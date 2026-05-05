@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ExternalIntegration.Identity/IntegratedIdentity.csproj" />
+  <Project Path="ExternalIntegration.Service/ExternalIntegration.Service.csproj" />
+</Solution>

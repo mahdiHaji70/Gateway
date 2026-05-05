@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "ExternalIntegration.Identity\\IntegratedIdentity.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ExternalIntegration.Service\\ExternalIntegration.Service.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

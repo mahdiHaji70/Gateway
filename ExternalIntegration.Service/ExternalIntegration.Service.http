@@ -1,0 +1,6 @@
+@ExternalIntegration.Service_HostAddress = http://localhost:5293
+
+GET {{ExternalIntegration.Service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
