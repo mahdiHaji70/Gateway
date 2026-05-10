@@ -1,7 +1,10 @@
 ﻿namespace ExternalIntegration.Service.Sync.DTOs
 {
-    public record DateRangeDto(string TerminalCode,
-                                 DateTime FromDate,
-                                 DateTime ToDate,
-                                 string PortCode);
+    public class DateRangeDto
+    {
+        public required string TerminalCode { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public required string PortCode { get; set; }
+    }
 }

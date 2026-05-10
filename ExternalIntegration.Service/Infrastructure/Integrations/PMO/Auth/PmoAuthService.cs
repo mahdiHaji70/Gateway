@@ -21,17 +21,15 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
         private readonly IMemoryCache _cache;
         private readonly ITerminalRepository _terminalRepository;
         private readonly AesEncryption _aesEncryption;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        //private readonly ILogger<ExternalAuthService> _logger;
-        private string? _terminalCode;
+        
+        //private readonly ILogger<ExternalAuthService> _logger;        
 
         public PmoAuthService(
             HttpClient httpClient,
             IConfiguration configuration,
             IMemoryCache cache,
             ITerminalRepository terminalRepository,
-            AesEncryption aesEncryption,
-            IHttpContextAccessor httpContextAccessor//,
+            AesEncryption aesEncryption//,
             //ILogger<ExternalAuthService> logger
             )
         {
@@ -41,42 +39,40 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
             _baseAddress = configuration["ServiceProviderConfig:PMO:BaseAddress"]!;
             _cache = cache;
             _terminalRepository = terminalRepository;  
-            _aesEncryption = aesEncryption;
-            _httpContextAccessor = httpContextAccessor;
+            _aesEncryption = aesEncryption;            
             //_logger = logger;
         }
 
         public async Task<string> GetTokenAsync(string terminalCode, CancellationToken cancellationToken)
         {
-            _terminalCode = _httpContextAccessor.HttpContext?.User?.FindFirst("terminalCode")?.Value! ?? "088";
 
-            //if (string.IsNullOrWhiteSpace(_terminalCode))
-            //    throw new InvalidOperationException("terminal code is null or empty!");
+            if (string.IsNullOrWhiteSpace(terminalCode))
+                throw new InvalidOperationException("terminal code is null or empty!");
 
-            //var terminal = await _terminalRepository.GetByCodeAsync(_terminalCode);
-            //if (terminal is null)
-            //    throw new InvalidOperationException($"No terminal found in database for terminalCode: {_terminalCode}");
+            var terminal = await _terminalRepository.GetByCodeAsync(terminalCode);
+            if (terminal is null)
+                throw new InvalidOperationException($"No terminal found in database for terminalCode: {terminalCode}");
 
-            //var cacheKey = CacheKeyPrefix + terminal.PortCode;
-            //if (_cache.TryGetValue(cacheKey, out string? token))
-            //{
-            //    var handler = new JwtSecurityTokenHandler();
-            //    var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
-            //    var exp = jsonToken?.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
+            var cacheKey = CacheKeyPrefix + terminal.PortCode;
+            if (_cache.TryGetValue(cacheKey, out string? token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
+                var exp = jsonToken?.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
 
-            //    var unixDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(exp!)).DateTime;
+                var unixDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(exp!)).DateTime;
 
-            //    if (unixDateTime >= DateTime.UtcNow)
-            //        return token!;
-            //}            
+                if (unixDateTime >= DateTime.UtcNow)
+                    return token!;
+            }
 
-            //var (accessToken, expireIn) = await GetAccessTokenAsync(terminal.PortCode, _aesEncryption.Decrypt(terminal.Password), terminal.UserName, cancellationToken);
-            var (accessToken, expireIn) = await GetAccessTokenAsync("IRBIK", "golF@gency5o86", "1950866270", cancellationToken);
+            var (accessToken, expireIn) = await GetAccessTokenAsync(terminal.PortCode, terminal.Password, terminal.UserName, cancellationToken);
+            //var (accessToken, expireIn) = await GetAccessTokenAsync("IRBIK", "golF@gency5o86", "1950866270", cancellationToken);
 
             if (string.IsNullOrWhiteSpace(accessToken))
                 throw new InvalidOperationException("Received empty access token from AuthService.");
 
-            //_cache.Set(cacheKey, accessToken, expireIn);
+            _cache.Set(cacheKey, accessToken, expireIn);
 
             return accessToken;
         }

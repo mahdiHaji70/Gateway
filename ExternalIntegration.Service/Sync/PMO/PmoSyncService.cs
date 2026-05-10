@@ -9,23 +9,27 @@ namespace ExternalIntegration.Service.Sync.PMO
 {
     public class PmoSyncService : IPmoSyncService
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPmoClient _client;
         private readonly IMapper _mapper;
         private readonly IRepository<GoodwayBill> _goodwayBillRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PmoSyncService(IPmoClient client
+        public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
             ,IMapper mapper
             ,IUnitOfWork unitOfWork
             , IRepository<GoodwayBill> goodwayBillRepository)
         {
+            _httpContextAccessor = httpContextAccessor;
             _client = client;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
-        {            
+        {
+            dto.TerminalCode = _httpContextAccessor.HttpContext?.User?.FindFirst("terminalCode")?.Value! ?? dto.TerminalCode;
+
             var clientResult = await _client.GetGoodwayBill(dto);
 
             var syncMappingDto = _mapper.Map<Response<IEnumerable<GoodwayBillDto>>>(clientResult);
@@ -44,7 +48,9 @@ namespace ExternalIntegration.Service.Sync.PMO
 
         public  async   Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
         {
-            var clientResult=await _client.CreateStorageAgreement(dto);
+            dto.TerminalCode = _httpContextAccessor.HttpContext?.User?.FindFirst("terminalCode")?.Value! ?? dto.TerminalCode;
+
+            var clientResult =await _client.CreateStorageAgreement(dto);
             var syncMappingDto = _mapper.Map<Response<CreateStorageAgreementResultDto>>(clientResult);
             return syncMappingDto;
         }

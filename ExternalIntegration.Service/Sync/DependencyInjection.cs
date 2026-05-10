@@ -9,6 +9,8 @@ namespace ExternalIntegration.Service.Sync
     {
         public static IServiceCollection AddSync(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddHttpContextAccessor();
+
             services.AddAutoMapper(cfg => { }, typeof(PmoSyncProfile));
 
             services.AddScoped<IPmoSyncService, PmoSyncService>();

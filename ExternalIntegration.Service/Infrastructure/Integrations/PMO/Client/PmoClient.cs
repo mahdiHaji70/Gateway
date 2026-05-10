@@ -47,7 +47,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         {
             var request = new PmoRequestBuilder()
             .WithCredential(_userName, _password)
-            .WithService("ipas-StorageAgreement")
+            .WithService(_serviceNames.CreateStorageAgreement)
             .WithParameters(new List<Parameter>
             {
                 new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },

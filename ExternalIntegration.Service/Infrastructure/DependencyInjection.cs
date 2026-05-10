@@ -35,7 +35,6 @@ namespace ExternalIntegration.Service.Infrastructure
             services.Configure<PmoServiceNames>(configuration.GetSection("PmoServices"));
 
             services.AddMemoryCache();
-            services.AddHttpContextAccessor();
 
             services.AddHttpClient<IPmoRequestExecutor, PmoRequestExecutor>();
 
