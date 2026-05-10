@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Integrations.PMO.Responses;
+﻿using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 
 namespace ExternalIntegration.Service.Sync.DTOs
 {

@@ -1,15 +1,15 @@
 ﻿using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Infrastructure.Encryption;
 using ExternalIntegration.Service.Infrastructure.Persistence.Context;
-using ExternalIntegration.Service.Integrations.PMO.Requests;
-using ExternalIntegration.Service.Integrations.PMO.Responses;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using TOS.Services.Gateway.Integrations.PMO.Requests;
+using TOS.Services.Gateway.Infrastructure.Integrations.PMO.Requests;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Auth
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
 {
     public class PmoAuthService
     {

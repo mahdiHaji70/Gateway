@@ -1,4 +1,4 @@
-﻿namespace ExternalIntegration.Service.Integrations.PMO.Requests
+﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
 {
     public record PmoDateRangeDto(string TerminalCode,
                                DateTime FromDate,

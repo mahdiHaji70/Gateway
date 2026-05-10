@@ -1,5 +1,5 @@
 using ExternalIntegration.Service.Infrastructure;
-using ExternalIntegration.Service.Integrations;
+using ExternalIntegration.Service.Infrastructure.Integrations;
 using ExternalIntegration.Service.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -55,14 +55,13 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddIntegration(builder.Configuration);
 builder.Services.AddSync(builder.Configuration);
 
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.Equals("Test"))
 {
     app.MapOpenApi();
     app.UseSwagger();
@@ -75,11 +74,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.Use(async (context, next) =>
-{
-    Console.WriteLine("AUTH HEADER: " + context.Request.Headers["Authorization"]);
-    await next();
-});
 
 app.Run();

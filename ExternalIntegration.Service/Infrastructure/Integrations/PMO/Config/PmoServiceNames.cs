@@ -1,4 +1,4 @@
-﻿namespace ExternalIntegration.Service.Integrations.PMO.Config
+﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config
 {
     public class PmoServiceNames
     {

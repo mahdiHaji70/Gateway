@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Requests
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
 {
     public class CreateStorageAgreementRequestDto
     {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ExternalIntegration.Service.Application.Shared;
-using ExternalIntegration.Service.Integrations.PMO.Requests;
-using ExternalIntegration.Service.Integrations.PMO.Responses;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
 using Newtonsoft.Json;
 

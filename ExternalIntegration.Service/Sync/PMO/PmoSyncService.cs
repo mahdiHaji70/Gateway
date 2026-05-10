@@ -2,8 +2,7 @@
 using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
-using ExternalIntegration.Service.Infrastructure.Persistence.Repositories;
-using ExternalIntegration.Service.Integrations.PMO.Client;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
 using ExternalIntegration.Service.Sync.DTOs;
 
 namespace ExternalIntegration.Service.Sync.PMO

@@ -1,5 +1,8 @@
 ﻿using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Infrastructure.Encryption;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config;
 using ExternalIntegration.Service.Infrastructure.Persistence;
 using ExternalIntegration.Service.Infrastructure.Persistence.Context;
 using ExternalIntegration.Service.Infrastructure.Persistence.Repositories;
@@ -22,6 +25,21 @@ namespace ExternalIntegration.Service.Infrastructure
             services.AddScoped<ITerminalRepository, TerminalRepository>();
 
             services.AddSingleton<AesEncryption>();
+
+            services.AddHttpClient<PmoAuthService>()
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                    SslProtocols = System.Security.Authentication.SslProtocols.Tls12
+                });
+
+            services.Configure<PmoServiceNames>(configuration.GetSection("PmoServices"));
+
+            services.AddMemoryCache();
+            services.AddHttpContextAccessor();
+
+            services.AddHttpClient<IPmoRequestExecutor, PmoRequestExecutor>();
+
+            services.AddScoped<IPmoClient, PmoClient>();
 
             return services;
         }

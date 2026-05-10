@@ -1,6 +1,6 @@
-﻿using ExternalIntegration.Service.Integrations.PMO.Requests;
+﻿using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
 
-namespace TOS.Services.Gateway.Integrations.PMO.Requests
+namespace TOS.Services.Gateway.Infrastructure.Integrations.PMO.Requests
 {
     internal class PmoRequestBuilder
     {
