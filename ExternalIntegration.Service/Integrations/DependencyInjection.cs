@@ -1,5 +1,6 @@
 ﻿using ExternalIntegration.Service.Integrations.PMO.Auth;
 using ExternalIntegration.Service.Integrations.PMO.Client;
+using ExternalIntegration.Service.Integrations.PMO.Config;
 
 namespace ExternalIntegration.Service.Integrations
 {
@@ -12,6 +13,8 @@ namespace ExternalIntegration.Service.Integrations
                 {
                     SslProtocols = System.Security.Authentication.SslProtocols.Tls12
                 });
+
+            services.Configure<PmoServiceNames>(configuration.GetSection("PmoServices"));
 
             services.AddMemoryCache();
             services.AddHttpContextAccessor();

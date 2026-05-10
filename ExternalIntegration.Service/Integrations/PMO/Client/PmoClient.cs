@@ -1,7 +1,9 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Integrations.PMO.Config;
 using ExternalIntegration.Service.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
+using Microsoft.Extensions.Options;
 using TOS.Services.Gateway.Integrations.PMO.Requests;
 
 namespace ExternalIntegration.Service.Integrations.PMO.Client
@@ -9,13 +11,16 @@ namespace ExternalIntegration.Service.Integrations.PMO.Client
     public class PmoClient : IPmoClient
     {
         private readonly IPmoRequestExecutor _requestExecutor;
+        private readonly PmoServiceNames _serviceNames;
         private readonly string _userName;
         private readonly string _password;
 
         public PmoClient(IPmoRequestExecutor requestExecutor,
+            IOptions<PmoServiceNames> serviceNames,
             IConfiguration configuration)
         {
             _requestExecutor = requestExecutor;
+            _serviceNames = serviceNames.Value;
             _userName = configuration["ServiceProviderConfig:PMO:Username"]!;
             _password = configuration["ServiceProviderConfig:PMO:Password"]!;
         }
@@ -23,7 +28,7 @@ namespace ExternalIntegration.Service.Integrations.PMO.Client
         {
             var request = new PmoRequestBuilder()
             .WithCredential(_userName, _password)
-            .WithService("ipas-GoodwayBills")
+            .WithService(_serviceNames.GoodwayBills)
             .WithParameters(new List<Parameter>
             {
                 new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
