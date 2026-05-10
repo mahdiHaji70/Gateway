@@ -23,5 +23,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetGoodwayBill(dto);
         }
+
+        [HttpPost("CreateStorageAgreement")]
+        public async Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement([FromBody] CreateStorageAgreementDto dto)
+        {
+            return await _pmoSyncService.CreateStorageAgreement(dto);
+        }
     }
 }

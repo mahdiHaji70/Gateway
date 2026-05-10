@@ -7,5 +7,6 @@ namespace ExternalIntegration.Service.Integrations.PMO.Client
     public interface IPmoClient
     {
         Task<Response<IEnumerable<GoodwayBillResultDto>>> GetGoodwayBill(DateRangeDto dto);
+        Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementDto dto);
     }
 }

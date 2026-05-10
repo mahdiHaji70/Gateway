@@ -6,5 +6,7 @@ namespace ExternalIntegration.Service.Sync.PMO
     public interface IPmoSyncService
     {
         Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto);
+        Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto);
+
     }
 }

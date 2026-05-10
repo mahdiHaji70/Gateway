@@ -2,6 +2,7 @@
 using ExternalIntegration.Service.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
+using Newtonsoft.Json;
 using TOS.Services.Gateway.Integrations.PMO.Requests;
 
 namespace ExternalIntegration.Service.Integrations.PMO.Client
@@ -36,5 +37,28 @@ namespace ExternalIntegration.Service.Integrations.PMO.Client
 
             return response;
         }
+
+        public async Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
+        {
+            var request = new PmoRequestBuilder()
+            .WithCredential(_userName, _password)
+            .WithService("ipas-StorageAgreement")
+            .WithParameters(new List<Parameter>
+            {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
+                new Parameter{ ParameterName = nameof(dto.AgreementDate), ParameterValue = dto.AgreementDate  },
+                new Parameter{ ParameterName = nameof(dto.StartDate ), ParameterValue = dto.StartDate  },
+                new Parameter{ParameterName = nameof(dto.FinishDate), ParameterValue = dto.FinishDate},
+                new Parameter{ParameterName = nameof(dto.CustomsProcedureCode), ParameterValue = dto.CustomsProcedureCode},
+                new Parameter{ParameterName = nameof(dto.WorkflowRemark), ParameterValue = dto.WorkflowRemark},
+                new Parameter{ParameterName =nameof(dto.Owner),ParameterValue = JsonConvert.SerializeObject(dto.Owner)},
+                new Parameter { ParameterName =nameof(dto.OwnerRep),ParameterValue = JsonConvert.SerializeObject(dto.OwnerRep)}
+              
+            }).Build();
+
+            var response = await _requestExecutor.PostAsync<CreateStorageAgreementResponseDto>(request, dto.TerminalCode);
+            return response;
+        }
+
     }
 }
