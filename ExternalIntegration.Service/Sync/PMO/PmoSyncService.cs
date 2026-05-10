@@ -42,5 +42,13 @@ namespace ExternalIntegration.Service.Sync.PMO
            
             return syncMappingDto;
         }
+
+        public  async   Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
+        {
+            var clientResult=await _client.CreateStorageAgreement(dto);
+            var syncMappingDto = _mapper.Map<Response<CreateStorageAgreementResultDto>>(clientResult);
+            return syncMappingDto;
+        }
+
     }
 }
