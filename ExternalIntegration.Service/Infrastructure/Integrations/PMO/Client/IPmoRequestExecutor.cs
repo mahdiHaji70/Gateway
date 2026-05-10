@@ -1,6 +1,6 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Client
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 {
     public interface IPmoRequestExecutor
     {

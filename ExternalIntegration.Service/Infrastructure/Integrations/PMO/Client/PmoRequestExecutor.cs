@@ -1,12 +1,12 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
-using ExternalIntegration.Service.Integrations.PMO.Auth;
-using ExternalIntegration.Service.Integrations.PMO.Responses;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Client
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 {
     public class PmoRequestExecutor : IPmoRequestExecutor
     {

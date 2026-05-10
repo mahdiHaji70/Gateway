@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Requests
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
 {
     public class Parameter
     {

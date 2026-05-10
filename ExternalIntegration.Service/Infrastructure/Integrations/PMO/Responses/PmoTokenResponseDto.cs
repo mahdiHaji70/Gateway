@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Responses
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
 {
     public class PmoTokenResponseDto
     {

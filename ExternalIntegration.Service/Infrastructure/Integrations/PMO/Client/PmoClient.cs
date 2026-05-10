@@ -1,13 +1,13 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
-using ExternalIntegration.Service.Integrations.PMO.Config;
-using ExternalIntegration.Service.Integrations.PMO.Requests;
-using ExternalIntegration.Service.Integrations.PMO.Responses;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using TOS.Services.Gateway.Integrations.PMO.Requests;
+using TOS.Services.Gateway.Infrastructure.Integrations.PMO.Requests;
 
-namespace ExternalIntegration.Service.Integrations.PMO.Client
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 {
     public class PmoClient : IPmoClient
     {
