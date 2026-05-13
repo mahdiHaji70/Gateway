@@ -1,0 +1,52 @@
+﻿using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using TDM.Application.BasicInformation.Companies.Commands.CreateCompany;
+using TDM.Domain.Enums;
+
+namespace TDM.Application.BasicInformation.Companies.Commands.UpdateCompany
+{
+    public class UpdateCompanyCommandValidator : AbstractValidator<UpdateCompanyCommand>
+    {
+        public UpdateCompanyCommandValidator()
+        {
+            RuleFor(x => x.Id)
+                .NotEmpty();                
+
+            RuleFor(x => x.Name)
+            .NotEmpty()
+            .MaximumLength(200);
+
+            RuleFor(x => x.NationalId)
+                .NotEmpty()
+                .MaximumLength(20);
+
+            RuleFor(x => x.RegisterDate)
+            .NotEmpty()
+            .WithMessage("Register date is required.");
+
+            RuleFor(x => x.Mobile)
+                .NotEmpty()
+                .Matches(@"^09\d{9}$")
+                .WithMessage("Mobile should start with 09 and it has 11 digits long");
+
+            RuleFor(x => x.Address)
+                .NotEmpty()
+                .MaximumLength(500);
+
+            RuleFor(x => x.PostCode)
+                .NotEmpty()
+                .MaximumLength(10);
+
+            RuleFor(x => x.EconomicCode)
+                .NotEmpty()
+                .When(x => x.CompanyType == CompanyType.Company);
+
+            RuleFor(x => x.EconomicCode)
+                .Must((cmd, code) =>
+                    cmd.CompanyType == CompanyType.Person || string.IsNullOrEmpty(code))
+                .WithMessage("Economic code is allowed only for Legal companies.");
+        }
+    }
+}
