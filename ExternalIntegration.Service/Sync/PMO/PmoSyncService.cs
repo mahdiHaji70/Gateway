@@ -18,7 +18,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
             ,IMapper mapper
             ,IUnitOfWork unitOfWork
-            , IRepository<GoodwayBill> goodwayBillRepository)
+            ,IRepository<GoodwayBill> goodwayBillRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;

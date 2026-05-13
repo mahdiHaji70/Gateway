@@ -1,4 +1,14 @@
 <Solution>
-  <Project Path="ExternalIntegration.Identity/IntegratedIdentity.csproj" />
-  <Project Path="ExternalIntegration.Service/ExternalIntegration.Service.csproj" />
+  <Folder Name="/Gateway/">
+    <Project Path="ExternalIntegration.Service/ExternalIntegration.Service.csproj" />
+  </Folder>
+  <Folder Name="/Identity/">
+    <Project Path="ExternalIntegration.Identity/IntegratedIdentity.csproj" />
+  </Folder>
+  <Folder Name="/TDM (TerminalData Manager)/">
+    <Project Path="TDM.API/TDM.API.csproj" Id="b4ee01a1-321e-4909-bc9f-f64d7dbd0738" />
+    <Project Path="TDM.Application/TDM.Application.csproj" Id="45450220-abe3-4ccf-9a59-b4c47f965dda" />
+    <Project Path="TDM.Domain/TDM.Domain.csproj" Id="82f35e5d-1a04-4e7e-bf8a-b234801a0f6d" />
+    <Project Path="TDM.Infrastructure/TDM.Infrastructure.csproj" Id="65965dd8-c1d4-4aee-b4eb-a9b0eb52d317" />
+  </Folder>
 </Solution>
