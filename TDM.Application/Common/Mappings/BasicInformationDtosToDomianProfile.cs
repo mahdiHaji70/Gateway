@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TDM.Application.BasicInformation.Commodities.DTOs;
 using TDM.Application.BasicInformation.Companies.DTOs;
 using TDM.Application.Common.Models;
 using TDM.Domain.Entities;
@@ -15,6 +16,8 @@ namespace TDM.Application.Common.Mappings
             CreateMap(typeof(PagedResult<>), typeof(PagedResult<>));
 
             CreateMap<Company, CompanyDto>();
+
+            CreateMap<Commodity, CommodityDto>();
         }
     }
 }

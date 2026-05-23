@@ -11,6 +11,7 @@ namespace TDM.Infrastructure.Persistence
     public class TDMDbContext : DbContext
     {
         public DbSet<Company> Companies => Set<Company>();
+        public DbSet<Commodity> Commodities => Set<Commodity>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)
