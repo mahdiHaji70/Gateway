@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDM.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using TDM.Infrastructure.Persistence;
 namespace TDM.Infrastructure.Migrations
 {
     [DbContext(typeof(TDMDbContext))]
-    partial class TDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260523103433_addCommodity_and_scheme")]
+    partial class addCommodity_and_scheme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace TDM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Commodities", "basicInfo");
+                    b.ToTable("Commodities", "common");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.Company", b =>
@@ -118,7 +121,7 @@ namespace TDM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies", "basicInfo");
+                    b.ToTable("Companies", "common");
                 });
 #pragma warning restore 612, 618
         }

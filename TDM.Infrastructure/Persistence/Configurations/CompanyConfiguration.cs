@@ -11,7 +11,7 @@ namespace TDM.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
-            builder.ToTable("Companies");
+            builder.ToTable("Companies", schema: "basicInfo");
 
             builder.HasKey(x => x.Id);
 
