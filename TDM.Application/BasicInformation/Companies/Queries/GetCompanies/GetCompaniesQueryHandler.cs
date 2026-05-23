@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TDM.Application.BasicInformation.Companies.DTOs;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;

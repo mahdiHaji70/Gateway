@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TDM.Domain.Common;
 using TDM.Domain.Entities;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace TDM.Infrastructure.Persistence
 {
@@ -12,6 +8,7 @@ namespace TDM.Infrastructure.Persistence
     {
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<Commodity> Commodities => Set<Commodity>();
+        public DbSet<Traffic> Traffics => Set<Traffic>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)

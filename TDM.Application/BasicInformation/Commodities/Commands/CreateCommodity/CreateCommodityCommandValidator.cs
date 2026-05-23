@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using TDM.Domain.Enums;
 
 namespace TDM.Application.BasicInformation.Commodities.Commands.CreateCommodity
 {

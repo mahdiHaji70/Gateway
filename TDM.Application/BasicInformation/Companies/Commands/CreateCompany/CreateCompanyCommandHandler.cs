@@ -1,7 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 

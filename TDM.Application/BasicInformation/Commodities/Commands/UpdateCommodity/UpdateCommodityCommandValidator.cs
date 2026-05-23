@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using TDM.Application.BasicInformation.Commodities.Commands.UpdateCommodity;
-using TDM.Domain.Enums;
 
 namespace TDM.Application.BasicInformation.Commodities.Commands.UpdateCommodity
 {

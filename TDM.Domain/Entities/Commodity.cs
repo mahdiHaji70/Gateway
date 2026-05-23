@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
-using TDM.Domain.Common;
+﻿using TDM.Domain.Common;
 using TDM.Domain.Exceptions;
 
 namespace TDM.Domain.Entities
