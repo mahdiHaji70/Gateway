@@ -1,8 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TDM.Application.BasicInformation.Companies.Commands.CreateCompany;
 using TDM.Domain.Enums;
 
 namespace TDM.Application.BasicInformation.Companies.Commands.UpdateCompany

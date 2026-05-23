@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using TDM.Application.Common.Models;
-using TDM.Domain.Entities;
+﻿using TDM.Application.Common.Models;
 
 namespace TDM.Application.Common.Interfaces
 {

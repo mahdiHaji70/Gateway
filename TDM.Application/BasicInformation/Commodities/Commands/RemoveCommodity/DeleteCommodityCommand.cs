@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TDM.Application.BasicInformation.Companies.Commands.RemoveCommodity
+namespace TDM.Application.BasicInformation.Commodities.Commands.RemoveCommodity
 {
     public class DeleteCommodityCommand : IRequest<bool>
     {

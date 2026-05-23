@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TDM.Application.Common.Models
+﻿namespace TDM.Application.Common.Models
 {
     public class PagedResult<T>
     {

@@ -2,15 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.Commodities.Commands.CreateCommodity;
+using TDM.Application.BasicInformation.Commodities.Commands.RemoveCommodity;
 using TDM.Application.BasicInformation.Commodities.Commands.UpdateCommodity;
 using TDM.Application.BasicInformation.Commodities.Queries.GetCommodities;
 using TDM.Application.BasicInformation.Commodities.Queries.GetComodityById;
-using TDM.Application.BasicInformation.Companies.Commands.CreateCompany;
-using TDM.Application.BasicInformation.Companies.Commands.RemoveCommodity;
-using TDM.Application.BasicInformation.Companies.Commands.RemoveCompany;
-using TDM.Application.BasicInformation.Companies.Commands.UpdateCompany;
-using TDM.Application.BasicInformation.Companies.Queries.GetCompanies;
-using TDM.Application.BasicInformation.Companies.Queries.GetCompanyById;
 
 namespace TDM.API.Controllers
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TDM.Application.Common.Exceptions
+﻿namespace TDM.Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {

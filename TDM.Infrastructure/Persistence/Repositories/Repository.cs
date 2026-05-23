@@ -1,13 +1,7 @@
-﻿using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TDM.Application.BasicInformation.Companies.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;
 using TDM.Domain.Common;
-using TDM.Domain.Entities;
 
 namespace TDM.Infrastructure.Persistence.Repositories
 {

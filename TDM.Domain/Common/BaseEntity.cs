@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TDM.Domain.Common
+﻿namespace TDM.Domain.Common
 {
     public abstract class BaseEntity
     {

@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Infrastructure.Persistence;
 using TDM.Infrastructure.Persistence.Repositories;

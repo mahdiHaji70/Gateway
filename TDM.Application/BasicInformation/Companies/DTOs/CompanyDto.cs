@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TDM.Domain.Enums;
+﻿using TDM.Domain.Enums;
 
 namespace TDM.Application.BasicInformation.Companies.DTOs
 {
