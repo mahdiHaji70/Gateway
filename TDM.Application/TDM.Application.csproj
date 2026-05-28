@@ -17,4 +17,8 @@
     <ProjectReference Include="..\TDM.Domain\TDM.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BasicInformation\Cities\Commands\UpdateCity - Copy\" />
+  </ItemGroup>
+
 </Project>

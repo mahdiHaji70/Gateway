@@ -8,6 +8,8 @@ namespace TDM.Domain.Entities
         public string Name { get; set; }
         public string Code { get; set; }
 
+        public ICollection<City> Cities { get; private set; } = new List<City>();
+
         public Country(string name, string code)
         {
             Validate(name, code);
@@ -18,6 +20,8 @@ namespace TDM.Domain.Entities
 
         public void Update(string name, string code)
         {
+            Validate(name, code);
+
             Name = name;
             Code = code;
         }
