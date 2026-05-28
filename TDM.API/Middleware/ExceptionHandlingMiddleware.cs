@@ -50,8 +50,23 @@ public class ExceptionHandlingMiddleware
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         context.Response.ContentType = "application/json";
 
-        var response = ApiResponse.Fail(ex.Message);
+        var root = GetRootException(ex);
+
+        var message = root == ex
+            ? ex.Message
+            : $"{ex.Message} | Inner: {root.Message}";
+
+        var response = ApiResponse.Fail(message);
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(response));
     }
+
+    private static Exception GetRootException(Exception ex)
+    {
+        while (ex.InnerException is not null)
+            ex = ex.InnerException;
+
+        return ex;
+    }
+
 }

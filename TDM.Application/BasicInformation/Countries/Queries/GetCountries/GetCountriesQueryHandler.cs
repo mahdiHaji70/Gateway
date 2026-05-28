@@ -8,12 +8,12 @@ using TDM.Domain.Entities;
 
 namespace TDM.Application.BasicInformation.Countries.Queries.GetCountrys
 {
-    public class GetCountrysQueryHandler : IRequestHandler<GetCountriesQuery, PagedResult<CountryDto>>
+    public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, PagedResult<CountryDto>>
     {
         private readonly IRepository<Country> _countryRepository;
         private readonly IMapper _mapper;
 
-        public GetCountrysQueryHandler(IMapper mapper,
+        public GetCountriesQueryHandler(IMapper mapper,
             IRepository<Country> countryRepository)
         {
             _countryRepository = countryRepository;

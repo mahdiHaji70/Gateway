@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TDM.Application.BasicInformation.Cities.DTOs;
 using TDM.Application.BasicInformation.Commodities.DTOs;
 using TDM.Application.BasicInformation.Companies.DTOs;
 using TDM.Application.BasicInformation.Countries.DTOs;
@@ -24,6 +25,9 @@ namespace TDM.Application.Common.Mappings
             CreateMap<Package, PackageDto>();
             
             CreateMap<Country, CountryDto>();
+
+            CreateMap<City, CityDto>();
+
         }
     }
 }
