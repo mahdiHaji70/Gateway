@@ -16,7 +16,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<PagedResult<TEntity>?> GetPagedAsync(int pageNumber, int pageSize)
+        public virtual async Task<PagedResult<TEntity>?> GetPagedAsync(int pageNumber, int pageSize)
         {
             var query = _dbSet.AsNoTracking();
 
@@ -37,12 +37,12 @@ namespace TDM.Infrastructure.Persistence.Repositories
             };
         }
 
-        public async Task<IEnumerable<TEntity>?> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>?> GetAllAsync()
         {
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public async Task<TEntity?> GetAsync(Guid id)
+        public virtual async Task<TEntity?> GetAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }

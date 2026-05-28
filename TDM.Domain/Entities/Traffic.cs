@@ -18,6 +18,8 @@ namespace TDM.Domain.Entities
 
         public void Update(string name, string code)
         {
+            Validate(name, code);
+
             Name = name;
             Code = code;
         }

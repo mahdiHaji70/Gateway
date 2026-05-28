@@ -33,7 +33,7 @@ namespace TDM.Domain.Entities
                 throw new DomainValidationException("Post code is required.");
 
             if (hsCOde.Length != 8)
-                throw new DomainValidationException("Post code must be 10 digits.");
+                throw new DomainValidationException("Post code must be 8 digits.");
         }
     }
 }
