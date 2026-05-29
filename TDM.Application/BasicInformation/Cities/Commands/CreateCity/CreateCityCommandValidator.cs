@@ -2,9 +2,9 @@
 
 namespace TDM.Application.BasicInformation.Cities.Commands.CreateCity
 {
-    public class UpdateCityCommandValidator : AbstractValidator<CreateCityCommand>
+    public class CreateCityCommandValidator : AbstractValidator<CreateCityCommand>
     {
-        public UpdateCityCommandValidator()
+        public CreateCityCommandValidator()
         {
             RuleFor(x => x.Name)
             .NotEmpty()

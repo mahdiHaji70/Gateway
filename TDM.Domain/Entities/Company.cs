@@ -18,6 +18,9 @@ namespace TDM.Domain.Entities
         public string? RegisterPlace { get; private set; }
         public string? Phone { get; private set; }
 
+        public ICollection<Declaration> ConsigneeDeclarations { get; private set; } = new List<Declaration>();
+        public ICollection<Declaration> ConsigneeRepDeclarations { get; private set; } = new List<Declaration>();
+
         public Company(CompanyType companyType,
             string name,
             string nationalId,
