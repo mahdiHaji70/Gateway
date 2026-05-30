@@ -20,6 +20,7 @@ namespace TDM.Infrastructure
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IDeclarationRepository, DeclarationRepository>();
 
             return services;
         }

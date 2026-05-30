@@ -9,6 +9,6 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
         public DateTime StartDate { get; init; } = default!;
         public DateTime EndDate { get; init; } = default!;
         public Guid ConsigneeId { get; set; }
-        public Guid ConsigneerepId { get; set; }
+        public Guid ConsigneeRepId { get; set; }
     }
 }

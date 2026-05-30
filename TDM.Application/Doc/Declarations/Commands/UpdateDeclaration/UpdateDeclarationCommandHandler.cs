@@ -28,7 +28,7 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
                 request.StartDate,
                 request.EndDate,
                 request.ConsigneeId,
-                request.ConsigneerepId);
+                request.ConsigneeRepId);
 
             _declarationRepository.Update(declaration);
 

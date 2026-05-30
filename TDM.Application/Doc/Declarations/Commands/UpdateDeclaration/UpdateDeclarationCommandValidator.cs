@@ -25,7 +25,7 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
                 .NotEmpty()
                 .WithMessage("Consignee Id is required.");
             
-            RuleFor(x => x.ConsigneerepId)
+            RuleFor(x => x.ConsigneeRepId)
                 .NotEmpty()
                 .WithMessage("Consignee rep Id is required.");
         }
