@@ -10,6 +10,9 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<Commodity> Commodities => Set<Commodity>();
         public DbSet<Traffic> Traffics => Set<Traffic>();
         public DbSet<Package> Packages => Set<Package>();
+        public DbSet<Country> Countries => Set<Country>();
+        public DbSet<City> Cities => Set<City>();
+        public DbSet<Declaration> Declarations => Set<Declaration>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)
