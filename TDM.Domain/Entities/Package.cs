@@ -11,6 +11,9 @@ namespace TDM.Domain.Entities
         public string Name { get; set; }
         public string Code { get; set; }
 
+        public ICollection<DeclarationItem> PackageDeclarationItems { get; private set; } = new List<DeclarationItem>();
+
+
         public Package(string name, string code)
         {
             Validate(name, code);

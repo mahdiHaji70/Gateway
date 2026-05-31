@@ -8,6 +8,9 @@ namespace TDM.Domain.Entities
         public string Name { get; set; }
         public string HsCode { get; set; }
 
+        public ICollection<DeclarationItem> CommodityDeclarationItems { get; private set; } = new List<DeclarationItem>();
+
+
         public Commodity(string name, string hsCode)
         {
             Validate(name, hsCode);

@@ -13,6 +13,7 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<City> Cities => Set<City>();
         public DbSet<Declaration> Declarations => Set<Declaration>();
+        public DbSet<DeclarationItem> DeclarationItems => Set<DeclarationItem>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)
