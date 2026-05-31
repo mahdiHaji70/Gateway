@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDM.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using TDM.Infrastructure.Persistence;
 namespace TDM.Infrastructure.Migrations
 {
     [DbContext(typeof(TDMDbContext))]
-    partial class TDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260531065354_addDeclarationItems")]
+    partial class addDeclarationItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,9 +254,6 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("CreatedByUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DeclarationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("GrossWeight")
                         .HasColumnType("decimal(18,2)");
 
@@ -275,8 +275,6 @@ namespace TDM.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CommodityId");
-
-                    b.HasIndex("DeclarationId");
 
                     b.HasIndex("PackageId");
 
@@ -387,12 +385,6 @@ namespace TDM.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TDM.Domain.Entities.Declaration", "Declaration")
-                        .WithMany("DeclarationItems")
-                        .HasForeignKey("DeclarationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("TDM.Domain.Entities.Package", "Package")
                         .WithMany("PackageDeclarationItems")
                         .HasForeignKey("PackageId")
@@ -400,8 +392,6 @@ namespace TDM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Commodity");
-
-                    b.Navigation("Declaration");
 
                     b.Navigation("Package");
                 });
@@ -421,11 +411,6 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.Country", b =>
                 {
                     b.Navigation("Cities");
-                });
-
-            modelBuilder.Entity("TDM.Domain.Entities.Declaration", b =>
-                {
-                    b.Navigation("DeclarationItems");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
