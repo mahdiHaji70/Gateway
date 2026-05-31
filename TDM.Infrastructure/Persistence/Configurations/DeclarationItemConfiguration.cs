@@ -12,12 +12,17 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);            
 
+            builder.HasOne(c => c.Declaration)
+            .WithMany(cn => cn.DeclarationItems)
+            .HasForeignKey(c => c.DeclarationId)
+            .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasOne(c => c.Commodity)
             .WithMany(cn => cn.CommodityDeclarationItems)
             .HasForeignKey(c => c.CommodityId)
             .OnDelete(DeleteBehavior.Restrict);
 
-             builder.HasOne(c => c.Package)
+            builder.HasOne(c => c.Package)
             .WithMany(cn => cn.PackageDeclarationItems)
             .HasForeignKey(c => c.PackageId)
             .OnDelete(DeleteBehavior.Restrict);

@@ -16,6 +16,9 @@ namespace TDM.Domain.Entities
         public Guid ConsigneeRepId { get; set; }
         public Company ConsigneeRep { get; set; }
 
+        public ICollection<DeclarationItem> DeclarationItems { get; private set; } = new List<DeclarationItem>();
+
+
         public Declaration(
             string number,
              DateTime startDate,

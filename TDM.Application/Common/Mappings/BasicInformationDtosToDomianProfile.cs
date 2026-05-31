@@ -6,6 +6,7 @@ using TDM.Application.BasicInformation.Countries.DTOs;
 using TDM.Application.BasicInformation.Packages.DTOs;
 using TDM.Application.BasicInformation.Traffics.DTOs;
 using TDM.Application.Common.Models;
+using TDM.Application.Doc.DeclarationItems.DTOs;
 using TDM.Application.Doc.Declarations.DTOs;
 using TDM.Domain.Entities;
 
@@ -30,6 +31,9 @@ namespace TDM.Application.Common.Mappings
             CreateMap<City, CityDto>();
 
             CreateMap<Declaration, DeclarationDto>();
+
+            CreateMap<DeclarationItem, DeclarationItemDto>();
+
 
         }
     }
