@@ -18,8 +18,8 @@ namespace ExternalIntegration.Service.Controllers
             _pmoSyncService = pmoSyncService;
         }
 
-        [HttpPost("GetGoodwayBill")]
-        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill([FromBody] DateRangeDto dto)
+        [HttpGet("GetGoodwayBill")]
+        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill([FromQuery] DateRangeDto dto)
         {
             return await _pmoSyncService.GetGoodwayBill(dto);
         }
@@ -28,6 +28,19 @@ namespace ExternalIntegration.Service.Controllers
         public async Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement([FromBody] CreateStorageAgreementDto dto)
         {
             return await _pmoSyncService.CreateStorageAgreement(dto);
+        }
+
+        [HttpGet("GetStorageAgreement")]
+        public async Task<Response<StorageAgreementResultDto>> GetStorageAgreement([FromQuery]  StorageAgreementDto dto)
+        {
+             var result = await _pmoSyncService.GetStorageAgreement(dto);
+            return result;
+        }
+        [HttpPost("DeleteStorageAgreement")]
+        public async  Task<Response<Boolean>> DeleteStorageAgreement([FromBody] StorageAgreementDto dto)
+        {
+            var result = await _pmoSyncService.DeleteStorageAgreement(dto);
+            return result;
         }
     }
 }

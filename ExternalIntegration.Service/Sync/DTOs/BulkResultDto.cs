@@ -1,4 +1,4 @@
-﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
+﻿namespace ExternalIntegration.Service.Sync.DTOs
 {
     public class BulkResultDto
     {

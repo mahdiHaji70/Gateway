@@ -28,8 +28,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
-            dto.TerminalCode = _httpContextAccessor.HttpContext?.User?.FindFirst("terminalCode")?.Value! ?? dto.TerminalCode;
-
+          
             var clientResult = await _client.GetGoodwayBill(dto);
 
             var syncMappingDto = _mapper.Map<Response<IEnumerable<GoodwayBillDto>>>(clientResult);
@@ -48,12 +47,23 @@ namespace ExternalIntegration.Service.Sync.PMO
 
         public  async   Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
         {
-            dto.TerminalCode = _httpContextAccessor.HttpContext?.User?.FindFirst("terminalCode")?.Value! ?? dto.TerminalCode;
-
+         
             var clientResult =await _client.CreateStorageAgreement(dto);
             var syncMappingDto = _mapper.Map<Response<CreateStorageAgreementResultDto>>(clientResult);
             return syncMappingDto;
         }
 
+        public async Task<Response<StorageAgreementResultDto>> GetStorageAgreement(StorageAgreementDto dto)
+        {
+            var clientResult = await _client.GetStorageAgreement(dto);
+            var syncMappingDto = _mapper.Map<Response<StorageAgreementResultDto>>(clientResult);
+            return syncMappingDto;
+        }
+
+        public async Task<Response<bool>> DeleteStorageAgreement(StorageAgreementDto dto)
+        {
+            var clientResult = await _client.DeleteStorageAgreement(dto);
+            return clientResult;
+        }
     }
 }
