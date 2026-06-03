@@ -1,6 +1,6 @@
-﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
+﻿namespace ExternalIntegration.Service.Sync.DTOs
 {
-    public class ContainersGoodDto
+    public class ContainerGoodResultDto
     {
         public string? HSCode { get; set; }
         public string? Description { get; set; }

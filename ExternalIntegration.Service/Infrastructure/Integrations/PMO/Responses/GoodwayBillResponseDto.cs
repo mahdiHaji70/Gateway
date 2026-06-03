@@ -1,6 +1,6 @@
 ﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
 {
-    public class GoodwayBillResultDto
+    public class GoodwayBillResponseDto
     {
         public string? Id { get; set; }
         public int SerialNo { get; set; }
@@ -85,8 +85,8 @@
         public Guid? DischargeId { get; set; }
         public int? DischargeStateId { get; set; }
         public DateTime CreationDate { get; set; }
-        public List<BulkResultDto>? BulkList { get; set; }
-        public List<GeneralCargoResultDto>? CargoList { get; set; }
-        public List<ContainerResultDto>? ContainerList { get; set; }
+        public List<BulkResponseDto>? BulkList { get; set; }
+        public List<GeneralCargoResponseDto>? CargoList { get; set; }
+        public List<ContainerResponseDto>? ContainerList { get; set; }
     }
 }

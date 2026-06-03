@@ -13,12 +13,12 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
         {
             CreateMap(typeof(Response<>), typeof(Response<>));        
 
-            CreateMap<GoodwayBillDto, GoodwayBillResultDto>()
+            CreateMap<GoodwayBillDto, GoodwayBillResponseDto>()
                 .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
                 .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => src.CargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
-            CreateMap<GoodwayBillResultDto, GoodwayBillDto>()
+            CreateMap<GoodwayBillResponseDto, GoodwayBillDto>()
                 .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
                 .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => src.CargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
@@ -28,6 +28,11 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => src.OwnerRep));
 
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>();
+
+            CreateMap<StorageAgreementResponseDto, StorageAgreementResultDto>()
+               .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
+               .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => src.CargoList))
+               .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
         }
     }

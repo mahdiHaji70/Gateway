@@ -25,7 +25,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             _userName = configuration["ServiceProviderConfig:PMO:Username"]!;
             _password = configuration["ServiceProviderConfig:PMO:Password"]!;
         }
-        public async Task<Response<IEnumerable<GoodwayBillResultDto>>> GetGoodwayBill(DateRangeDto dto)
+        public async Task<Response<IEnumerable<GoodwayBillResponseDto>>> GetGoodwayBill(DateRangeDto dto)
         {
             var request = new PmoRequestBuilder()
             .WithCredential(_userName, _password)
@@ -38,7 +38,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
             }).Build();
 
-            var response = await _requestExecutor.PostAsync<IEnumerable<GoodwayBillResultDto>>(request, dto.TerminalCode);
+            var response = await _requestExecutor.PostAsync<IEnumerable<GoodwayBillResponseDto>>(request, dto.TerminalCode);
 
             return response;
         }
@@ -64,6 +64,34 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             var response = await _requestExecutor.PostAsync<CreateStorageAgreementResponseDto>(request, dto.TerminalCode);
             return response;
         }
+             
+        public async Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(GetStorageAgreementDto dto)
+        {
+            var request = new PmoRequestBuilder()
+           .WithCredential(_userName, _password)
+           .WithService(_serviceNames.StorageAgreement)
+           .WithParameters(new List<Parameter>
+           {
+                new Parameter{ ParameterName = nameof(dto.AgreementNo), ParameterValue = dto.AgreementNo },
+           }).Build();
 
+            var response = await _requestExecutor.PostAsync<StorageAgreementResponseDto>(request);
+            return response;
+        }
+
+        public async Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.DeleteStorageAgreement)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter{ ParameterName = nameof(dto.No), ParameterValue = dto.No },
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode }
+          }).Build();
+
+            var response = await _requestExecutor.PostAsync<bool>(request);
+            return response;
+        }
     }
 }
