@@ -1,4 +1,4 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿namespace TDM.Infrastructure.Integrations.Requests
 {
     public class OwnerRepDto
     {
