@@ -8,6 +8,9 @@ namespace TDM.Domain.Entities
         public string Name { get; set; }
         public string Code { get; set; }
 
+        public ICollection<Declaration> TrafficDeclarations { get; private set; } = new List<Declaration>();
+
+
         public Traffic(string name, string code)
         {
             Validate(name, code);

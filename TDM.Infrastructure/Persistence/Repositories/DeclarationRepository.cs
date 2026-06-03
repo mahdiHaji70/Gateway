@@ -19,7 +19,8 @@ namespace TDM.Infrastructure.Persistence.Repositories
             var query = _dbSet
            .AsNoTracking()
            .Include(x => x.Consignee)
-           .Include(x => x.ConsigneeRep);
+           .Include(x => x.ConsigneeRep)
+           .Include(x => x.Traffic);
 
             var totalCount = await query.CountAsync();
 
@@ -44,6 +45,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .AsNoTracking()
                         .Include(x => x.Consignee)
                         .Include(x => x.ConsigneeRep)
+                        .Include(x => x.Traffic)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
     }

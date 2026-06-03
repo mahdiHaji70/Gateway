@@ -6,6 +6,7 @@ using TDM.Application.BasicInformation.Declarations.Commands.RemoveDeclaration;
 using TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclaration;
 using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarations;
 using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarationById;
+using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId;
 
 
 namespace TDM.API.Controllers
@@ -59,6 +60,13 @@ namespace TDM.API.Controllers
             await _mediator.Send(new DeleteDeclarationCommand(id), cancellationToken);
 
             return Ok(ApiResponse.Success(true, "Declaration deleted"));
+        }
+
+        [HttpPost("{declarationId:guid}/request-ipas-declaration-id")]
+        public async Task<IActionResult> RequestVerifierId(Guid declarationId)
+        {
+            var result = await _mediator.Send(new IpasDeclarationIdCommand(declarationId));
+            return Ok(ApiResponse.Success(result));
         }
     }
 }
