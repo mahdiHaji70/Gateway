@@ -2,13 +2,13 @@
 {
     public class OwnerDto
     {
-        public string Name { get; set; }
-        public string NationalID { get; set; }
-        public string Email { get; set; }
+        public string Name { get; set; } = default!;
+        public string NationalID { get; set; } = default!;
+        public string Email { get; set; } = default!;
         public DateTime Date { get; set; }
-        public string CellPhone { get; set; }
-        public string PostalCode { get; set; }
-        public string Address { get; set; }
+        public string CellPhone { get; set; } = default!;
+        public string PostalCode { get; set; } = default!;
+        public string Address { get; set; } = default!;
         public Boolean? IsCompany { get; set; }
     }
 }
