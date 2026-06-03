@@ -10,5 +10,8 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
         public DateTime EndDate { get; init; } = default!;
         public Guid ConsigneeId { get; set; }
         public Guid ConsigneeRepId { get; set; }
+        public Guid TrafficId { get; set; }
+        public string Description { get; set; } = default!;
+        public string TerminalCode { get; set; } = default!;
     }
 }

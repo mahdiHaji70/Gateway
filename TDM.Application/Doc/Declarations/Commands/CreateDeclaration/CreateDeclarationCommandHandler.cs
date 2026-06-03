@@ -23,7 +23,10 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.CreateDeclarati
                 request.StartDate,
                 request.EndDate,
                 request.ConsigneeId,
-                request.ConsigneerepId);
+                request.ConsigneerepId,
+                request.TrafficId,
+                request.Description,
+                request.TerminalCode);
 
             await _declarationRepository.InsertAsync(declaration);
 

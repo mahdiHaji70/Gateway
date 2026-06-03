@@ -28,7 +28,10 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
                 request.StartDate,
                 request.EndDate,
                 request.ConsigneeId,
-                request.ConsigneeRepId);
+                request.ConsigneeRepId,
+                request.TrafficId,
+                request.Description,
+                request.TerminalCode);
 
             _declarationRepository.Update(declaration);
 

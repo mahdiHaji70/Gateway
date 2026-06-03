@@ -16,12 +16,17 @@ namespace TDM.Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(50);            
 
+            builder.HasOne(c => c.Traffic)
+            .WithMany(cn => cn.TrafficDeclarations)
+            .HasForeignKey(c => c.TrafficId)
+            .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasOne(c => c.Consignee)
             .WithMany(cn => cn.ConsigneeDeclarations)
             .HasForeignKey(c => c.ConsigneeId)
             .OnDelete(DeleteBehavior.Restrict);
 
-             builder.HasOne(c => c.ConsigneeRep)
+            builder.HasOne(c => c.ConsigneeRep)
             .WithMany(cn => cn.ConsigneeRepDeclarations)
             .HasForeignKey(c => c.ConsigneeRepId)
             .OnDelete(DeleteBehavior.Restrict);

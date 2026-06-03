@@ -28,6 +28,14 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
             RuleFor(x => x.ConsigneeRepId)
                 .NotEmpty()
                 .WithMessage("Consignee rep Id is required.");
+
+            RuleFor(x => x.TrafficId)
+               .NotEmpty()
+               .WithMessage("Traffic Id is required.");
+
+            RuleFor(x => x.TerminalCode)
+                .NotEmpty()
+                .WithMessage("Terminal code is required.");
         }
     }
 }
