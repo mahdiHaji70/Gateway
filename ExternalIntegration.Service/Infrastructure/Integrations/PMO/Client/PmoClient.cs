@@ -65,7 +65,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
              
-        public async Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(StorageAgreementDto dto)
+        public async Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(GetStorageAgreementDto dto)
         {
             var request = new PmoRequestBuilder()
            .WithCredential(_userName, _password)
@@ -79,9 +79,19 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public Task<Response<bool>> DeleteStorageAgreement(StorageAgreementDto dto)
+        public async Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto)
         {
-            throw new NotImplementedException();
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.DeleteStorageAgreement)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter{ ParameterName = nameof(dto.No), ParameterValue = dto.No },
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode }
+          }).Build();
+
+            var response = await _requestExecutor.PostAsync<bool>(request);
+            return response;
         }
     }
 }

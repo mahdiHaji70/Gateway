@@ -31,13 +31,13 @@ namespace ExternalIntegration.Service.Controllers
         }
 
         [HttpGet("GetStorageAgreement")]
-        public async Task<Response<StorageAgreementResultDto>> GetStorageAgreement([FromQuery]  StorageAgreementDto dto)
+        public async Task<Response<StorageAgreementResultDto>> GetStorageAgreement([FromQuery]  GetStorageAgreementDto dto)
         {
              var result = await _pmoSyncService.GetStorageAgreement(dto);
             return result;
         }
         [HttpPost("DeleteStorageAgreement")]
-        public async  Task<Response<Boolean>> DeleteStorageAgreement([FromBody] StorageAgreementDto dto)
+        public async  Task<Response<Boolean>> DeleteStorageAgreement([FromBody] DeleteStorageAgreementDto dto)
         {
             var result = await _pmoSyncService.DeleteStorageAgreement(dto);
             return result;

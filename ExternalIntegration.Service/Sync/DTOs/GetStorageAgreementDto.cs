@@ -1,6 +1,6 @@
 ﻿namespace ExternalIntegration.Service.Sync.DTOs
 {
-    public class StorageAgreementDto:TerminalBaseDto
+    public class GetStorageAgreementDto:TerminalBaseDto
     {
         public string AgreementNo { get; set; }
     }

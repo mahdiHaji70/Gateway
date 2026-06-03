@@ -8,8 +8,8 @@ namespace ExternalIntegration.Service.Sync.PMO
     {
         Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto);
         Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto);
-        Task<Response<StorageAgreementResultDto>> GetStorageAgreement(StorageAgreementDto agreementNo);
-        Task<Response<Boolean>> DeleteStorageAgreement(StorageAgreementDto agreementNo);
+        Task<Response<StorageAgreementResultDto>> GetStorageAgreement(GetStorageAgreementDto agreementNo);
+        Task<Response<Boolean>> DeleteStorageAgreement(DeleteStorageAgreementDto agreementNo);
 
     }
 }

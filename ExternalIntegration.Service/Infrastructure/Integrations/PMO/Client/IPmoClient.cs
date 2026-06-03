@@ -8,7 +8,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
     {
         Task<Response<IEnumerable<GoodwayBillResponseDto>>> GetGoodwayBill(DateRangeDto dto);
         Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementDto dto);
-        Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(StorageAgreementDto dto);
-        Task<Response<bool>> DeleteStorageAgreement(StorageAgreementDto dto);
+        Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(GetStorageAgreementDto dto);
+        Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto);
     }
 }

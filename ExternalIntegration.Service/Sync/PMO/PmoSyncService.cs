@@ -53,14 +53,14 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public async Task<Response<StorageAgreementResultDto>> GetStorageAgreement(StorageAgreementDto dto)
+        public async Task<Response<StorageAgreementResultDto>> GetStorageAgreement(GetStorageAgreementDto dto)
         {
             var clientResult = await _client.GetStorageAgreement(dto);
             var syncMappingDto = _mapper.Map<Response<StorageAgreementResultDto>>(clientResult);
             return syncMappingDto;
         }
 
-        public async Task<Response<bool>> DeleteStorageAgreement(StorageAgreementDto dto)
+        public async Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto)
         {
             var clientResult = await _client.DeleteStorageAgreement(dto);
             return clientResult;
