@@ -1,8 +1,10 @@
 using ExternalIntegration.Service.Infrastructure;
 using ExternalIntegration.Service.Infrastructure.Integrations;
+using ExternalIntegration.Service.Middlewares;
 using ExternalIntegration.Service.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,6 +54,11 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Enter your JWT token here: Bearer {your token}"
     });
 
+    options.AddSecurityRequirement((document) => new OpenApiSecurityRequirement()
+    {
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = ["readAccess", "writeAccess"]
+    });
+
 });
 
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -67,6 +74,8 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.Equals("T
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
