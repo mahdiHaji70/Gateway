@@ -36,6 +36,7 @@ namespace ExternalIntegration.Service.Controllers
              var result = await _pmoSyncService.GetStorageAgreement(dto);
             return result;
         }
+        
         [HttpPost("DeleteStorageAgreement")]
         public async  Task<Response<Boolean>> DeleteStorageAgreement([FromBody] DeleteStorageAgreementDto dto)
         {

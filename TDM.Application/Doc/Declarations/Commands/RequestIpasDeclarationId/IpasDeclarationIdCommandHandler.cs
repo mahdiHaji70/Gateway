@@ -28,7 +28,7 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDecl
                 throw new Exception("Declaration not found");
 
             if (!string.IsNullOrWhiteSpace(declaration.IpasDeclarationId))
-                throw new DomainValidationException("Ipas declarationId id has already been assigned for this declaration.");
+                throw new Exception("Ipas declarationId id has already been assigned for this declaration.");
 
             var ipasDeclarationIdRequest = IpasDeclarationIdRequestMapper.Map(declaration);
 

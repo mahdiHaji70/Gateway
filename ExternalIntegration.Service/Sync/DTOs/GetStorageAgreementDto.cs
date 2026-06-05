@@ -2,6 +2,6 @@
 {
     public class GetStorageAgreementDto:TerminalBaseDto
     {
-        public string AgreementNo { get; set; }
+        public string AgreementNo { get; set; } = default!;
     }
 }

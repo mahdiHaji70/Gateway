@@ -1,8 +1,6 @@
-﻿using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
-
-namespace ExternalIntegration.Service.Sync.DTOs
+namespace TDM.Infrastructure.Integrations.Responses
 {
-    public class StorageAgreementResultDto
+    public class StorageAgreementResponseDto
     {
         public Guid Id { get; set; }
         public int TypeId { get; set; }
@@ -74,8 +72,8 @@ namespace ExternalIntegration.Service.Sync.DTOs
         public string GoodInsuranceTaskStageName { get; set; } = default!;
         public Guid? GoodsEntryId { get; set; }
         public Guid? GoodsEntryStateId { get; set; }
-        public List<GeneralCargoResultDto>? CargoList { get; set; }
-        public List<ContainerResultDto>? ContainerList { get; set; }
-        public List<BulkResultDto>? BulkList { get; set; }
+        public List<GeneralCargoResponseDto>? CargoList { get; set; }
+        public List<ContainerResponseDto>? ContainerList { get; set; }
+        public List<BulkResponseDto>? BulkList { get; set; }
     }
 }
