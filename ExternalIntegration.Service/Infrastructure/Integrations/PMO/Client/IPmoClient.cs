@@ -10,5 +10,6 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementDto dto);
         Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(GetStorageAgreementDto dto);
         Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto);
+        Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(DateRangeDto dto);
     }
 }
