@@ -13,6 +13,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IPmoClient _client;
         private readonly IMapper _mapper;
         private readonly IRepository<GoodwayBill> _goodwayBillRepository;
+        private readonly IRepository<DischargePermit> _dischargePermitRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
@@ -64,6 +65,24 @@ namespace ExternalIntegration.Service.Sync.PMO
         {
             var clientResult = await _client.DeleteStorageAgreement(dto);
             return clientResult;
+        }
+        public async Task<Response<IEnumerable<DischargePermitDto>>> GetDischargePermit(DateRangeDto dto)
+        {
+
+            var clientResult = await _client.GetDischargePermit(dto);
+
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<DischargePermitDto>>>(clientResult);
+
+            var newData = await _dischargePermitRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<DischargePermit>>(syncMappingDto.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _dischargePermitRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
         }
     }
 }

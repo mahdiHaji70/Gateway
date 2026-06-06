@@ -93,5 +93,25 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             var response = await _requestExecutor.PostAsync<bool>(request);
             return response;
         }
+        public async Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(DateRangeDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.DischargPermit)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+
+                }).Build();
+
+
+            var response = await _requestExecutor.PostAsync<IEnumerable<DischargePermitResponseDto>>(request, dto.TerminalCode);
+            
+            return response;
+
+        }
+
     }
 }

@@ -42,5 +42,10 @@ namespace ExternalIntegration.Service.Controllers
             var result = await _pmoSyncService.DeleteStorageAgreement(dto);
             return result;
         }
+        [HttpGet("GetDischargePermit")]
+        public async Task<Response<IEnumerable<DischargePermitDto>>> GetDischargePermit([FromQuery] DateRangeDto dto)
+        {
+            return await _pmoSyncService.GetDischargePermit(dto);
+        }
     }
 }
