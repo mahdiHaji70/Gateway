@@ -3,6 +3,7 @@ using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Sync.DTOs;
 
 namespace ExternalIntegration.Service.Sync.PMO
@@ -48,8 +49,9 @@ namespace ExternalIntegration.Service.Sync.PMO
 
         public  async   Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
         {
-         
-            var clientResult =await _client.CreateStorageAgreement(dto);
+
+            var syncMappingRequestDto = _mapper.Map<CreateStorageAgreementRequestDto>(dto);
+            var clientResult =await _client.CreateStorageAgreement(syncMappingRequestDto);
             var syncMappingDto = _mapper.Map<Response<CreateStorageAgreementResultDto>>(clientResult);
             return syncMappingDto;
         }
@@ -84,5 +86,13 @@ namespace ExternalIntegration.Service.Sync.PMO
 
             return syncMappingDto;
         }
+        public async Task<Response<Guid>> SubmitTruckTerminalDischarge(TruckTerminalDischargeDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<TruckTerminalDischargeRequestDto>(dto);
+            var clientResult = await _client.TruckTerminalDischarge(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<Guid>>(clientResult);
+            return syncMappingDto;
+        }
+
     }
 }

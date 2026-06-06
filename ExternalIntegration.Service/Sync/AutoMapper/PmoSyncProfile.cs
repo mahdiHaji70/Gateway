@@ -35,7 +35,8 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
             CreateMap<DischargePermitDto, DischargePermitResponseDto>();
-            CreateMap<DischargePermitResponseDto, DischargePermitDto>();
+            
+            CreateMap<TruckTerminalDischargeDto, TruckTerminalDischargeRequestDto>();
 
         }
     }
