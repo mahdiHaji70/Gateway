@@ -47,5 +47,12 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetDischargePermit(dto);
         }
+
+        [HttpPost("SubmitTruckTerminalDischarge")]
+        public async Task<Response<Guid>> SubmitTruckTerminalDischarge([FromBody] TruckTerminalDischargeDto dto)
+        {
+            return await _pmoSyncService.SubmitTruckTerminalDischarge(dto);
+        }
+
     }
 }
