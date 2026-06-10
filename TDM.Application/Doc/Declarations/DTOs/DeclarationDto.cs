@@ -8,6 +8,7 @@ namespace TDM.Application.Doc.Declarations.DTOs
     {
         public Guid Id { get; set; }
         public string? Number { get; set; }
+        public DateTime Date { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string? Description { get; set; }

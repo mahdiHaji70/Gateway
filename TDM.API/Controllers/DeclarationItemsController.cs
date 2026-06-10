@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.CreateDeclarationItem;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.RemoveDeclarationItem;
+using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDeclarationItem;
-using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItems;
 using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItemById;
+using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItems;
+using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId;
 
 
 namespace TDM.API.Controllers
@@ -59,6 +61,13 @@ namespace TDM.API.Controllers
             await _mediator.Send(new DeleteDeclarationItemCommand(id), cancellationToken);
 
             return Ok(ApiResponse.Success(true, "Declaration Item deleted"));
+        }
+
+        [HttpGet("{declarationId:guid}/request-ipas-declaration-items")]
+        public async Task<IActionResult> RequestVerifierId(Guid declarationId)
+        {
+            var result = await _mediator.Send(new IpasDeclarationItemsCommand(declarationId));
+            return Ok(ApiResponse.Success(result));
         }
     }
 }

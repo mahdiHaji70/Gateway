@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDM.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using TDM.Infrastructure.Persistence;
 namespace TDM.Infrastructure.Migrations
 {
     [DbContext(typeof(TDMDbContext))]
-    partial class TDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260607072924_add_declaration_date")]
+    partial class add_declaration_date
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,13 +223,10 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("IpasDeclarationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("IpasDeclarationNo")
+                    b.Property<string>("IpasDeclarationId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("IpasDeclarationReceivedAt")
+                    b.Property<DateTime?>("IpasDeclarationIdReceivedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Number")

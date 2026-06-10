@@ -25,6 +25,7 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
 
             declaration.Update(
                 request.Number,
+                request.Date,
                 request.StartDate,
                 request.EndDate,
                 request.ConsigneeId,

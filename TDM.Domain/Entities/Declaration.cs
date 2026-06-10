@@ -7,6 +7,7 @@ namespace TDM.Domain.Entities
     public class Declaration : BaseEntity
     {
         public string Number { get; set; }
+        public DateTime Date { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Description { get; set; }
@@ -21,25 +22,28 @@ namespace TDM.Domain.Entities
         public Guid ConsigneeRepId { get; set; }
         public Company ConsigneeRep { get; set; }
 
-        public string? IpasDeclarationId { get; private set; }
-        public DateTime? IpasDeclarationIdReceivedAt { get; private set; }
+        public Guid? IpasDeclarationId { get; private set; }
+        public string? IpasDeclarationNo { get; private set; }
+        public DateTime? IpasDeclarationReceivedAt { get; private set; }
 
         public ICollection<DeclarationItem> DeclarationItems { get; private set; } = new List<DeclarationItem>();
 
 
         public Declaration(
             string number,
-             DateTime startDate,
-             DateTime endDate,
+            DateTime date,
+            DateTime startDate,
+            DateTime endDate,
             Guid consigneeId,
             Guid consigneeRepId,
             Guid trafficId,
             string description,
             string terminalCode)
         {
-            Validate(number, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode);
+            Validate(number, date, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode);
 
             Number = number;
+            Date = date;
             StartDate = startDate;
             EndDate = endDate;
             ConsigneeId = consigneeId;
@@ -51,43 +55,52 @@ namespace TDM.Domain.Entities
 
         public void Update(
             string number,
-             DateTime startDate,
-             DateTime endDate,
+            DateTime date,
+            DateTime startDate,
+            DateTime endDate,
             Guid consigneeId,
             Guid consigneeRepId,
             Guid trafficId,
             string description,
             string terminalCode)
         {
-            Validate(number, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode);
+            Validate(number, date, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode);
 
             Number = number;
+            Date = date;
             StartDate = startDate;
             EndDate = endDate;
             ConsigneeId = consigneeId;
             ConsigneeRepId = consigneeRepId;
             TrafficId = trafficId;
-            Description = description;  
+            Description = description;
             TerminalCode = terminalCode;
         }
 
-        public void SetIpasDeclarationId(string ipasDeclarationId)
+        public void SetIpasDeclarationId(Guid ipasDeclarationId, string ipasDeclarationNo)
         {
-            if (string.IsNullOrWhiteSpace(ipasDeclarationId))
+            if (ipasDeclarationId == Guid.Empty)
                 throw new DomainValidationException("Ipas Declaration Id id cannot be empty.");
 
-            if (!string.IsNullOrWhiteSpace(IpasDeclarationId))
-                throw new DomainValidationException("Ipas Declaration Id has already been assigned.");
+            if (string.IsNullOrWhiteSpace(ipasDeclarationNo))
+                throw new DomainValidationException("Ipas Declaration no cannot be empty.");
+
+            if (!string.IsNullOrWhiteSpace(IpasDeclarationNo))
+                throw new DomainValidationException("Ipas Declaration no has already been assigned.");
 
             IpasDeclarationId = ipasDeclarationId;
-            IpasDeclarationIdReceivedAt = DateTime.UtcNow;
+            IpasDeclarationNo = ipasDeclarationNo;
+            IpasDeclarationReceivedAt = DateTime.Now;
         }
 
-        private void Validate(string number, DateTime startDate, DateTime EndDate,
+        private void Validate(string number, DateTime date, DateTime startDate, DateTime EndDate,
         Guid consigneeId, Guid consigneeRepId, Guid trafficId, string description, string terminalCode)
         {
             if (string.IsNullOrEmpty(number))
                 throw new DomainValidationException("Number is required.");
+
+            if (date.Equals(DateTime.MinValue))
+                throw new DomainValidationException("Date invalid.");
 
             if (startDate.Equals(DateTime.MinValue))
                 throw new DomainValidationException("Start date invalid.");

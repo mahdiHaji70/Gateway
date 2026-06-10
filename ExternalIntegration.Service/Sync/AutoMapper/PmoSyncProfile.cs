@@ -29,11 +29,18 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>();
 
+            CreateMap<CreateStorageAgreementResultDto, CreateStorageAgreementResponseDto>();
+            CreateMap<CreateStorageAgreementResponseDto, CreateStorageAgreementResultDto>();                                 
+
             CreateMap<StorageAgreementResponseDto, StorageAgreementResultDto>()
                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
                .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => src.CargoList))
                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
+            CreateMap<GeneralCargoResponseDto, GeneralCargoResultDto>();
+            CreateMap<ContainerResponseDto, ContainerResultDto>();
+            CreateMap<BulkResponseDto, BulkResultDto>();
+            
             CreateMap<DischargePermitDto, DischargePermitResponseDto>();
             
             CreateMap<TruckTerminalDischargeDto, TruckTerminalDischargeRequestDto>();
