@@ -47,6 +47,11 @@ namespace TDM.Infrastructure.Persistence.Repositories
             return await _dbSet.FindAsync(id);
         }
 
+        public async Task InsertRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+        }
+        
         public async Task InsertAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);

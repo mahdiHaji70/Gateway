@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDM.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using TDM.Infrastructure.Persistence;
 namespace TDM.Infrastructure.Migrations
 {
     [DbContext(typeof(TDMDbContext))]
-    partial class TDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260610073611_edit_declaration_ipas_fields")]
+    partial class edit_declaration_ipas_fields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,6 +227,7 @@ namespace TDM.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("IpasDeclarationNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("IpasDeclarationReceivedAt")

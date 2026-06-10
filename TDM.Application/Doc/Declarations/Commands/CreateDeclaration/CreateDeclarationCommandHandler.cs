@@ -20,6 +20,7 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.CreateDeclarati
         {
             var declaration = new Declaration(
                 request.Number,
+                request.Date,
                 request.StartDate,
                 request.EndDate,
                 request.ConsigneeId,

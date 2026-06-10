@@ -37,9 +37,9 @@ namespace TDM.Application.BasicInformation.Companies.Commands.CreateCompany
                 .When(x => x.CompanyType == CompanyType.Company);
 
             RuleFor(x => x.EconomicCode)
-                .Must((cmd, code) =>
-                    cmd.CompanyType == CompanyType.Person || string.IsNullOrEmpty(code))
-                .WithMessage("Economic code is allowed only for Legal companies.");
+                .Empty()
+                .When(x => x.CompanyType == CompanyType.Person)
+                .WithMessage("Economic code is not permitted for persons.");
         }
     }
 }
