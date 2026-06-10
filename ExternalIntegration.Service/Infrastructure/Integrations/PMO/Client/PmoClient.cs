@@ -51,20 +51,20 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             .WithParameters(new List<Parameter>
             {
                 new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
-                new Parameter{ ParameterName = nameof(dto.AgreementDate), ParameterValue = dto.AgreementDate  },
-                new Parameter{ ParameterName = nameof(dto.StartDate ), ParameterValue = dto.StartDate  },
-                new Parameter{ParameterName = nameof(dto.FinishDate), ParameterValue = dto.FinishDate},
+                new Parameter{ ParameterName = nameof(dto.AgreementDate), ParameterValue = dto.AgreementDate.ToString("yyyy-MM-ddTHH:mm:ss")  },
+                new Parameter{ ParameterName = nameof(dto.StartDate ), ParameterValue = dto.StartDate.ToString("yyyy-MM-ddTHH:mm:ss")  },
+                new Parameter{ParameterName = nameof(dto.FinishDate), ParameterValue = dto.FinishDate.ToString("yyyy-MM-ddTHH:mm:ss") },
                 new Parameter{ParameterName = nameof(dto.CustomsProcedureCode), ParameterValue = dto.CustomsProcedureCode},
                 new Parameter{ParameterName = nameof(dto.WorkflowRemark), ParameterValue = dto.WorkflowRemark},
                 new Parameter{ParameterName =nameof(dto.Owner),ParameterValue = JsonConvert.SerializeObject(dto.Owner)},
                 new Parameter { ParameterName =nameof(dto.OwnerRep),ParameterValue = JsonConvert.SerializeObject(dto.OwnerRep)}
-              
+
             }).Build();
 
             var response = await _requestExecutor.PostAsync<CreateStorageAgreementResponseDto>(request, dto.TerminalCode);
             return response;
         }
-             
+
         public async Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(GetStorageAgreementDto dto)
         {
             var request = new PmoRequestBuilder()
@@ -75,7 +75,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                 new Parameter{ ParameterName = nameof(dto.AgreementNo), ParameterValue = dto.AgreementNo },
            }).Build();
 
-            var response = await _requestExecutor.PostAsync<StorageAgreementResponseDto>(request);
+            var response = await _requestExecutor.PostAsync<StorageAgreementResponseDto>(request, dto.TerminalCode);
             return response;
         }
 

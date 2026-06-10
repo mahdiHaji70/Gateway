@@ -13,6 +13,10 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
             .NotEmpty()
             .MaximumLength(50);
 
+            RuleFor(x => x.Date)
+            .NotEmpty()
+            .WithMessage("Start date is required.");
+
             RuleFor(x => x.StartDate)
             .NotEmpty()
             .WithMessage("Start date is required.");

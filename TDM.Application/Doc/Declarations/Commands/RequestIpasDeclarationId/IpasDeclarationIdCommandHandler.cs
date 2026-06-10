@@ -27,20 +27,20 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDecl
             if (declaration == null)
                 throw new Exception("Declaration not found");
 
-            if (!string.IsNullOrWhiteSpace(declaration.IpasDeclarationId))
+            if (!string.IsNullOrWhiteSpace(declaration.IpasDeclarationNo))
                 throw new Exception("Ipas declarationId id has already been assigned for this declaration.");
 
             var ipasDeclarationIdRequest = IpasDeclarationIdRequestMapper.Map(declaration);
 
-            var ipasDeclarationId = await _declarationExternalService.GetIpasDeclarationId(ipasDeclarationIdRequest);
+            var response = await _declarationExternalService.GetIpasDeclarationId(ipasDeclarationIdRequest);
 
-            declaration.SetIpasDeclarationId(ipasDeclarationId);
+            declaration.SetIpasDeclarationId(response.IpasDeclarationId, response.IpasDeclarationNo);
 
             _declarationRepository.Update(declaration);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 
-            return ipasDeclarationId;
+            return response.IpasDeclarationNo;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
-
+﻿
 namespace ExternalIntegration.Service.Sync.DTOs
 {
     public class StorageAgreementResultDto
@@ -15,7 +14,7 @@ namespace ExternalIntegration.Service.Sync.DTOs
         public DateTime Date { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
-        public Guid CustomsProcedureId { get; set; }
+        public int CustomsProcedureId { get; set; }
         public string CustomsProcedureCode { get; set; } = default!;
         public string CustomsProcedure { get; set; } = default!;
         public Guid CountryOriginId { get; set; }
@@ -65,7 +64,7 @@ namespace ExternalIntegration.Service.Sync.DTOs
         public DateTime? TaskRegisterDate { get; set; }
         public string TaskRemark { get; set; } = default!;
         public Guid? CustomsPermitId { get; set; }
-        public Guid? CustomsPermitStateId { get; set; }
+        public int? CustomsPermitStateId { get; set; }
         public string CustomsPermitTaskStage { get; set; } = default!;
         public string CustomsPermitTaskStageName { get; set; } = default!;
         public Guid? GoodInsuranceId { get; set; }

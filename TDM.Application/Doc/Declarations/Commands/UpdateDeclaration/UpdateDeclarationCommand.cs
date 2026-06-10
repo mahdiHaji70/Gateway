@@ -6,6 +6,7 @@ namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclarati
     {
         public Guid Id { get; set; }
         public string Number { get; init; } = default!;
+        public DateTime Date { get; init; } = default!;
         public DateTime StartDate { get; init; } = default!;
         public DateTime EndDate { get; init; } = default!;
         public Guid ConsigneeId { get; set; }

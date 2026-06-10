@@ -7,7 +7,7 @@ using TDM.Domain.Entities;
 
 namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems
 {
-    public class IpasDeclarationItemsCommandHandler : IRequestHandler<IpasDeclarationItemsCommand, string>
+    public class IpasDeclarationItemsCommandHandler : IRequestHandler<IpasDeclarationItemsCommand, Guid>
     {
         private readonly IDeclarationRepository _declarationRepository;
         private readonly IDeclarationItemRepository _declarationItemRepository;
@@ -31,17 +31,20 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             _declarationExternalService = declarationExternalService;
         }
 
-        public async Task<string> Handle(IpasDeclarationItemsCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(IpasDeclarationItemsCommand request, CancellationToken cancellationToken)
         {
             var declaration = await _declarationRepository.GetAsync(request.DeclarationId);
             if (declaration == null)
                 throw new Exception("Declaration not found");
 
-            var ipasDeclarationItemsRequest = new IpasDeclarationItemsRequest(declaration.TerminalCode, declaration.IpasDeclarationId!);
+            if (await _declarationItemRepository.ExistsByDeclarationId(declaration.Id))
+                throw new Exception("Declaration items are exists");
+
+            var ipasDeclarationItemsRequest = new IpasDeclarationItemsRequest(declaration.TerminalCode, declaration.IpasDeclarationNo!);
 
             var ipasDeclarationItems = await _declarationExternalService.GetIpasDeclarationItems(ipasDeclarationItemsRequest);
 
-            if(!ipasDeclarationItems.Any())
+            if (!ipasDeclarationItems.Any())
                 throw new Exception("No item found for this declaration");
 
             var hsCodes = ipasDeclarationItems.Select(x => x.HSCode).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
@@ -82,7 +85,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 
-            return string.Empty;
+            return declaration.Id;
         }
     }
 }

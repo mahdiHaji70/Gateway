@@ -20,8 +20,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 new IpasDeclarationItemResponse
                 {
                     Quantity = Convert.ToInt64(x.PackageQuantity),
-                    GrossWeight = Convert.ToDecimal(Convert.ToInt64(x.PackageQuantity) * x.GrossWeight),
-                    NetWeight = Convert.ToDecimal(Convert.ToInt64(x.PackageQuantity) * x.NetWeight),
+                    GrossWeight = Convert.ToDecimal(x.GrossWeight),
+                    NetWeight = Convert.ToDecimal(x.NetWeight),
                     HSCode = x.HSCode!,
                     PackageCode = x.PackageTypeCode!
                 }));

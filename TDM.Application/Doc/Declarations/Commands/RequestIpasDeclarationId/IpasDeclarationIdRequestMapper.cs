@@ -13,7 +13,7 @@ namespace TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId
             return new IpasDeclarationIdRequest 
             { 
                 TerminalCode = declaration.TerminalCode,
-                Date = declaration.CreatedAt,
+                Date = declaration.Date,
                 StartDate = declaration.StartDate,
                 EndDate = declaration.EndDate,
                 Traffic = declaration.Traffic.Code,
