@@ -12,6 +12,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
 
         public DbSet<Terminal> Terminals => Set<Terminal>();
         public DbSet<GoodwayBill> GoodwayBills => Set<GoodwayBill>();
+        public DbSet<DischargePermit> DischargePermits => Set<DischargePermit>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

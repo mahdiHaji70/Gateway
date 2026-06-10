@@ -10,6 +10,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto);
         Task<Response<StorageAgreementResultDto>> GetStorageAgreement(GetStorageAgreementDto agreementNo);
         Task<Response<Boolean>> DeleteStorageAgreement(DeleteStorageAgreementDto agreementNo);
-
+        Task<Response<IEnumerable<DischargePermitDto>>> GetDischargePermit(DateRangeDto dto);
+        Task<Response<Guid>> SubmitTruckTerminalDischarge(TruckTerminalDischargeDto dto);
     }
 }

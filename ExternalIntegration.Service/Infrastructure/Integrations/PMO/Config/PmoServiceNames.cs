@@ -6,5 +6,8 @@
         public string CreateStorageAgreement { get; init; } = default!;
         public string StorageAgreement { get; init; } = default!;
         public string DeleteStorageAgreement { get; init; } = default!;
+        public string DischargPermit { get; init; } = default!;
+        public string TruckTerminalDis { get; init; } = default!;
+        
     }
 }

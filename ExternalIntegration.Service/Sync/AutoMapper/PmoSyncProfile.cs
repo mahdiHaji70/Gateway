@@ -11,7 +11,7 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
     {
         public PmoSyncProfile()
         {
-            CreateMap(typeof(Response<>), typeof(Response<>));        
+            CreateMap(typeof(Response<>), typeof(Response<>));
 
             CreateMap<GoodwayBillDto, GoodwayBillResponseDto>()
                 .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
@@ -24,7 +24,7 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>()
-                .ForMember(dest=>dest.Owner,opt=>opt.MapFrom(src=>src.Owner))
+                .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Owner))
                 .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => src.OwnerRep));
 
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>();
@@ -40,6 +40,10 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<GeneralCargoResponseDto, GeneralCargoResultDto>();
             CreateMap<ContainerResponseDto, ContainerResultDto>();
             CreateMap<BulkResponseDto, BulkResultDto>();
+            
+            CreateMap<DischargePermitDto, DischargePermitResponseDto>();
+            
+            CreateMap<TruckTerminalDischargeDto, TruckTerminalDischargeRequestDto>();
 
         }
     }

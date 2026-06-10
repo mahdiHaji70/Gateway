@@ -43,7 +43,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
+        public async Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementRequestDto dto)
         {
             var request = new PmoRequestBuilder()
             .WithCredential(_userName, _password)
@@ -93,5 +93,95 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             var response = await _requestExecutor.PostAsync<bool>(request);
             return response;
         }
+        public async Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(DateRangeDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.DischargPermit)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+
+                }).Build();
+
+
+            var response = await _requestExecutor.PostAsync<IEnumerable<DischargePermitResponseDto>>(request, dto.TerminalCode);
+            
+            return response;
+
+        }
+        public async Task<Response<Guid>> TruckTerminalDischarge(TruckTerminalDischargeRequestDto model)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.TruckTerminalDis)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ParameterName = nameof(model.TerminalCode), ParameterValue = model.TerminalCode },
+                new Parameter{ParameterName = nameof(model.AgreementNo), ParameterValue = model.AgreementNo  },
+                new Parameter{ParameterName = nameof(model.WaybillNo ), ParameterValue = model.WaybillNo  },
+                new Parameter{ParameterName = nameof(model.WaybillId), ParameterValue = model.WaybillId},
+                new Parameter{ParameterName = nameof(model.DischargeDate), ParameterValue = model.DischargeDate},
+                new Parameter{ParameterName = nameof(model.TruckPlateNumber), ParameterValue = model.TruckPlateNumber},
+                new Parameter{ParameterName = nameof(model.TruckEmptyWeight), ParameterValue = model.TruckEmptyWeight},
+                new Parameter{ParameterName = nameof(model.TruckFullWeight), ParameterValue = model.TruckFullWeight},
+                new Parameter{ParameterName = nameof(model.Tallyman), ParameterValue = model.Tallyman},
+                new Parameter{ParameterName =nameof(model.GateInDateTime),ParameterValue = model.GateInDateTime},
+                new Parameter{ParameterName =nameof(model.GateOutDateTime),ParameterValue = model.GateOutDateTime},
+                new Parameter{ParameterName =nameof(model.GeneralCargoList),
+                    ParameterValue = JsonConvert.SerializeObject(model.GeneralCargoList.Select( s=>
+                                new {
+                s.HSCode,
+                s.Description,
+                s.BrandName,
+                s.PackageTypeCode ,
+                s.PackageType,
+                s.PackageQuantity ,
+                s.GrossWeight  ,
+                s.NetWeight,
+                s.IsNonPalletized ,
+                s.IsDamaged,
+                s.IsDangerous,
+                s.Width,
+                s.Height,
+                s.Length,
+                s.IsVoluminous,
+                s.Remark,
+                s.DangerousSpecification
+                                }
+                                ))},
+                new Parameter { ParameterName =nameof(model.BulkList),
+                    ParameterValue = JsonConvert.SerializeObject( model.BulkList.Select( s=>
+                                new {
+                s.HSCode,
+                s.Description,
+                s.Weight,
+                s.Volume,
+                s.ISDangerous,
+                s.DangerousNotNoticed,
+                s.DangerousSpecification,
+                s.Remark,
+                                }
+                                ))},
+                new Parameter { ParameterName =nameof(model.ContainerList),
+                    ParameterValue = JsonConvert.SerializeObject(model.ContainerList.Select( s=>
+                               new {
+                s.ContainerNo,
+                s.ContainerTypeAndSizeCode,
+                s.SealNumber,
+                s.Remark,
+                s.DangerousSpecification
+
+                                }
+                                ))}
+                }).Build();
+
+            var response = await _requestExecutor.PostAsync<Guid>(request);
+            return response;
+        }
+
+
     }
 }
