@@ -26,9 +26,9 @@ export class CountryListComponent {
   }
 
   loadCountries(){
-    this.basicInformationService.getAll('Country').subscribe({
+    this.basicInformationService.getAll('countries').subscribe({
       next: (res: any) => {
-        this.countries = res.data.map((item: any) => new Country(item.code, item.name, item.id));
+        this.countries = res.data.items.map((item: any) => new Country(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
@@ -54,7 +54,7 @@ export class CountryListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Country', id).subscribe({
+        this.basicInformationService.removeBasicInformation('countries', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadCountries();

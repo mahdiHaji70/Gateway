@@ -1,49 +1,43 @@
 import { ContactTypes } from "../../../shared/constants/contact-types";
 
 export class ContactList {
-    id?: string;
-    contactType?: string;
+     id?: string;
+    companyType?: string;
     name?: string;
-    nationalCode?: string;
-    certificateNumber?: string;
-    economicCode?: string;
-    registrationDate?: Date;
-    registrationPlace?: string;
-    postalCode?: string;
-    mobile?: string;
-    phone?: string;
+    nationalId?: string;
+    registerDate?: Date;
     address?: string;
-    commerceCardCode?: string;
-    email?: string;
+    postCode?: string;
+    mobile?: string;
+    economicCode?: string;
+    registerNumber?: string;
+    registerPlace?: string;
+    phone?: string;
 
     /**
      *
      */
-    constructor(contactType: string, name: string, nationalCode: string,
-        certificateNumber: string,
-        economicCode: string,
-        registrationDate: Date,
-        registrationPlace: string,
-        postalCode: string,
-        mobile: string,
-        phone: string,
+     constructor(companyType: string, name: string, nationalId: string,
+        registerDate: Date,
         address: string,
-        commerceCardCode: string,
-        email: string,
+        postCode: string,
+        mobile: string,
+        economicCode: string,
+        registerNumber: string,
+        registerPlace: string,
+        phone: string,
         id?: string) {
-        this.contactType = contactType;
+        this.companyType = companyType;
         this.name = name;
-        this.nationalCode = nationalCode;
-        this.certificateNumber = certificateNumber;
-        this.economicCode = economicCode;
-        this.registrationDate = registrationDate;
-        this.registrationPlace = registrationPlace;
-        this.postalCode = postalCode;
-        this.mobile = mobile;
-        this.phone = phone;
+        this.nationalId = nationalId;
+        this.registerDate = registerDate;
         this.address = address;
-        this.commerceCardCode = commerceCardCode;
-        this.email = email;
+        this.postCode = postCode;
+        this.mobile = mobile;
+        this.economicCode = economicCode;
+        this.registerNumber = registerNumber;
+        this.registerPlace = registerPlace;
+        this.phone = phone;
         this.id = id;
     }
 }

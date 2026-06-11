@@ -1,6 +1,6 @@
 export enum ContactTypes {
-    Person = 1,
-    Company = 2,
+    Company = 1,
+    Person = 2,
     Tourist = 3,
 }
 

@@ -26,9 +26,9 @@ export class TrafficListComponent {
   }
 
   loadTraffics(){
-    this.basicInformationService.getAll('Traffic').subscribe({
+    this.basicInformationService.getAll('traffics').subscribe({
       next: (res: any) => {
-        this.traffics = res.data.map((item: any) => new Traffic(item.code, item.name, item.id));
+        this.traffics = res.data.items.map((item: any) => new Traffic(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
@@ -54,7 +54,7 @@ export class TrafficListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Traffic', id).subscribe({
+        this.basicInformationService.removeBasicInformation('traffics', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadTraffics();
