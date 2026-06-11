@@ -26,9 +26,9 @@ export class CityListComponent {
   }
 
   loadCities() {
-    this.basicInformationService.getAll('City').subscribe({
+    this.basicInformationService.getAll('cities').subscribe({
       next: (res: any) => {
-        this.cities = res.data.map((item: any) => new CityDto(item.code, item.name, item.countryCode, item.countryName, item.countryId, item.id));
+        this.cities = res.data.items.map((item: any) => new CityDto(item.code, item.name, item.countryCode, item.countryName, item.countryId, item.id));
       },
       error: (error: any) => { }
     });
@@ -54,7 +54,7 @@ export class CityListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('City', id).subscribe({
+        this.basicInformationService.removeBasicInformation('cities', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadCities();

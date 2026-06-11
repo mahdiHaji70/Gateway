@@ -26,9 +26,9 @@ export class PackageListComponent {
   }
 
   loadPackages(){
-    this.basicInformationService.getAll('Package').subscribe({
+    this.basicInformationService.getAll('packages').subscribe({
       next: (res: any) => {
-        this.packages = res.data.map((item: any) => new Package(item.code, item.name, item.id));
+        this.packages = res.data.items.map((item: any) => new Package(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
@@ -54,7 +54,7 @@ export class PackageListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Package', id).subscribe({
+        this.basicInformationService.removeBasicInformation('packages', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadPackages();

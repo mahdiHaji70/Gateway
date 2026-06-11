@@ -19,17 +19,15 @@ export class ContactComponent {
   form = new FormGroup({
     contactType: new FormControl<{ name: string; value: ContactTypes; } | undefined>(undefined),
     name: new FormControl<string>('', [Validators.minLength(3)]),
-    nationalCode: new FormControl<string>(''),
-    certificateNumber: new FormControl<string>(''),
-    economicCode: new FormControl<string>(''),
-    registrationDate: new FormControl<Date | undefined>(undefined),
-    registrationPlace: new FormControl<string>(''),
-    postalCode: new FormControl<string>('', [Validators.pattern(/^[0-9]{10}$/)]),
-    mobile: new FormControl<string>('', [Validators.required, Validators.pattern(/^09\d{9}$/)]),
-    phone: new FormControl<string>('', [Validators.required, Validators.pattern(/^0\d{10}$/)]),
+    nationalId: new FormControl<string>(''),
+    registerDate: new FormControl<Date | undefined>(undefined),
     address: new FormControl<string>(''),
-    commerceCardCode: new FormControl<string>(''),
-    email: new FormControl<string>('', [Validators.email]),
+    postCode: new FormControl<string>('', [Validators.pattern(/^[0-9]{10}$/)]),
+    mobile: new FormControl<string>('', [Validators.required, Validators.pattern(/^09\d{9}$/)]),
+    economicCode: new FormControl<string>(''),
+    registerNumber: new FormControl<string>(''),
+    registerPlace: new FormControl<string>(''),
+    phone: new FormControl<string>('', [Validators.required, Validators.pattern(/^0\d{10}$/)]),
   });
   /**
    *
@@ -46,22 +44,20 @@ export class ContactComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('Contact', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('companies', this.id).subscribe((res: any) => {
           this.form.setValue({
             contactType: contactTypesDropdown.find(
-              (type) => type.value === res.data.contactType),
+              (type) => type.value === res.data.companyType),
             name: res.data.name,
-            nationalCode: res.data.nationalCode,
-            certificateNumber: res.data.certificateNumber,
-            economicCode: res.data.economicCode,
-            registrationDate: new Date(res.data.registrationDate),
-            registrationPlace: res.data.registrationPlace,
-            postalCode: res.data.postalCode,
-            mobile: res.data.mobile,
-            phone: res.data.phone,
+            nationalId: res.data.nationalId,
+            registerDate: new Date(res.data.registerDate),
             address: res.data.address,
-            commerceCardCode: res.data.commerceCardCode,
-            email: res.data.email
+            postCode: res.data.postCode,
+            mobile: res.data.mobile,
+            economicCode: res.data.economicCode,
+            registerNumber: res.data.registerNumber,
+            registerPlace: res.data.registerPlace,
+            phone: res.data.phone,
           });
         });
       }
@@ -74,7 +70,7 @@ export class ContactComponent {
   }
 
   private setValidatorsBasedOnContactType(contactType: any | undefined): void {
-    const nationalCodeControl = this.form.get('nationalCode');
+    const nationalCodeControl = this.form.get('nationalId');
     const economicCodeControl = this.form.get('economicCode');
 
     if (contactType.value === ContactTypes.Person) {
@@ -99,23 +95,21 @@ export class ContactComponent {
     const contact: Contact = new Contact(
       contactType.value,
       this.form.get('name')?.value!,
-      this.form.get('nationalCode')?.value!,
-      this.form.get('certificateNumber')?.value!,
-      this.form.get('economicCode')?.value!,
-      this.form.get('registrationDate')?.value!,
-      this.form.get('registrationPlace')?.value!,
-      this.form.get('postalCode')?.value!,
-      this.form.get('mobile')?.value!,
-      this.form.get('phone')?.value!,
+      this.form.get('nationalId')?.value!,
+      this.form.get('registerDate')?.value!,
       this.form.get('address')?.value!,
-      this.form.get('commerceCardCode')?.value!,
-      this.form.get('email')?.value!,
+      this.form.get('postCode')?.value!,
+      this.form.get('mobile')?.value!,
+      this.form.get('economicCode')?.value!,
+      this.form.get('registerNumber')?.value!,
+      this.form.get('registerPlace')?.value!,
+      this.form.get('phone')?.value!,
       this.id
     );
 
     const contactAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('Contact', contact)
-      : this.basicInformationService.postBasicInformation('Contact', contact);
+      ? this.basicInformationService.putBasicInformation('companies', contact)
+      : this.basicInformationService.postBasicInformation('companies', contact);
 
     contactAction$
       .subscribe({

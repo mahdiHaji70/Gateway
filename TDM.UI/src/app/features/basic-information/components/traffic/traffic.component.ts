@@ -31,7 +31,7 @@ export class TrafficComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('Traffic', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('traffics', this.id).subscribe((res: any) => {
           this.form.patchValue(res.data);
         });
       }
@@ -52,8 +52,8 @@ export class TrafficComponent {
     );
 
     const trafficAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('Traffic', traffic)
-      : this.basicInformationService.postBasicInformation('Traffic', traffic);
+      ? this.basicInformationService.putBasicInformation('traffics', traffic)
+      : this.basicInformationService.postBasicInformation('traffics', traffic);
 
     trafficAction$
       .subscribe({

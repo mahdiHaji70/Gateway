@@ -20,35 +20,31 @@
         <tr>
             <th>Contact Type</th>
             <th>Name</th>
-            <th>National Code</th>
-            <th>Certificate Number</th>
+            <th>National Id</th>
+            <th>Register Number</th>
             <th>Economic Code</th>
-            <th>Registration Date</th>
-            <th>Registration Place</th>
-            <th>Postal Code</th>
+            <th>Register Date</th>
+            <th>Register Place</th>
+            <th>Post Code</th>
             <th>Mobile</th>
             <th>Phone</th>
             <th>Address</th>
-            <th>Commerce Card Code</th>
-            <th>Email</th>
             <th>Actions</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-contact>
         <tr>
-            <td>{{ contact.contactType }}</td>
+            <td>{{ contact.companyType }}</td>
             <td>{{ contact.name }}</td>
-            <td>{{ contact.nationalCode }}</td>
-            <td>{{ contact.certificateNumber }}</td>
+            <td>{{ contact.nationalId }}</td>
+            <td>{{ contact.registerNumber }}</td>
             <td>{{ contact.economicCode }}</td>
-            <td>{{ contact.registrationDate }}</td>
-            <td>{{ contact.registrationPlace }}</td>
-            <td>{{ contact.postalCode }}</td>
+            <td>{{ contact.registerDate }}</td>
+            <td>{{ contact.registerPlace }}</td>
+            <td>{{ contact.postCode }}</td>
             <td>{{ contact.mobile }}</td>
             <td>{{ contact.phone }}</td>
             <td>{{ contact.address }}</td>
-            <td>{{ contact.commerceCardCode }}</td>
-            <td>{{ contact.email }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                     (click)="onEdit(contact.id)">

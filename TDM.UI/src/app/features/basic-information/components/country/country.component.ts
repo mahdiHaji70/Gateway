@@ -29,7 +29,7 @@ export class CountryComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('Country', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('countries', this.id).subscribe((res: any) => {
           this.form.patchValue(res.data);
         });
       }
@@ -50,8 +50,8 @@ export class CountryComponent {
     );
 
     const countryAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('Country', country)
-      : this.basicInformationService.postBasicInformation('Country', country);
+      ? this.basicInformationService.putBasicInformation('countries', country)
+      : this.basicInformationService.postBasicInformation('countries', country);
 
     countryAction$
       .subscribe({

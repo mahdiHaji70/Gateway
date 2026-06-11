@@ -27,13 +27,13 @@ export class ContactListComponent {
   }
 
   loadContacts(){
-    this.basicInformationService.getAll('Contact').subscribe({
+    this.basicInformationService.getAll('companies').subscribe({
       next: (res: any) => {
-        this.contacts = res.data.map((item: Contact) => new ContactList(contactTypesDropdown.find(
-          (type) => type.value === item.contactType
-        )!.name!, item.name!, item. nationalCode!, item. certificateNumber!,
-          item.economicCode!, item.registrationDate!, item.registrationPlace!, item.postalCode!, item.mobile!, item.phone!, item.address!,
-          item.economicCode!, item.email!, item.id));
+        this.contacts = res.data.items.map((item: Contact) => new ContactList(contactTypesDropdown.find(
+          (type) => type.value === item.companyType
+        )!.name!, item.name!, item. nationalId!, item.registerDate!,
+          item.address!, item.postCode!, item.mobile!, item.economicCode!, item.registerNumber!,
+           item.registerPlace!, item.phone!, item.id));
       },
       error: (error: any) => { }
     });
@@ -59,7 +59,7 @@ export class ContactListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Contact', id).subscribe({
+        this.basicInformationService.removeBasicInformation('companies', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadContacts();

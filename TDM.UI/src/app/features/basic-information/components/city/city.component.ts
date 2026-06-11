@@ -36,7 +36,7 @@ export class CityComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('City', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('cities', this.id).subscribe((res: any) => {
           //this.form.patchValue(res.data);
           this.form.setValue({
             code: res.data.code,
@@ -51,9 +51,9 @@ export class CityComponent {
   }
 
   loadCountries() {
-    this.basicInformationService.getAll('Country').subscribe({
+    this.basicInformationService.getAll('countries').subscribe({
       next: (res: any) => {
-        this.countries = res.data.map((item: any) => new Country(item.code, item.name, item.id));
+        this.countries = res.data.items.map((item: any) => new Country(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
@@ -72,8 +72,8 @@ export class CityComponent {
     );
 
     const cityAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('City', city)
-      : this.basicInformationService.postBasicInformation('City', city);
+      ? this.basicInformationService.putBasicInformation('cities', city)
+      : this.basicInformationService.postBasicInformation('cities', city);
 
     cityAction$
       .subscribe({

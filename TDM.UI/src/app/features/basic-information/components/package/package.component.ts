@@ -31,7 +31,7 @@ export class PackageComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('Package', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('packages', this.id).subscribe((res: any) => {
           this.form.patchValue(res.data);
         });
       }
@@ -52,8 +52,8 @@ export class PackageComponent {
     );
 
     const packageAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('Package', myPackage)
-      : this.basicInformationService.postBasicInformation('Package', myPackage);
+      ? this.basicInformationService.putBasicInformation('packages', myPackage)
+      : this.basicInformationService.postBasicInformation('packages', myPackage);
 
       packageAction$
       .subscribe({
