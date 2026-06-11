@@ -1,0 +1,18 @@
+.title-bar {
+    border-radius: 12px;
+    background-color: white;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    span {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    i {
+        float: right;
+        color: #0151A4;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,68 @@
+<div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <div class="p-fluid p-formgrid grid col-6 group-box">
+            <div class="col-7">
+            </div>
+            <div class="col-6">
+                <app-drop-down [options]="contactTypes" [formGroup]="form" [controlName]="'contactType'"
+                    [required]="true"></app-drop-down>
+            </div>
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'name'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'nationalCode'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'certificateNumber'" [required]="false"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'economicCode'" [required]="false"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-en-calender [formGroup]="form" [controlName]="'registrationDate'"
+                    [required]="true"></app-en-calender>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'registrationPlace'" [required]="true"></app-input>
+
+            </div>
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'postalCode'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'mobile'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'phone'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-12">
+                <app-input [formGroup]="form" [controlName]="'address'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'commerceCardCode'" [required]="false"></app-input>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'email'" [required]="true"></app-input>
+            </div>
+
+            <div class="col-12">
+                <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                    [disabled]="form.invalid"></button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<p-toast></p-toast>

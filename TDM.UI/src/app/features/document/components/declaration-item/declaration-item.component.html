@@ -1,0 +1,48 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+    <div class="p-fluid p-formgrid">
+
+        <div class="">
+            <app-drop-down [options]="cargoTypes" [formGroup]="form" [controlName]="'cargoType'"
+                [required]="true"></app-drop-down>
+        </div>
+
+        <div class="">
+            <app-drop-down [options]="commodities" [formGroup]="form" [controlName]="'commodity'"
+                [required]="true"></app-drop-down>
+        </div>
+
+        <div class="">
+            <app-drop-down [options]="packages" [formGroup]="form" [controlName]="'package'"
+                [required]="true"></app-drop-down>
+        </div>
+
+        <div class="">
+            <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
+                [required]="true"></app-drop-down>
+        </div>
+
+        <div class="grid">
+            <div class="col-6">
+                <app-input-number [formGroup]="form" [controlName]="'packNumber'" [required]="true"></app-input-number>
+            </div>
+
+            <div class="col-6">
+                <app-input-number [formGroup]="form" [controlName]="'weight'" [required]="true"></app-input-number>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col-6">
+                <app-input-number [formGroup]="form" [controlName]="'volume'" [required]="false"></app-input-number>
+            </div>
+
+            <div class="col-6">
+                <app-input [formGroup]="form" [controlName]="'shipMark'" [required]="false"></app-input>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update item' : 'Add item'"
+                icon="fa-plus" [disabled]="form.invalid"></button>
+        </div>
+    </div>
+</form>

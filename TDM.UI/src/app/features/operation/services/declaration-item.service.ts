@@ -1,0 +1,36 @@
+import { Injectable } from '@angular/core';
+import { ApiService } from '../../../core/services/api.service';
+import { ApiEndpoints } from '../../../core/constants/api-endpoints';
+import { DeclarationItem } from '../models/declaration-item.model';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class DeclarationItemService {
+
+  constructor(private apiService: ApiService) { }
+
+  getByDeclarationId(id: string): Observable<any>{
+    let _url = ApiEndpoints.Get_Declaration_Item_By_Declaration_Id + `/${id}`;
+    return this.apiService.get(_url);
+  }
+
+  getById(id: string): Observable<any>{
+    let _url = ApiEndpoints.Declaration_Item + `/${id}`;
+    return this.apiService.get(_url);
+  }
+
+  postDeclarationItem(declarationItem: DeclarationItem): Observable<any>{
+    let _url = ApiEndpoints.Declaration_Item;
+    return this.apiService.post(_url, declarationItem);
+  }
+
+  putDeclarationItem(declarationItem: DeclarationItem): Observable<any>{
+    let _url = ApiEndpoints.Declaration_Item;
+    return this.apiService.put(_url, declarationItem);
+  }
+
+  deleteDeclarationItem(id: string): Observable<any> {
+    let _url = ApiEndpoints.Declaration_Item + `/${id}`;
+    return this.apiService.delete(_url);
+  }
+}

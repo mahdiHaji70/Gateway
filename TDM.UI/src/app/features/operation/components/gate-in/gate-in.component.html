@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+    <div class="p-fluid p-formgrid grid">
+        <div class="col-4 group-box">
+
+            <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'"
+                [required]="true"></app-drop-down>
+
+            <app-drop-down [options]="vehicles" [formGroup]="form" [controlName]="'vehicle'"
+                [required]="true"></app-drop-down>
+
+            <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'"
+                [required]="false"></app-drop-down>
+
+            <app-en-calender [formGroup]="form" [controlName]="'enterDate'" [required]="true"
+                [showTime]="true"></app-en-calender>
+
+            <div>
+                <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                    [disabled]="form.invalid"></button>
+            </div>
+        </div>
+    </div>
+</form>
+<p-toast />

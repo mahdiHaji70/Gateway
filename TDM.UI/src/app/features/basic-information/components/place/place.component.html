@@ -1,0 +1,16 @@
+<div class="col-4 group-box">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <app-drop-down [options]="placeTypes" [formGroup]="form" [controlName]="'placeType'"
+            [required]="true"></app-drop-down>
+        <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contact'"
+            [required]="true"></app-drop-down>
+        <app-input [formGroup]="form" [controlName]="'placeName'" [required]="true"></app-input>
+        <app-input-number [formGroup]="form" [controlName]="'capacity'" [required]="true"></app-input-number>
+        <app-input-number [formGroup]="form" [controlName]="'area'" [required]="true"></app-input-number>
+        <div>
+            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                [disabled]="form.invalid"></button>
+        </div>
+    </form>
+</div>
+<p-toast></p-toast>

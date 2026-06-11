@@ -1,0 +1,46 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <p-button 
+            severity="success" 
+            label="New" 
+            icon="pi pi-plus" 
+            class="mr-2" 
+            (onClick)="onAdd()" />
+            <p-button 
+            severity="info" 
+            label="Refresh" 
+            icon="pi pi-refresh" 
+            class="mr-2" 
+            (onClick)="loadTrucks()" />
+    </ng-template>
+
+</p-toolbar>
+<p-table [value]="trucks" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Left Side</th>
+            <th>Charecter</th>
+            <th>Right Side</th>
+            <th>Serial</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-truck>
+        <tr>
+            <td>{{ truck.leftSide }}</td>
+            <td>{{ truck.charecter }}</td>
+            <td>{{ truck.rightSide }}</td>
+            <td>{{ truck.serial }}</td>
+            <td>
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="onEdit(truck.id)">
+                </button>
+                <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,truck.id)">
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast />
+<p-confirmDialog />

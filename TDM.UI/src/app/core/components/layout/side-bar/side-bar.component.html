@@ -1,0 +1,48 @@
+<div class="sidebar-container">
+    <div class="user-profile">
+      <img class="user-avatar" src="assets/images/user-avatar.png" alt="User Avatar" />
+      <div>
+        <span class="text-lg">Welcome, </span>
+        <strong class="text-lg">{{ username }}</strong>
+      </div>
+    </div>
+  
+    <div class="main-button w-full">
+      <p-button [style]="{ 'background-color': '#0151A4', width: '100%', border: 'none' }" (onClick)="router.navigate(['/'])">
+        <img class="main-button-image" src="assets/images/dashboard.png" alt="Dashboard Icon" />
+        <span class="text-lg">Dashboard</span>
+      </p-button>
+    </div>
+  
+    <ul class="layout-menu">
+      <ng-container *ngFor="let parent of menuItems; let i = index">
+        <li class="layout-menuitem">
+          <div class="layout-menuitem-root-text" (click)="toggleParent(i)">
+            <div (click)="onItemClick(parent['path'])">
+              <img *ngIf="parent.url" class="icon-image" [src]="parent.url" alt="Icon" />
+              <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon ? parent.icon : 'pi pi-question'"></i>
+              {{ parent.label }}
+            </div>
+            <i class="pi" [ngClass]="{ 'pi-angle-down': isParentOpen(i), 'pi-angle-up': !isParentOpen(i) }"></i>
+          </div>
+  
+          <ul *ngIf="isParentOpen(i)" [@expandCollapse]>
+            <li *ngFor="let child of parent.items">
+              <a class="layout-menuitem-link" tabindex="0" pRipple (click)="onItemClick(child['path'])">
+                <i class="layout-menuitem-icon pi pi-circle-fill" style="font-size: 0.5rem; color: #444;"></i>
+                <span class="layout-menuitem-text">{{ child.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  
+    <div class="main-button support-button" style="margin-bottom: 1rem;">
+      <p-button [style]="{ 'background-color': '#0151A4', width: '100%', border: 'none' }" (onClick)="router.navigate(['/'])">
+        <img class="main-button-image" src="assets/images/support.png" alt="Support Icon" />
+        <span class="text-lg">Support</span>
+      </p-button>
+    </div>
+  </div>
+  

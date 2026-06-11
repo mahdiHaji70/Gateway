@@ -1,0 +1,57 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <p-button 
+            severity="success" 
+            label="New" 
+            icon="pi pi-plus" 
+            class="mr-2" 
+            (onClick)="onAdd()" />
+            <p-button 
+            severity="info" 
+            label="Refresh" 
+            icon="pi pi-refresh" 
+            class="mr-2" 
+            (onClick)="loadDeclarations()" />
+    </ng-template>
+
+</p-toolbar>
+<p-table [value]="declarations" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Declaration Type</th>
+            <th>Number</th>
+            <th>Contact</th>
+            <th>Contact Agent</th>
+            <th>Booking Number</th>
+            <th>Terminal</th>
+            <th>Origin City</th>
+            <th>Destination City</th>
+            <th>Carrier Contact</th>
+            <th>Serial</th>            
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-declaration>
+        <tr>
+            <td>{{ declaration.declarationTypeName }}</td>
+            <td>{{ declaration.number }}</td>
+            <td>{{ declaration.contactName }}</td>
+            <td>{{ declaration.contactAgentName }}</td>
+            <td>{{ declaration.bookingNumber }}</td>
+            <td>{{ declaration.terminalName }}</td>
+            <td>{{ declaration.originCityName }}</td>
+            <td>{{ declaration.destinationCityName }}</td>
+            <td>{{ declaration.carrierContactName }}</td>
+            <td>{{ declaration.serial }}</td>
+            <td>
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="onEdit(declaration.id)">
+                </button>
+                <!-- <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,declaration.id)">
+                </button> -->
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast />
