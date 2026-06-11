@@ -1,0 +1,44 @@
+<div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <div class="p-fluid p-formgrid">
+
+            <div class="">
+                <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'"
+                    [required]="true"></app-drop-down>
+            </div>
+
+            <div class="mt-4">
+                <button pButton type="submit"
+                    [label]="id != undefined || id != null ? 'Update container' : 'Add container'" icon="fa-plus"
+                    [disabled]="form.invalid"></button>
+            </div>
+        </div>
+    </form>
+
+    <div class="mt-4">
+        <p-table [value]="declarationContainers" styleClass="p-datatable-gridlines"
+            [tableStyle]="{ 'min-width': '5rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Container</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-declarationContainer>
+                <tr>
+                    <td>{{ declarationContainer.containerName }}</td>
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-sliders-h" title="Management of goods inside the container"
+                            class="p-button-rounded p-button-text" (click)="showContainerInfo(declarationContainer)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-times" title="Delete"
+                            (click)="onDeleteContainer(declarationContainer.id)"
+                            class="p-button-rounded p-button-text p-button-danger cursor-pointer">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>

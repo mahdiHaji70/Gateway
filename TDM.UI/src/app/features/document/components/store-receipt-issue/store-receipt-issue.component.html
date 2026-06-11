@@ -1,0 +1,59 @@
+<div class="group-box">
+    <div class="icon-autocomplete-container">
+        <img src="../../../../../assets/images/doc-icon.png" class="pi pi-search search-icon" alt="">
+        <p-autoComplete [(ngModel)]="selectedDeclaration" [suggestions]="filteredItems"
+            (completeMethod)="filterItems($event)" field="name" placeholder="Search..." [style]="{ width: '100%' }"
+            class="col-6" (onSelect)="onDeclarationSelected($event)" [showClear]="true" (onClear)="clearItems()"></p-autoComplete>
+    </div>
+
+    <div class="mt-4" *ngFor="let receiptRequest of receiptRequests">
+        <div class="receipt-card" *ngIf="receiptRequest">
+
+            <!-- Header -->
+            <div class="card-header">
+                <div class="header-text">
+                    <h3>Store Receipt Request Created</h3>
+                    <p>
+                        This store receipt request has been successfully created for the selected
+                        declaration.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+            <!-- Content -->
+            <div class="card-content">
+
+                <div class="info-row">
+                    <div class="info-item">
+                        <span class="label">Issue Date</span>
+                        <span class="value">
+                            {{ receiptRequest.issueDate | date:'medium' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Packages</span>
+                        <span class="value highlight">
+                            {{ receiptRequest.packNb }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Total Weight</span>
+                        <span class="value highlight">
+                            {{ receiptRequest.weight }} kg
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <button pButton type="submit" label="Issue" icon="fa-plus" (click)="issueStoreReceipt(receiptRequest)"></button>
+            </div>
+        </div>
+    </div>
+</div>

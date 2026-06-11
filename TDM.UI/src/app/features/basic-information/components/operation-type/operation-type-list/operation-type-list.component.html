@@ -1,0 +1,32 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <p-button severity="success" label="New" icon="pi pi-plus" class="mr-2" (onClick)="onAdd()" />
+        <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadOperationTypes()" />
+    </ng-template>
+
+</p-toolbar>
+<p-table [value]="operationTypes" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-operationType>
+        <tr>
+            <td>{{ operationType.code }}</td>
+            <td>{{ operationType.name }}</td>
+            <td>
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="onEdit(operationType.id)">
+                </button>
+                <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,operationType.id)">
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast />
+<p-confirmDialog />

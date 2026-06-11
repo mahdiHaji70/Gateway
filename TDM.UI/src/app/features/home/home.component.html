@@ -1,0 +1,74 @@
+<div>
+    <div class="col-12">
+        <h3>Stores <span style="color: rgb(226, 56, 56);">(Live)</span></h3>
+        <div class="p-fluid p-formgrid grid">
+            <ng-container *ngFor="let item of stores">
+                <p-button severity="info" [label]="item.name" [style]="{'background-color': item.color}"
+                    class="col-2 custom-button" [disabled]="false"></p-button>
+            </ng-container>
+        </div>
+
+        <div class="mt-3" style="display: flex;">
+            <div class="card p-fluid col-8" style="background-color: #f9f5e8;">
+                <h3>Live Agreements Progress</h3>
+                <div>
+                    <span class="pi pi-chart-pie mr-2" style="color: #ffb822;"></span>
+                    <span> <strong> Agreement Number: 4584582141</strong></span>
+                    <span style="float: right;"> <strong>Progress: 70%</strong></span>
+                </div>
+                <div class="mt-4">
+                    <span class="pi pi-chart-pie mr-2" style="color: #ffb822;"></span>
+                    <span> <strong> Agreement Number: 6324586584</strong></span>
+                    <span style="float: right;"> <strong>Progress: 60%</strong></span>
+                </div>
+                <div class="mt-4">
+                    <span class="pi pi-chart-pie mr-2" style="color: #ffb822;"></span>
+                    <span> <strong> Agreement Number: 1426589657</strong></span>
+                    <span style="float: right;"> <strong>Progress: 20%</strong></span>
+                </div>
+                <div>
+                    <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+                </div>
+            </div>
+            <div class="col-4 ml-2">
+                <div class="card p-fluid" style="background-color: #f9f5e8;max-height: 20rem;">
+                    <h3>Discharged Trucks</h3>
+                    <h5>till 11 am / 2024-02-15</h5>
+                    <div class="number">33</div>
+                </div>
+                <div class="card p-fluid" style="background-color: #f9f5e8;max-height: 20rem;">
+                    <h3>Loading Trucks</h3>
+                    <h5>till 11 am / 2024-02-15</h5>
+                    <div class="number">68</div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3" style="display: flex;">
+            <div class="col-4 ml-2">
+                <div class="card p-fluid" style="background-color: #f9f5e8;max-height: 20rem;">
+                    <h3 class="title-with-line">Gate In</h3>                    
+                    <div class="">
+                        <span class="pi pi-check-circle" style="font-size: 1.5rem;color: rgb(80, 224, 80);"></span>
+                        <span style="font-weight: bold;"> Entered: (till 10:30 AM) </span>
+                        <span style="float: right;font-size: 1.5rem;font-weight: bold;">28</span>
+                    </div>
+                </div>
+                <div class="card p-fluid" style="background-color: #f9f5e8;max-height: 20rem;">
+                    <h3 class="title-with-line">Gate Out</h3>                    
+                    <div class="">
+                        <span class="pi pi-check-circle" style="font-size: 1.5rem;color: rgb(80, 224, 80);"></span>
+                        <span style="font-weight: bold;"> Exited: (till 10:30 AM) </span>
+                        <span style="float: right;font-size: 1.5rem;font-weight: bold;">32</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 ml-2 card p-fluid" style="background-color: #f9f5e8;">
+                <span style="font-size: 1.5rem;">Discharged Chart</span>
+                <span style="float: right;">Agreement Number: 12545875214</span>
+                <div class="mt-5">
+                    <p-chart type="line" [data]="chartData2" [options]="chartOptions2"></p-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

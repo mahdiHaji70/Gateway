@@ -1,0 +1,99 @@
+<div class="group-box">
+    <div class="icon-autocomplete-container">
+        <img src="../../../../../assets/images/doc-icon.png" class="pi pi-search search-icon" alt="">
+        <p-autoComplete [(ngModel)]="selectedDeclaration" [suggestions]="filteredItems"
+            (completeMethod)="filterItems($event)" field="name" placeholder="Search..." [style]="{ width: '100%' }"
+            class="col-6" (onSelect)="onDeclarationSelected($event)" [showClear]="true"></p-autoComplete>
+
+    </div>
+    <div *ngIf="selectedDeclaration?.name">
+        <div class="mt-6  w-full  cursor-pointer" *ngFor="let item of declarationInventory">
+            <div class="flex align-items-center" (click)="onSelectInventory(item)">
+                <i *ngIf="item?.id == selectedInventory?.id" class="pi pi-caret-right selected-icon"></i>
+                <div class="ml-4 custom-card w-full unselected-card"
+                    [ngClass]="item?.id == selectedInventory?.id ? 'selected-card' : 'unselected-card'">
+                    <div class="grid pl-2 w-9 mb-3 mt-1 font-bold justify-content-center">
+                        <div class="col-2">
+                            <p>Cargo type</p>
+                        </div>
+                        <div class="col-2">
+                            <p>Package</p>
+                        </div>
+                        <div class="col-2">
+                            <p>Pack count</p>
+                        </div>
+                        <div class="col-2">
+                            <p>Weight</p>
+                        </div>
+                        <div class="col-2">
+                            <p>Store</p>
+                        </div>
+                        <div class="col-2">
+                            <p>Date</p>
+                        </div>
+                    </div>
+                    <div class="grid pl-2 w-9 mb-4 justify-content-center data-box">
+                        <div class="col-2">
+                            <p>{{ item?.cargoTypeName }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ item?.packageName }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ item?.packNb }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ item?.netWeight }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ item?.placeName }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ item?.date | date: 'dd/MM/yyyy' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-6" *ngIf="selectedInventory?.id == item?.id">
+                <div class="mt-3">
+                    <i class="pi pi-chevron-right" style="color: #0151A4;font-size: 1rem;"></i>
+                    <span class="font-bold ml-2">Stuff detail:</span>
+                </div>
+                <div class="grid mt-4">
+                    <div class="col-3">
+                        <div class="">
+                            <app-drop-down [options]="containerInventory" [formGroup]="form" [controlName]="'container'"
+                                [required]="false"></app-drop-down>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="">
+                            <app-input-number [formGroup]="form" [controlName]="'pack'"
+                                [required]="true"></app-input-number>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="">
+                            <app-input-number [formGroup]="form" [controlName]="'weight'"
+                                [required]="true"></app-input-number>
+                        </div>
+                    </div>
+                     <div class="col-3">
+                        <div class="">
+                            <app-en-calender [formGroup]="form" [controlName]="'date'" [required]="true"
+                            [showTime]="true"></app-en-calender>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="main-button support-button mt-4" style="margin-bottom: 1rem;">
+                    <p-button [disabled]="!selectedInventory" (onClick)="saveRequest()"
+                        [style]="{ 'background-color': '#0151A4', width: '15%', border: 'none', 'justify-content': 'center' }">
+                        <span class="text-lg">Save request</span>
+                    </p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toast />

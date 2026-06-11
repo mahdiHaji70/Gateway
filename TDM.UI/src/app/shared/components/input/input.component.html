@@ -1,0 +1,9 @@
+<div class="field" [formGroup]="formGroup">
+    <label [for]="controlName">{{ label }}</label>
+    <input pInputText [formControlName]="controlName" type="text" [required]="required" />
+    <div *ngIf="formGroup.controls[controlName].errors?.['required'] && formGroup.controls[controlName]?.touched" class="text-red-500 text-sm font-medium m-1">{{label + ' is required'}}</div>
+    <div *ngIf="formGroup.controls[controlName].errors?.['minlength']" class="text-red-500 text-sm font-medium m-1">{{ label }} must be at least {{ formGroup.controls[controlName].errors?.['minlength'].requiredLength }} characters</div>
+    <div *ngIf="formGroup.controls[controlName].errors?.['maxlength']" class="text-red-500 text-sm font-medium m-1">{{ label }} cannot exceed {{ formGroup.controls[controlName].errors?.['maxlength'].requiredLength }} characters</div>
+    <div *ngIf="formGroup.controls[controlName].errors?.['pattern']" class="text-red-500 text-sm font-medium m-1">Invalid format for {{ label }}</div>
+    <div *ngIf="formGroup.controls[controlName].errors?.['email']" class="text-red-500 text-sm font-medium m-1">Invalid email format</div>
+</div>

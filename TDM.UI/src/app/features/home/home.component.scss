@@ -1,0 +1,43 @@
+
+
+  ::ng-deep .custom-button button {
+    //all: unset; /* Resets all styles */
+    //background-color: #007bff; 
+    color: white; 
+    //padding: 8px 12px;
+    //border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  ::ng-deep .custom-button button:hover {
+    //background-color: #0056b3;
+    border: unset;
+  }
+
+  ::ng-deep .custom-button button:active {
+    //background-color: #0056b3;
+    border: unset;
+  }
+
+  ::ng-deep .custom-button button:focus {
+    //background-color: #0056b3;
+    border: unset;
+  }
+
+  .number{
+    justify-self: center;
+    margin: 3rem;
+    font-size: 4rem;
+    font-weight: bolder;
+  }
+
+  .title-with-line::after {
+    content: "";
+    display: inline-block;
+    width: 80%;
+    height: 0.2em;
+    background-color: rgb(126, 121, 121);
+    margin-left: 10px;
+    vertical-align: middle;
+  }

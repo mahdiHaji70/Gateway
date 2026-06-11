@@ -1,0 +1,8 @@
+<div class="field" [formGroup]="formGroup">
+    <label [for]="controlName">{{ label }}</label>
+    <p-calendar [formControlName]="controlName" [showIcon]="true" [showOnFocus]="false" dateFormat="yy/mm/dd"
+        [required]="required" inputId="buttondisplay" [showTime]="showTime" />
+    <div *ngIf="formGroup.controls[controlName]?.invalid && formGroup.controls[controlName]?.touched"
+        class="text-red-500 text-sm font-medium m-1">{{label + ' is required'}}</div>
+
+</div>

@@ -1,0 +1,14 @@
+<div class="col-4 group-box">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <app-input [formGroup]="form" [controlName]="'leftSide'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'charecter'" [required]="true" readonly></app-input>
+        <app-input [formGroup]="form" [controlName]="'rightSide'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'serial'" [required]="true"></app-input>
+
+        <div>
+            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                [disabled]="form.invalid"></button>
+        </div>
+    </form>
+</div>
+<p-toast></p-toast>

@@ -1,0 +1,42 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <p-button 
+            severity="success" 
+            label="New" 
+            icon="pi pi-plus" 
+            class="mr-2" 
+            (onClick)="onAdd()" />
+            <p-button 
+            severity="info" 
+            label="Refresh" 
+            icon="pi pi-refresh" 
+            class="mr-2" 
+            (onClick)="loadCommodities()" />
+    </ng-template>
+
+</p-toolbar>
+<p-table [value]="commodities" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>hsCode</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-commodity>
+        <tr>
+            <td>{{ commodity.name }}</td>
+            <td>{{ commodity.hsCode }}</td>
+            <td>
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="onEdit(commodity.id)">
+                </button>
+                <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,commodity.id)">
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast />
+<p-confirmDialog />

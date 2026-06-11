@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+    <div class="p-fluid p-formgrid grid">
+        <div class="col-6 group-box">
+
+            <div class="grid">
+                <div class="col-6">
+                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'"
+                        [required]="true"></app-drop-down>
+                </div>
+                <div class="col-6">
+                    <app-drop-down [options]="staffs" [formGroup]="form" [controlName]="'staff'"
+                        [required]="true"></app-drop-down>
+                </div>
+            </div>
+            <div class="grid">
+                <div class="col-6">
+                    <app-drop-down [options]="equipments" [formGroup]="form" [controlName]="'equipment'"
+                        [required]="true"></app-drop-down>
+                </div>
+                <div class="col-6">
+                    <app-drop-down [options]="shifts" [formGroup]="form" [controlName]="'shift'"
+                        [required]="false"></app-drop-down>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="col-6">
+                    <app-drop-down [options]="places" [formGroup]="form" [controlName]="'place'"
+                        [required]="false"></app-drop-down>
+                </div>
+
+                <div class="col-6">
+                    <app-en-calender [formGroup]="form" [controlName]="'date'" [required]="true"
+                        [showTime]="true"></app-en-calender>
+                </div>
+            </div>
+
+            <div class="col-6 justify-self-center">
+                <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                    [disabled]="form.invalid"></button>
+            </div>
+        </div>
+    </div>
+</form>
+<p-toast />
