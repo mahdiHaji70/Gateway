@@ -53,5 +53,16 @@ namespace TDM.Infrastructure.Persistence.Repositories
         {
             return await _dbSet.AnyAsync(x => x.DeclarationId == declarationId);
         }
+
+        public async Task<IEnumerable<DeclarationItem>> GetByDeclarationId(Guid declarationId)
+        {
+            return await _dbSet
+            .AsNoTracking()
+            .Include(x => x.Declaration)
+            .Include(x => x.Commodity)
+            .Include(x => x.Package)
+            .Where(x => x.DeclarationId == declarationId)
+            .ToListAsync();
+        }
     }
 }

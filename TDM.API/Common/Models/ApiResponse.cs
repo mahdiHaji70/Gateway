@@ -18,7 +18,7 @@
             Errors = errors;
         }
 
-        public static ApiResponse Success(object? data = null, string? message = null)
+        public static ApiResponse Success(object? data = null, string? message = "Operation done successfully")
             => new(true, data, message);
 
         public static ApiResponse Fail(string message, object? errors = null)

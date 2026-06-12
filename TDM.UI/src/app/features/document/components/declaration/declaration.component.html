@@ -3,12 +3,19 @@
         <div class="p-fluid p-formgrid grid col-12 group-box">
 
             <div class="col-4">
-                <app-drop-down [options]="declarationTypes" [formGroup]="form" [controlName]="'declarationType'"
-                    [required]="true"></app-drop-down>
+                <app-input [formGroup]="form" [controlName]="'number'" [required]="true"></app-input>
             </div>
 
             <div class="col-4">
-                <app-input [formGroup]="form" [controlName]="'number'" [required]="true"></app-input>
+                <app-en-calender [formGroup]="form" [controlName]="'date'" [required]="true"></app-en-calender>
+            </div>
+
+            <div class="col-4">
+                <app-en-calender [formGroup]="form" [controlName]="'startDate'" [required]="true"></app-en-calender>
+            </div>
+
+            <div class="col-4">
+                <app-en-calender [formGroup]="form" [controlName]="'endDate'" [required]="true"></app-en-calender>
             </div>
 
             <div class="col-4">
@@ -17,64 +24,57 @@
             </div>
 
             <div class="col-4">
-                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contactAgent'"
+                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contactRep'"
                     [required]="false"></app-drop-down>
             </div>
 
             <div class="col-4">
-                <app-input [formGroup]="form" [controlName]="'bookingNumber'" [required]="true"></app-input>
-            </div>
-
-            <div class="col-4">
-                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'carrierContact'"
-                    [required]="false"></app-drop-down>
-            </div>
-
-            <div class="col-4">
-                <app-drop-down [options]="cities" [formGroup]="form" [controlName]="'originCity'"
+                <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
                     [required]="true"></app-drop-down>
             </div>
 
             <div class="col-4">
-                <app-drop-down [options]="cities" [formGroup]="form" [controlName]="'destinationCity'"
-                    [required]="true"></app-drop-down>
+                <app-input [formGroup]="form" [controlName]="'description'" [required]="false"></app-input>
             </div>
 
             <div class="col-2 mt-4">
                 <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
                     [disabled]="form.invalid"></button>
             </div>
+
+            @if (id != undefined || id != null) {
+            <div class="col-2 mt-4">
+                <button pButton type="button" class="px-2" (click)="sendDeclarationToIpas(id)" label="Send To Ipas" icon="fa-plus" [disabled]="form.invalid"></button>
+            </div>
+            }
+
         </div>
 
     </form>
 
     <div class="group-box w-full">
-        <div class="w-2 mb-2">
-            <p-button severity="info" label="Add items" icon="pi pi-plus" class="mr-2" (onClick)="showItemsPopup()"
-                [disabled]="id == undefined" />
+        <div class="w-4 mb-2">
+            <p-button severity="info" label="Get Declaration Items" icon="pi pi-cloud-download" class="mr-2" 
+            (onClick)="getItemsFromIpas(id)" [disabled]="id == undefined" />
         </div>
 
         <p-table [value]="declarationItems" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Cargo Type</th>
                     <th>Commodity</th>
                     <th>Package</th>
-                    <th>Traffic</th>
                     <th>Pack Number</th>
                     <th>Weight</th>
-                    <th>Actions</th>
+                    <!-- <th>Actions</th> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-declarationItem>
                 <tr>
-                    <td>{{ declarationItem.cargoTypeName }}</td>
                     <td>{{ declarationItem.commodityName }}</td>
                     <td>{{ declarationItem.packageName }}</td>
-                    <td>{{ declarationItem.trafficName }}</td>
                     <td>{{ declarationItem.packNumber }}</td>
-                    <td>{{ declarationItem.weight }}</td>
-                    <td>
+                    <td>{{ declarationItem.grossWeight }}</td>
+                    <!-- <td>
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                             title="Edit" (click)="onEditItem(declarationItem.id)">
                         </button>
@@ -86,7 +86,7 @@
                             class="p-button-rounded p-button-text p-button-danger"
                             (click)="onDeleteItem(declarationItem.id)">
                         </button>
-                    </td>
+                    </td> -->
                 </tr>
             </ng-template>
         </p-table>
@@ -105,12 +105,12 @@
 
 <p-dialog header="Add Container" [modal]="true" [(visible)]="containerPopupVisibility"
     [style]="{ width: '30rem', 'min-height': '30rem' }">
-    <app-declaration-container #declaration_container (showConainerInfoEvent)="showContainerInfoPopup($event)">
-    </app-declaration-container>
+    <!-- <app-declaration-container #declaration_container (showConainerInfoEvent)="showContainerInfoPopup($event)">
+    </app-declaration-container> -->
 </p-dialog>
 
 <p-dialog [header]="containerInfoHeader" [modal]="true" [(visible)]="containerInfoPopupVisibility"
     [style]="{ width: '50rem', 'min-height': '30rem' }">
-    <app-declaration-container-info #declaration_container_info>
-    </app-declaration-container-info>
+    <!-- <app-declaration-container-info #declaration_container_info>
+    </app-declaration-container-info> -->
 </p-dialog>

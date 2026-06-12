@@ -23,9 +23,9 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarati
         GetDeclarationItemsQuery request,
         CancellationToken cancellationToken)
         {
-            var countries = await _declarationItemRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var declarationItems = await _declarationItemRepository.GetPagedAsync(request.PageNumber, request.PageSize);
 
-            return _mapper.Map<PagedResult<DeclarationItemDto>>(countries);
+            return _mapper.Map<PagedResult<DeclarationItemDto>>(declarationItems);
         }
     }
 }

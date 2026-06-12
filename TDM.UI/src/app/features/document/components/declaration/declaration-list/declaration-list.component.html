@@ -18,31 +18,23 @@
 <p-table [value]="declarations" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
-            <th>Declaration Type</th>
             <th>Number</th>
+            <th>Date</th>
+            <th>Traffic</th>
             <th>Contact</th>
-            <th>Contact Agent</th>
-            <th>Booking Number</th>
-            <th>Terminal</th>
-            <th>Origin City</th>
-            <th>Destination City</th>
-            <th>Carrier Contact</th>
-            <th>Serial</th>            
+            <th>Contact Rep</th>
+            <th>Ipas Declaration Id</th>          
             <th>Actions</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-declaration>
         <tr>
-            <td>{{ declaration.declarationTypeName }}</td>
             <td>{{ declaration.number }}</td>
+            <td>{{ declaration.date }}</td>
+            <td>{{ declaration.trafficName }}</td>
             <td>{{ declaration.contactName }}</td>
-            <td>{{ declaration.contactAgentName }}</td>
-            <td>{{ declaration.bookingNumber }}</td>
-            <td>{{ declaration.terminalName }}</td>
-            <td>{{ declaration.originCityName }}</td>
-            <td>{{ declaration.destinationCityName }}</td>
-            <td>{{ declaration.carrierContactName }}</td>
-            <td>{{ declaration.serial }}</td>
+            <td>{{ declaration.contactRepName }}</td>
+            <td>{{ declaration.ipasDeclarationId }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                     (click)="onEdit(declaration.id)">

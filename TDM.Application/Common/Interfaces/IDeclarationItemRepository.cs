@@ -7,6 +7,7 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface IDeclarationItemRepository : IRepository<DeclarationItem>
     {
+        Task<IEnumerable<DeclarationItem>> GetByDeclarationId(Guid declarationId);
         Task<bool> ExistsByDeclarationId(Guid declarationId);
     }
 }

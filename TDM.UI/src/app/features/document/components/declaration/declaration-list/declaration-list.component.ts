@@ -27,10 +27,10 @@ export class DeclarationListComponent {
   loadDeclarations() {
     this.declarationService.getDeclarations().subscribe({
       next: (res: any) => {
-        this.declarations = res.data.map((item: DeclarationFull) => new DeclarationFull(item.declarationTypeId, item.declarationTypeName, item.number,
-          item.contactId, item.contactName, item.bookingNumber, item.terminalId, item.terminalName, item.originCityId,
-          item.originCityName, item.destinationCityId, item.destinationCityName, item.requestStatus, item.serial, item.contactAgentId,
-          item.contactAgentName, item.carrierContactId, item.carrierContactName, item.id));
+        this.declarations = res.data.items.map((item: any) => 
+          new DeclarationFull(item.id!, item.number, item.date, item.startDate, item.endDate, item.trafficId,
+            item.trafficName, item.consigneeId, item.consigneeName, item.description, item.ipasDeclarationId,
+            item.consigneeRepId, item.consigneeRepName));
       },
       error: (error: any) => { }
     });

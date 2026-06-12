@@ -62,7 +62,7 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(true, "Declaration deleted"));
         }
 
-        [HttpPost("{declarationId:guid}/request-ipas-declaration-id")]
+        [HttpPost("request-ipas-declaration-id/{declarationId:guid}")]
         public async Task<IActionResult> RequestVerifierId(Guid declarationId)
         {
             var result = await _mediator.Send(new IpasDeclarationIdCommand(declarationId));

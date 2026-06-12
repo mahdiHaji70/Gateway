@@ -10,17 +10,17 @@ export class DeclarationService {
   constructor(private apiService: ApiService) { }
 
   getDeclarations(): Observable<any> {
-    let _url = ApiEndpoints.Declaration;
+    let _url = ApiEndpoints.Declarations;
     return this.apiService.get(_url);
   }
 
   getById(id: string): Observable<any> {
-    let _url = ApiEndpoints.Declaration + `/${id}`;
+    let _url = ApiEndpoints.Declarations + `/${id}`;
     return this.apiService.get(_url);
   }
 
   getByNumber(number: string): Observable<any> {
-    let _url = ApiEndpoints.Declaration + `/GetByDeclarationNumber/${number}`;
+    let _url = ApiEndpoints.Declarations + `/GetByDeclarationNumber/${number}`;
     return this.apiService.get(_url);
   }
 }

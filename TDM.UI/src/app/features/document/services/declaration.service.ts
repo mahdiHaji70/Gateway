@@ -10,27 +10,32 @@ export class DeclarationService {
   constructor(private apiService: ApiService) { }
 
   getDeclarations(): Observable<any> {
-    let _url = ApiEndpoints.Declaration;
+    let _url = ApiEndpoints.Declarations;
     return this.apiService.get(_url);
   }
 
   getById(id: string): Observable<any> {
-    let _url = ApiEndpoints.Declaration + `/${id}`;
+    let _url = ApiEndpoints.Declarations + `/${id}`;
     return this.apiService.get(_url);
   }
 
   getByNumber(number: string): Observable<any> {
-    let _url = ApiEndpoints.Declaration + `/GetByDeclarationNumber/${number}`;
+    let _url = ApiEndpoints.Declarations + `/GetByDeclarationNumber/${number}`;
     return this.apiService.get(_url);
   }
 
   postDeclaration(declaration: Declaration): Observable<any> {
-    let _url = ApiEndpoints.Create_Declaration;
+    let _url = ApiEndpoints.Declarations;
     return this.apiService.post(_url, declaration);
   }
 
   putDeclaration(declaration: Declaration): Observable<any> {
-    let _url = ApiEndpoints.Update_Declaration;
+    let _url = ApiEndpoints.Declarations;
     return this.apiService.put(_url, declaration);
+  }
+
+  requestIpasDeclarationId(declarationId: string): Observable<any> {
+    let _url = ApiEndpoints.Request_Ipas_Declaration_Id + `/${declarationId}`;
+    return this.apiService.post(_url, {});
   }
 }

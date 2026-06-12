@@ -23,13 +23,12 @@ import { DeclarationContainerInfoComponent } from '../declaration-container-info
 })
 export class DeclarationComponent {
   @ViewChild('declaration_item', { static: false }) declarationItem!: DeclarationItemComponent;
-  @ViewChild('declaration_container', { static: false }) declarationContainer!: DeclarationContainerComponent;
-  @ViewChild('declaration_container_info', { static: false }) declarationContainerInfo!: DeclarationContainerInfoComponent;
-  
+  // @ViewChild('declaration_container', { static: false }) declarationContainer!: DeclarationContainerComponent;
+  // @ViewChild('declaration_container_info', { static: false }) declarationContainerInfo!: DeclarationContainerInfoComponent;
+
   id?: any;
-  declarationTypes: DropdownOption[] = [];
   contacts: DropdownOption[] = [];
-  cities: DropdownOption[] = [];
+  traffics: DropdownOption[] = [];
   declarationItems: DeclarationItemFull[] = [];
   itemsPopupVisibility: boolean = false;
   containerPopupVisibility: boolean = false;
@@ -37,16 +36,15 @@ export class DeclarationComponent {
   containerInfoHeader: string = "";
 
   form = new FormGroup({
-    declarationType: new FormControl<DropdownOption | undefined>(undefined),
+    //declarationType: new FormControl<DropdownOption | undefined>(undefined),
     number: new FormControl<string>(''),
-    //declarationDate: new FormControl<Date | undefined>(undefined),
+    date: new FormControl<Date | undefined>(undefined),
+    startDate: new FormControl<Date | undefined>(undefined),
+    endDate: new FormControl<Date | undefined>(undefined),
     contact: new FormControl<DropdownOption | undefined>(undefined),
-    contactAgent: new FormControl<DropdownOption | undefined>(undefined),
-    bookingNumber: new FormControl<string>(''),
-    originCity: new FormControl<DropdownOption | undefined>(undefined),
-    destinationCity: new FormControl<DropdownOption | undefined>(undefined),
-    carrierContact: new FormControl<DropdownOption | undefined>(undefined),
-    serial: new FormControl<string>(''),
+    contactRep: new FormControl<DropdownOption | undefined>(undefined),
+    traffic: new FormControl<DropdownOption | undefined>(undefined),
+    description: new FormControl<string>(''),
   });
 
   /**
@@ -67,48 +65,37 @@ export class DeclarationComponent {
         this.declarationService.getById(this.id).subscribe((res: any) => {
           var data = res.data;
           this.form.setValue({
-            declarationType: new DropdownOption(data.declarationTypeId, data.declarationTypeName),
             number: data.number,
-            contact: new DropdownOption(data.contactId, data.contactName),
-            contactAgent: new DropdownOption(data.contactAgentId, data.contactAgentName),
-            bookingNumber: data.bookingNumber,
-            originCity: new DropdownOption(data.originCityId, data.originCityName),
-            destinationCity: new DropdownOption(data.destinationCityId, data.destinationCityName),
-            carrierContact: new DropdownOption(data.carrierContactId, data.carrierContactName),
-            serial: data.serial
+            date: new Date(data.date),
+            startDate: new Date(data.startDate),
+            endDate: new Date(data.endDate),
+            traffic: new DropdownOption(data.trafficId, data.trafficName),
+            contact: new DropdownOption(data.consigneeId, data.consigneeName),
+            contactRep: new DropdownOption(data.consigneeRepId, data.consigneeRepName),
+            description: data.description,
           });
         });
         this.loadDeclarationItems();
       }
 
     });
-    this.loadDeclarationTypes();
     this.loadContacts();
-    this.loadCities();
-  }
-
-  loadDeclarationTypes() {
-    this.basicInformationService.getAll('DeclarationType').subscribe({
-      next: (res: any) => {
-        this.declarationTypes = res.data.map((item: any) => new DropdownOption(item.id, item.name));
-      },
-      error: (error: any) => { }
-    });
+    this.loadTraffics();
   }
 
   loadContacts() {
-    this.basicInformationService.getAll('Contact').subscribe({
+    this.basicInformationService.getAll('companies').subscribe({
       next: (res: any) => {
-        this.contacts = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.contacts = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
   }
 
-  loadCities() {
-    this.basicInformationService.getAll('City').subscribe({
+  loadTraffics() {
+    this.basicInformationService.getAll('traffics').subscribe({
       next: (res: any) => {
-        this.cities = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -117,10 +104,10 @@ export class DeclarationComponent {
   loadDeclarationItems() {
     this.declarationItemService.getByDeclarationId(this.id).subscribe({
       next: (res: any) => {
-        this.declarationItems = res.data.map((item: any) => new DeclarationItemFull(item.declarationId, item.cargoType,
-          cargoTypesDropdown.find((type) => type.value === item.cargoTypeId)!.name!, item.commodityId, item.commodityName, item.packNumber,
-          item.weight, item.volume, item.packageId, item.packageName, item.trafficId, item.trafficName, item.shipMark, item.id));
-          this.declarationItem.resetForm();
+        this.declarationItems = res.data.map((item: any) => new DeclarationItemFull(item.id, item.declarationId,
+          item.declarationNumber, item.commodityId, item.commodityName, item.quantity, item.grossWeight,
+          item.netWeight, item.packageId, item.packageName));
+        this.declarationItem.resetForm();
       },
       error: (error: any) => { }
     });
@@ -136,14 +123,14 @@ export class DeclarationComponent {
 
   declarationItemAddedEvent($event: boolean) {
     this.itemsPopupVisibility = false;
-  } 
+  }
 
-  onEditItem(declarationItemId: string){
+  onEditItem(declarationItemId: string) {
     this.declarationItem.loadForm(declarationItemId);
     this.showItemsPopup();
   }
 
-  onDeleteItem(declarationItemId: string){
+  onDeleteItem(declarationItemId: string) {
     this.declarationItemService.deleteDeclarationItem(declarationItemId).subscribe({
       next: (res: any) => {
         this.messageService.add({ severity: 'success', summary: res.message });
@@ -155,16 +142,16 @@ export class DeclarationComponent {
     });
   }
 
-  onAddContainer(declarationItemId: string){
-    this.declarationContainer.loadForm(declarationItemId);
-    this.showContainersPopup();
-  }
+  // onAddContainer(declarationItemId: string) {
+  //   this.declarationContainer.loadForm(declarationItemId);
+  //   this.showContainersPopup();
+  // }
 
-  showContainerInfoPopup(event: any){
-    this.declarationContainerInfo.loadForm(event.id);
-    this.containerInfoHeader = event.container;
-    this.containerInfoPopupVisibility = true;
-  }
+  // showContainerInfoPopup(event: any) {
+  //   this.declarationContainerInfo.loadForm(event.id);
+  //   this.containerInfoHeader = event.container;
+  //   this.containerInfoPopupVisibility = true;
+  // }
 
   onSubmit() {
     if (!this.form.valid) {
@@ -174,19 +161,17 @@ export class DeclarationComponent {
     let declarationType: any = this.form.get('declarationType')?.value!;
 
     const declaration: Declaration = new Declaration(
-      declarationType.id,
       this.form.get('number')?.value!,
+      this.form.get('date')?.value!,
+      this.form.get('startDate')?.value!,
+      this.form.get('endDate')?.value!,
       this.form.get('contact')?.value!.id!,
-      this.form.get('bookingNumber')?.value!,
+      this.form.get('traffic')?.value!.id!,
       //todo change terminal id to dynamic mode
-      '3780B827-A2BC-4331-B474-576100D3104B',
-      this.form.get('originCity')?.value!.id!,
-      this.form.get('destinationCity')?.value!.id!,
-      true,
-      this.form.get('contactAgent')?.value!.id!,
-      this.form.get('carrierContact')?.value!.id!,
-      this.id,
-      this.form.get('serial')?.value!,);
+      '088',
+      this.form.get('description')?.value!,
+      this.form.get('contactRep')?.value!.id!,
+      this.id);
 
     const declarationAction$ = this.id
       ? this.declarationService.putDeclaration(declaration)
@@ -198,8 +183,32 @@ export class DeclarationComponent {
         this.id = res.data
         this.loadDeclarationItems();
       },
-      error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+      error: (failRes: any) => {
+        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+      }
+    });
+  }
+
+  sendDeclarationToIpas(id: string) {
+    console.log(id)
+    this.declarationService.requestIpasDeclarationId(id).subscribe({
+      next: (res: any) => {
+        this.messageService.add({ severity: 'success', summary: res.message });
+      },
+      error: (failRes: any) => {
+        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+      }
+    });
+  }
+
+  getItemsFromIpas(id: string) {
+    this.declarationItemService.requestIpasDeclarationItems(id).subscribe({
+      next: (res: any) => {
+        this.messageService.add({ severity: 'success', summary: res.message });
+        this.loadDeclarationItems();
+      },
+      error: (failRes: any) => {
+        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
       }
     });
   }
