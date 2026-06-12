@@ -1,19 +1,19 @@
 
 export class ApiEndpoints {
 
-  //public static readonly BASE_URL = 'http://localhost:5201/api';
-  public static readonly BASE_URL = 'https://localhost:7032/api';
+  public static readonly BASE_URL = 'http://localhost:5201/api';
+  //public static readonly BASE_URL = 'https://localhost:7032/api';
 
 
   public static readonly Traffic = `${this.BASE_URL}/Traffic`;
   public static readonly Traffic_GET_ALL = `${this.BASE_URL}/Traffic/GetAll`;
 
-  public static readonly Declaration = `${this.BASE_URL}/Declaration`;
-  public static readonly Create_Declaration = `${this.BASE_URL}/Declaration/CreateSingleDeclaration`;
-  public static readonly Update_Declaration = `${this.BASE_URL}/Declaration/UpdateSingleDeclaration`;
+  public static readonly Declarations = `${this.BASE_URL}/Declarations`;
+  public static readonly Request_Ipas_Declaration_Id = `${this.BASE_URL}/Declarations/request-ipas-declaration-id`;
+  public static readonly Request_Ipas_Declaration_Items = `${this.BASE_URL}/DeclarationItems/request-ipas-declaration-items`;
   public static readonly Declaration_Item = `${this.BASE_URL}/DeclarationItem`;
   public static readonly Declaration_Container = `${this.BASE_URL}/DeclarationContainer`;
-  public static readonly Get_Declaration_Item_By_Declaration_Id = `${this.BASE_URL}/DeclarationItem/GetByDeclarationId`;
+  public static readonly Get_Declaration_Items_By_Declaration_Id = `${this.BASE_URL}/declarationItems/get_by_declaration_id`;
   public static readonly Get_Declaration_Container_By_Declaration_Item_Id = `${this.BASE_URL}/DeclarationContainer/GetByDeclarationItem`;
   public static readonly Declaration_Container_Info = `${this.BASE_URL}/DeclarationContainerInfo`;
   public static readonly Get_Declaration_Container_Info_By_Declaration_Container_Id = `${this.BASE_URL}/DeclarationContainerInfo/GetByDeclarationContainer`;

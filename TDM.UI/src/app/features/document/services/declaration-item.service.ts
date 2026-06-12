@@ -10,7 +10,7 @@ export class DeclarationItemService {
   constructor(private apiService: ApiService) { }
 
   getByDeclarationId(id: string): Observable<any>{
-    let _url = ApiEndpoints.Get_Declaration_Item_By_Declaration_Id + `/${id}`;
+    let _url = ApiEndpoints.Get_Declaration_Items_By_Declaration_Id + `/${id}`;
     return this.apiService.get(_url);
   }
 
@@ -32,5 +32,10 @@ export class DeclarationItemService {
   deleteDeclarationItem(id: string): Observable<any> {
     let _url = ApiEndpoints.Declaration_Item + `/${id}`;
     return this.apiService.delete(_url);
+  }
+
+  requestIpasDeclarationItems(id: string): Observable<any> {
+    let _url = ApiEndpoints.Request_Ipas_Declaration_Items + `/${id}`;
+    return this.apiService.get(_url);
   }
 }

@@ -1,33 +1,29 @@
 export class Declaration {
     id?: string;
-    declarationTypeId: string;
     number: string;
-    contactId: string;
-    contactAgentId?: string
-    bookingNumber: string;
-    terminalId: string;
-    originCityId: string;
-    destinationCityId: string;
-    carrierContactId?: string;
-    requestStatus: boolean;
-    serial?: string;
+    date: Date;
+    startDate: Date;
+    endDate: Date;
+    consigneeId: string;
+    consigneeRepId?: string
+    trafficId: string;
+    terminalCode: string;
+    description: string;
+
     /**
      *
      */
-    constructor(declarationTypeId: string, number: string, contactId: string, bookingNumber: string, terminalId: string,
-        originCityId: string, destinationCityId: string, requestStatus: boolean, contactAgentId?: string, carrierContactId?: string, id?: string, serial?: string
-    ) {
-        this.declarationTypeId = declarationTypeId;
+    constructor(number: string,date: Date,startDate: Date,endDate: Date, consigneeId: string, 
+         trafficId: string ,terminalCode: string, description: string,consigneeRepId?: string, id?: string) {
         this.number = number;
-        this.contactId = contactId;
-        this.bookingNumber = bookingNumber;
-        this.terminalId = terminalId;
-        this.originCityId = originCityId;
-        this.destinationCityId = destinationCityId;
-        this.requestStatus = requestStatus;
+        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.consigneeId = consigneeId;
+        this.consigneeRepId = consigneeRepId;
+        this.trafficId = trafficId;
+        this.terminalCode = terminalCode;
+        this.description = description;
         this.id = id;
-        this.contactAgentId = contactAgentId;
-        this.carrierContactId = carrierContactId;
-        this.serial = serial;
     }
 }

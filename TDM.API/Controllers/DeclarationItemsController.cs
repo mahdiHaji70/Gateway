@@ -7,6 +7,7 @@ using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDecl
 using TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDeclarationItem;
 using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItemById;
 using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItems;
+using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItemsByDeclarationId;
 using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId;
 
 
@@ -39,6 +40,14 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(result));
         }
 
+        [HttpGet("get_by_declaration_id/{id}")]
+        public async Task<IActionResult> GetByDeclarationId(Guid id)
+        {
+            var result = await _mediator.Send(new GetDeclarationsByDeclarationIdQuery(id));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDeclarationItemCommand command, CancellationToken cancellationToken)
         {
@@ -63,7 +72,7 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(true, "Declaration Item deleted"));
         }
 
-        [HttpGet("{declarationId:guid}/request-ipas-declaration-items")]
+        [HttpGet("request-ipas-declaration-items/{declarationId:guid}")]
         public async Task<IActionResult> RequestVerifierId(Guid declarationId)
         {
             var result = await _mediator.Send(new IpasDeclarationItemsCommand(declarationId));

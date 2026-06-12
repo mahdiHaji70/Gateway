@@ -1,48 +1,35 @@
 export class DeclarationFull {
     id?: string;
-    declarationTypeId: string;
-    declarationTypeName: string;
     number: string;
+    date: Date;
+    startDate: Date;
+    endDate: Date;
+    trafficId: string;
+    trafficName: string;
     contactId: string;
     contactName: string;
-    contactAgentId?: string
-    contactAgentName?: string
-    bookingNumber: string;
-    terminalId: string;
-    terminalName: string;
-    originCityId: string;
-    originCityName: string;
-    destinationCityId: string;
-    destinationCityName: string;
-    carrierContactId?: string;
-    carrierContactName?: string;
-    requestStatus: boolean;
-    serial: string;
+    description: string;
+    contactRepId?: string
+    contactRepName?: string
+    ipasDeclarationId?: string;
     /**
      *
      */
-    constructor(declarationTypeId: string, declarationTypeName: string, number: string, contactId: string, contactName: string, bookingNumber: string, terminalId: string,
-        terminalName: string, originCityId: string, originCityName: string, destinationCityId: string, destinationCityName: string, requestStatus: boolean, serial: string,
-        contactAgentId?: string, contactAgentName?: string, carrierContactId?: string, carrierContactName?: string, id?: string
-    ) {
-        this.declarationTypeId = declarationTypeId;
-        this.declarationTypeName = declarationTypeName;
+    constructor(id: string, number: string, date: Date, startDate: Date, endDate: Date,
+        trafficId: string, trafficName: string, contactId: string, contactName: string,
+        description: string, ipasDeclarationId?: string,contactRepId?: string, contactRepName?: string) {
+        this.id = id;
         this.number = number;
+        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.trafficId = trafficId;
+        this.trafficName = trafficName;
         this.contactId = contactId;
         this.contactName = contactName;
-        this.bookingNumber = bookingNumber;
-        this.terminalId = terminalId;
-        this.terminalName = terminalName;
-        this.originCityId = originCityId;
-        this.originCityName = originCityName;
-        this.destinationCityId = destinationCityId;
-        this.destinationCityName = destinationCityName;
-        this.requestStatus = requestStatus;
-        this.serial = serial;
-        this.id = id;
-        this.contactAgentId = contactAgentId;
-        this.contactAgentName = contactAgentName;
-        this.carrierContactId = carrierContactId;
-        this.carrierContactName = carrierContactName;
+        this.description = description;
+        this.contactRepId = contactRepId;
+        this.contactRepName = contactRepName;
+        this.ipasDeclarationId = ipasDeclarationId;
     }
 }

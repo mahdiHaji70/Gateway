@@ -50,27 +50,27 @@ export class DeclarationItemComponent {
   }
 
   loadCommodities() {
-    this.basicInformationService.getAll('Commodity').subscribe({
+    this.basicInformationService.getAll('commodities').subscribe({
       next: (res: any) => {
-        this.commodities = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
   }
 
   loadPackages() {
-    this.basicInformationService.getAll('Package').subscribe({
+    this.basicInformationService.getAll('packages').subscribe({
       next: (res: any) => {
-        this.packages = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
   }
 
   loadTraffics() {
-    this.basicInformationService.getAll('Traffic').subscribe({
+    this.basicInformationService.getAll('traffics').subscribe({
       next: (res: any) => {
-        this.traffics = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
