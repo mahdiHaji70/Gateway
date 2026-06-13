@@ -29,7 +29,7 @@ export class DeclarationListComponent {
       next: (res: any) => {
         this.declarations = res.data.items.map((item: any) => 
           new DeclarationFull(item.id!, item.number, item.date, item.startDate, item.endDate, item.trafficId,
-            item.trafficName, item.consigneeId, item.consigneeName, item.description, item.ipasDeclarationId,
+            item.trafficName, item.consigneeId, item.consigneeName, item.description, item.ipasDeclarationNo,
             item.consigneeRepId, item.consigneeRepName));
       },
       error: (error: any) => { }

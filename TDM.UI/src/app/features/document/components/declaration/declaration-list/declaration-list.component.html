@@ -23,7 +23,7 @@
             <th>Traffic</th>
             <th>Contact</th>
             <th>Contact Rep</th>
-            <th>Ipas Declaration Id</th>          
+            <th>Ipas Declaration No</th>          
             <th>Actions</th>
         </tr>
     </ng-template>
@@ -34,7 +34,7 @@
             <td>{{ declaration.trafficName }}</td>
             <td>{{ declaration.contactName }}</td>
             <td>{{ declaration.contactRepName }}</td>
-            <td>{{ declaration.ipasDeclarationId }}</td>
+            <td>{{ declaration.ipasDeclarationNo }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                     (click)="onEdit(declaration.id)">

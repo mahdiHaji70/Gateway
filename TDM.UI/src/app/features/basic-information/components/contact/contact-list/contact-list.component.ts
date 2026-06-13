@@ -31,7 +31,7 @@ export class ContactListComponent {
       next: (res: any) => {
         this.contacts = res.data.items.map((item: Contact) => new ContactList(contactTypesDropdown.find(
           (type) => type.value === item.companyType
-        )!.name!, item.name!, item. nationalId!, item.registerDate!,
+        )!.name!, item.name!, item. nationalId!, new Date(item.registerDate!).toDateString(),
           item.address!, item.postCode!, item.mobile!, item.economicCode!, item.registerNumber!,
            item.registerPlace!, item.phone!, item.id));
       },

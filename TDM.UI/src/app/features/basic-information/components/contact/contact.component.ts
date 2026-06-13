@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from '../../models/contact.model';
 import { ContactTypes, contactTypesDropdown } from '../../../../shared/constants/contact-types';
 import { getEnumOptions } from '../../../../shared/utils/get-enum-options';
+import { formatUTCDate } from '../../../../shared/utils/format-date';
 
 @Component({
   selector: 'app-contact',
@@ -27,7 +28,7 @@ export class ContactComponent {
     economicCode: new FormControl<string>(''),
     registerNumber: new FormControl<string>(''),
     registerPlace: new FormControl<string>(''),
-    phone: new FormControl<string>('', [Validators.required, Validators.pattern(/^0\d{10}$/)]),
+    phone: new FormControl<string>('', [Validators.pattern(/^0\d{10}$/)]),
   });
   /**
    *
@@ -90,13 +91,13 @@ export class ContactComponent {
       return;
     }
 
-    let contactType: any = this.form.get('contactType')?.value!;
+    let contactType: any = this.form.get('contactType')?.value!;        
 
     const contact: Contact = new Contact(
       contactType.value,
       this.form.get('name')?.value!,
       this.form.get('nationalId')?.value!,
-      this.form.get('registerDate')?.value!,
+      formatUTCDate(this.form.get('registerDate')?.value as Date),
       this.form.get('address')?.value!,
       this.form.get('postCode')?.value!,
       this.form.get('mobile')?.value!,
