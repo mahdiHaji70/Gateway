@@ -11,13 +11,13 @@ export class DeclarationFull {
     description: string;
     contactRepId?: string
     contactRepName?: string
-    ipasDeclarationId?: string;
+    ipasDeclarationNo?: string;
     /**
      *
      */
     constructor(id: string, number: string, date: Date, startDate: Date, endDate: Date,
         trafficId: string, trafficName: string, contactId: string, contactName: string,
-        description: string, ipasDeclarationId?: string,contactRepId?: string, contactRepName?: string) {
+        description: string, ipasDeclarationNo?: string,contactRepId?: string, contactRepName?: string) {
         this.id = id;
         this.number = number;
         this.date = date;
@@ -30,6 +30,6 @@ export class DeclarationFull {
         this.description = description;
         this.contactRepId = contactRepId;
         this.contactRepName = contactRepName;
-        this.ipasDeclarationId = ipasDeclarationId;
+        this.ipasDeclarationNo = ipasDeclarationNo;
     }
 }

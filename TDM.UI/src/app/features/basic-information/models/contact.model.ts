@@ -5,7 +5,7 @@ export class Contact {
     companyType?: number;
     name?: string;
     nationalId?: string;
-    registerDate?: Date;
+    registerDate?: string;
     address?: string;
     postCode?: string;
     mobile?: string;
@@ -18,7 +18,7 @@ export class Contact {
      *
      */
     constructor(companyType: number, name: string, nationalId: string,
-        registerDate: Date,
+        registerDate: string,
         address: string,
         postCode: string,
         mobile: string,

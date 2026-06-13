@@ -27,6 +27,16 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Owner))
                 .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => src.OwnerRep));
 
+            CreateMap<OwnerRequestDto, OwnerDto>();
+            CreateMap<OwnerDto, OwnerRequestDto>();
+
+            CreateMap<OwnerRepRequestDto, OwnerRepDto>();
+            CreateMap<OwnerRepDto, OwnerRepRequestDto>();
+
+            CreateMap<CreateStorageAgreementRequestDto, CreateStorageAgreementDto>()
+                .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Owner))
+                .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => src.OwnerRep));
+
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>();
 
             CreateMap<CreateStorageAgreementResultDto, CreateStorageAgreementResponseDto>();

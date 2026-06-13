@@ -1,9 +1,9 @@
 export class Declaration {
     id?: string;
     number: string;
-    date: Date;
-    startDate: Date;
-    endDate: Date;
+    date: string;
+    startDate: string;
+    endDate: string;
     consigneeId: string;
     consigneeRepId?: string
     trafficId: string;
@@ -13,7 +13,7 @@ export class Declaration {
     /**
      *
      */
-    constructor(number: string,date: Date,startDate: Date,endDate: Date, consigneeId: string, 
+    constructor(number: string,date: string,startDate: string,endDate: string, consigneeId: string, 
          trafficId: string ,terminalCode: string, description: string,consigneeRepId?: string, id?: string) {
         this.number = number;
         this.date = date;

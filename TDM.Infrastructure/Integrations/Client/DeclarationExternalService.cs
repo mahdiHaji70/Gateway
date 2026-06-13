@@ -25,6 +25,8 @@ namespace TDM.Infrastructure.Integrations.Client
 
             var ipasDeclarationResponse = await _requestExecutor.PostAsync<CreateStorageAgreementResultDto>("PMO", "CreateStorageAgreement", createStorageAgreementDto, cancellationToken);
 
+            ExternalResponseHelper.EnsureSuccess(ipasDeclarationResponse, "GetIpasDeclarationId");
+
             var response = new IpasDeclarationIdResponse
             {
                 IpasDeclarationId = ipasDeclarationResponse.Data!.Id,

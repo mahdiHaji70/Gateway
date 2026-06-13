@@ -15,6 +15,7 @@ import { DropdownOption } from '../../../../shared/models/drop-down-option-model
 import { DeclarationItemComponent } from '../declaration-item/declaration-item.component';
 import { DeclarationContainerComponent } from '../declaration-container/declaration-container.component';
 import { DeclarationContainerInfoComponent } from '../declaration-container-info/declaration-container-info.component';
+import { formatUTCDate } from '../../../../shared/utils/format-date';
 
 @Component({
   selector: 'app-declaration',
@@ -162,9 +163,9 @@ export class DeclarationComponent {
 
     const declaration: Declaration = new Declaration(
       this.form.get('number')?.value!,
-      this.form.get('date')?.value!,
-      this.form.get('startDate')?.value!,
-      this.form.get('endDate')?.value!,
+      formatUTCDate(this.form.get('date')?.value! as Date),
+      formatUTCDate(this.form.get('startDate')?.value! as Date),
+      formatUTCDate(this.form.get('endDate')?.value! as Date),
       this.form.get('contact')?.value!.id!,
       this.form.get('traffic')?.value!.id!,
       //todo change terminal id to dynamic mode
