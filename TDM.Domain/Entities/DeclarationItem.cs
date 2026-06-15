@@ -19,6 +19,9 @@ namespace TDM.Domain.Entities
         public Guid PackageId { get; set; }
         public Package Package { get; set; }
 
+        public ICollection<DeclarationContainer> DeclarationContainers { get; private set; } = new List<DeclarationContainer>();
+
+
         public DeclarationItem(
             long quantity,
             decimal grossWeight,
@@ -55,6 +58,11 @@ namespace TDM.Domain.Entities
             PackageId = packageId;
         }
 
+        public void AddContainer(DeclarationContainer container)
+        {
+            DeclarationContainers.Add(container);
+        }
+
         private void Validate(long quantity, decimal grossWeight, decimal netWeight, Guid declarationId, Guid commodityId, Guid packageId)
         {
             if (quantity <= 0)
@@ -70,13 +78,13 @@ namespace TDM.Domain.Entities
                 throw new DomainValidationException("NetWeight cannot be greater than GrossWeight.");
 
             if (declarationId == Guid.Empty)
-                throw new DomainValidationException("DeclarationId is required.");
+                throw new DomainValidationException("Declaration Id is required.");
 
             if (commodityId == Guid.Empty)
-                throw new DomainValidationException("CommodityId is required.");
+                throw new DomainValidationException("Commodity Id is required.");
 
             if (packageId == Guid.Empty)
-                throw new DomainValidationException("PackageId is required.");
+                throw new DomainValidationException("Package Id is required.");
         }
     }
 }

@@ -19,5 +19,7 @@ namespace TDM.Application.Doc.DeclarationItems.DTOs
 
         public Guid PackageId { get; set; }
         public string? PackageName { get; set; }
+        public List<DeclarationContainerDto>? DeclarationContainers { get; set; }
+
     }
 }

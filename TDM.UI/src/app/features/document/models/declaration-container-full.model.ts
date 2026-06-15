@@ -1,3 +1,5 @@
+import { DeclarationContainerInfoFull } from "./declaration-container-info-full.model";
+
 export class DeclarationContainerFull {
     id?: string;
     declarationItemId: string;
@@ -5,7 +7,7 @@ export class DeclarationContainerFull {
     containerName: string;
     isFull: boolean;
     weight: number;
-
+    declarationContainerInfos?: DeclarationContainerInfoFull[];
     /**
      *
      */

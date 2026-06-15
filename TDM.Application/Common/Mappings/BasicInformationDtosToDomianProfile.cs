@@ -34,7 +34,14 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<DeclarationItem, DeclarationItemDto>();
 
+            CreateMap<DeclarationContainer, DeclarationContainerDto>()
+                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.No))
+                .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.TypeAndSize));
 
+
+            CreateMap<DeclarationContainerGood, DeclarationContainerGoodDto>()
+                .ForMember(dest => dest.CommodityName, opt => opt.MapFrom(src => src.Commodity.Name))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(src => src.Package.Name));
         }
     }
 }

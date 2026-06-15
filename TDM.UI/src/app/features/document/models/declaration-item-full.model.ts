@@ -1,3 +1,5 @@
+import { DeclarationContainer } from "./declaration-container.model";
+
 export class DeclarationItemFull {
     id?: string;
     declarationId: string;
@@ -9,7 +11,7 @@ export class DeclarationItemFull {
     netWeight: number;
     packageId: string;
     packageName: string;
-
+    declarationContainers? : DeclarationContainer[];
     /**
      *
      */

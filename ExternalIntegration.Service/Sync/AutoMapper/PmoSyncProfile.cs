@@ -49,6 +49,7 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
             CreateMap<GeneralCargoResponseDto, GeneralCargoResultDto>();
             CreateMap<ContainerResponseDto, ContainerResultDto>();
+            CreateMap<ContainersGoodResponseDto, ContainerGoodResultDto>();
             CreateMap<BulkResponseDto, BulkResultDto>();
             
             CreateMap<DischargePermitDto, DischargePermitResponseDto>();
