@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using TDM.Application.BasicInformation.Packages.Commands.CreatePackage;
 
 namespace TDM.Application.BasicInformation.Packages.Commands.CreatePackage
 {
-    public class UpdatePackageCommandValidator : AbstractValidator<CreatePackageCommand>
+    public class CreatePackageCommandValidator : AbstractValidator<CreatePackageCommand>
     {
-        public UpdatePackageCommandValidator()
+        public CreatePackageCommandValidator()
         {
             RuleFor(x => x.Name)
             .NotEmpty()
