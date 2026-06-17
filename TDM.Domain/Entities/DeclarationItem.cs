@@ -19,6 +19,8 @@ namespace TDM.Domain.Entities
         public Guid PackageId { get; set; }
         public Package Package { get; set; }
 
+        public ICollection<TerminalDischarge> TerminalDischarges { get; private set; } = new List<TerminalDischarge>();
+
         public DeclarationItem(
             long quantity,
             decimal grossWeight,
