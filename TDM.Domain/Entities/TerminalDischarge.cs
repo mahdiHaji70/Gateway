@@ -177,14 +177,12 @@ namespace TDM.Domain.Entities
                 throw new DomainValidationException("DischargeDate cannot be in the future.");
 
            
-            if (packNB < 0)
+            if (packNB <= 0)
                 throw new DomainValidationException("PackNB cannot be negative.");
 
             if (weight <= 0)
                 throw new DomainValidationException("Weight must be greater than zero.");
-
-            if (volume < 0)
-                throw new DomainValidationException("Volume cannot be negative.");
+  
 
             if (isDangerous)
             {
