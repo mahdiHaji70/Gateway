@@ -1,29 +1,25 @@
 export class Container {
     id?: string;
-    containerNumber?: string;
-    containerTypeId?: string;
-    containerSizeId?: string;
-    weight?: number;
+    no?: string;
+    containerTypeAndSizeId?: string;
 
     /**
      *
      */
-    constructor(containerNumber: string, containerTypeId: string, containerSizeId: string, weight: number, id?: string) {
+    constructor(no: string, containerTypeAndSizeId: string, id?: string) {
         this.id = id;
-        this.containerNumber = containerNumber;
-        this.containerTypeId = containerTypeId;
-        this.containerSizeId = containerSizeId;
-        this.weight = weight;
+        this.no = no;
+        this.containerTypeAndSizeId = containerTypeAndSizeId;
     }
 }
 
 
 export class ContainerDto {
     id?: string;
-    containerNumber?: string;
-    containerTypeId?: string;
-    containerTypeCode?: string;
-    containerTypeName?: string;
+    containerNo?: string;
+    containerTypeAndSizeId?: string;
+    containerTypeAndSizeCode?: string;
+    containerTypeAndSize?: string;
     containerSizeId?: string;
     containerSizeCode?: string;
     containerSizeName?: string;
@@ -32,16 +28,11 @@ export class ContainerDto {
     /**
      *
      */
-    constructor(containerNumber: string, containerTypeId: string, containerTypeCode: string,containerTypeName: string, containerSizeId: string, 
-        containerSizeCode: string,containerSizeName: string, weight: number, id?: string) {
+    constructor(containerNo: string, containerTypeAndSizeId: string, containerTypeAndSizeCode: string,containerTypeAndSize: string, id?: string) {
         this.id = id;
-        this.containerNumber = containerNumber;
-        this.containerTypeId = containerTypeId;
-        this.containerTypeCode = containerTypeCode;        
-        this.containerTypeName = containerTypeName;        
-        this.containerSizeId = containerSizeId;
-        this.containerSizeCode = containerSizeCode; 
-        this.containerSizeName = containerSizeName; 
-        this.weight = weight;
+        this.containerNo = containerNo;
+        this.containerTypeAndSizeId = containerTypeAndSizeId;
+        this.containerTypeAndSizeCode = containerTypeAndSizeCode;        
+        this.containerTypeAndSize = containerTypeAndSize;        
     }
 }

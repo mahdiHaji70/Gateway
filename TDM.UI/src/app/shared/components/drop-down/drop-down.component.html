@@ -1,6 +1,6 @@
 <div class="field" [formGroup]="formGroup">
     <label [for]="controlName">{{ label }}</label>
-    <p-dropdown [options]="options" [formControlName]="controlName" optionLabel="name" [filter]="true" filterBy="name"
+    <p-dropdown [options]="options" [formControlName]="controlName" [optionLabel]="optionLabel" [filter]="true" filterBy="name"
         [showClear]="true" [placeholder]="'Select a ' + label" [required]="required"></p-dropdown>
     <div *ngIf="formGroup.controls[controlName]?.invalid && formGroup.controls[controlName]?.touched"
         class="text-red-500 text-sm font-medium m-1">{{label + ' is required'}}</div>

@@ -6,6 +6,7 @@ import { BasicInformationService } from '../../services/basic-information.servic
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Container } from '../../models/container.model';
+import { ContainerTypeAndSize } from '../../models/container-type-and-size.model';
 
 @Component({
   selector: 'app-container',
@@ -14,14 +15,11 @@ import { Container } from '../../models/container.model';
 })
 export class ContainerComponent {
   id?: any;
-  containerTypes: ContainerType[] = [];
-  containerSizes: ContainerSize[] = [];
+  containerTypesAndSizes: ContainerTypeAndSize[] = [];
 
   form = new FormGroup({
     containerNumber: new FormControl<string>(''),
-    containerType: new FormControl<ContainerType | undefined>(undefined),
-    containerSize: new FormControl<ContainerSize | undefined>(undefined),
-    weight: new FormControl<number | undefined>(undefined),
+    containerTypeAndSize: new FormControl<ContainerTypeAndSize | undefined>(undefined),
   });
   /**
    *
@@ -34,19 +32,16 @@ export class ContainerComponent {
   }
 
   ngOnInit() {
-    this.loadContainerTypes();
-    this.loadContainerSizes();
+    this.loadContainerTypesAndSizes();
 
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('Container', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('Containers', this.id).subscribe((res: any) => {
           //this.form.patchValue(res.data);
           this.form.setValue({
-            containerNumber: res.data.containerNumber,
-            containerType: new ContainerType(res.data.containerTypeCode, res.data.containerTypeName, res.data.containerTypeId),
-            containerSize: new ContainerSize(res.data.containerSizeCode, res.data.containerSizeName, res.data.containerSizeId),
-            weight: res.data.weight,
+            containerNumber: res.data.no,
+            containerTypeAndSize: new ContainerTypeAndSize(res.data.containerTypeAndSizeCode, res.data.containerTypeAndSize, res.data.containerTypeAndSizeId)
           });
         });
       }
@@ -55,19 +50,10 @@ export class ContainerComponent {
 
   }
 
-  loadContainerTypes() {
-    this.basicInformationService.getAll('ContainerType').subscribe({
+  loadContainerTypesAndSizes() {
+    this.basicInformationService.getAll('ContainerTypesAndSizes').subscribe({
       next: (res: any) => {
-        this.containerTypes = res.data.map((item: any) => new ContainerType(item.code, item.name, item.id));
-      },
-      error: (error: any) => { }
-    });
-  }
-
-  loadContainerSizes() {
-    this.basicInformationService.getAll('ContainerSize').subscribe({
-      next: (res: any) => {
-        this.containerSizes = res.data.map((item: any) => new ContainerSize(item.code, item.name, item.id));
+        this.containerTypesAndSizes = res.data.items.map((item: any) => new ContainerTypeAndSize(item.typeAndSizeCode, item.typeAndSize, item.id));
       },
       error: (error: any) => { }
     });
@@ -80,16 +66,14 @@ export class ContainerComponent {
 
     const container: Container = new Container(
       this.form.get('containerNumber')?.value!,
-      this.form.get('containerType')?.value!.id!,
-      this.form.get('containerSize')?.value!.id!,
-      this.form.get('weight')?.value!,
+      this.form.get('containerTypeAndSize')?.value!.id!,
       this.id
     );
 
     const containerAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('Container', container)
-      : this.basicInformationService.postBasicInformation('Container', container);
-
+      ? this.basicInformationService.putBasicInformation('Containers', container)
+      : this.basicInformationService.postBasicInformation('Containers', container);
+debugger
     containerAction$
       .subscribe({
         next: (res: any) => {

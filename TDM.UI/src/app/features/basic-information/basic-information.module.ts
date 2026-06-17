@@ -46,6 +46,8 @@ import { PlaceTypeComponent } from './components/place-type/place-type.component
 import { PlaceTypeListComponent } from './components/place-type/place-type-list/place-type-list.component';
 import { PlaceComponent } from './components/place/place.component';
 import { PlaceListComponent } from './components/place/place-list/place-list.component';
+import { ContainerTypeAndSizeComponent } from './components/container-type-and-size/container-type-and-size.component';
+import { ContainerTypeAndSizeListComponent } from './components/container-type-and-size/container-type-and-size-list/container-type-and-size-list.component';
 
 
 
@@ -84,7 +86,9 @@ import { PlaceListComponent } from './components/place/place-list/place-list.com
     PlaceTypeComponent,
     PlaceTypeListComponent,
     PlaceComponent,
-    PlaceListComponent
+    PlaceListComponent,
+    ContainerTypeAndSizeComponent,
+    ContainerTypeAndSizeListComponent
   ],
   imports: [
     CommonModule,

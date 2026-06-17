@@ -26,10 +26,9 @@ containers: ContainerDto[] = [];
   }
 
   loadContainers() {
-    this.basicInformationService.getAll('Container').subscribe({
+    this.basicInformationService.getAll('Containers').subscribe({
       next: (res: any) => {
-        this.containers = res.data.map((item: any) => new ContainerDto(item.containerNumber, item.containerTypeId, item.containerTypeCode,item.containerTypeName, item.containerSizeId,
-          item.containerSizeCode, item.containerSizeName,item.weight, item.id));
+        this.containers = res.data.items.map((item: any) => new ContainerDto(item.no, item.containerTypeAndSizeId, item.containerTypeAndSizeCode,item.containerTypeAndSize, item.id));
       },
       error: (error: any) => { }
     });
@@ -55,7 +54,7 @@ containers: ContainerDto[] = [];
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Container', id).subscribe({
+        this.basicInformationService.removeBasicInformation('Containers', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadContainers();
