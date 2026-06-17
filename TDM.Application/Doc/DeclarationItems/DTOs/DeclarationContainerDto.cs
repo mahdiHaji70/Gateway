@@ -2,6 +2,7 @@
 {
     public class DeclarationContainerDto
     {
+        public Guid DeclarationContainerId { get; set; }
         public Guid ContainerId { get; set; }
         public string? ContainerNo { get; set; }
         public string? ContainerTypeAndSize { get; set; }
