@@ -13,6 +13,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
         private readonly IDeclarationItemRepository _declarationItemRepository;
         private readonly ICommodityRepository _commodityRepository;
         private readonly IPackageRepository _packageRepository;
+        private readonly IContainerRepository _containerRepository;
         private readonly IDeclarationExternalService _declarationExternalService;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -20,6 +21,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             , IDeclarationRepository declarationRepository
             , ICommodityRepository commodityRepository
             , IPackageRepository packageRepository
+            , IContainerRepository containerRepository
             , IDeclarationItemRepository declarationItemRepository
             , IDeclarationExternalService declarationExternalService)
         {
@@ -27,6 +29,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             _declarationRepository = declarationRepository;
             _commodityRepository = commodityRepository;
             _packageRepository = packageRepository;
+            _containerRepository = containerRepository;
             _declarationItemRepository = declarationItemRepository;
             _declarationExternalService = declarationExternalService;
         }
@@ -69,17 +72,31 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             .Distinct()
             .ToList();
 
+            var containerNoAndCodes = 
+             ipasDeclarationItems
+            .SelectMany(x => x.Containers ?? Enumerable.Empty<IpasDeclarationContainerResponse>())            
+            .Select(g => (g.ContainerNo, g.ContainerTypeAndSizeCode))
+            .Where(x => !string.IsNullOrWhiteSpace(x.ContainerNo) && !string.IsNullOrWhiteSpace(x.ContainerTypeAndSizeCode))
+            .Distinct()
+            .ToList();
+
             var commodities = await _commodityRepository
                 .GetByHsCodesAsync(hsCodes, cancellationToken);
 
             var packages = await _packageRepository
                 .GetByCodesAsync(packageCodes, cancellationToken);
 
+            var containers = await _containerRepository
+                .GetByNoAndCodesAsync(containerNoAndCodes, cancellationToken);
+
             var commodityDict = commodities
                 .ToDictionary(x => x.HsCode, x => x.Id);
 
             var packageDict = packages
                 .ToDictionary(x => x.Code, x => x.Id);
+
+            var containerDict = containers
+                .ToDictionary(x => x.No, x => x.Id);
 
             var declarationItems = ipasDeclarationItems.Select(itemDto =>
             {
@@ -102,10 +119,11 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
                 {
                     foreach (var containerDto in itemDto.Containers)
                     {
+                        if (!containerDict.TryGetValue(containerDto.ContainerNo, out var containerId))
+                            throw new Exception($"Containers with No '{containerDto.ContainerNo}' with type code '{containerDto.ContainerTypeAndSizeCode}' not found.");
+
                         var container = new DeclarationContainer(
-                            containerDto.ContainerNo,
-                            containerDto.ContainerTypeAndSizeCode,
-                            containerDto.ContainerTypeAndSize
+                            containerId
                             );
 
                         if (containerDto.Goods != null && containerDto.Goods.Any() == true)

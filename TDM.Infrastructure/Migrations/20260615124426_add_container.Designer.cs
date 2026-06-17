@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDM.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using TDM.Infrastructure.Persistence;
 namespace TDM.Infrastructure.Migrations
 {
     [DbContext(typeof(TDMDbContext))]
-    partial class TDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260615124426_add_container")]
+    partial class add_container
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +168,6 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ContainerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ContainerTypeAndSizeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -189,8 +189,6 @@ namespace TDM.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContainerId");
 
                     b.HasIndex("ContainerTypeAndSizeId");
 
@@ -338,9 +336,6 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContainerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -350,6 +345,18 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("DeclarationItemId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("No")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeAndSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeAndSizeCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -357,8 +364,6 @@ namespace TDM.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContainerId");
 
                     b.HasIndex("DeclarationItemId");
 
@@ -538,10 +543,6 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.Container", b =>
                 {
-                    b.HasOne("TDM.Domain.Entities.Container", null)
-                        .WithMany("ContainerDeclarations")
-                        .HasForeignKey("ContainerId");
-
                     b.HasOne("TDM.Domain.Entities.ContainerTypeAndSize", "ContainerTypeAndSize")
                         .WithMany("Containers")
                         .HasForeignKey("ContainerTypeAndSizeId")
@@ -580,19 +581,11 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.DeclarationContainer", b =>
                 {
-                    b.HasOne("TDM.Domain.Entities.Container", "Container")
-                        .WithMany()
-                        .HasForeignKey("ContainerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TDM.Domain.Entities.DeclarationItem", "DeclarationItem")
                         .WithMany("DeclarationContainers")
                         .HasForeignKey("DeclarationItemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Container");
 
                     b.Navigation("DeclarationItem");
                 });
@@ -663,11 +656,6 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("ConsigneeDeclarations");
 
                     b.Navigation("ConsigneeRepDeclarations");
-                });
-
-            modelBuilder.Entity("TDM.Domain.Entities.Container", b =>
-                {
-                    b.Navigation("ContainerDeclarations");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.ContainerTypeAndSize", b =>

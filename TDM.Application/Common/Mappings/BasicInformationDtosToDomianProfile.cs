@@ -2,6 +2,8 @@
 using TDM.Application.BasicInformation.Cities.DTOs;
 using TDM.Application.BasicInformation.Commodities.DTOs;
 using TDM.Application.BasicInformation.Companies.DTOs;
+using TDM.Application.BasicInformation.Containers.DTOs;
+using TDM.Application.BasicInformation.ContainerTypesAndSizes.DTOs;
 using TDM.Application.BasicInformation.Countries.DTOs;
 using TDM.Application.BasicInformation.Packages.DTOs;
 using TDM.Application.BasicInformation.Traffics.DTOs;
@@ -34,14 +36,21 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<DeclarationItem, DeclarationItemDto>();
 
+            CreateMap<ContainerTypeAndSize, ContainerTypeAndSizeDto>();
+
+
             CreateMap<DeclarationContainer, DeclarationContainerDto>()
-                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.No))
-                .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.TypeAndSize));
+                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.Container.No))
+                .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.Container.ContainerTypeAndSize));
 
 
             CreateMap<DeclarationContainerGood, DeclarationContainerGoodDto>()
                 .ForMember(dest => dest.CommodityName, opt => opt.MapFrom(src => src.Commodity.Name))
                 .ForMember(dest => dest.PackageName, opt => opt.MapFrom(src => src.Package.Name));
+
+            CreateMap<Container, ContainerDto>()
+                .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.ContainerTypeAndSize.TypeAndSize))
+                .ForMember(dest => dest.ContainerTypeAndSizeCode, opt => opt.MapFrom(src => src.ContainerTypeAndSize.TypeAndSizeCode));
         }
     }
 }
