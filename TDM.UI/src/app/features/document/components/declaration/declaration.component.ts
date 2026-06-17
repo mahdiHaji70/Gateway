@@ -16,6 +16,7 @@ import { DeclarationItemComponent } from '../declaration-item/declaration-item.c
 import { DeclarationContainerComponent } from '../declaration-container/declaration-container.component';
 import { DeclarationContainerInfoComponent } from '../declaration-container-info/declaration-container-info.component';
 import { formatUTCDate } from '../../../../shared/utils/format-date';
+import { DeclarationContainerFull } from '../../models/declaration-container-full.model';
 
 @Component({
   selector: 'app-declaration',
@@ -105,10 +106,24 @@ export class DeclarationComponent {
   loadDeclarationItems() {
     this.declarationItemService.getByDeclarationId(this.id).subscribe({
       next: (res: any) => {
-        this.declarationItems = res.data.map((item: any) => new DeclarationItemFull(item.id, item.declarationId,
-          item.declarationNumber, item.commodityId, item.commodityName, item.quantity, item.grossWeight,
-          item.netWeight, item.packageId, item.packageName));
-        this.declarationItem.resetForm();
+        this.declarationItems = res.data.map((item: any) => {
+          var declarationItem = new DeclarationItemFull(item.id, item.declarationId,
+            item.declarationNumber, item.commodityId, item.commodityName, item.quantity, item.grossWeight,
+            item.netWeight, item.packageId, item.packageName);
+
+            if(item.declarationContainers != null && item.declarationContainers.length > 0){
+              var declarationContainers = item.declarationContainers.map((container: any) => {
+                //var declarationContainer = new DeclarationContainerFull(container.declarationItemId, '', container.containerNo, ));
+              });
+            }
+
+            return declarationItem;
+        }
+
+
+        );
+
+
       },
       error: (error: any) => { }
     });

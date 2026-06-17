@@ -13,6 +13,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
         private readonly IDeclarationItemRepository _declarationItemRepository;
         private readonly ICommodityRepository _commodityRepository;
         private readonly IPackageRepository _packageRepository;
+        private readonly IContainerRepository _containerRepository;
         private readonly IDeclarationExternalService _declarationExternalService;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -20,6 +21,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             , IDeclarationRepository declarationRepository
             , ICommodityRepository commodityRepository
             , IPackageRepository packageRepository
+            , IContainerRepository containerRepository
             , IDeclarationItemRepository declarationItemRepository
             , IDeclarationExternalService declarationExternalService)
         {
@@ -27,6 +29,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             _declarationRepository = declarationRepository;
             _commodityRepository = commodityRepository;
             _packageRepository = packageRepository;
+            _containerRepository = containerRepository;
             _declarationItemRepository = declarationItemRepository;
             _declarationExternalService = declarationExternalService;
         }
@@ -47,9 +50,35 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             if (!ipasDeclarationItems.Any())
                 throw new Exception("No item found for this declaration");
 
-            var hsCodes = ipasDeclarationItems.Select(x => x.HSCode).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
+            var hsCodes = ipasDeclarationItems
+            .Select(x => x.HSCode)
+            .Concat(
+             ipasDeclarationItems
+            .SelectMany(x => x.Containers ?? Enumerable.Empty<IpasDeclarationContainerResponse>())
+            .SelectMany(c => c.Goods ?? Enumerable.Empty<IpasDeclarationContainerGoodsResponse>())
+            .Select(g => g.HSCode))
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Distinct()
+            .ToList();
 
-            var packageCodes = ipasDeclarationItems.Select(x => x.PackageCode).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
+            var packageCodes = ipasDeclarationItems
+            .Select(x => x.PackageCode)
+            .Concat(
+             ipasDeclarationItems
+            .SelectMany(x => x.Containers ?? Enumerable.Empty<IpasDeclarationContainerResponse>())
+            .SelectMany(c => c.Goods ?? Enumerable.Empty<IpasDeclarationContainerGoodsResponse>())
+            .Select(g => g.PackageCode))
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Distinct()
+            .ToList();
+
+            var containerNoAndCodes = 
+             ipasDeclarationItems
+            .SelectMany(x => x.Containers ?? Enumerable.Empty<IpasDeclarationContainerResponse>())            
+            .Select(g => (g.ContainerNo, g.ContainerTypeAndSizeCode))
+            .Where(x => !string.IsNullOrWhiteSpace(x.ContainerNo) && !string.IsNullOrWhiteSpace(x.ContainerTypeAndSizeCode))
+            .Distinct()
+            .ToList();
 
             var commodities = await _commodityRepository
                 .GetByHsCodesAsync(hsCodes, cancellationToken);
@@ -57,28 +86,71 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
             var packages = await _packageRepository
                 .GetByCodesAsync(packageCodes, cancellationToken);
 
+            var containers = await _containerRepository
+                .GetByNoAndCodesAsync(containerNoAndCodes, cancellationToken);
+
             var commodityDict = commodities
                 .ToDictionary(x => x.HsCode, x => x.Id);
 
             var packageDict = packages
                 .ToDictionary(x => x.Code, x => x.Id);
 
-            var declarationItems = ipasDeclarationItems.Select(x =>
+            var containerDict = containers
+                .ToDictionary(x => x.No, x => x.Id);
+
+            var declarationItems = ipasDeclarationItems.Select(itemDto =>
             {
-                if (!commodityDict.TryGetValue(x.HSCode, out var commodityId))
-                    throw new Exception($"Commodity with HSCode '{x.HSCode}' not found.");
+                if (!commodityDict.TryGetValue(itemDto.HSCode, out var commodityId))
+                    throw new Exception($"Commodity with HSCode '{itemDto.HSCode}' not found.");
 
-                if (!packageDict.TryGetValue(x.PackageCode, out var packageId))
-                    throw new Exception($"Package with Code '{x.PackageCode}' not found.");
+                if (!packageDict.TryGetValue(itemDto.PackageCode, out var packageId))
+                    throw new Exception($"Package with Code '{itemDto.PackageCode}' not found.");
 
-                return new DeclarationItem(
-                    x.Quantity,
-                    x.GrossWeight,
-                    x.NetWeight,
+                var newItem = new DeclarationItem(
+                    itemDto.Quantity,
+                    itemDto.GrossWeight,
+                    itemDto.NetWeight,
                     request.DeclarationId,
                     commodityId,
                     packageId
-                    );
+                    );                
+
+                if(itemDto.Containers != null && itemDto.Containers.Any() == true)
+                {
+                    foreach (var containerDto in itemDto.Containers)
+                    {
+                        if (!containerDict.TryGetValue(containerDto.ContainerNo, out var containerId))
+                            throw new Exception($"Containers with No '{containerDto.ContainerNo}' with type code '{containerDto.ContainerTypeAndSizeCode}' not found.");
+
+                        var container = new DeclarationContainer(
+                            containerId
+                            );
+
+                        if (containerDto.Goods != null && containerDto.Goods.Any() == true)
+                        {
+                            foreach (var goodDto in containerDto.Goods)
+                            {
+                                if (!commodityDict.TryGetValue(goodDto.HSCode, out var inseideContainerCommodityId))
+                                    throw new Exception($"Commodity with HSCode '{goodDto.HSCode}' not found.");
+
+                                if (!packageDict.TryGetValue(goodDto.PackageCode, out var inseideContainerPackageId))
+                                    throw new Exception($"Package with Code '{goodDto.PackageCode}' not found.");
+
+                                container.AddGood(new DeclarationContainerGood(
+                                    goodDto.Quantity,
+                                    goodDto.Weight,
+                                    goodDto.Description,
+                                    inseideContainerCommodityId,
+                                    inseideContainerPackageId
+                                    ));
+                            }
+                        }
+
+                        newItem.AddContainer(container);
+                    }
+                }
+
+                return newItem;
             });
 
             await _declarationItemRepository.InsertRangeAsync(declarationItems);

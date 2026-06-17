@@ -61,6 +61,12 @@ namespace TDM.Infrastructure.Persistence.Repositories
             .Include(x => x.Declaration)
             .Include(x => x.Commodity)
             .Include(x => x.Package)
+            .Include(x => x.DeclarationContainers)
+                .ThenInclude(c => c.DeclarationContainerGoods)
+                .ThenInclude(dcg => dcg.Commodity)
+            .Include(x => x.DeclarationContainers)
+                .ThenInclude(c => c.DeclarationContainerGoods)
+                .ThenInclude(dcg => dcg.Package)
             .Where(x => x.DeclarationId == declarationId)
             .ToListAsync();
         }

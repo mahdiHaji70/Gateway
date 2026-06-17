@@ -23,9 +23,9 @@ namespace TDM.Application.BasicInformation.Cities.Queries.GetCities
         GetCitiesQuery request,
         CancellationToken cancellationToken)
         {
-            var countries = await _cityRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var cities = await _cityRepository.GetPagedAsync(request.PageNumber, request.PageSize);
 
-            return _mapper.Map<PagedResult<CityDto>>(countries);
+            return _mapper.Map<PagedResult<CityDto>>(cities);
         }
     }
 }

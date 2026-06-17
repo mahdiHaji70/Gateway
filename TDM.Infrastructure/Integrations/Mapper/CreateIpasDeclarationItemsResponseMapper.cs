@@ -13,7 +13,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
         {
             var items = new List<IpasDeclarationItemResponse>();
 
-            if(storageAgreementResponseDto.CargoList != null &&
+            if (storageAgreementResponseDto.CargoList != null &&
             storageAgreementResponseDto.CargoList.Count() > 0)
             {
                 items.AddRange(storageAgreementResponseDto.CargoList.Select(x =>
@@ -27,7 +27,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 }));
             }
 
-            if(storageAgreementResponseDto.BulkList != null &&
+            if (storageAgreementResponseDto.BulkList != null &&
             storageAgreementResponseDto.BulkList.Count() > 0)
             {
                 items.AddRange(storageAgreementResponseDto.BulkList.Select(x =>
@@ -41,10 +41,38 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 }));
             }
 
-            if(storageAgreementResponseDto.ContainerList != null &&
+            if (storageAgreementResponseDto.ContainerList != null &&
             storageAgreementResponseDto.ContainerList.Count() > 0)
             {
-                //TODO
+                items.AddRange(storageAgreementResponseDto.ContainerList.Select(container =>
+                    new IpasDeclarationItemResponse
+                    {
+                        Quantity = storageAgreementResponseDto.ContainerList.Count(),
+                        GrossWeight = 1,
+                        NetWeight = 1,
+                        HSCode = "86090000",
+                        PackageCode = "SX",
+
+                        Containers = new List<IpasDeclarationContainerResponse>
+                        {
+                new IpasDeclarationContainerResponse
+                {
+                    ContainerNo = container.ContainerNo!,
+                    ContainerTypeAndSize = container.ContainerTypeAndSize!,
+                    ContainerTypeAndSizeCode = container.ContainerTypeAndSizeCode!,
+
+                    Goods = container.Goods?
+                        .Select(g => new IpasDeclarationContainerGoodsResponse
+                        {
+                            HSCode = g.HSCode!,
+                            PackageCode = g.PackageTypeCode!,
+                            Quantity = Convert.ToInt64(g.PackageQuantity),
+                            Weight = Convert.ToInt64(g.PackageQuantity) * Convert.ToDecimal(g.weight)
+                        })
+                        .ToList()
+                }
+                        }
+                    }));
             }
 
             return items;
