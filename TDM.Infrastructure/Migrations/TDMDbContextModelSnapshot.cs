@@ -915,33 +915,34 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
                 {
                     b.Navigation("DeclarationContainers");
-            modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
-                {
-                    b.Navigation("TerminalDischarges");
-                });
+                    modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
+                        {
+                            b.Navigation("TerminalDischarges");
+                        });
 
-            modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
-                {
-                    b.Navigation("PackageDeclarationContainerGoods");
+                    modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
+                        {
+                            b.Navigation("PackageDeclarationContainerGoods");
 
-                    b.Navigation("PackageDeclarationItems");
-                });
+                            b.Navigation("PackageDeclarationItems");
+                        });
 
-            modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
-                {
-                    b.Navigation("StoreTerminalDischarges");
-                });
+                    modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
+                        {
+                            b.Navigation("StoreTerminalDischarges");
+                        });
 
-            modelBuilder.Entity("TDM.Domain.Entities.StoreType", b =>
-                {
-                    b.Navigation("Stores");
-                });
+                    modelBuilder.Entity("TDM.Domain.Entities.StoreType", b =>
+                        {
+                            b.Navigation("Stores");
+                        });
 
-            modelBuilder.Entity("TDM.Domain.Entities.Traffic", b =>
-                {
-                    b.Navigation("TrafficDeclarations");
-                });
+                    modelBuilder.Entity("TDM.Domain.Entities.Traffic", b =>
+                        {
+                            b.Navigation("TrafficDeclarations");
+                        });
 #pragma warning restore 612, 618
+                });
         }
     }
 }
