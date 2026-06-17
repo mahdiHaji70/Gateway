@@ -44,7 +44,8 @@
 
             @if (id != undefined || id != null) {
             <div class="col-2 mt-4">
-                <button pButton type="button" class="px-2" (click)="sendDeclarationToIpas(id)" label="Send To Ipas" icon="fa-plus" [disabled]="form.invalid"></button>
+                <button pButton type="button" class="px-2" (click)="sendDeclarationToIpas(id)" label="Send To Ipas"
+                    icon="fa-plus" [disabled]="form.invalid"></button>
             </div>
             }
 
@@ -54,13 +55,15 @@
 
     <div class="group-box w-full">
         <div class="w-4 mb-2">
-            <p-button severity="info" label="Get Declaration Items" icon="pi pi-cloud-download" class="mr-2" 
-            (onClick)="getItemsFromIpas(id)" [disabled]="id == undefined" />
+            <p-button severity="info" label="Get Declaration Items" icon="pi pi-cloud-download" class="mr-2"
+                (onClick)="getItemsFromIpas(id)" [disabled]="id == undefined" />
         </div>
 
-        <p-table [value]="declarationItems" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table [value]="declarationItems" dataKey="id" styleClass="p-datatable-gridlines"
+            [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
+                    <th style="width: 5rem"></th>
                     <th>Commodity</th>
                     <th>Package</th>
                     <th>Pack Number</th>
@@ -68,8 +71,14 @@
                     <!-- <th>Actions</th> -->
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-declarationItem>
+            <ng-template pTemplate="body" let-declarationItem let-expanded="expanded">
                 <tr>
+                    <td>
+                        @if (declarationItem.declarationContainers?.length) {
+                        <p-button type="button" [pRowToggler]="declarationItem"
+                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                        }
+                    </td>
                     <td>{{ declarationItem.commodityName }}</td>
                     <td>{{ declarationItem.packageName }}</td>
                     <td>{{ declarationItem.packNumber }}</td>
@@ -89,8 +98,65 @@
                     </td> -->
                 </tr>
             </ng-template>
+            <ng-template pTemplate="rowexpansion" let-declarationItem>
+                <tr>
+                    <td colspan="12">
+                        <div class="p-3">
+                            <p-table [value]="declarationItem.declarationContainers" dataKey="declarationContainerId">
+                                <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 5rem"></th>
+                    <th>Container Number</th>
+                    <th>Type</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-container let-expanded="expanded">
+                <tr>
+                    <td>
+                        @if (declarationItem.declarationContainers?.length) {
+                        <p-button type="button" [pRowToggler]="container"
+                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                        }
+                    </td>
+                    <td>{{container.containerNo}}</td>
+                    <td>{{container.containerTypeAndSize}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-container>
+                <tr>
+                    <td colspan="3">
+                        <div class="p-3">
+                            <p-table [value]="container.declarationContainerInfos">
+                                <ng-template pTemplate="header">
+                <tr>
+                    <th>Commodity</th>
+                    <th>Package</th>
+                    <th>Pack Number</th>
+                    <th>Weight</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-containerInfo>
+                <tr>
+                    <td>{{containerInfo.commodityName}}</td>
+                    <td>{{containerInfo.packageName}}</td>
+                    <td>{{containerInfo.packNumber}}</td>
+                    <td>{{containerInfo.weight}}</td>
+
+                </tr>
+            </ng-template>
         </p-table>
     </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+</div>
+</td>
+</tr>
+</ng-template>
+</p-table>
+</div>
 
 
 </div>

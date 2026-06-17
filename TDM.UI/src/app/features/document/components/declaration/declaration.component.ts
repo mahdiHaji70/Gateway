@@ -17,6 +17,7 @@ import { DeclarationContainerComponent } from '../declaration-container/declarat
 import { DeclarationContainerInfoComponent } from '../declaration-container-info/declaration-container-info.component';
 import { formatUTCDate } from '../../../../shared/utils/format-date';
 import { DeclarationContainerFull } from '../../models/declaration-container-full.model';
+import { DeclarationContainerInfoFull } from '../../models/declaration-container-info-full.model';
 
 @Component({
   selector: 'app-declaration',
@@ -111,19 +112,21 @@ export class DeclarationComponent {
             item.declarationNumber, item.commodityId, item.commodityName, item.quantity, item.grossWeight,
             item.netWeight, item.packageId, item.packageName);
 
-            if(item.declarationContainers != null && item.declarationContainers.length > 0){
-              var declarationContainers = item.declarationContainers.map((container: any) => {
-                //var declarationContainer = new DeclarationContainerFull(container.declarationItemId, '', container.containerNo, ));
-              });
-            }
+          if (item.declarationContainers != null && item.declarationContainers.length > 0) {
+            declarationItem.declarationContainers = item.declarationContainers.map((container: any) => {
+              var declarationContainer = new DeclarationContainerFull(container.declarationContainerId, container.declarationItemId, container.containerId, container.containerNo, container.containerTypeAndSize);
 
-            return declarationItem;
-        }
-
-
-        );
-
-
+              if (container.declarationContainerGoods != null && container.declarationContainerGoods.length > 0) {
+                declarationContainer.declarationContainerInfos = container.declarationContainerGoods.map((containerGood: any) =>
+                  new DeclarationContainerInfoFull(containerGood.declarationContainerId, containerGood.commodityId, containerGood.commodityName,
+                    containerGood.packageId, containerGood.packageName, containerGood.quantity, containerGood.weight
+                  ));
+              }
+              return declarationContainer;
+            });
+          }
+          return declarationItem;
+        });
       },
       error: (error: any) => { }
     });

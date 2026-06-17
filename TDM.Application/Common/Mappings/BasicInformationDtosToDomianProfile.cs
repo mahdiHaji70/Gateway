@@ -52,7 +52,7 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<DeclarationContainer, DeclarationContainerDto>()
                 .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.Container.No))
-                .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.Container.ContainerTypeAndSize));
+                .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.Container.ContainerTypeAndSize.TypeAndSize));
 
 
             CreateMap<DeclarationContainerGood, DeclarationContainerGoodDto>()

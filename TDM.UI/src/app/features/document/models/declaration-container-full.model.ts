@@ -1,22 +1,21 @@
 import { DeclarationContainerInfoFull } from "./declaration-container-info-full.model";
 
 export class DeclarationContainerFull {
-    id?: string;
+    declarationContainerId: string;
     declarationItemId: string;
     containerId: string;
-    containerName: string;
-    isFull: boolean;
-    weight: number;
+    containerNo: string;
+    containerTypeAndSize: string
     declarationContainerInfos?: DeclarationContainerInfoFull[];
     /**
      *
      */
-    constructor(declarationItemId: string, containerId: string, containerName: string, isFull: boolean, weight: number, id?: string) {
+    constructor(declarationContainerId: string, declarationItemId: string, containerId: string, containerNo: string, containerTypeAndSize: string) {
+        this.declarationContainerId = declarationContainerId;
         this.declarationItemId = declarationItemId;
         this.containerId = containerId;
-        this.containerName = containerName;
-        this.isFull = isFull;
-        this.weight = weight;
-        this.id = id;
+        this.containerNo = containerNo;
+        this.containerTypeAndSize = containerTypeAndSize;
+
     }
 }

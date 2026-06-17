@@ -43,8 +43,7 @@ export class DeclarationContainerComponent {
   loadDeclarationContainers() {
     this.declarationContainerService.getByDeclarationItemId(this.declarationItemId!).subscribe({
       next: (res: any) => {
-        this.declarationContainers = res.data.map((item: any) => new DeclarationContainerFull(item.declarationItemId, item.containerId, item.containerName,
-          item.isFull, item.weight, item.id));
+        this.declarationContainers = res.data.map((container: any) => new DeclarationContainerFull(container.declarationContainerId, container.declarationItemId, container.containerId, container.containerNo, container.containerTypeAndSize));
       },
       error: (error: any) => { }
     });
@@ -63,8 +62,8 @@ export class DeclarationContainerComponent {
   showContainerInfo(declarationContainer: DeclarationContainerFull) {
     this.showConainerInfoEvent.emit(
       {
-        id: declarationContainer.id,
-        container: declarationContainer.containerName
+        id: declarationContainer.declarationContainerId,
+        container: declarationContainer.containerNo
       });
   }
 
