@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDM.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using TDM.Infrastructure.Persistence;
 namespace TDM.Infrastructure.Migrations
 {
     [DbContext(typeof(TDMDbContext))]
-    partial class TDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260616052728_n-feat-InfoBaseTerminalDischarge2")]
+    partial class nfeatInfoBaseTerminalDischarge2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -436,7 +439,10 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CargoTypeId")
+                    b.Property<int>("CargoTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CargoTypeId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Classification")
@@ -478,14 +484,19 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<bool>("IsVoluminous")
                         .HasColumnType("bit");
 
+                    b.Property<int>("MyProperty")
+                        .HasColumnType("int");
+
                     b.Property<long>("PackNB")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("StoreId")
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StoreId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TerminalCode")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -513,9 +524,11 @@ namespace TDM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CargoTypeId1");
+
                     b.HasIndex("DeclarationItemId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StoreId1");
 
                     b.ToTable("TerminalDischarges", "operation");
                 });
@@ -631,22 +644,22 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.TerminalDischarge", b =>
                 {
-                    b.HasOne("TDM.Domain.Entities.DeclarationItem", "DeclarationItem")
-                        .WithMany("TerminalDischarges")
-                        .HasForeignKey("DeclarationItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("TDM.Domain.Entities.CargoType", "CargoType")
+                        .WithMany()
+                        .HasForeignKey("CargoTypeId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TDM.Domain.Entities.CargoType", "CargoType")
-                        .WithMany("CargoTypeTerminalDischarges")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("TDM.Domain.Entities.DeclarationItem", "DeclarationItem")
+                        .WithMany()
+                        .HasForeignKey("DeclarationItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TDM.Domain.Entities.Store", "Store")
-                        .WithMany("StoreTerminalDischarges")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("StoreId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CargoType");
@@ -654,11 +667,6 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("DeclarationItem");
 
                     b.Navigation("Store");
-                });
-
-            modelBuilder.Entity("TDM.Domain.Entities.CargoType", b =>
-                {
-                    b.Navigation("CargoTypeTerminalDischarges");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.Commodity", b =>
@@ -683,19 +691,9 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("DeclarationItems");
                 });
 
-            modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
-                {
-                    b.Navigation("TerminalDischarges");
-                });
-
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
                 {
                     b.Navigation("PackageDeclarationItems");
-                });
-
-            modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
-                {
-                    b.Navigation("StoreTerminalDischarges");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.StoreType", b =>

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BasicInformation\Cities\Commands\UpdateCity - Copy\**" />
+    <EmbeddedResource Remove="BasicInformation\Cities\Commands\UpdateCity - Copy\**" />
+    <None Remove="BasicInformation\Cities\Commands\UpdateCity - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
@@ -18,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BasicInformation\Cities\Commands\UpdateCity - Copy\" />
+    <Folder Include="Operation\TerminalDischarges\Queries\GetTerminalDischargeByDeclarationNo\" />
   </ItemGroup>
 
 </Project>

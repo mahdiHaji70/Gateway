@@ -30,6 +30,10 @@ namespace TDM.Infrastructure
             services.AddScoped<IDeclarationRepository, DeclarationRepository>();
             services.AddScoped<IDeclarationItemRepository, DeclarationItemRepository>();
             services.AddScoped<IDeclarationExternalService, DeclarationExternalService>();
+            services.AddScoped<ICargoTypeRepository, CargoTypeRepository>();
+            services.AddScoped<IStoreTypeRepository, StoreTypeRepository>();
+            services.AddScoped<IStoreRepository, StoreRepository>();
+            services.AddScoped<ITerminalDischargeRepository, TerminalDischargeRepository>();
 
             return services;
         }

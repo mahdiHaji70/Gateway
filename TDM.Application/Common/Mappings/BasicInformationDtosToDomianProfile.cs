@@ -1,13 +1,17 @@
 ﻿using AutoMapper;
+using TDM.Application.BasicInformation.CargoTypes.DTOs;
 using TDM.Application.BasicInformation.Cities.DTOs;
 using TDM.Application.BasicInformation.Commodities.DTOs;
 using TDM.Application.BasicInformation.Companies.DTOs;
 using TDM.Application.BasicInformation.Countries.DTOs;
 using TDM.Application.BasicInformation.Packages.DTOs;
+using TDM.Application.BasicInformation.Stores.DTOs;
+using TDM.Application.BasicInformation.StoreTypes.DTOs;
 using TDM.Application.BasicInformation.Traffics.DTOs;
 using TDM.Application.Common.Models;
 using TDM.Application.Doc.DeclarationItems.DTOs;
 using TDM.Application.Doc.Declarations.DTOs;
+using TDM.Application.Operation.TerminalDischarges.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Mappings
@@ -34,6 +38,13 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<DeclarationItem, DeclarationItemDto>();
 
+            CreateMap<CargoType, CargoTypeDto>();
+
+            CreateMap<StoreType, StoreTypeDto>();
+
+            CreateMap<Store, StoreDto>();
+
+            CreateMap<TerminalDischarge, TerminalDischargeDto>();
 
         }
     }
