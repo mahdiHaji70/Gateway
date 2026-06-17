@@ -12,6 +12,7 @@ export class DropDownComponent {
   @Input() controlName: string = '';
   @Input() options?: any[];
   @Input() required: boolean = false;
+  @Input() optionLabel: string = 'name';
   label?: string;  
   selectedOption: any;
   /**

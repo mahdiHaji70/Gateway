@@ -11,30 +11,28 @@
             label="Refresh" 
             icon="pi pi-refresh" 
             class="mr-2" 
-            (onClick)="loadContainers()" />
+            (onClick)="loadContainerTypesAndSizes()" />
     </ng-template>
 
 </p-toolbar>
-<p-table [value]="containers" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="containerTypes" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
-            <th>Container Number</th>
-            <th>Container Type Code</th>
-            <th>container Type</th>
+            <th>Code</th>
+            <th>Name</th>
             <th>Actions</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-container>
+    <ng-template pTemplate="body" let-containerType>
         <tr>
-            <td>{{ container.containerNo }}</td>
-            <td>{{ container.containerTypeAndSizeCode }}</td>
-            <td>{{ container.containerTypeAndSize }}</td>
+            <td>{{ containerType.typeAndSizeCode }}</td>
+            <td>{{ containerType.typeAndSize }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                    (click)="onEdit(container.id)">
+                    (click)="onEdit(containerType.id)">
                 </button>
                 <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,container.id)">
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,containerType.id)">
                 </button>
             </td>
         </tr>

@@ -34,6 +34,8 @@ import { PlaceTypeListComponent } from './components/place-type/place-type-list/
 import { PlaceTypeComponent } from './components/place-type/place-type.component';
 import { PlaceListComponent } from './components/place/place-list/place-list.component';
 import { PlaceComponent } from './components/place/place.component';
+import { ContainerTypeAndSizeComponent } from './components/container-type-and-size/container-type-and-size.component';
+import { ContainerTypeAndSizeListComponent } from './components/container-type-and-size/container-type-and-size-list/container-type-and-size-list.component';
 
 const routes: Routes = [  
   { path: 'traffic-list', component: TrafficListComponent},
@@ -75,6 +77,10 @@ const routes: Routes = [
   { path: 'container-type-list', component: ContainerTypeListComponent},
   { path: 'container-type', component: ContainerTypeComponent},
   { path: 'container-type/:id', component: ContainerTypeComponent},
+
+  { path: 'container-type-and-size-list', component: ContainerTypeAndSizeListComponent},
+  { path: 'container-type-and-size', component: ContainerTypeAndSizeComponent},
+  { path: 'container-type-and-size/:id', component: ContainerTypeAndSizeComponent},
 
   { path: 'container-size-list', component: ContainerSizeListComponent},
   { path: 'container-size', component: ContainerSizeComponent},
