@@ -14,6 +14,10 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<City> Cities => Set<City>();
         public DbSet<Declaration> Declarations => Set<Declaration>();
         public DbSet<DeclarationItem> DeclarationItems => Set<DeclarationItem>();
+        public DbSet<CargoType> CargoTypes=>Set<CargoType>();
+        public DbSet<StoreType> StoreTypes => Set<StoreType>();
+        public DbSet<Store> Stores => Set<Store>();
+        public DbSet<TerminalDischarge> TerminalDischarges => Set<TerminalDischarge>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)

@@ -24,5 +24,6 @@ namespace TDM.Application.Doc.Declarations.DTOs
         public string? IpasDeclarationId { get; set; }
         public string? IpasDeclarationNo { get; set; }
         public DateTime IpasDeclarationIdReceivedAt { get; set; }
+
     }
 }

@@ -21,6 +21,7 @@ namespace TDM.Domain.Entities
 
         public ICollection<DeclarationContainer> DeclarationContainers { get; private set; } = new List<DeclarationContainer>();
 
+        public ICollection<TerminalDischarge> TerminalDischarges { get; private set; } = new List<TerminalDischarge>();
 
         public DeclarationItem(
             long quantity,
