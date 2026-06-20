@@ -13,11 +13,11 @@ namespace TDM.Application.BasicInformation.Stores.Queries.GetStoreById
 {
     public class GetStoreByIdQueryHandler : IRequestHandler<GetStoreByIdQuery, StoreDto>
     {
-        private readonly IRepository<Store> _storeRepository;
+        private readonly IStoreRepository _storeRepository;
         private readonly IMapper _mapper;
 
         public GetStoreByIdQueryHandler(IMapper mapper,
-            IRepository<Store> storeRepository)
+            IStoreRepository storeRepository)
         {
             _storeRepository = storeRepository;
             _mapper = mapper;

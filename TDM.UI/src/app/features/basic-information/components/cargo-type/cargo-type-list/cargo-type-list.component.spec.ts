@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlaceTypeComponent } from './place-type.component';
+import { CargoTypeListComponent } from './cargo-type-list.component';
 
-describe('PlaceTypeComponent', () => {
-  let component: PlaceTypeComponent;
-  let fixture: ComponentFixture<PlaceTypeComponent>;
+describe('CargoTypeListComponent', () => {
+  let component: CargoTypeListComponent;
+  let fixture: ComponentFixture<CargoTypeListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PlaceTypeComponent]
+      declarations: [CargoTypeListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlaceTypeComponent);
+    fixture = TestBed.createComponent(CargoTypeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

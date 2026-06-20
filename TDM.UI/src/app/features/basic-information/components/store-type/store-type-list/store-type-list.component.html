@@ -11,34 +11,26 @@
             label="Refresh" 
             icon="pi pi-refresh" 
             class="mr-2" 
-            (onClick)="loadPlaces()" />
+            (onClick)="loadStoreTypes()" />
     </ng-template>
 
 </p-toolbar>
-<p-table [value]="places" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="storeTypes" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
-            <th>Place Type</th>
-            <th>Place Name</th>
-            <th>Capacity</th>
-            <th>Area</th>
-            <th>Contact</th>            
+            <th>Name</th>
             <th>Actions</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-place>
+    <ng-template pTemplate="body" let-storeType>
         <tr>
-            <td>{{ place.placeType }}</td>
-            <td>{{ place.placeName }}</td>
-            <td>{{ place.capacity }}</td>
-            <td>{{ place.area }}</td>
-            <td>{{ place.contactName }}</td>
+            <td>{{ storeType.name }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                    (click)="onEdit(place.id)">
+                    (click)="onEdit(storeType.id)">
                 </button>
                 <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,place.id)">
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,storeType.id)">
                 </button>
             </td>
         </tr>
