@@ -30,12 +30,14 @@ import { TruckListComponent } from './components/truck/truck-list/truck-list.com
 import { TruckComponent } from './components/truck/truck.component';
 import { OperationTypeListComponent } from './components/operation-type/operation-type-list/operation-type-list.component';
 import { OperationTypeComponent } from './components/operation-type/operation-type.component';
-import { PlaceTypeListComponent } from './components/place-type/place-type-list/place-type-list.component';
-import { PlaceTypeComponent } from './components/place-type/place-type.component';
-import { PlaceListComponent } from './components/place/place-list/place-list.component';
-import { PlaceComponent } from './components/place/place.component';
+import { StoreTypeListComponent } from './components/store-type/store-type-list/store-type-list.component';
+import { StoreTypeComponent } from './components/store-type/store-type.component';
+import { StoreListComponent } from './components/store/store-list/store-list.component';
+import { StoreComponent } from './components/store/store.component';
 import { ContainerTypeAndSizeComponent } from './components/container-type-and-size/container-type-and-size.component';
 import { ContainerTypeAndSizeListComponent } from './components/container-type-and-size/container-type-and-size-list/container-type-and-size-list.component';
+import { CargoTypeListComponent } from './components/cargo-type/cargo-type-list/cargo-type-list.component';
+import { CargoTypeComponent } from './components/cargo-type/cargo-type.component';
 
 const routes: Routes = [  
   { path: 'traffic-list', component: TrafficListComponent},
@@ -102,13 +104,17 @@ const routes: Routes = [
   { path: 'operation-type', component: OperationTypeComponent},
   { path: 'operation-type/:id', component: OperationTypeComponent},
 
-  { path: 'place-type-list', component: PlaceTypeListComponent},
-  { path: 'place-type', component: PlaceTypeComponent},
-  { path: 'place-type/:id', component: PlaceTypeComponent},
+  { path: 'store-type-list', component: StoreTypeListComponent},
+  { path: 'store-type', component: StoreTypeComponent},
+  { path: 'store-type/:id', component: StoreTypeComponent},
 
-  { path: 'place-list', component: PlaceListComponent},
-  { path: 'place', component: PlaceComponent},
-  { path: 'place/:id', component: PlaceComponent},
+  { path: 'store-list', component: StoreListComponent},
+  { path: 'store', component: StoreComponent},
+  { path: 'store/:id', component: StoreComponent},
+
+   { path: 'cargo-type-list', component: CargoTypeListComponent},
+  { path: 'cargo-type', component: CargoTypeComponent},
+  { path: 'cargo-type/:id', component: CargoTypeComponent},
 ];
 
 @NgModule({

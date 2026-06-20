@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
-import { Place } from '../../../models/place.model';
+import { CargoType } from '../../../models/cargo-type.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { placeTypesDropdown } from '../../../../../shared/constants/place-types';
-import { PlaceFull } from '../../../models/place-full.model';
 
 @Component({
-  selector: 'app-place-list',
-  templateUrl: './place-list.component.html',
-  styleUrl: './place-list.component.scss'
+  selector: 'app-cargo-type-list',
+  templateUrl: './cargo-type-list.component.html',
+  styleUrl: './cargo-type-list.component.scss'
 })
-export class PlaceListComponent {
-places: PlaceFull[] = [];
+export class CargoTypeListComponent {
+  cargoTypes: CargoType[] = [];
 
   /**
    *
@@ -24,25 +22,24 @@ places: PlaceFull[] = [];
   }
 
   ngOnInit() {
-    this.loadPlaces();
+    this.loadCargoTypes();
   }
 
-  loadPlaces(){
-    this.basicInformationService.getAll('Place').subscribe({
+  loadCargoTypes() {
+    this.basicInformationService.getAll('CargoTypes').subscribe({
       next: (res: any) => {
-        this.places = res.data.map((item: any) => new PlaceFull(placeTypesDropdown.find(
-          (type) => type.value === item.placeType)!.name!, item.placeName!,item.capacity, item.area, item.isOwner, item.contact.id, item.contact.name, item.id));
+        this.cargoTypes = res.data.items.map((item: any) => new CargoType(item.name, item.id));
       },
       error: (error: any) => { }
     });
   }
 
-  onAdd(){
-    this.router.navigate(['/place']);
+  onAdd() {
+    this.router.navigate(['/cargo-type']);
   }
 
   onEdit(id: any) {
-    this.router.navigate(['/place', id]);
+    this.router.navigate(['/cargo-type', id]);
   }
 
   onDelete(event: any, id: any) {
@@ -57,10 +54,10 @@ places: PlaceFull[] = [];
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Place', id).subscribe({
+        this.basicInformationService.removeBasicInformation('CargoTypes', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-            this.loadPlaces();
+            this.loadCargoTypes();
           },
           error: (error: any) => {
             this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });

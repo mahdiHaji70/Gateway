@@ -1,4 +1,4 @@
-export enum PlaceTypes {
+export enum StoreTypes {
   OpenArea = 1,
   ClosedArea = 2,
   Sule = 3,
@@ -6,9 +6,9 @@ export enum PlaceTypes {
   Hive = 5,
 }
 
-export const placeTypesDropdown = Object.keys(PlaceTypes)
+export const storeTypesDropdown = Object.keys(StoreTypes)
 .filter((key) => isNaN(Number(key)))
 .map((key) => ({
   name: key,
-  value: PlaceTypes[key as keyof typeof PlaceTypes]
+  value: StoreTypes[key as keyof typeof StoreTypes]
 }));

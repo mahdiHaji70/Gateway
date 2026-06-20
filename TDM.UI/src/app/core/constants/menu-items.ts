@@ -1,5 +1,5 @@
 export const MenuItems = [
-    
+
     {
         label: 'Operation',
         url: 'assets/images/warehouse.png',
@@ -13,11 +13,11 @@ export const MenuItems = [
             { label: 'Operation Aggregation', path: 'operation/operation-aggregation-list' },
             { label: 'Change Package', path: 'operation/change-package' },
             { label: 'Stuff', path: 'operation/stuff' },
-            { label: 'Store Receipt Request', path: 'operation/store-request' },           
+            { label: 'Store Receipt Request', path: 'operation/store-request' },
             { label: 'Exit From Store', path: 'operation/exit-from-store-list' },
 
         ]
-    },    
+    },
     {
         label: 'Document',
         icon: 'pi pi-file',
@@ -38,7 +38,10 @@ export const MenuItems = [
             { label: 'City', path: 'city-list' },
             { label: 'Traffic', path: 'traffic-list' },
             { label: 'Container Type And Size', path: 'container-type-and-size-list' },
-            { label: 'Container', path: 'container-list' },            
+            { label: 'Container', path: 'container-list' },
+            { label: 'Store Type', path: 'store-type-list' },
+            { label: 'Store', path: 'store-list' },
+            { label: 'Cargo Type', path: 'cargo-type-list' },
             //{ label: 'Container Size', path: 'container-size-list' },
             //{ label: 'Terminal', path: 'terminal-list' },
             // { label: 'Declaration Type', path: 'declaration-type-list' },
@@ -47,9 +50,7 @@ export const MenuItems = [
             // { label: 'Wagon', path: 'wagon-list' },
             // { label: 'Truck', path: 'truck-list' },
             // { label: 'Operation Type', path: 'operation-type-list' },
-            // { label: 'Place Type', path: 'place-type-list' },
-            // { label: 'Place', path: 'place-list' },
         ]
     }
-    
+
 ];

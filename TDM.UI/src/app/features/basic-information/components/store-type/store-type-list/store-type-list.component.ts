@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { PlaceType } from '../../../models/place-type.model';
+import { StoreType } from '../../../models/store-type.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-place-type-list',
-  templateUrl: './place-type-list.component.html',
-  styleUrl: './place-type-list.component.scss'
+  selector: 'app-store-type-list',
+  templateUrl: './store-type-list.component.html',
+  styleUrl: './store-type-list.component.scss'
 })
-export class PlaceTypeListComponent {
-placeTypes: PlaceType[] = [];
+export class StoreTypeListComponent {
+storeTypes: StoreType[] = [];
 
   /**
    *
@@ -22,24 +22,24 @@ placeTypes: PlaceType[] = [];
   }
 
   ngOnInit() {
-    this.loadPlaceTypes();
+    this.loadStoreTypes();
   }
 
-  loadPlaceTypes(){
-    this.basicInformationService.getAll('PlaceType').subscribe({
+  loadStoreTypes(){
+    this.basicInformationService.getAll('StoreTypes').subscribe({
       next: (res: any) => {
-        this.placeTypes = res.data.map((item: any) => new PlaceType(item.code, item.name, item.id));
+        this.storeTypes = res.data.items.map((item: any) => new StoreType(item.name, item.id));
       },
       error: (error: any) => { }
     });
   }
 
   onAdd(){
-    this.router.navigate(['/place-type']);
+    this.router.navigate(['/store-type']);
   }
 
   onEdit(id: any) {
-    this.router.navigate(['/place-type', id]);
+    this.router.navigate(['/store-type', id]);
   }
 
   onDelete(event: any, id: any) {
@@ -54,10 +54,10 @@ placeTypes: PlaceType[] = [];
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('PlaceType', id).subscribe({
+        this.basicInformationService.removeBasicInformation('StoreTypes', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-            this.loadPlaceTypes();
+            this.loadStoreTypes();
           },
           error: (error: any) => {
             this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });

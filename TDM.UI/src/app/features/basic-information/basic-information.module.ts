@@ -42,12 +42,14 @@ import { TruckComponent } from './components/truck/truck.component';
 import { TruckListComponent } from './components/truck/truck-list/truck-list.component';
 import { OperationTypeComponent } from './components/operation-type/operation-type.component';
 import { OperationTypeListComponent } from './components/operation-type/operation-type-list/operation-type-list.component';
-import { PlaceTypeComponent } from './components/place-type/place-type.component';
-import { PlaceTypeListComponent } from './components/place-type/place-type-list/place-type-list.component';
-import { PlaceComponent } from './components/place/place.component';
-import { PlaceListComponent } from './components/place/place-list/place-list.component';
 import { ContainerTypeAndSizeComponent } from './components/container-type-and-size/container-type-and-size.component';
 import { ContainerTypeAndSizeListComponent } from './components/container-type-and-size/container-type-and-size-list/container-type-and-size-list.component';
+import { StoreTypeComponent } from './components/store-type/store-type.component';
+import { StoreTypeListComponent } from './components/store-type/store-type-list/store-type-list.component';
+import { StoreComponent } from './components/store/store.component';
+import { StoreListComponent } from './components/store/store-list/store-list.component';
+import { CargoTypeComponent } from './components/cargo-type/cargo-type.component';
+import { CargoTypeListComponent } from './components/cargo-type/cargo-type-list/cargo-type-list.component';
 
 
 
@@ -83,12 +85,14 @@ import { ContainerTypeAndSizeListComponent } from './components/container-type-a
     TruckListComponent,
     OperationTypeComponent,
     OperationTypeListComponent,
-    PlaceTypeComponent,
-    PlaceTypeListComponent,
-    PlaceComponent,
-    PlaceListComponent,
     ContainerTypeAndSizeComponent,
-    ContainerTypeAndSizeListComponent
+    ContainerTypeAndSizeListComponent,
+    StoreTypeComponent,
+    StoreTypeListComponent,
+    StoreComponent,
+    StoreListComponent,
+    CargoTypeComponent,
+    CargoTypeListComponent
   ],
   imports: [
     CommonModule,

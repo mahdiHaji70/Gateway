@@ -3,18 +3,17 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { BasicInformationService } from '../../services/basic-information.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PlaceType } from '../../models/place-type.model';
+import { CargoType } from '../../models/cargo-type.model';
 
 @Component({
-  selector: 'app-place-type',
-  templateUrl: './place-type.component.html',
-  styleUrl: './place-type.component.scss'
+  selector: 'app-cargo-type',
+  templateUrl: './cargo-type.component.html',
+  styleUrl: './cargo-type.component.scss'
 })
-export class PlaceTypeComponent {
+export class CargoTypeComponent {
   id?: any;
 
   form = new FormGroup({
-    code: new FormControl<string>(''),
     name: new FormControl<string>('')
   });
   /**
@@ -30,13 +29,12 @@ export class PlaceTypeComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('PlaceType', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('CargoTypes', this.id).subscribe((res: any) => {
           this.form.patchValue(res.data);
         });
       }
 
     });
-
   }
 
   onSubmit(): void {
@@ -44,21 +42,20 @@ export class PlaceTypeComponent {
       return;
     }
 
-    const placeType: PlaceType = new PlaceType(
-      this.form.get('code')?.value!,
+    const cargoType: CargoType = new CargoType(
       this.form.get('name')?.value!,
       this.id
     );
 
-    const placeTypeAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('PlaceType', placeType)
-      : this.basicInformationService.postBasicInformation('PlaceType', placeType);
+    const cargoTypeAction$ = this.id
+      ? this.basicInformationService.putBasicInformation('CargoTypes', cargoType)
+      : this.basicInformationService.postBasicInformation('CargoTypes', cargoType);
 
-    placeTypeAction$
+    cargoTypeAction$
       .subscribe({
         next: (res: any) => {
           this.messageService.add({ severity: 'success', summary: `Successfully ${this.id ? 'updated' : 'added'}` });
-          this.router.navigate(['/place-type-list'])
+          this.router.navigate(['/cargo-type-list'])
         },
         error: (error: any) => {
           this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
