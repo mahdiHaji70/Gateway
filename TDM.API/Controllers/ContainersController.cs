@@ -1,15 +1,17 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
-using TDM.Application.BasicInformation.Containers.Queries.GetContainers;
-using TDM.Application.BasicInformation.Containers.Queries.GetContainerById;
 using TDM.Application.BasicInformation.Containers.Commands.CreateContainer;
-using TDM.Application.BasicInformation.Containers.Commands.UpdateContainer;
 using TDM.Application.BasicInformation.Containers.Commands.RemoveContainer;
+using TDM.Application.BasicInformation.Containers.Commands.UpdateContainer;
+using TDM.Application.BasicInformation.Containers.Queries.GetContainerById;
+using TDM.Application.BasicInformation.Containers.Queries.GetContainers;
 
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ContainersController : Controller

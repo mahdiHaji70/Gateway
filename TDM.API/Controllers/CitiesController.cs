@@ -1,15 +1,17 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
+using TDM.Application.BasicInformation.Cities.Commands.CreateCity;
+using TDM.Application.BasicInformation.Cities.Commands.RemoveCity;
+using TDM.Application.BasicInformation.Cities.Commands.UpdateCity;
 using TDM.Application.BasicInformation.Cities.Queries.GetCities;
 using TDM.Application.BasicInformation.Cities.Queries.GetCityById;
-using TDM.Application.BasicInformation.Cities.Commands.CreateCity;
-using TDM.Application.BasicInformation.Cities.Commands.UpdateCity;
-using TDM.Application.BasicInformation.Cities.Commands.RemoveCity;
 
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CitiesController : Controller

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.CreateDeclarationItem;
@@ -13,6 +14,7 @@ using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarat
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DeclarationItemsController : Controller

@@ -1,16 +1,18 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.Declarations.Commands.CreateDeclaration;
 using TDM.Application.BasicInformation.Declarations.Commands.RemoveDeclaration;
-using TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclaration;
-using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarations;
-using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarationById;
 using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId;
+using TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclaration;
+using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarationById;
+using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarations;
 
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DeclarationsController : Controller
