@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.Countries.Commands.CreateCountry;
@@ -10,6 +11,7 @@ using TDM.Application.BasicInformation.Countries.Queries.GetCountryById;
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CountriesController : Controller

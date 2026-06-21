@@ -1,14 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
+using TDM.Application.BasicInformation.ContainerTypesAndSizes.Commands.CreateContainerTypeAndSize;
+using TDM.Application.BasicInformation.ContainerTypesAndSizes.Commands.RemoveContainerTypeAndSize;
+using TDM.Application.BasicInformation.ContainerTypesAndSizes.Commands.UpdateContainerTypeAndSize;
 using TDM.Application.BasicInformation.ContainerTypesAndSizes.Queries.GetContainerTypeAndSizeById;
 using TDM.Application.BasicInformation.ContainerTypesAndSizes.Queries.GetContainerTypesAndSizes;
-using TDM.Application.BasicInformation.ContainerTypesAndSizes.Commands.CreateContainerTypeAndSize;
-using TDM.Application.BasicInformation.ContainerTypesAndSizes.Commands.UpdateContainerTypeAndSize;
-using TDM.Application.BasicInformation.ContainerTypesAndSizes.Commands.RemoveContainerTypeAndSize;
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ContainerTypesAndSizesController : Controller

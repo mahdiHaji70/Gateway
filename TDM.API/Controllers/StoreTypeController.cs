@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.StoreTypes.Commands.CreateStoreType;
@@ -9,6 +10,7 @@ using TDM.Application.BasicInformation.StoreTypes.Queries.GetStoreTypes;
 
 namespace TDM.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class StoreTypesController : Controller
