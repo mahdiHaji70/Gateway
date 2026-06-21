@@ -2,9 +2,9 @@
 
 namespace TDM.Application.BasicInformation.Traffics.Commands.CreateTraffic
 {
-    public class UpdateTrafficCommandValidator : AbstractValidator<CreateTrafficCommand>
+    public class CreateTrafficCommandValidator : AbstractValidator<CreateTrafficCommand>
     {
-        public UpdateTrafficCommandValidator()
+        public CreateTrafficCommandValidator()
         {
             RuleFor(x => x.Name)
             .NotEmpty()

@@ -9,6 +9,7 @@ using TDM.Application.BasicInformation.Countries.DTOs;
 using TDM.Application.BasicInformation.Packages.DTOs;
 using TDM.Application.BasicInformation.Stores.DTOs;
 using TDM.Application.BasicInformation.StoreTypes.DTOs;
+using TDM.Application.BasicInformation.Terminals.DTOs;
 using TDM.Application.BasicInformation.Traffics.DTOs;
 using TDM.Application.Common.Models;
 using TDM.Application.Doc.DeclarationItems.DTOs;
@@ -35,6 +36,8 @@ namespace TDM.Application.Common.Mappings
             CreateMap<Country, CountryDto>();
 
             CreateMap<City, CityDto>();
+            
+            CreateMap<Terminal, TerminalDto>();
 
             CreateMap<Declaration, DeclarationDto>();
 
