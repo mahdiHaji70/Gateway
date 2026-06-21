@@ -7,7 +7,7 @@ using TDM.Domain.Entities;
 
 namespace TDM.Infrastructure.Persistence.Configurations
 {
-    public class TerminalDischargeConfiguration:IEntityTypeConfiguration<TerminalDischarge>
+    public class TerminalDischargeConfiguration : IEntityTypeConfiguration<TerminalDischarge>
     {
         public void Configure(EntityTypeBuilder<TerminalDischarge> builder)
         {
@@ -42,7 +42,7 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasOne(c => c.CargoType)
            .WithMany(cn => cn.CargoTypeTerminalDischarges)
-           .HasForeignKey(c => c.StoreId)
+           .HasForeignKey(c => c.CargoTypeId)
            .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(c => c.Store)

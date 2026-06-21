@@ -5,10 +5,10 @@ using System.Text;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDischarge
 {
-    public class UpdateTerminalDischargeCommand:IRequest<Guid>
+    public class UpdateTerminalDischargeCommand : IRequest<Guid>
     {
         public Guid Id { get; set; }
-        public int TerminalCode { get; set; }
+        public string TerminalCode { get; set; }
         public Guid CargoTypeId { get; set; }
         public Guid StoreId { get; set; }
         public Guid DeclarationItemId { get; set; }
@@ -25,7 +25,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDi
         public bool IsDangerous { get; set; }
         public string DangerousCode { get; set; }
         public string Classification { get; set; }
-        public float IgnitionTemperature { get; set; }
+        public decimal IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
     }
 }

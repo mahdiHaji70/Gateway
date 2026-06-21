@@ -6,13 +6,13 @@ using System.Text;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDischarge
 {
-   
+
     public class CreateTerminalDischargeCommandValidator : AbstractValidator<CreateTerminalDischargeCommand>
     {
         public CreateTerminalDischargeCommandValidator()
         {
             RuleFor(x => x.TerminalCode)
-           .GreaterThan(0);
+           .NotEmpty();
 
             RuleFor(x => x.CargoTypeId)
                 .NotEmpty();
@@ -42,7 +42,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDi
 
             RuleFor(x => x.Weight)
                 .GreaterThan(0);
-            
+
             RuleFor(x => x.DangerousCode)
                 .NotEmpty()
                 .MaximumLength(50)
