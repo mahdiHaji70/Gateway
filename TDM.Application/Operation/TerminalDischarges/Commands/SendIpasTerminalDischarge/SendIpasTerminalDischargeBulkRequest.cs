@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
+{
+    public class SendIpasTerminalDischargeBulkRequest
+    {
+        public string HSCode { get; set; }
+        public string Description { get; set; }
+        public float Weight { get; set; }
+        public float? Volume { get; set; }
+        public bool IsDangerous { get; set; }
+        public bool DangerousNotNoticed { get; set; }
+        public SendIpasTerminalDischargeDangerousSpecificationRequest DangerousSpecification { get; set; }
+        public string Remark { get; set; }
+    }
+}

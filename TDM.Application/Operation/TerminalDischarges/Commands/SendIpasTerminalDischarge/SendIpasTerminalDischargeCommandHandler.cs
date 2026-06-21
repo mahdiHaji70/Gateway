@@ -1,10 +1,44 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using TDM.Application.Common.Exceptions;
+using TDM.Application.Common.Interfaces;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
 {
-    internal class SendIpasTerminalDischargeCommandHandler
+   
+    public class SendIpasTerminalDischargeCommandHandler : IRequestHandler<SendIpasTerminalDischargeCommand, bool>
     {
+        private readonly ITerminalDischargeRepository _terminalDischargeRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public SendIpasTerminalDischargeCommandHandler(IUnitOfWork unitOfWork
+            , ITerminalDischargeRepository terminalDischargeRepository
+            , IDeclarationExternalService declarationExternalService)
+        {
+            _unitOfWork = unitOfWork;
+            _terminalDischargeRepository = terminalDischargeRepository;
+
+        }
+
+        public async Task<bool> Handle(SendIpasTerminalDischargeCommand request, CancellationToken cancellationToken)
+        {
+            var terminalDischarges = await _terminalDischargeRepository.GetPendingIpasSubmissionByDeclarationIdAsync(request.DeclarationId);
+
+            if (terminalDischarges == null || !terminalDischarges.Any())
+                throw new NotFoundException("terminal discharge records not found for IPAS submission");
+
+            foreach (var item in terminalDischarges)
+            {
+                //  var ipasDeclarationIdRequest = IpasTerminalDischargeRequestMapper.Map(item);
+
+            }
+
+
+
+            return true;
+
+        }
     }
 }

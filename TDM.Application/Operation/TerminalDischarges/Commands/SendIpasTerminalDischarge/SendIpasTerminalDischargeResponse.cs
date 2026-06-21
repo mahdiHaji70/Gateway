@@ -4,7 +4,9 @@ using System.Text;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
 {
-    internal class SendIpasTerminalDischargeResponse
+    public class SendIpasTerminalDischargeResponse
     {
+        public Guid IpasTerminalDischargeId { get; set; }
+        //  public  { get; set; }
     }
 }

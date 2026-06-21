@@ -1,10 +1,17 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
 {
-    internal class SendIpasTerminalDischargeCommand
+    public record SendIpasTerminalDischargeCommand : IRequest<bool>
     {
+        public Guid DeclarationId { get; set; }
+
+        public SendIpasTerminalDischargeCommand(Guid declarationId)
+        {
+            DeclarationId = declarationId;
+        }
     }
 }
