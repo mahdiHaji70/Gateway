@@ -26,7 +26,7 @@ namespace TDM.Application.Operation.TerminalDischarges.DTOs
         public bool IsDangerous { get; set; }
         public string DangerousCode { get; set; }
         public string Classification { get; set; }
-        public float IgnitionTemperature { get; set; }
+        public decimal  IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
     }
 }

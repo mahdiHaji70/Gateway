@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
+
+namespace TDM.Infrastructure.Integrations.Requests
 {
-    public class SendIpasTerminalDischargeGeneralCargoRequest
+    public class SendIpasTerminalDischargeGeneralCargo
     {
         public string HSCode { get; set; }
         public string Description { get; set; }
@@ -21,7 +22,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
         public float? Height { get; set; }
         public float? Length { get; set; }
         public bool IsVoluminous { get; set; }
-        public SendIpasTerminalDischargeDangerousSpecificationRequest DangerousSpecification { get; set; }
+        public SendIpasTerminalDischargeDangerousSpecification DangerousSpecification { get; set; }
         public string Remark { get; set; }
     }
 }

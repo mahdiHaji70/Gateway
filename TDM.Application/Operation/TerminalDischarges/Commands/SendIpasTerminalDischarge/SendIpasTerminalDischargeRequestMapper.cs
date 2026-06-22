@@ -12,87 +12,34 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
             return new SendIpasTerminalDischargeRequest
             {
                 TerminalCode = terminalDischarge.TerminalCode.ToString(),
-                AgreementNo = terminalDischarge.DeclarationItem.Declaration.IpasDeclarationNo,
+                IpasDeclarationNo = terminalDischarge.DeclarationItem.Declaration.IpasDeclarationNo,
                 WaybillId = terminalDischarge.WayBillId,
                 WaybillNo = terminalDischarge.WayBillNo,
                 DischargeDate = terminalDischarge.DischargeDate,
-                TruckPlateNumber = terminalDischarge.VehicleNumber,
-                TruckEmptyWeight = 1000,
-                TruckFullWeight = (float)(terminalDischarge.Weight + 1000m),
-                Tallyman = "To DO",
-                GateInDateTime = terminalDischarge.DischargeDate,
-                GateOutDateTime = terminalDischarge.DischargeDate,
-                GeneralCargoList = terminalDischarge.CargoTypeId == Domain.Enums.CargoTypes.GeneralCargo
-            ? new List<SendIpasTerminalDischargeGeneralCargoRequest> { MapToGeneralCargo(terminalDischarge) }
-            : new List<SendIpasTerminalDischargeGeneralCargoRequest>(),
-
-                BulkList = terminalDischarge.CargoTypeId == Domain.Enums.CargoTypes.Bulk
-            ? new List<SendIpasTerminalDischargeBulkRequest> { MapToBulk(terminalDischarge) }
-            : new List<SendIpasTerminalDischargeBulkRequest>(),
-
-                ContainerList = terminalDischarge.CargoTypeId == Domain.Enums.CargoTypes.Container
-            ? new List<SendIpasTerminalDischargeContainerRequest> { MapToContainer(terminalDischarge) }
-            : new List<SendIpasTerminalDischargeContainerRequest>()
-            };
-
-        }
-        private static SendIpasTerminalDischargeGeneralCargoRequest MapToGeneralCargo(TerminalDischarge terminalDischarge)
-        {
-            return new SendIpasTerminalDischargeGeneralCargoRequest
-            {
+                VehicleNumber = terminalDischarge.VehicleNumber,
+                CargoTypeId = terminalDischarge.CargoTypeId,
+                CargoTypeName = terminalDischarge.CargoType.Name,
                 HSCode = terminalDischarge.DeclarationItem.Commodity.HsCode,
-                Description = terminalDischarge.DeclarationItem.Commodity.Name,
-                BrandName = "TO DO",
-                PackageTypeCode = terminalDischarge.DeclarationItem.Package.Code,
-                PackageQuantity = terminalDischarge.PackNB,
-                GrossWeight = (float)terminalDischarge.Weight,
-                NetWeight = (float)terminalDischarge.Weight,
+                CommodityId = terminalDischarge.DeclarationItem.Commodity.Id,
+                CommodityName = terminalDischarge.DeclarationItem.Commodity.Name,
+                PackageCode = terminalDischarge.DeclarationItem.Package.Code,
+                PackageId = terminalDischarge.DeclarationItem.Package.Id,
+                PackageName = terminalDischarge.DeclarationItem.Package.Name,
+                PackNB = terminalDischarge.PackNB,
+                Weight = terminalDischarge.Weight,
+                Volume = terminalDischarge.Volume,
+                IsVoluminous= terminalDischarge.IsVoluminous,
                 IsDangerous = terminalDischarge.IsDangerous,
                 IsNonPalletized = terminalDischarge.IsNonPalletized,
                 IsDamaged = terminalDischarge.IsDamaged,
-                Width = 1,
-                Height = 1,
-                Length = 1,
-                IsVoluminous = terminalDischarge.IsVoluminous,
-                DangerousSpecification = new SendIpasTerminalDischargeDangerousSpecificationRequest
-                {
-                    Classification = terminalDischarge.Classification,
-                    DangerousCode = terminalDischarge.DangerousCode,
-                    IgnitionTemperature = terminalDischarge.IgnitionTemperature,
-                    IgnitionTemperatureUnit = terminalDischarge.IgnitionTemperatureUnit
-                },
-                Remark = "To DO"
+                Classification = terminalDischarge.Classification,
+                DangerousCode = terminalDischarge.DangerousCode,
+                IgnitionTemperature = terminalDischarge.IgnitionTemperature,
+                IgnitionTemperatureUnit = terminalDischarge.IgnitionTemperatureUnit
             };
+
         }
 
-        private static SendIpasTerminalDischargeBulkRequest MapToBulk(TerminalDischarge terminalDischarge)
-        {
-            return new SendIpasTerminalDischargeBulkRequest
-            {
-                HSCode = terminalDischarge.DeclarationItem.Commodity.HsCode,
-                Description = terminalDischarge.DeclarationItem.Commodity.Name,
-                Weight = (float)terminalDischarge.Weight,
-                Volume = (float)terminalDischarge.Volume,
-                IsDangerous = terminalDischarge.IsDangerous,
-                DangerousNotNoticed = false,
-                DangerousSpecification = new SendIpasTerminalDischargeDangerousSpecificationRequest
-                {
-                    Classification = terminalDischarge.Classification,
-                    DangerousCode = terminalDischarge.DangerousCode,
-                    IgnitionTemperature = terminalDischarge.IgnitionTemperature,
-                    IgnitionTemperatureUnit = terminalDischarge.IgnitionTemperatureUnit
-                },
-                Remark = "To DO"
-            };
-        }
-
-        private static SendIpasTerminalDischargeContainerRequest MapToContainer(TerminalDischarge terminalDischarge)
-        {
-            return new SendIpasTerminalDischargeContainerRequest
-            {
-                ContainerNo = ""
-            };
-        }
 
     }
 

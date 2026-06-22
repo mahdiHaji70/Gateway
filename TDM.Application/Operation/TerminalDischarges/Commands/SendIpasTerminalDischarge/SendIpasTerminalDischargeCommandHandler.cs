@@ -31,7 +31,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
 
             foreach (var item in terminalDischarges)
             {
-                //  var ipasDeclarationIdRequest = IpasTerminalDischargeRequestMapper.Map(item);
+                  var ipasDeclarationIdRequest = SendIpasTerminalDischargeRequestMapper.Map(item);
 
             }
 

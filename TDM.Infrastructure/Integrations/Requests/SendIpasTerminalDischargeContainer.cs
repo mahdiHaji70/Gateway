@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
+
+namespace TDM.Infrastructure.Integrations.Requests
 {
-    public class SendIpasTerminalDischargeContainerRequest
+    public class SendIpasTerminalDischargeContainer
     {
         public string ContainerNo { get; set; }
         public string ContainerTypeAndSizeCode { get; set; }
         public string SealNumber { get; set; }
         public string Remark { get; set; }
-        public SendIpasTerminalDischargeDangerousSpecificationRequest DangerousSpecification { get; set; }
+        public SendIpasTerminalDischargeDangerousSpecification DangerousSpecification { get; set; }
     }
 }

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
+namespace TDM.Infrastructure.Integrations.Responses
 {
-    public class SendIpasTerminalDischargeResponse
+    public class SendIpasTerminalDischargeResultDto
     {
         public Guid IpasTerminalDischargeId { get; set; }
         public string ErrorMessage { get; set; }
-       
     }
 }
