@@ -2,9 +2,9 @@
 
 namespace TDM.Application.BasicInformation.Terminals.Commands.CreateTerminal
 {
-    public class UpdateTerminalCommandValidator : AbstractValidator<CreateTerminalCommand>
+    public class CreateTerminalCommandValidator : AbstractValidator<CreateTerminalCommand>
     {
-        public UpdateTerminalCommandValidator()
+        public CreateTerminalCommandValidator()
         {
             RuleFor(x => x.Name)
             .NotEmpty()
