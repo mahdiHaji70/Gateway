@@ -11,6 +11,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputComponent,
     DropDownComponent,
     EnCalenderComponent,
-    InputNumberComponent
+    InputNumberComponent,
+    CheckboxComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -31,8 +34,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DropdownModule,
     CalendarModule,
     TableModule,
-    InputNumberModule    
+    InputNumberModule,
+    CheckboxModule   
   ],
-  exports: [InputComponent, DropDownComponent, EnCalenderComponent, InputNumberComponent]
+  exports: [InputComponent, DropDownComponent, EnCalenderComponent, InputNumberComponent, CheckboxComponent]
 })
 export class SharedModule { }

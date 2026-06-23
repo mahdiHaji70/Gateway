@@ -24,8 +24,7 @@ namespace IntegratedIdentity.Service
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
             new Claim("firstName", user.Name ?? ""),
-            new Claim("nationalId", user.NationalId?? ""),
-            new Claim("terminalCode", user.TerminalCode?? ""),
+            new Claim("nationalId", user.NationalId?? ""),            
         };
 
             var key = new SymmetricSecurityKey(

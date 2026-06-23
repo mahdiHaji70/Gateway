@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Terminal } from '../../models/terminal.model';
+import { userInfo } from 'os';
 
 @Component({
   selector: 'app-terminal',
@@ -14,7 +15,12 @@ export class TerminalComponent {
   id?: any;
 
   form = new FormGroup({
-    name: new FormControl<string>('')
+    code: new FormControl<string>(''),
+    name: new FormControl<string>(''),
+    portCode: new FormControl<string>(''),
+    username: new FormControl<string>(''),
+    password: new FormControl<string>(''),
+    isActive: new FormControl<boolean>(false)
   });
   /**
    *
@@ -22,14 +28,14 @@ export class TerminalComponent {
   constructor(private basicInformationService: BasicInformationService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router) {    
+    private router: Router) {
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('Terminal', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('Terminals', this.id).subscribe((res: any) => {
           this.form.patchValue(res.data);
         });
       }
@@ -44,15 +50,19 @@ export class TerminalComponent {
     }
 
     const terminal: Terminal = new Terminal(
+      this.form.get('code')?.value!,
       this.form.get('name')?.value!,
+      this.form.get('portCode')?.value!,
+      this.form.get('username')?.value!,
+      this.form.get('password')?.value!,
+      this.form.get('isActive')?.value!,
       this.id
     );
-
     const terminalAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('Terminal', terminal)
-      : this.basicInformationService.postBasicInformation('Terminal', terminal);
+      ? this.basicInformationService.putBasicInformation('Terminals', terminal)
+      : this.basicInformationService.postBasicInformation('Terminals', terminal);
 
-      terminalAction$
+    terminalAction$
       .subscribe({
         next: (res: any) => {
           this.messageService.add({ severity: 'success', summary: `Successfully ${this.id ? 'updated' : 'added'}` });
