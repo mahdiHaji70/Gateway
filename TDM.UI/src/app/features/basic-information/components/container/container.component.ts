@@ -73,8 +73,8 @@ export class ContainerComponent {
     const containerAction$ = this.id
       ? this.basicInformationService.putBasicInformation('Containers', container)
       : this.basicInformationService.postBasicInformation('Containers', container);
-debugger
-    containerAction$
+
+      containerAction$
       .subscribe({
         next: (res: any) => {
           this.messageService.add({ severity: 'success', summary: `Successfully ${this.id ? 'updated' : 'added'}` });

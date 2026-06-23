@@ -36,6 +36,7 @@ namespace TDM.Infrastructure
             services.AddScoped<IStoreTypeRepository, StoreTypeRepository>();
             services.AddScoped<IStoreRepository, StoreRepository>();
             services.AddScoped<ITerminalDischargeRepository, TerminalDischargeRepository>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
         }

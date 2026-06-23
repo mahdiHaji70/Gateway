@@ -50,7 +50,9 @@ import { StoreComponent } from './components/store/store.component';
 import { StoreListComponent } from './components/store/store-list/store-list.component';
 import { CargoTypeComponent } from './components/cargo-type/cargo-type.component';
 import { CargoTypeListComponent } from './components/cargo-type/cargo-type-list/cargo-type-list.component';
-
+import { UserTerminalComponent } from './components/user-terminal/user-terminal.component';
+import { UserTerminalListComponent } from './components/user-terminal/user-terminal-list/user-terminal-list.component';
+import { UserService } from './services/user.service';
 
 
 @NgModule({
@@ -92,7 +94,9 @@ import { CargoTypeListComponent } from './components/cargo-type/cargo-type-list/
     StoreComponent,
     StoreListComponent,
     CargoTypeComponent,
-    CargoTypeListComponent
+    CargoTypeListComponent,
+    UserTerminalComponent,
+    UserTerminalListComponent
   ],
   imports: [
     CommonModule,
@@ -104,9 +108,8 @@ import { CargoTypeListComponent } from './components/cargo-type/cargo-type-list/
     SharedModule,
     TableModule,
     ConfirmDialogModule,
-    ToolbarModule,    
-    
+    ToolbarModule
   ],
-  providers: [BasicInformationService, MessageService, ConfirmationService]
+  providers: [BasicInformationService, MessageService, ConfirmationService, UserService]
 })
 export class BasicInformationModule { } 

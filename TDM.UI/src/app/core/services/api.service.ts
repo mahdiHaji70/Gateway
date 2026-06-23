@@ -30,9 +30,27 @@ export class ApiService {
     return this.http.delete<T>(url, options);
   }
 
-  private buildOptions(params?: any, headers?: any) {
-    const httpHeaders = headers ? new HttpHeaders(headers) : new HttpHeaders();
-    const httpParams = params ? new HttpParams({ fromObject: params }) : new HttpParams();
+ private buildOptions(params?: any, customHeaders?: any) {
+  debugger
+    const token = localStorage.getItem('token');
+    
+    let httpHeaders = new HttpHeaders();
+
+    // Add Authorization header if token exists
+    if (token) {
+      httpHeaders = httpHeaders.set('Authorization', `Bearer ${token}`);
+    }
+
+    // Merge custom headers
+    if (customHeaders) {
+      for (const key of Object.keys(customHeaders)) {
+        httpHeaders = httpHeaders.set(key, customHeaders[key]);
+      }
+    }
+
+    const httpParams = params
+      ? new HttpParams({ fromObject: params })
+      : new HttpParams();
 
     return {
       headers: httpHeaders,

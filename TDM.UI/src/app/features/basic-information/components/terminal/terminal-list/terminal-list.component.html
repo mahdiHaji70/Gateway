@@ -8,13 +8,23 @@
 <p-table [value]="terminals" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
+            <th>Code</th>
             <th>Name</th>
+            <th>Port Code</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Is Active</th>
             <th>Actions</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-terminal>
         <tr>
+            <td>{{ terminal.code }}</td>
             <td>{{ terminal.name }}</td>
+            <td>{{ terminal.portCode }}</td>
+            <td>{{ terminal.username }}</td>
+            <td>{{ terminal.password }}</td>
+            <td>{{ terminal.isActive }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                     (click)="onEdit(terminal.id)">

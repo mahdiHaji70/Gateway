@@ -39,7 +39,6 @@ export class StoreComponent {
       if (params.id) {
         this.id = params.id;
         this.basicInformationService.getById('Stores', this.id).subscribe((res: any) => {
-          debugger
           this.form.setValue({
             storeType: new StoreType(res.data.storeTypeName, res.data.storeTypeId),
             //contact: new DropdownOption(res.data.contact.id, res.data.contact.name),

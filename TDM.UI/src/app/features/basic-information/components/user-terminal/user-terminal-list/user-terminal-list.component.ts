@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
+import { UserTerminalFull } from '../../../models/user-terminal-full.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Terminal } from '../../../models/terminal.model';
 
 @Component({
-  selector: 'app-terminal-list',
-  templateUrl: './terminal-list.component.html',
-  styleUrl: './terminal-list.component.scss'
+  selector: 'app-user-terminal-list',
+  templateUrl: './user-terminal-list.component.html',
+  styleUrl: './user-terminal-list.component.scss'
 })
-export class TerminalListComponent {
-  terminals: Terminal[] = [];
+export class UserTerminalListComponent {
+  userTerminals: UserTerminalFull[] = [];
+
   /**
    *
    */
@@ -21,24 +22,24 @@ export class TerminalListComponent {
   }
 
   ngOnInit() {
-    this.loadTerminals();
+    this.loadUserTerminals();
   }
 
-  loadTerminals() {
-    this.basicInformationService.getAll('Terminals').subscribe({
+  loadUserTerminals() {
+    this.basicInformationService.getAll('UsersTerminal').subscribe({
       next: (res: any) => {
-        this.terminals = res.data.items.map((item: any) => new Terminal(item.code, item.name, item.portCode, item.username, item.password, item.isActive, item.id));
+        this.userTerminals = res.data.items.map((item: any) => new UserTerminalFull(item.userNationalId, item.terminalId, item.terminalName, item.terminalCode, item.id));
       },
       error: (error: any) => { }
     });
   }
 
   onAdd() {
-    this.router.navigate(['/terminal']);
+    this.router.navigate(['/user-terminal']);
   }
 
   onEdit(id: any) {
-    this.router.navigate(['/terminal', id]);
+    this.router.navigate(['/user-terminal', id]);
   }
 
   onDelete(event: any, id: any) {
@@ -53,10 +54,10 @@ export class TerminalListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Terminals', id).subscribe({
+        this.basicInformationService.removeBasicInformation('UsersTerminal', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-            this.loadTerminals();
+            this.loadUserTerminals();
           },
           error: (error: any) => {
             this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });

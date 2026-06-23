@@ -8,6 +8,7 @@ using TDM.Application.BasicInformation.UsersTerminal.Commands.UpdateUserTerminal
 using TDM.Application.BasicInformation.UsersTerminal.Queries.GetUserTerminalById;
 using TDM.Application.BasicInformation.UsersTerminal.Queries.GetUsersTerminal;
 using TDM.Application.BasicInformation.UsersTerminal.Queries.GetUserTerminalByNationalId;
+using TDM.Application.BasicInformation.UsersTerminal.Queries.GetCurrentUserTerminal;
 
 namespace TDM.API.Controllers
 {
@@ -35,6 +36,14 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> GetByNationalId(string nationalId)
         {
             var result = await _mediator.Send(new GetUserTerminalByNationalIdQuery(nationalId));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("GetCurrentUserTerminal")]
+        public async Task<IActionResult> GetCurrentUserTerminal()
+        {
+            var result = await _mediator.Send(new GetCurrentUserTerminalQuery());
 
             return Ok(ApiResponse.Success(result));
         }

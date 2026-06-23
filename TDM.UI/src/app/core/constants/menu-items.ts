@@ -42,6 +42,8 @@ export const MenuItems = [
             { label: 'Store Type', path: 'store-type-list' },
             { label: 'Store', path: 'store-list' },
             { label: 'Cargo Type', path: 'cargo-type-list' },
+            { label: 'Terminal', path: 'terminal-list' },
+            { label: 'User Terminal', path: 'user-terminal-list' },
             //{ label: 'Container Size', path: 'container-size-list' },
             //{ label: 'Terminal', path: 'terminal-list' },
             // { label: 'Declaration Type', path: 'declaration-type-list' },

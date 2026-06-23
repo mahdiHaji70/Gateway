@@ -20,10 +20,10 @@ namespace TDM.Domain.Entities
 
 
         public Terminal(string code, string name, string portCode, string username, string password, bool isActive)
-        => SetProperties(code, name, portCode, username, password, IsActive);
+        => SetProperties(code, name, portCode, username, password, isActive);
 
         public void Update(string code, string name, string portCode, string username, string password, bool isActive)
-        => SetProperties(code, name, portCode, username, password, IsActive);
+        => SetProperties(code, name, portCode, username, password, isActive);
 
         private void SetProperties(string code, string name, string portCode, string username, string password, bool isActive)
         {
