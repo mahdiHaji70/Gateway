@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDischarge;
 using TDM.Application.Operation.TerminalDischarges.Commands.DeleteTerminalDischarge;
+using TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge;
 using TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDischarge;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetGetTerminalDischarges;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeById;
@@ -62,11 +63,11 @@ namespace TDM.API.Controllers
 
             return Ok(ApiResponse.Success(true, "terminaldischarge deleted"));
         }
-        //[HttpPost("request-ipas-terminaldischarge-id/{declarationId:guid}")]
-        //public async Task<IActionResult> RequestVerifierId(Guid declarationId)
-        //{
-        //    var result = await _mediator.Send(new IpasTerminalDischargeCommand(declarationId));
-        //    return Ok(ApiResponse.Success(result));
-        //}
+        [HttpPost("request-ipas-terminaldischarge-id/{declarationId:guid}")]
+        public async Task<IActionResult> RequestVerifierId(Guid declarationId)
+        {
+            var result = await _mediator.Send(new SendIpasTerminalDischargeCommand(declarationId));
+            return Ok(ApiResponse.Success(result));
+        }
     }
 }

@@ -59,11 +59,14 @@ namespace TDM.Infrastructure.Persistence.Repositories
         }
         public async Task<List<TerminalDischarge>> GetPendingIpasSubmissionByDeclarationIdAsync(Guid declarationId)
         {
-            return await _dbSet
+             return await _dbSet
                         .AsNoTracking()
                         .Include(x => x.Store)
                         .Include(x => x.CargoType)
                         .Include(x => x.DeclarationItem)
+                        .Include(x => x.DeclarationItem.Declaration)
+                        .Include(x=>x.DeclarationItem.Commodity)
+                        .Include(x => x.DeclarationItem.Package)
                         .Where(x => x.DeclarationItem.DeclarationId == declarationId
                                  && x.IpasTerminalDischargeId == null)
                         .ToListAsync();

@@ -7,18 +7,20 @@ using TDM.Application.Common.Interfaces;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
 {
-   
+
     public class SendIpasTerminalDischargeCommandHandler : IRequestHandler<SendIpasTerminalDischargeCommand, bool>
     {
         private readonly ITerminalDischargeRepository _terminalDischargeRepository;
+        private readonly ITerminalDischargeExternalService _terminalDischargeExternalService;
         private readonly IUnitOfWork _unitOfWork;
 
         public SendIpasTerminalDischargeCommandHandler(IUnitOfWork unitOfWork
             , ITerminalDischargeRepository terminalDischargeRepository
-            , IDeclarationExternalService declarationExternalService)
+            , ITerminalDischargeExternalService terminalDischargeExternalService)
         {
             _unitOfWork = unitOfWork;
             _terminalDischargeRepository = terminalDischargeRepository;
+            _terminalDischargeExternalService = terminalDischargeExternalService;
 
         }
 
@@ -31,7 +33,8 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
 
             foreach (var item in terminalDischarges)
             {
-                  var ipasDeclarationIdRequest = SendIpasTerminalDischargeRequestMapper.Map(item);
+                var ipasDeclarationIdRequest = SendIpasTerminalDischargeRequestMapper.Map(item);
+                var response = await _terminalDischargeExternalService.SendIpasTerminalDischarge(ipasDeclarationIdRequest);
 
             }
 
