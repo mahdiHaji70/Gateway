@@ -48,14 +48,14 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .Include(x => x.DeclarationItem)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<TerminalDischarge?> GetByDeclarationIdAsync(Guid id)
+        public async Task<List<TerminalDischarge>?> GetByDeclarationIdAsync(Guid id)
         {
             return await _dbSet
                         .AsNoTracking()
                         .Include(x => x.Store)
                         .Include(x => x.CargoType)
                         .Include(x => x.DeclarationItem)
-                        .FirstOrDefaultAsync(x => x.DeclarationItem.DeclarationId == id);
+                        .Where(x => x.DeclarationItem.DeclarationId == id).ToListAsync();
         }
         public async Task<List<TerminalDischarge>> GetPendingIpasSubmissionByDeclarationIdAsync(Guid declarationId)
         {

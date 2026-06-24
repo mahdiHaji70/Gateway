@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
 using TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge;
+using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
 using TDM.Infrastructure.Integrations.Helpers;
 using TDM.Infrastructure.Integrations.Mapper;
 using TDM.Infrastructure.Integrations.Requests;
@@ -45,5 +47,22 @@ namespace TDM.Infrastructure.Integrations.Client
             }
             return sendIpasTerminalDischargeResponse;
         }
+
+        public async Task<List<IpasGoodwayBillsResponse>> GetIpasGoodwayBills(IpasGoodwayBillsRequest ipasDeclarationItemsRequest, CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<List<GoodwayBillsResponseDto>>("TDM", "GetGoodwayBillByStorageAgreementId",
+             new
+             {
+                 storageAgreementId = ipasDeclarationItemsRequest.IpasDeclarationId,
+                 TerminalCode = ipasDeclarationItemsRequest.TerminalCode!
+             });
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetGoodwayBillByStorageAgreementId");
+
+            var IpasGoodwayBills = IpasGoodwayBillMapper.Map(response.Data!);
+
+            return IpasGoodwayBills;
+        }
+
     }
 }

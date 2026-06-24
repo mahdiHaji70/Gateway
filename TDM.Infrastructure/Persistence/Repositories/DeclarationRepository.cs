@@ -48,5 +48,19 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .Include(x => x.Traffic)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
+   
+       public async Task<bool> ExistsByIpasDeclarationNo(string IpasDeclarationNo)
+        {
+            return await _dbSet.AnyAsync(x => x.IpasDeclarationNo .Contains( IpasDeclarationNo));
+        }
+        public async  Task<Declaration?> GetByIpasDeclarationNoAsync(string ipasDeclarationNo)
+        {
+            return await _dbSet
+                        .AsNoTracking()
+                        .Include(x => x.Consignee)
+                        .Include(x => x.ConsigneeRep)
+                        .Include(x => x.Traffic)
+                        .FirstOrDefaultAsync(x => x.IpasDeclarationNo == ipasDeclarationNo);
+        }
     }
-}
+ }

@@ -1,0 +1,28 @@
+﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Sync.DTOs;
+using ExternalIntegration.Service.Sync.TDM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ExternalIntegration.Service.Controllers
+{
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TDMController : ControllerBase
+    {
+        private readonly ITDMSyncService _tdmSyncService;
+
+        public TDMController(ITDMSyncService tdmSyncService)
+        {
+            _tdmSyncService = tdmSyncService;
+        }
+        [HttpPost("GetGoodwayBillByStorageAgreementId")]
+        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId([FromQuery] GetGoodwayBillDto storageAgreementId)
+        {
+            return await _tdmSyncService.GetGoodwayBillByStorageAgreementId(storageAgreementId);
+        }
+
+
+    }
+}
