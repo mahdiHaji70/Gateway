@@ -20,7 +20,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
            .AsNoTracking()
            .Include(x => x.Store)
            .Include(x => x.DeclarationItem)
-           .Include(x=>x.CargoType);
+           .Include(x => x.CargoType);
 
             var totalCount = await query.CountAsync();
 
@@ -48,6 +48,28 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .Include(x => x.DeclarationItem)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
-
+        public async Task<TerminalDischarge?> GetByDeclarationIdAsync(Guid id)
+        {
+            return await _dbSet
+                        .AsNoTracking()
+                        .Include(x => x.Store)
+                        .Include(x => x.CargoType)
+                        .Include(x => x.DeclarationItem)
+                        .FirstOrDefaultAsync(x => x.DeclarationItem.DeclarationId == id);
+        }
+        public async Task<List<TerminalDischarge>> GetPendingIpasSubmissionByDeclarationIdAsync(Guid declarationId)
+        {
+             return await _dbSet
+                        .AsNoTracking()
+                        .Include(x => x.Store)
+                        .Include(x => x.CargoType)
+                        .Include(x => x.DeclarationItem)
+                        .Include(x => x.DeclarationItem.Declaration)
+                        .Include(x=>x.DeclarationItem.Commodity)
+                        .Include(x => x.DeclarationItem.Package)
+                        .Where(x => x.DeclarationItem.DeclarationId == declarationId
+                                 && x.IpasTerminalDischargeId == null)
+                        .ToListAsync();
+        }
     }
 }

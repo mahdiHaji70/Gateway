@@ -123,13 +123,13 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                 new Parameter{ParameterName = nameof(model.AgreementNo), ParameterValue = model.AgreementNo  },
                 new Parameter{ParameterName = nameof(model.WaybillNo ), ParameterValue = model.WaybillNo  },
                 new Parameter{ParameterName = nameof(model.WaybillId), ParameterValue = model.WaybillId},
-                new Parameter{ParameterName = nameof(model.DischargeDate), ParameterValue = model.DischargeDate},
+                new Parameter{ParameterName = nameof(model.DischargeDate), ParameterValue = model.DischargeDate.ToString("yyyy-MM-ddTHH:mm:ss")},
                 new Parameter{ParameterName = nameof(model.TruckPlateNumber), ParameterValue = model.TruckPlateNumber},
                 new Parameter{ParameterName = nameof(model.TruckEmptyWeight), ParameterValue = model.TruckEmptyWeight},
                 new Parameter{ParameterName = nameof(model.TruckFullWeight), ParameterValue = model.TruckFullWeight},
                 new Parameter{ParameterName = nameof(model.Tallyman), ParameterValue = model.Tallyman},
-                new Parameter{ParameterName =nameof(model.GateInDateTime),ParameterValue = model.GateInDateTime},
-                new Parameter{ParameterName =nameof(model.GateOutDateTime),ParameterValue = model.GateOutDateTime},
+                new Parameter{ParameterName =nameof(model.GateInDateTime),ParameterValue = model.GateInDateTime.ToString("yyyy-MM-ddTHH:mm:ss")},
+                new Parameter{ParameterName =nameof(model.GateOutDateTime),ParameterValue = model.GateOutDateTime.ToString("yyyy-MM-ddTHH:mm:ss")},
                 new Parameter{ParameterName =nameof(model.GeneralCargoList),
                     ParameterValue = JsonConvert.SerializeObject(model.GeneralCargoList.Select( s=>
                                 new {
@@ -178,7 +178,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                                 ))}
                 }).Build();
 
-            var response = await _requestExecutor.PostAsync<Guid>(request);
+            var response = await _requestExecutor.PostAsync<Guid>(request, model.TerminalCode);
             return response;
         }
 

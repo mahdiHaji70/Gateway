@@ -10,7 +10,7 @@ namespace TDM.Domain.Entities
 {
     public class TerminalDischarge : BaseEntity
     {
-        public int TerminalCode { get; set; }
+        public string TerminalCode { get; set; }
         public Guid CargoTypeId { get; set; }
         public CargoType CargoType { get; set; } = null!;
         public Guid StoreId { get; set; }
@@ -30,11 +30,13 @@ namespace TDM.Domain.Entities
         public bool IsDangerous { get; set; } = false;
         public string DangerousCode { get; set; }
         public string Classification { get; set; }
-        public float IgnitionTemperature { get; set; }
+        public decimal IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
+        public Guid? IpasTerminalDischargeId { get; set; }
+        public DateTime? IpasTerminalDischargeReceivedAt { get; set; }
 
         public TerminalDischarge(
-     int terminalCode,
+     string terminalCode,
      Guid cargoTypeId,
      Guid storeId,
      Guid declarationItemId,
@@ -51,7 +53,7 @@ namespace TDM.Domain.Entities
      bool isDangerous = false,
      string dangerousCode = null,
      string classification = null,
-     float ignitionTemperature = 0,
+     decimal ignitionTemperature = 0,
      string ignitionTemperatureUnit = null)
      => SetProperty(terminalCode, cargoTypeId, storeId, declarationItemId, wayBillNo,
                     wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
@@ -59,7 +61,7 @@ namespace TDM.Domain.Entities
                     dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit);
 
         public void Update(
-            int terminalCode,
+            string terminalCode,
             Guid cargoTypeId,
             Guid storeId,
             Guid declarationItemId,
@@ -76,7 +78,7 @@ namespace TDM.Domain.Entities
             bool isDangerous = false,
             string dangerousCode = null,
             string classification = null,
-            float ignitionTemperature = 0,
+            decimal ignitionTemperature = 0,
             string ignitionTemperatureUnit = null)
             => SetProperty(terminalCode, cargoTypeId, storeId, declarationItemId, wayBillNo,
                            wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
@@ -84,7 +86,7 @@ namespace TDM.Domain.Entities
                            dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit);
 
         private void SetProperty(
-            int terminalCode,
+            string terminalCode,
             Guid cargoTypeId,
             Guid storeId,
             Guid declarationItemId,
@@ -101,7 +103,7 @@ namespace TDM.Domain.Entities
             bool isDangerous,
             string dangerousCode,
             string classification,
-            float ignitionTemperature,
+            decimal ignitionTemperature,
             string ignitionTemperatureUnit)
         {
             Validate(terminalCode, cargoTypeId, storeId, declarationItemId,
@@ -131,7 +133,7 @@ namespace TDM.Domain.Entities
         }
 
         private void Validate(
-            int terminalCode,
+            string terminalCode,
             Guid cargoTypeId,
             Guid storeId,
             Guid declarationItemId,
@@ -144,10 +146,10 @@ namespace TDM.Domain.Entities
             decimal volume,
             bool isDangerous,
             string dangerousCode,
-            float ignitionTemperature,
+            decimal ignitionTemperature,
             string ignitionTemperatureUnit)
         {
-            if (terminalCode <= 0)
+            if (string.IsNullOrWhiteSpace(terminalCode))
                 throw new DomainValidationException("TerminalCode is required.");
 
             if (cargoTypeId == Guid.Empty)
@@ -162,27 +164,27 @@ namespace TDM.Domain.Entities
             if (wayBillId == Guid.Empty)
                 throw new DomainValidationException("WayBillId is required.");
 
-          
+
             if (string.IsNullOrWhiteSpace(wayBillNo))
                 throw new DomainValidationException("WayBillNo is required.");
 
             if (string.IsNullOrWhiteSpace(vehicleNumber))
                 throw new DomainValidationException("VehicleNumber is required.");
 
-           
+
             if (dischargeDate == default)
                 throw new DomainValidationException("DischargeDate is required.");
 
             if (dischargeDate > DateTime.UtcNow)
                 throw new DomainValidationException("DischargeDate cannot be in the future.");
 
-           
+
             if (packNB <= 0)
                 throw new DomainValidationException("PackNB cannot be negative.");
 
             if (weight <= 0)
                 throw new DomainValidationException("Weight must be greater than zero.");
-  
+
 
             if (isDangerous)
             {
