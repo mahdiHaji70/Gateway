@@ -7,6 +7,7 @@ using TDM.Application.Operation.TerminalDischarges.Commands.DeleteTerminalDischa
 using TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge;
 using TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDischarge;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetGetTerminalDischarges;
+using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeById;
 
 
@@ -69,5 +70,13 @@ namespace TDM.API.Controllers
             var result = await _mediator.Send(new SendIpasTerminalDischargeCommand(declarationId));
             return Ok(ApiResponse.Success(result));
         }
+
+        [HttpGet("{declarationNo}/{vehicleNumber}/{wayBill}")]
+        public async Task<IActionResult> GetTerminalDischargeByDeclarationNo(string declarationNo)
+        {
+               var result = await _mediator.Send(new GetTerminalDischargeByDeclarationNoQuery(declarationNo));
+                return Ok(ApiResponse.Success(result));
+            }
+
+        }
     }
-}
