@@ -12,8 +12,14 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<Package> Packages => Set<Package>();
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<City> Cities => Set<City>();
+        public DbSet<Terminal> Terminals => Set<Terminal>();
+        public DbSet<UserTerminal> UserTerminals => Set<UserTerminal>();
+        public DbSet<Container> Containers => Set<Container>();
+        public DbSet<ContainerTypeAndSize> ContainerTypesAndSizes => Set<ContainerTypeAndSize>();
         public DbSet<Declaration> Declarations => Set<Declaration>();
         public DbSet<DeclarationItem> DeclarationItems => Set<DeclarationItem>();
+        public DbSet<DeclarationContainer> DeclarationContainers => Set<DeclarationContainer>();
+        public DbSet<DeclarationContainerGood> DeclarationContainerGoods => Set<DeclarationContainerGood>();
         public DbSet<CargoType> CargoTypes=>Set<CargoType>();
         public DbSet<StoreType> StoreTypes => Set<StoreType>();
         public DbSet<Store> Stores => Set<Store>();

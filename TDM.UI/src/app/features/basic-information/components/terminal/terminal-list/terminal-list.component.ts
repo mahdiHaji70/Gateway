@@ -17,23 +17,23 @@ export class TerminalListComponent {
   constructor(private basicInformationService: BasicInformationService,
     private router: Router,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) {    
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
     this.loadTerminals();
   }
 
-  loadTerminals(){
-    this.basicInformationService.getAll('Terminal').subscribe({
+  loadTerminals() {
+    this.basicInformationService.getAll('Terminals').subscribe({
       next: (res: any) => {
-        this.terminals = res.data.map((item: any) => new Terminal(item.name, item.id));
+        this.terminals = res.data.items.map((item: any) => new Terminal(item.code, item.name, item.portCode, item.username, item.password, item.isActive, item.id));
       },
       error: (error: any) => { }
     });
   }
 
-  onAdd(){
+  onAdd() {
     this.router.navigate(['/terminal']);
   }
 
@@ -53,7 +53,7 @@ export class TerminalListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('Terminal', id).subscribe({
+        this.basicInformationService.removeBasicInformation('Terminals', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadTerminals();

@@ -1,0 +1,13 @@
+<div class="col-4 group-box">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <app-drop-down [options]="users" [formGroup]="form" [controlName]="'user'"
+            [required]="true"></app-drop-down>
+        <app-drop-down [options]="terminals" [formGroup]="form" [controlName]="'terminal'"
+            [required]="true"></app-drop-down>
+        <div>
+            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                [disabled]="form.invalid"></button>
+        </div>
+    </form>
+</div>
+<p-toast></p-toast>

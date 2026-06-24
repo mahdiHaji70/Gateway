@@ -1,6 +1,11 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <app-input [formGroup]="form" [controlName]="'code'" [required]="true"></app-input>
         <app-input [formGroup]="form" [controlName]="'name'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'portCode'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'username'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'password'" [required]="true"></app-input>
+        <app-checkbox [formGroup]="form" [controlName]="'isActive'" [required]="true"></app-checkbox>
         <div>
             <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
                 [disabled]="form.invalid"></button>

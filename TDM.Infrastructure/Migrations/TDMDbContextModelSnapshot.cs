@@ -581,6 +581,57 @@ namespace TDM.Infrastructure.Migrations
                     b.ToTable("StoreTypes", "basicInfo");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.Terminal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PortCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Terminals", "basicInfo");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.TerminalDischarge", b =>
                 {
                     b.Property<Guid>("Id")
@@ -702,6 +753,39 @@ namespace TDM.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Traffics", "basicInfo");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.UserTerminal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TerminalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserNationalId")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TerminalId");
+
+                    b.ToTable("UserTerminals", "basicInfo");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.City", b =>
@@ -868,6 +952,17 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("Store");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.UserTerminal", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.Terminal", "Terminal")
+                        .WithMany("UserTerminals")
+                        .HasForeignKey("TerminalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Terminal");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.CargoType", b =>
                 {
                     b.Navigation("CargoTypeTerminalDischarges");
@@ -915,34 +1010,37 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
                 {
                     b.Navigation("DeclarationContainers");
-                    modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
-                        {
-                            b.Navigation("TerminalDischarges");
-                        });
 
-                    modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
-                        {
-                            b.Navigation("PackageDeclarationContainerGoods");
-
-                            b.Navigation("PackageDeclarationItems");
-                        });
-
-                    modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
-                        {
-                            b.Navigation("StoreTerminalDischarges");
-                        });
-
-                    modelBuilder.Entity("TDM.Domain.Entities.StoreType", b =>
-                        {
-                            b.Navigation("Stores");
-                        });
-
-                    modelBuilder.Entity("TDM.Domain.Entities.Traffic", b =>
-                        {
-                            b.Navigation("TrafficDeclarations");
-                        });
-#pragma warning restore 612, 618
+                    b.Navigation("TerminalDischarges");
                 });
+
+            modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
+                {
+                    b.Navigation("PackageDeclarationContainerGoods");
+
+                    b.Navigation("PackageDeclarationItems");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
+                {
+                    b.Navigation("StoreTerminalDischarges");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.StoreType", b =>
+                {
+                    b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.Terminal", b =>
+                {
+                    b.Navigation("UserTerminals");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.Traffic", b =>
+                {
+                    b.Navigation("TrafficDeclarations");
+                });
+#pragma warning restore 612, 618
         }
     }
 }

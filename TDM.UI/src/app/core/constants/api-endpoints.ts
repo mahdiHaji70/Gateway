@@ -3,6 +3,7 @@ export class ApiEndpoints {
 
   //public static readonly BASE_URL = 'http://localhost:5201/api';
   public static readonly BASE_URL = 'https://localhost:7032/api';
+  public static readonly BASE_AUTH_URL = 'https://localhost:7202/api/Auth';
 
 
   public static readonly Traffic = `${this.BASE_URL}/Traffic`;

@@ -27,15 +27,14 @@ namespace IntegratedIdentity.Controllers
             _tokenService = tokenService;
             _identityDbContext = identityDbContext;
         }
-        
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDto model)
+        public async Task<IActionResult> Register(CreateUserDto model)
         {
             var user = new User
             {
                 Name = model.Name,
-                NationalId = model.NationalId,
-                TerminalCode = model.TerminalCode,
+                NationalId = model.NationalId,                
                 UserName = model.Name,
                 Email = model.NationalId + "@test.com"
             };
@@ -57,7 +56,7 @@ namespace IntegratedIdentity.Controllers
 
             if (user is null || !await _userManager.CheckPasswordAsync(user, model.Password))
                 return Unauthorized("username or password incorrect");
-            
+
 
             if (user == null)
                 return Unauthorized("Invalid credentials");
@@ -65,11 +64,45 @@ namespace IntegratedIdentity.Controllers
             if (!await _userManager.CheckPasswordAsync(user, model.Password))
                 return Unauthorized("Invalid credentials");
 
-            var accessToken = _tokenService.GenerateAccessToken(user);            
+            var accessToken = _tokenService.GenerateAccessToken(user);
 
             return Ok(new
             {
-                accessToken                
+                accessToken
+            });
+        }
+
+        [HttpGet("get_all_users")]
+        public async Task<IActionResult> GetAllUsersAsync()
+        {
+            var users = await _identityDbContext.User.ToListAsync();
+
+            var mappedUsers = users.Select(x => new UserDto{
+                Id = x.Id,
+                Name = x.Name,
+                NationalId = x.NationalId,
+            });
+
+            return Ok(new
+            {
+                mappedUsers
+            });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Login(Guid id)
+        {
+            //var user = await _userManager.FindByEmailAsync(model.NationalId);
+            var user = await _identityDbContext.User.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (user is null)
+                return Unauthorized("user not found");
+
+            var result = _userManager.DeleteAsync(user);
+
+            return Ok(new
+            {
+                result
             });
         }
     }

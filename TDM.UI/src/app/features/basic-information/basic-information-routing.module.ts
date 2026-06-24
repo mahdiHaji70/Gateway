@@ -38,83 +38,89 @@ import { ContainerTypeAndSizeComponent } from './components/container-type-and-s
 import { ContainerTypeAndSizeListComponent } from './components/container-type-and-size/container-type-and-size-list/container-type-and-size-list.component';
 import { CargoTypeListComponent } from './components/cargo-type/cargo-type-list/cargo-type-list.component';
 import { CargoTypeComponent } from './components/cargo-type/cargo-type.component';
+import { UserTerminalListComponent } from './components/user-terminal/user-terminal-list/user-terminal-list.component';
+import { UserTerminalComponent } from './components/user-terminal/user-terminal.component';
 
-const routes: Routes = [  
-  { path: 'traffic-list', component: TrafficListComponent},
-  { path: 'traffic', component: TrafficComponent},
-  { path: 'traffic/:id', component: TrafficComponent},
+const routes: Routes = [
+  { path: 'traffic-list', component: TrafficListComponent },
+  { path: 'traffic', component: TrafficComponent },
+  { path: 'traffic/:id', component: TrafficComponent },
 
-  { path: 'declaration-type-list', component: DeclarationTypeListComponent},
-  { path: 'declaration-type', component: DeclarationTypeComponent},
-  { path: 'declaration-type/:id', component: DeclarationTypeComponent},
+  { path: 'declaration-type-list', component: DeclarationTypeListComponent },
+  { path: 'declaration-type', component: DeclarationTypeComponent },
+  { path: 'declaration-type/:id', component: DeclarationTypeComponent },
 
-  { path: 'terminal-list', component: TerminalListComponent},
-  { path: 'terminal', component: TerminalComponent},
-  { path: 'terminal/:id', component: TerminalComponent},
+  { path: 'terminal-list', component: TerminalListComponent },
+  { path: 'terminal', component: TerminalComponent },
+  { path: 'terminal/:id', component: TerminalComponent },
 
-  { path: 'country-list', component: CountryListComponent},
-  { path: 'country', component: CountryComponent},
-  { path: 'country/:id', component: CountryComponent},
+  { path: 'user-terminal-list', component: UserTerminalListComponent },
+  { path: 'user-terminal', component: UserTerminalComponent },
+  { path: 'user-terminal/:id', component: UserTerminalComponent },
 
-  { path: 'city-list', component: CityListComponent},
-  { path: 'city', component: CityComponent},
-  { path: 'city/:id', component: CityComponent},
+  { path: 'country-list', component: CountryListComponent },
+  { path: 'country', component: CountryComponent },
+  { path: 'country/:id', component: CountryComponent },
 
-  { path: 'contact-list', component: ContactListComponent},
-  { path: 'contact', component: ContactComponent},
-  { path: 'contact/:id', component: ContactComponent},
+  { path: 'city-list', component: CityListComponent },
+  { path: 'city', component: CityComponent },
+  { path: 'city/:id', component: CityComponent },
 
-  { path: 'commodity-list', component: CommodityListComponent},
-  { path: 'commodity', component: CommodityComponent},
-  { path: 'commodity/:id', component: CommodityComponent},
+  { path: 'contact-list', component: ContactListComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'contact/:id', component: ContactComponent },
 
-  { path: 'package-list', component: PackageListComponent},
-  { path: 'package', component: PackageComponent},
-  { path: 'package/:id', component: PackageComponent},
+  { path: 'commodity-list', component: CommodityListComponent },
+  { path: 'commodity', component: CommodityComponent },
+  { path: 'commodity/:id', component: CommodityComponent },
 
-  { path: 'container-list', component: ContainerListComponent},
-  { path: 'container', component: ContainerComponent},
-  { path: 'container/:id', component: ContainerComponent},
+  { path: 'package-list', component: PackageListComponent },
+  { path: 'package', component: PackageComponent },
+  { path: 'package/:id', component: PackageComponent },
 
-  { path: 'container-type-list', component: ContainerTypeListComponent},
-  { path: 'container-type', component: ContainerTypeComponent},
-  { path: 'container-type/:id', component: ContainerTypeComponent},
+  { path: 'container-list', component: ContainerListComponent },
+  { path: 'container', component: ContainerComponent },
+  { path: 'container/:id', component: ContainerComponent },
 
-  { path: 'container-type-and-size-list', component: ContainerTypeAndSizeListComponent},
-  { path: 'container-type-and-size', component: ContainerTypeAndSizeComponent},
-  { path: 'container-type-and-size/:id', component: ContainerTypeAndSizeComponent},
+  { path: 'container-type-list', component: ContainerTypeListComponent },
+  { path: 'container-type', component: ContainerTypeComponent },
+  { path: 'container-type/:id', component: ContainerTypeComponent },
 
-  { path: 'container-size-list', component: ContainerSizeListComponent},
-  { path: 'container-size', component: ContainerSizeComponent},
-  { path: 'container-size/:id', component: ContainerSizeComponent},
+  { path: 'container-type-and-size-list', component: ContainerTypeAndSizeListComponent },
+  { path: 'container-type-and-size', component: ContainerTypeAndSizeComponent },
+  { path: 'container-type-and-size/:id', component: ContainerTypeAndSizeComponent },
 
-  { path: 'vessel-list', component: VesselListComponent},
-  { path: 'vessel', component: VesselComponent},
-  { path: 'vessel/:id', component: VesselComponent},
+  { path: 'container-size-list', component: ContainerSizeListComponent },
+  { path: 'container-size', component: ContainerSizeComponent },
+  { path: 'container-size/:id', component: ContainerSizeComponent },
 
-  { path: 'wagon-list', component: WagonListComponent},
-  { path: 'wagon', component: WagonComponent},
-  { path: 'wagon/:id', component: WagonComponent},
+  { path: 'vessel-list', component: VesselListComponent },
+  { path: 'vessel', component: VesselComponent },
+  { path: 'vessel/:id', component: VesselComponent },
 
-  { path: 'truck-list', component: TruckListComponent},
-  { path: 'truck', component: TruckComponent},
-  { path: 'truck/:id', component: TruckComponent},
+  { path: 'wagon-list', component: WagonListComponent },
+  { path: 'wagon', component: WagonComponent },
+  { path: 'wagon/:id', component: WagonComponent },
 
-  { path: 'operation-type-list', component: OperationTypeListComponent},
-  { path: 'operation-type', component: OperationTypeComponent},
-  { path: 'operation-type/:id', component: OperationTypeComponent},
+  { path: 'truck-list', component: TruckListComponent },
+  { path: 'truck', component: TruckComponent },
+  { path: 'truck/:id', component: TruckComponent },
 
-  { path: 'store-type-list', component: StoreTypeListComponent},
-  { path: 'store-type', component: StoreTypeComponent},
-  { path: 'store-type/:id', component: StoreTypeComponent},
+  { path: 'operation-type-list', component: OperationTypeListComponent },
+  { path: 'operation-type', component: OperationTypeComponent },
+  { path: 'operation-type/:id', component: OperationTypeComponent },
 
-  { path: 'store-list', component: StoreListComponent},
-  { path: 'store', component: StoreComponent},
-  { path: 'store/:id', component: StoreComponent},
+  { path: 'store-type-list', component: StoreTypeListComponent },
+  { path: 'store-type', component: StoreTypeComponent },
+  { path: 'store-type/:id', component: StoreTypeComponent },
 
-   { path: 'cargo-type-list', component: CargoTypeListComponent},
-  { path: 'cargo-type', component: CargoTypeComponent},
-  { path: 'cargo-type/:id', component: CargoTypeComponent},
+  { path: 'store-list', component: StoreListComponent },
+  { path: 'store', component: StoreComponent },
+  { path: 'store/:id', component: StoreComponent },
+
+  { path: 'cargo-type-list', component: CargoTypeListComponent },
+  { path: 'cargo-type', component: CargoTypeComponent },
+  { path: 'cargo-type/:id', component: CargoTypeComponent },
 ];
 
 @NgModule({

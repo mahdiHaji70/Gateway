@@ -28,6 +28,8 @@ export class TopBarComponent {
 
   signOut(): void {
     this.localStorageService.removeItem('token');
+    this.localStorageService.removeItem('terminalId');
+    this.localStorageService.removeItem('terminalCode');
     this.router.navigate(['/login']).then().catch();
   }
 
