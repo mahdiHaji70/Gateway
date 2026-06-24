@@ -7,7 +7,7 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface ITerminalDischargeExternalService
     {
-        Task<SendIpasTerminalDischargeResponse> SendIpasTerminalDischarge(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest, CancellationToken cancellationToken = default);
+        Task<List<SendIpasTerminalDischargeResponse>> SendIpasTerminalDischarge(List<SendIpasTerminalDischargeRequest> sendIpasTerminalDischargeRequest, CancellationToken cancellationToken = default);
 
     }
 }

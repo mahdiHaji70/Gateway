@@ -11,6 +11,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
         {
             return new SendIpasTerminalDischargeRequest
             {
+                TerminalDischargeId=terminalDischarge.Id,
                 TerminalCode = terminalDischarge.TerminalCode.ToString(),
                 IpasDeclarationNo = terminalDischarge.DeclarationItem.Declaration.IpasDeclarationNo,
                 WaybillId = terminalDischarge.WayBillId,
@@ -38,6 +39,10 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
                 IgnitionTemperatureUnit = terminalDischarge.IgnitionTemperatureUnit
             };
 
+        }
+        public static List<SendIpasTerminalDischargeRequest> Map(List<TerminalDischarge> terminalDischarges)
+        {
+            return terminalDischarges.Select(Map).ToList();
         }
 
 

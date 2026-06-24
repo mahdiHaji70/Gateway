@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Exceptions;
 using TDM.Application.Common.Interfaces;
+using TDM.Domain.Entities;
 
 namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
 {
@@ -30,13 +31,17 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
 
             if (terminalDischarges == null || !terminalDischarges.Any())
                 throw new NotFoundException("terminal discharge records not found for IPAS submission");
-
-            foreach (var item in terminalDischarges)
-            {
-                var ipasDeclarationIdRequest = SendIpasTerminalDischargeRequestMapper.Map(item);
+                       
+                var ipasDeclarationIdRequest = SendIpasTerminalDischargeRequestMapper.Map(terminalDischarges);
                 var response = await _terminalDischargeExternalService.SendIpasTerminalDischarge(ipasDeclarationIdRequest);
 
-            }
+                declaration.SetIpasDeclarationId(response., response.IpasDeclarationNo);
+
+                _declarationRepository.Update(declaration);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+
+            
 
 
 

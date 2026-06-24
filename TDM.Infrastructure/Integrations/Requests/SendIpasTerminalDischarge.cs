@@ -7,6 +7,7 @@ namespace TDM.Infrastructure.Integrations.Requests
 {
     public class SendIpasTerminalDischarge
     {
+        public Guid TerminalDischargeId { get; set; }
         public string TerminalCode { get; set; }
         public string AgreementNo { get; set; }
         public string WaybillNo { get; set; }

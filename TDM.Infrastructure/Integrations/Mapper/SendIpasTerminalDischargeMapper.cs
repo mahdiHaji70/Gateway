@@ -13,6 +13,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
         {
             return new SendIpasTerminalDischarge
             {
+                TerminalDischargeId= sendIpasTerminalDischargeRequest.TerminalDischargeId,
                 TerminalCode = sendIpasTerminalDischargeRequest.TerminalCode,
                 AgreementNo = sendIpasTerminalDischargeRequest.IpasDeclarationNo,
                 WaybillId = sendIpasTerminalDischargeRequest.WaybillId,
@@ -94,6 +95,11 @@ namespace TDM.Infrastructure.Integrations.Mapper
             {
                 ContainerNo = sendIpasTerminalDischargeRequest.ContainerNo
             };
+        }
+
+        public static List<SendIpasTerminalDischarge> Map(List<SendIpasTerminalDischargeRequest> sendIpasTerminalDischargeRequest)
+        {
+            return sendIpasTerminalDischargeRequest.Select(Map).ToList();
         }
     }
 }

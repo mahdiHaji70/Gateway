@@ -6,6 +6,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
 {
     public class SendIpasTerminalDischargeRequest
     {
+        public Guid TerminalDischargeId { get; set; }
         public string TerminalCode { get; set; }
         public string IpasDeclarationNo { get; set; }
         public string WaybillNo { get; set; }

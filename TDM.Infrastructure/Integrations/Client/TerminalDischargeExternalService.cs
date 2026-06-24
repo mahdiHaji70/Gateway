@@ -20,18 +20,29 @@ namespace TDM.Infrastructure.Integrations.Client
         {
             _requestExecutor = requestExecutor;
         }
-        public async Task<SendIpasTerminalDischargeResponse> SendIpasTerminalDischarge(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest, CancellationToken cancellationToken = default)
+        public async Task<List<SendIpasTerminalDischargeResponse>> SendIpasTerminalDischarge(List<SendIpasTerminalDischargeRequest> sendIpasTerminalDischargeRequest, CancellationToken cancellationToken = default)
         {
             var terminalDischargeDto = SendIpasTerminalDischargeMapper.Map(sendIpasTerminalDischargeRequest);
-            var response = await _requestExecutor.PostAsync<Guid>("PMO", "SubmitTruckTerminalDischarge", terminalDischargeDto, cancellationToken);
+          
+            var sendIpasTerminalDischargeResponse = new List<SendIpasTerminalDischargeResponse>();
 
-            var sendIpasTerminalDischargeResponse = new SendIpasTerminalDischargeResponse();
+            foreach (var item in terminalDischargeDto)
+            {
+                var response = await _requestExecutor.PostAsync<Guid>("PMO", "SubmitTruckTerminalDischarge", terminalDischargeDto, cancellationToken);
+                if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Terminal Discharge", out var errorMessage))
+                    sendIpasTerminalDischargeResponse.Add (new SendIpasTerminalDischargeResponse 
+                    { 
+                        TerminalDischargeId=item.TerminalDischargeId,
+                        ErrorMessage = errorMessage
+                    });
+                else
+                    sendIpasTerminalDischargeResponse.Add(new SendIpasTerminalDischargeResponse 
+                    { 
+                      TerminalDischargeId = item.TerminalDischargeId, 
+                      IpasTerminalDischargeId = new Guid(response.Data.ToString()) 
 
-            if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Terminal Discharge", out var errorMessage))
-                sendIpasTerminalDischargeResponse.ErrorMessage = errorMessage;
-            else
-                sendIpasTerminalDischargeResponse.IpasTerminalDischargeId = new Guid(response.Data.ToString());
-
+                    });
+            }
             return sendIpasTerminalDischargeResponse;
         }
     }
