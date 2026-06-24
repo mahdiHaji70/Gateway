@@ -7,5 +7,8 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface IDeclarationRepository : IRepository<Declaration>
     {
+
+        Task<bool> ExistsByIpasDeclarationNo(string IpasDeclarationNo);
+        Task<Declaration?> GetByIpasDeclarationNoAsync(string ipasDeclarationNo);
     }
 }

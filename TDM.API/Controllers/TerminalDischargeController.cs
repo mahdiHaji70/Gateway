@@ -72,9 +72,9 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet("{declarationNo}/{vehicleNumber}/{wayBill}")]
-        public async Task<IActionResult> GetTerminalDischargeByDeclarationNo(string declarationNo)
+        public async Task<IActionResult> GetTerminalDischargeByDeclarationNo(string ipasDeclarationNo)
         {
-               var result = await _mediator.Send(new GetTerminalDischargeByDeclarationNoQuery(declarationNo));
+               var result = await _mediator.Send(new GetTerminalDischargeByDeclarationNoQuery(ipasDeclarationNo));
                 return Ok(ApiResponse.Success(result));
             }
 

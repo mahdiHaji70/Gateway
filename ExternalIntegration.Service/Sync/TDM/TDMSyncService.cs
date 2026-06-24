@@ -19,9 +19,9 @@ namespace ExternalIntegration.Service.Sync.TDM
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
         }
-        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId)
+        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(GetGoodwayBillDto dto)
         {
-            var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync(storageAgreementId);
+            var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync(dto);
             var syncMappingDto = _mapper.Map<Response<IEnumerable<GoodwayBillDto>>>(goodwayBills);
             return syncMappingDto;
 

@@ -3,6 +3,8 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
+using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Common.Exceptions;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;
@@ -12,28 +14,51 @@ using TDM.Domain.Entities;
 
 namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo
 {
-   
-    public class GetTerminalDischargeByDeclarationNoQueryHandler : IRequestHandler<GetTerminalDischargeByDeclarationNoQuery, PagedResult<TerminalDischargeDto>>
+
+    public class GetTerminalDischargeByDeclarationNoQueryHandler : IRequestHandler<GetTerminalDischargeByDeclarationNoQuery, PagedResult<IpasGoodwayBillsResponse>>
     {
-        private readonly IRepository<TerminalDischarge> _terminalDischargeRepository;
+        private readonly ITerminalDischargeRepository _terminalDischargeRepository;
         private readonly IMapper _mapper;
+        private readonly IDeclarationRepository _declarationRepository;
+        private readonly ITerminalDischargeExternalService _terminalDischargeExternalService;
+
+
 
         public GetTerminalDischargeByDeclarationNoQueryHandler(IMapper mapper,
-            IRepository<TerminalDischarge> TerminalDischargeRepository)
+           ITerminalDischargeRepository terminalDischargeRepository,
+           IDeclarationRepository declarationRepository,
+           ITerminalDischargeExternalService terminalDischargeExternalService)
         {
-            _terminalDischargeRepository = TerminalDischargeRepository;
+            _terminalDischargeRepository = terminalDischargeRepository;
             _mapper = mapper;
+            _declarationRepository = declarationRepository;
+            _terminalDischargeExternalService = terminalDischargeExternalService;
         }
 
-        public async Task<PagedResult<TerminalDischargeDto>>
+        public async Task<PagedResult<IpasGoodwayBillsResponse>>
             Handle(GetTerminalDischargeByDeclarationNoQuery request, CancellationToken cancellationToken)
         {
-            var TerminalDischarges = await _terminalDischargeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var declaration = await _declarationRepository.GetByIpasDeclarationNoAsync(request.ipasDeclarationNo);
+            if (declaration == null)
+                throw new Exception("Declaration not found");
 
-            return _mapper.Map<PagedResult<TerminalDischargeDto>>(TerminalDischarges);
+            var ipasGoodwayBills =
+                await _terminalDischargeExternalService.GetIpasGoodwayBills(
+                    new IpasGoodwayBillsRequest(declaration.TerminalCode, declaration.IpasDeclarationId.Value));
 
+            var terminalDischarges = await _terminalDischargeRepository.GetByDeclarationIdAsync(declaration.Id);
+            if (terminalDischarges == null)
+                throw new Exception("No data received from IPAS.");
 
-            throw new NotImplementedException();
+            var filteredIpasGoodwiyBills = ipasGoodwayBills
+                                           .Where(newRecord => !terminalDischarges.Any
+                                           (existing =>
+                                            existing.TerminalCode == newRecord.TerminalCode &&
+                                            existing.WayBillId == newRecord.WaybillId
+                                            ))
+                                        .ToList();
+
+            return _mapper.Map<PagedResult<IpasGoodwayBillsResponse>>(filteredIpasGoodwiyBills);
         }
 
     }

@@ -5,6 +5,6 @@ namespace ExternalIntegration.Service.Sync.TDM
 {
     public interface ITDMSyncService
     {
-        Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId);
+        Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(GetGoodwayBillDto dto);
     }
 }

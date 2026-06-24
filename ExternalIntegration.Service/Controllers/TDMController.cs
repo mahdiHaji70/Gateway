@@ -18,7 +18,7 @@ namespace ExternalIntegration.Service.Controllers
             _tdmSyncService = tdmSyncService;
         }
         [HttpPost("GetGoodwayBillByStorageAgreementId")]
-        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId([FromQuery] Guid storageAgreementId)
+        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId([FromQuery] GetGoodwayBillDto storageAgreementId)
         {
             return await _tdmSyncService.GetGoodwayBillByStorageAgreementId(storageAgreementId);
         }
