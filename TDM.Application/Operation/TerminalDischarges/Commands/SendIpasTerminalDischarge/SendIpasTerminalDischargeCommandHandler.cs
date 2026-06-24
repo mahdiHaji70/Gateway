@@ -9,7 +9,7 @@ using TDM.Domain.Entities;
 namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge
 {
 
-    public class SendIpasTerminalDischargeCommandHandler : IRequestHandler<SendIpasTerminalDischargeCommand, bool>
+    public class SendIpasTerminalDischargeCommandHandler : IRequestHandler<SendIpasTerminalDischargeCommand, List<SendIpasTerminalDischargeResponse>>
     {
         private readonly ITerminalDischargeRepository _terminalDischargeRepository;
         private readonly ITerminalDischargeExternalService _terminalDischargeExternalService;
@@ -25,28 +25,26 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
 
         }
 
-        public async Task<bool> Handle(SendIpasTerminalDischargeCommand request, CancellationToken cancellationToken)
+        public async Task<List<SendIpasTerminalDischargeResponse>> Handle(SendIpasTerminalDischargeCommand request, CancellationToken cancellationToken)
         {
             var terminalDischarges = await _terminalDischargeRepository.GetPendingIpasSubmissionByDeclarationIdAsync(request.DeclarationId);
 
             if (terminalDischarges == null || !terminalDischarges.Any())
                 throw new NotFoundException("terminal discharge records not found for IPAS submission");
-                       
-                var ipasDeclarationIdRequest = SendIpasTerminalDischargeRequestMapper.Map(terminalDischarges);
-                var response = await _terminalDischargeExternalService.SendIpasTerminalDischarge(ipasDeclarationIdRequest);
 
-                declaration.SetIpasDeclarationId(response., response.IpasDeclarationNo);
+            var ipasTerminalDischargeRequest = SendIpasTerminalDischargeRequestMapper.Map(terminalDischarges);
+            var response = await _terminalDischargeExternalService.SendIpasTerminalDischarge(ipasTerminalDischargeRequest);
 
-                _declarationRepository.Update(declaration);
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
+           terminalDischarges.Join(response,
+           td => td.Id,
+           r => r.TerminalDischargeId,
+           (td, r) => new { TerminalDischarge = td, Response = r })
+            .ToList()
+            .ForEach(pair => pair.TerminalDischarge.IpasTerminalDischargeId = pair.Response.IpasTerminalDischargeId);
 
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            
-
-
-
-            return true;
-
+            return response;
         }
     }
 }
