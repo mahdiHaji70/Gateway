@@ -8,12 +8,12 @@ using TDM.Domain.Entities;
 namespace TDM.Application.Operation.WeightBridges.Commands.CreateWeightBridge
 {
    
-    public class CreateWeighBridgeCommandHandler : IRequestHandler<CreateWeighBridgeCommand, Guid>
+    public class CreateWeightBridgeCommandHandler : IRequestHandler<CreateWeightBridgeCommand, Guid>
     {
         private readonly IRepository<WeightBridge> _WeighBridgeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateWeighBridgeCommandHandler(IUnitOfWork unitOfWork
+        public CreateWeightBridgeCommandHandler(IUnitOfWork unitOfWork
             , IRepository<WeightBridge> WeighBridgeRepository)
         {
             _unitOfWork = unitOfWork;
@@ -21,7 +21,7 @@ namespace TDM.Application.Operation.WeightBridges.Commands.CreateWeightBridge
             _WeighBridgeRepository = WeighBridgeRepository;
         }
 
-        public async Task<Guid> Handle(CreateWeighBridgeCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateWeightBridgeCommand request, CancellationToken cancellationToken)
         {
             var WeighBridge = new WeightBridge(
                                           request.DeclarationId,

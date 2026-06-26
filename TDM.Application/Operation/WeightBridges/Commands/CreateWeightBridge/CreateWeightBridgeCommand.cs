@@ -6,10 +6,9 @@ using TDM.Domain.Entities;
 
 namespace TDM.Application.Operation.WeightBridges.Commands.CreateWeightBridge
 {
-    public class CreateWeighBridgeCommand:IRequest<Guid>
+    public class CreateWeightBridgeCommand:IRequest<Guid>
     {
         public Guid DeclarationId { get; set; }
-        public Declaration Declaration { get; set; }
         public Guid GateId { get; set; }
         public string Vehicle { get; set; }
         public Decimal? GrossWeight { get; set; }

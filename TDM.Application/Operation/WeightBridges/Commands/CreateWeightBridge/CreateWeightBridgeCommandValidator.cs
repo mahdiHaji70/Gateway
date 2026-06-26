@@ -7,9 +7,9 @@ using TDM.Application.Operation.Gates.Commands.CreateGate;
 namespace TDM.Application.Operation.WeightBridges.Commands.CreateWeightBridge
 {
    
-    public class CreateWeighBridgeCommandValidator : AbstractValidator<CreateWeighBridgeCommand>
+    public class CreateWeightBridgeCommandValidator : AbstractValidator<CreateWeightBridgeCommand>
     {
-        public CreateWeighBridgeCommandValidator()
+        public CreateWeightBridgeCommandValidator()
         {
             RuleFor(x => x.Vehicle)
             .NotEmpty();

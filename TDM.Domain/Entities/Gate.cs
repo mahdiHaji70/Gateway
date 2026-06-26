@@ -23,8 +23,8 @@ namespace TDM.Domain.Entities
       Guid? containerId, DateTime? enterDate, DateTime? exitDate)
       => SetProperty( declarationId, vehicle, containerId, enterDate, exitDate);
 
-        public void Update(Guid id, Guid declarationId, string vehicle,
-      Guid containerId, DateTime enterDate, DateTime exitDate)
+        public void Update( Guid declarationId, string vehicle,
+      Guid? containerId, DateTime? enterDate, DateTime? exitDate)
       => SetProperty(declarationId, vehicle, containerId, enterDate, exitDate);
 
 

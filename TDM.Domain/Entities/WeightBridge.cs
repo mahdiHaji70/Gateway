@@ -28,6 +28,7 @@ namespace TDM.Domain.Entities
         private void SetProperty(Guid declarationId, Guid gateId, string vehicle,
             decimal? grossWeight, decimal? tareWeight, DateTime? startDate, DateTime? endDate)
         {
+            
             DeclarationId = declarationId;
             GateId = gateId;
             Vehicle = vehicle;
