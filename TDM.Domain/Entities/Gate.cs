@@ -19,19 +19,19 @@ namespace TDM.Domain.Entities
         public DateTime? ExitDate { get; set; }
 
 
-        public Gate(Guid id, Guid declarationId, string vehicle,
-      Guid containerId, DateTime enterDate, DateTime exitDate)
-      => SetProperty(id, declarationId, vehicle, containerId, enterDate, exitDate);
+        public Gate( Guid declarationId, string vehicle,
+      Guid? containerId, DateTime? enterDate, DateTime? exitDate)
+      => SetProperty( declarationId, vehicle, containerId, enterDate, exitDate);
 
         public void Update(Guid id, Guid declarationId, string vehicle,
       Guid containerId, DateTime enterDate, DateTime exitDate)
-      => SetProperty(id, declarationId, vehicle, containerId, enterDate, exitDate);
+      => SetProperty(declarationId, vehicle, containerId, enterDate, exitDate);
 
 
-        private void SetProperty(Guid id, Guid declarationId, string vehicle, Guid containerId,
-            DateTime enterDate, DateTime exitDate)
+        private void SetProperty( Guid declarationId, string vehicle, Guid? containerId,
+            DateTime? enterDate, DateTime? exitDate)
         {
-            Id = id;
+          
             DeclarationId = declarationId;
             Vehicle = vehicle;
             ContainerId = containerId;
