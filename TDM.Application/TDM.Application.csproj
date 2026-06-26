@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Operation\Gate\Queries\" />
-    <Folder Include="Operation\WeightBridge\Queries\" />
+    <Folder Include="Operation\Gates\Queries\" />
+    <Folder Include="Operation\WeightBridges\Queries\" />
   </ItemGroup>
 
 </Project>

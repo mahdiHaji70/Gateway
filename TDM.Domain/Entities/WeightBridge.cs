@@ -6,7 +6,7 @@ using TDM.Domain.Exceptions;
 
 namespace TDM.Domain.Entities
 {
-    public class WeightBridge:BaseEntity
+    public class WeightBridge : BaseEntity
     {
         public Guid DeclarationId { get; set; }
         public Declaration Declaration { get; set; }
@@ -17,19 +17,18 @@ namespace TDM.Domain.Entities
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public WeightBridge(Guid declarationId, Declaration declaration, Guid gateId, string vehicle,
+        public WeightBridge(Guid declarationId, Guid gateId, string vehicle,
       decimal? grossWeight, decimal? tareWeight, DateTime? startDate, DateTime? endDate)
-      => SetProperty(declarationId, declaration, gateId, vehicle, grossWeight, tareWeight, startDate, endDate);
+      => SetProperty(declarationId, gateId, vehicle, grossWeight, tareWeight, startDate, endDate);
 
-        public void Update(Guid declarationId, Declaration declaration, Guid gateId, string vehicle,
+        public void Update(Guid declarationId, Guid gateId, string vehicle,
             decimal? grossWeight, decimal? tareWeight, DateTime? startDate, DateTime? endDate)
-            => SetProperty(declarationId, declaration, gateId, vehicle, grossWeight, tareWeight, startDate, endDate);
+            => SetProperty(declarationId, gateId, vehicle, grossWeight, tareWeight, startDate, endDate);
 
-        private void SetProperty(Guid declarationId, Declaration declaration, Guid gateId, string vehicle,
+        private void SetProperty(Guid declarationId, Guid gateId, string vehicle,
             decimal? grossWeight, decimal? tareWeight, DateTime? startDate, DateTime? endDate)
         {
             DeclarationId = declarationId;
-            Declaration = declaration;
             GateId = gateId;
             Vehicle = vehicle;
             GrossWeight = grossWeight;
