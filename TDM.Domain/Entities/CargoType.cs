@@ -27,5 +27,17 @@ namespace TDM.Domain.Entities
                 throw new DomainValidationException("Name is required.");
         }
 
+  
+    private void Validate(Guid declarationId, string vehicle, DateTime? startDate, DateTime? endDate)
+        {
+            if (declarationId == Guid.Empty)
+                throw new DomainValidationException("DeclarationId is required.");
+
+            if (string.IsNullOrWhiteSpace(vehicle))
+                throw new DomainValidationException("Vehicle is required.");
+
+            if (startDate.HasValue && endDate.HasValue && startDate.Value > endDate.Value)
+                throw new DomainValidationException("StartDate cannot be greater than EndDate.");
+        }
     }
-}
+  }

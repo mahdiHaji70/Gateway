@@ -38,6 +38,9 @@ namespace TDM.Infrastructure
             services.AddScoped<ITerminalDischargeRepository, TerminalDischargeRepository>();
             services.AddScoped<ITerminalDischargeExternalService, TerminalDischargeExternalService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IGateRepository, GateRepository>();
+            services.AddScoped<IWeightBridgeRepository, WeightBridgeRepository>();
+
 
             return services;
         }
