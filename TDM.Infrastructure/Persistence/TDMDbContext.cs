@@ -24,6 +24,8 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<StoreType> StoreTypes => Set<StoreType>();
         public DbSet<Store> Stores => Set<Store>();
         public DbSet<TerminalDischarge> TerminalDischarges => Set<TerminalDischarge>();
+        public DbSet<Gate> Gates => Set<Gate>();
+        public DbSet<WeightBridge> WeightBridges => Set<WeightBridge>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)
