@@ -1,10 +1,17 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TDM.Application.Operation.Gates.Commands.DeleteGate
 {
-    internal class DeleteGateCommand
+     public class DeleteGateCommand : IRequest<bool>
     {
+        public Guid Id { get; set; }
+
+        public DeleteGateCommand(Guid id)
+        {
+            Id = id;
+        }
     }
 }
