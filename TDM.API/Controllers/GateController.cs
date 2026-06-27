@@ -5,6 +5,8 @@ using TDM.API.Common.Models;
 using TDM.Application.Operation.Gates.Commands.CreateGate;
 using TDM.Application.Operation.Gates.Commands.DeleteGate;
 using TDM.Application.Operation.Gates.Commands.UpdateGate;
+using TDM.Application.Operation.Gates.Queries.GetGateById;
+using TDM.Application.Operation.Gates.Queries.GetGates;
 
 
 namespace TDM.API.Controllers
@@ -21,21 +23,21 @@ namespace TDM.API.Controllers
             _mediator = mediator;
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetById(Guid id)
-        //{
-        //    var result = await _mediator.Send(new GetGateByIdQuery(id));
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _mediator.Send(new GetGateByIdQuery(id));
 
-        //    return Ok(ApiResponse.Success(result));
-        //}
+            return Ok(ApiResponse.Success(result));
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
-        //{
-        //    var result = await _mediator.Send(new GetGatesQuery(pageNumber, pageSize));
+        [HttpGet]
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = await _mediator.Send(new GetGatesQuery(pageNumber, pageSize));
 
-        //    return Ok(ApiResponse.Success(result));
-        //}
+            return Ok(ApiResponse.Success(result));
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateGateCommand command, CancellationToken cancellationToken)
