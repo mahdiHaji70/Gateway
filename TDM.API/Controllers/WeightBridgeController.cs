@@ -5,6 +5,8 @@ using TDM.API.Common.Models;
 using TDM.Application.Operation.WeightBridges.Commands.CreateWeightBridge;
 using TDM.Application.Operation.WeightBridges.Commands.DeleteWeightBridge;
 using TDM.Application.Operation.WeightBridges.Commands.UpdateWeightBridge;
+using TDM.Application.Operation.WeightBridges.Queries.GetWeightBridgeById;
+using TDM.Application.Operation.WeightBridges.Queries.GetWeightBridges;
 
 
 namespace TDM.API.Controllers
@@ -21,21 +23,21 @@ namespace TDM.API.Controllers
             _mediator = mediator;
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetById(Guid id)
-        //{
-        //    var result = await _mediator.Send(new GetWeightBridgeByIdQuery(id));
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _mediator.Send(new GetWeightBridgeByIdQuery(id));
 
-        //    return Ok(ApiResponse.Success(result));
-        //}
+            return Ok(ApiResponse.Success(result));
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
-        //{
-        //    var result = await _mediator.Send(new GetWeightBridgesQuery(pageNumber, pageSize));
+        [HttpGet]
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = await _mediator.Send(new GetWeightBridgesQuery(pageNumber, pageSize));
 
-        //    return Ok(ApiResponse.Success(result));
-        //}
+            return Ok(ApiResponse.Success(result));
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateWeightBridgeCommand command, CancellationToken cancellationToken)

@@ -23,9 +23,4 @@
     <ProjectReference Include="..\TDM.Domain\TDM.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Operation\Gates\Queries\" />
-    <Folder Include="Operation\WeightBridges\Queries\" />
-  </ItemGroup>
-
 </Project>
