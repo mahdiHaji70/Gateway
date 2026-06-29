@@ -4,6 +4,7 @@ import { FeatureRoutingModule } from './feature-routing.module';
 import { BasicInformationModule } from './basic-information/basic-information.module';
 import { OperationModule } from './operation/operation.module';
 import { DocumentModule } from './document/document.module';
+import { SyncModule } from './sync/sync.module';
 
 
 
@@ -13,6 +14,7 @@ import { DocumentModule } from './document/document.module';
     CommonModule,
     FeatureRoutingModule,
     BasicInformationModule,
+    SyncModule
     // OperationModule,
     // DocumentModule
   ]

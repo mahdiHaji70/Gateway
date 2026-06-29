@@ -7,11 +7,16 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
 {
     public class TerminalRepository : Repository<Terminal>, ITerminalRepository
     {
-        public TerminalRepository(GatewayDbContext context): base(context) { }
+        protected readonly DbSet<Terminal> terminalDbSet;
+
+        public TerminalRepository(GatewayDbContext context): base(context)
+        {
+            terminalDbSet = _context.Set<Terminal>();
+        }
 
         public async Task<Terminal?> GetByCodeAsync(string code)
         {
-            return await _context.Terminals
+            return await terminalDbSet
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.Code == code);
         }

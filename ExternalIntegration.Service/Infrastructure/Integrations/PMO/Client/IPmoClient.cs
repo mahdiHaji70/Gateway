@@ -7,11 +7,11 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 {
     public interface IPmoClient
     {
-        Task<Response<IEnumerable<GoodwayBillResponseDto>>> GetGoodwayBill(DateRangeDto dto);
+        Task<Response<IEnumerable<GoodwayBillResponseDto>>> GetGoodwayBill(PmoDateRangeDto dto);
         Task<Response<CreateStorageAgreementResponseDto>> CreateStorageAgreement(CreateStorageAgreementRequestDto dto);
         Task<Response<StorageAgreementResponseDto>> GetStorageAgreement(GetStorageAgreementDto dto);
         Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto);
-        Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(DateRangeDto dto);
+        Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(PmoDateRangeDto dto);
         Task<Response<Guid>> TruckTerminalDischarge(TruckTerminalDischargeRequestDto dto);
     }
 }

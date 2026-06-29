@@ -25,7 +25,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             _userName = configuration["ServiceProviderConfig:PMO:Username"]!;
             _password = configuration["ServiceProviderConfig:PMO:Password"]!;
         }
-        public async Task<Response<IEnumerable<GoodwayBillResponseDto>>> GetGoodwayBill(DateRangeDto dto)
+        public async Task<Response<IEnumerable<GoodwayBillResponseDto>>> GetGoodwayBill(PmoDateRangeDto dto)
         {
             var request = new PmoRequestBuilder()
             .WithCredential(_userName, _password)
@@ -93,7 +93,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             var response = await _requestExecutor.PostAsync<bool>(request);
             return response;
         }
-        public async Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(DateRangeDto dto)
+        public async Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(PmoDateRangeDto dto)
         {
             var request = new PmoRequestBuilder()
                 .WithCredential(_userName, _password)
