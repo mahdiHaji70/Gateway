@@ -1,5 +1,9 @@
 export const MenuItems = [
-
+    {
+        label: 'Sync With Ipas',
+        icon: 'pi pi-sync',
+        path: 'country-list'
+    },
     {
         label: 'Operation',
         url: 'assets/images/warehouse.png',

@@ -23,6 +23,8 @@ namespace ExternalIntegration.Service.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITerminalRepository, TerminalRepository>();
+            services.AddScoped<IGoodwayBillRepository, GoodwayBillRepository>();
+            services.AddScoped<IDischargePermitRepository, DischargePermitRepository>();
 
             services.AddSingleton<AesEncryption>();
 

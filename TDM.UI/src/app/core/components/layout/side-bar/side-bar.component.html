@@ -23,7 +23,9 @@
               <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon ? parent.icon : 'pi pi-question'"></i>
               {{ parent.label }}
             </div>
+            @if(parent.items){
             <i class="pi" [ngClass]="{ 'pi-angle-down': isParentOpen(i), 'pi-angle-up': !isParentOpen(i) }"></i>
+            }
           </div>
   
           <ul *ngIf="isParentOpen(i)" [@expandCollapse]>

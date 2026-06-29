@@ -13,25 +13,39 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPmoClient _client;
         private readonly IMapper _mapper;
-        private readonly IRepository<GoodwayBill> _goodwayBillRepository;
-        private readonly IRepository<DischargePermit> _dischargePermitRepository;
+        private readonly IGoodwayBillRepository _goodwayBillRepository;
+        private readonly IDischargePermitRepository _dischargePermitRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
             ,IMapper mapper
             ,IUnitOfWork unitOfWork
-            ,IRepository<GoodwayBill> goodwayBillRepository)
+            , IGoodwayBillRepository goodwayBillRepository,
+            IDischargePermitRepository dischargePermitRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
+            _dischargePermitRepository = dischargePermitRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
-          
-            var clientResult = await _client.GetGoodwayBill(dto);
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)            
+                localFromDate = await _goodwayBillRepository.GetLastDateAsync();
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
+
+            var pmoDateDto = new PmoDateRangeDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode);
+
+            var clientResult = await _client.GetGoodwayBill(pmoDateDto);
 
             var syncMappingDto = _mapper.Map<Response<IEnumerable<GoodwayBillDto>>>(clientResult);
 
@@ -70,8 +84,20 @@ namespace ExternalIntegration.Service.Sync.PMO
         }
         public async Task<Response<IEnumerable<DischargePermitDto>>> GetDischargePermit(DateRangeDto dto)
         {
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)
+                localFromDate = await _dischargePermitRepository.GetLastDateAsync();
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
 
-            var clientResult = await _client.GetDischargePermit(dto);
+            var pmoDateDto = new PmoDateRangeDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode);
+
+            var clientResult = await _client.GetDischargePermit(pmoDateDto);
 
             var syncMappingDto = _mapper.Map<Response<IEnumerable<DischargePermitDto>>>(clientResult);
 
