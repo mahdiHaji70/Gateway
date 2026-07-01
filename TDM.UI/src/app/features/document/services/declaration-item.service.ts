@@ -15,22 +15,22 @@ export class DeclarationItemService {
   }
 
   getById(id: string): Observable<any>{
-    let _url = ApiEndpoints.Declaration_Item + `/${id}`;
+    let _url = ApiEndpoints.Declaration_Items + `/${id}`;
     return this.apiService.get(_url);
   }
 
   postDeclarationItem(declarationItem: DeclarationItem): Observable<any>{
-    let _url = ApiEndpoints.Declaration_Item;
+    let _url = ApiEndpoints.Declaration_Items;
     return this.apiService.post(_url, declarationItem);
   }
 
   putDeclarationItem(declarationItem: DeclarationItem): Observable<any>{
-    let _url = ApiEndpoints.Declaration_Item;
+    let _url = ApiEndpoints.Declaration_Items;
     return this.apiService.put(_url, declarationItem);
   }
 
   deleteDeclarationItem(id: string): Observable<any> {
-    let _url = ApiEndpoints.Declaration_Item + `/${id}`;
+    let _url = ApiEndpoints.Declaration_Items + `/${id}`;
     return this.apiService.delete(_url);
   }
 

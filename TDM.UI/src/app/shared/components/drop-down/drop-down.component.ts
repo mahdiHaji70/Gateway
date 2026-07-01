@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { toPascalCase } from '../../utils/to-pascal-case';
 
@@ -13,7 +13,9 @@ export class DropDownComponent {
   @Input() options?: any[];
   @Input() required: boolean = false;
   @Input() optionLabel: string = 'name';
-  label?: string;  
+  @Output() change = new EventEmitter<boolean>();
+
+  label?: string;
   selectedOption: any;
   /**
    *
@@ -21,10 +23,15 @@ export class DropDownComponent {
   constructor() {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.label = toPascalCase(this.controlName!);
   }
 
   selectOption(item: any) {
+  }
+
+  onChange(event: any) { 
+    const value = event?.value ?? event?.target?.value;
+    this.change.emit(value);
   }
 }

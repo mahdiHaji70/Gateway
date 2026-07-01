@@ -31,7 +31,6 @@ export class ApiService {
   }
 
  private buildOptions(params?: any, customHeaders?: any) {
-  debugger
     const token = localStorage.getItem('token');
     
     let httpHeaders = new HttpHeaders();
