@@ -1,4 +1,4 @@
 <div class="field" [formGroup]="formGroup">
     <p-checkbox [formGroup]="formGroup" [formControlName]="controlName" [binary]="true" [inputId]="'1'" [label]="label"
-        [required]="required" />
+        [required]="required" (onChange)="onChange($event)"/>
 </div>

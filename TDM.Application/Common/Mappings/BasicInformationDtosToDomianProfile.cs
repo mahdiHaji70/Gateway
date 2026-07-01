@@ -31,20 +31,22 @@ namespace TDM.Application.Common.Mappings
             CreateMap<Commodity, CommodityDto>();
 
             CreateMap<Traffic, TrafficDto>();
-            
+
             CreateMap<Package, PackageDto>();
-            
+
             CreateMap<Country, CountryDto>();
 
             CreateMap<City, CityDto>();
-            
+
             CreateMap<Terminal, TerminalDto>();
-            
+
             CreateMap<UserTerminal, UserTerminalDto>();
 
             CreateMap<Declaration, DeclarationDto>();
 
-            CreateMap<DeclarationItem, DeclarationItemDto>();
+            CreateMap<DeclarationItem, DeclarationItemDto>()
+                .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));
+
 
             CreateMap<ContainerTypeAndSize, ContainerTypeAndSizeDto>();
             CreateMap<CargoType, CargoTypeDto>();

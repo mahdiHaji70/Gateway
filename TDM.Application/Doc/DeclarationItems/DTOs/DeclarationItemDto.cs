@@ -12,7 +12,7 @@ namespace TDM.Application.Doc.DeclarationItems.DTOs
         public decimal NetWeight { get; set; }
 
         public Guid DeclarationId { get; set; }
-        public string? DeclarationNumber { get; set; }
+        public string? IpasDeclarationNo { get; set; }
 
         public Guid CommodityId { get; set; }
         public string? CommodityName { get; set; }

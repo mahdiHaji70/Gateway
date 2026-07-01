@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { OperationDetailFull } from '../../../models/operation-detail-full.model';
+import { OperationDetailFull } from '../../../models/discharge-full.model';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { OperationDetailService } from '../../../services/operation-detail.service';
+import { DischargeService } from '../../../services/discharge.service';
 
 @Component({
   selector: 'app-discharge-list',
@@ -18,7 +18,7 @@ export class DischargeListComponent {
   constructor(private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private operationDetailService: OperationDetailService) {
+    private dischargeService: DischargeService) {
   }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class DischargeListComponent {
   }
 
   loadDischarges() {
-    this.operationDetailService.getOperationDetails().subscribe({
+    this.dischargeService.getDischarges().subscribe({
       next: (res: any) => {
         this.discharges = res.data.map((item: OperationDetailFull) => new OperationDetailFull(item.declarationId, item.declarationNumber, item.vehicleId, item.vehicleName,
           item.placeId, item.placeName, item.packNumber, item.weight, item.operationDate, item.operationTypeId, item.operationTypeName, item.volume, item.containerId,
@@ -57,7 +57,7 @@ export class DischargeListComponent {
       rejectIcon: "none",
 
       accept: () => {
-        this.operationDetailService.deleteOperationDetail(id).subscribe({
+        this.dischargeService.deleteDischarge(id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadDischarges();

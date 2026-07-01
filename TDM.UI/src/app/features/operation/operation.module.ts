@@ -24,7 +24,7 @@ import { DischargeListComponent } from './components/discharge/discharge-list/di
 import { OperationPlanningComponent } from './components/operation-planning/operation-planning.component';
 import { OperationPlanningListComponent } from './components/operation-planning/operation-planning-list/operation-planning-list.component';
 import { OperationPlanningService } from './services/operation-planning.service';
-import { OperationDetailService } from './services/operation-detail.service';
+import { DischargeService } from './services/discharge.service';
 import { CargoArrivalComponent } from './components/cargo-arrival/cargo-arrival.component';
 import { CargoArrivalListComponent } from './components/cargo-arrival/cargo-arrival-list/cargo-arrival-list.component';
 import { CargoArrivalService } from './services/cargo-arrival.service';
@@ -39,6 +39,7 @@ import { StuffService } from './services/stuff.service';
 import { DeclarationService } from './services/declaration.service';
 import { ExitFromStoreListComponent } from './components/exit-from-store-list/exit-from-store-list.component';
 import { ExitFromStoreComponent } from './components/exit-from-store-list/exit-from-store/exit-from-store.component';
+import { DeclarationItemService } from './services/declaration-item.service';
 
 @NgModule({
   declarations: [    
@@ -78,12 +79,13 @@ import { ExitFromStoreComponent } from './components/exit-from-store-list/exit-f
   ],
   providers: [
     DeclarationService,
+    DeclarationItemService,
     GateService,
     ConfirmationService,
     MessageService,
     WeighBridgeService,
     OperationPlanningService,
-    OperationDetailService,
+    DischargeService,
     CargoArrivalService,
     OperationAggregationService,
     StoreReceiptRequestService,
