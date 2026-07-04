@@ -16,6 +16,7 @@ using TDM.Application.Common.Models;
 using TDM.Application.Doc.DeclarationItems.DTOs;
 using TDM.Application.Doc.Declarations.DTOs;
 using TDM.Application.Operation.TerminalDischarges.DTOs;
+using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Mappings
@@ -70,6 +71,7 @@ namespace TDM.Application.Common.Mappings
             CreateMap<Container, ContainerDto>()
                 .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.ContainerTypeAndSize.TypeAndSize))
                 .ForMember(dest => dest.ContainerTypeAndSizeCode, opt => opt.MapFrom(src => src.ContainerTypeAndSize.TypeAndSizeCode));
+            CreateMap<IpasGoodwayBillsResponse, IpasGoodwayBillsRequest>();
         }
     }
 }

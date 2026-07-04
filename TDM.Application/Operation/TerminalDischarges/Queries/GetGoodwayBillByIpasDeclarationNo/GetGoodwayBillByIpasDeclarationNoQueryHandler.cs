@@ -15,7 +15,7 @@ using TDM.Domain.Entities;
 namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo
 {
 
-    public class GetTerminalDischargeByDeclarationNoQueryHandler : IRequestHandler<GetTerminalDischargeByDeclarationNoQuery, PagedResult<IpasGoodwayBillsResponse>>
+    public class GetGoodwayBillByIpasDeclarationNoQueryHandler : IRequestHandler<GetGoodwayBillByIpasDeclarationNoQuery, IEnumerable<IpasGoodwayBillsResponse>>
     {
         private readonly ITerminalDischargeRepository _terminalDischargeRepository;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
 
 
 
-        public GetTerminalDischargeByDeclarationNoQueryHandler(IMapper mapper,
+        public GetGoodwayBillByIpasDeclarationNoQueryHandler(IMapper mapper,
            ITerminalDischargeRepository terminalDischargeRepository,
            IDeclarationRepository declarationRepository,
            ITerminalDischargeExternalService terminalDischargeExternalService)
@@ -35,8 +35,8 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
             _terminalDischargeExternalService = terminalDischargeExternalService;
         }
 
-        public async Task<PagedResult<IpasGoodwayBillsResponse>>
-            Handle(GetTerminalDischargeByDeclarationNoQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<IpasGoodwayBillsResponse>>
+            Handle(GetGoodwayBillByIpasDeclarationNoQuery request, CancellationToken cancellationToken)
         {
             var declaration = await _declarationRepository.GetByIpasDeclarationNoAsync(request.ipasDeclarationNo);
             if (declaration == null)
@@ -58,7 +58,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
                                             ))
                                         .ToList();
 
-            return _mapper.Map<PagedResult<IpasGoodwayBillsResponse>>(filteredIpasGoodwiyBills);
+            return _mapper.Map<IEnumerable<IpasGoodwayBillsResponse>>(filteredIpasGoodwiyBills);
         }
 
     }

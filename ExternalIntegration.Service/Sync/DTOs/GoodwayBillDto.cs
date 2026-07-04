@@ -87,8 +87,8 @@ namespace ExternalIntegration.Service.Sync.DTOs
         public Guid? DischargeId { get; set; }
         public int? DischargeStateId { get; set; }
         public DateTime CreationDate { get; set; }
-        public List<BulkDto>? BulkList { get; set; }
-        public List<GeneralCargoDto>? CargoList { get; set; }
-        public List<ContainerDto>? ContainerList { get; set; }
+        public List<BulkDto> BulkList { get; set; }
+        public List<GeneralCargoDto> CargoList { get; set; }
+        public List<ContainerDto> ContainerList { get; set; }
     }
 }
