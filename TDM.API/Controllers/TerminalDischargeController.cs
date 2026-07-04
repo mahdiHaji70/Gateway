@@ -71,12 +71,11 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(result));
         }
 
-        [HttpGet("{declarationNo}/{vehicleNumber}/{wayBill}")]
-        public async Task<IActionResult> GetTerminalDischargeByDeclarationNo(string ipasDeclarationNo)
+        [HttpGet("request-goodwayBill-by-ipasDeclarationNo/{ipasDeclarationNo}")]
+        public async Task<IActionResult> GetGoodwayBillByIpasDeclarationNo(string ipasDeclarationNo)
         {
-               var result = await _mediator.Send(new GetTerminalDischargeByDeclarationNoQuery(ipasDeclarationNo));
-                return Ok(ApiResponse.Success(result));
-            }
-
+            var result = await _mediator.Send(new GetGoodwayBillByIpasDeclarationNoQuery(ipasDeclarationNo));
+            return Ok(ApiResponse.Success(result));
         }
     }
+}

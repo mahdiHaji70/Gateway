@@ -7,5 +7,5 @@ using TDM.Application.Operation.TerminalDischarges.DTOs;
 
 namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo
 {
-     public record GetTerminalDischargeByDeclarationNoQuery(string ipasDeclarationNo, int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<IpasGoodwayBillsResponse>>;
+     public record GetGoodwayBillByIpasDeclarationNoQuery(string ipasDeclarationNo, int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<IpasGoodwayBillsResponse>>;
 }

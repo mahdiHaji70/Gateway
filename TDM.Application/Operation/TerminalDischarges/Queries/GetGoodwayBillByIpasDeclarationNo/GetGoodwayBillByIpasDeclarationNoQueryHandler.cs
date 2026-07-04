@@ -15,7 +15,7 @@ using TDM.Domain.Entities;
 namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo
 {
 
-    public class GetTerminalDischargeByDeclarationNoQueryHandler : IRequestHandler<GetTerminalDischargeByDeclarationNoQuery, PagedResult<IpasGoodwayBillsResponse>>
+    public class GetGoodwayBillByIpasDeclarationNoQueryHandler : IRequestHandler<GetGoodwayBillByIpasDeclarationNoQuery, PagedResult<IpasGoodwayBillsResponse>>
     {
         private readonly ITerminalDischargeRepository _terminalDischargeRepository;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
 
 
 
-        public GetTerminalDischargeByDeclarationNoQueryHandler(IMapper mapper,
+        public GetGoodwayBillByIpasDeclarationNoQueryHandler(IMapper mapper,
            ITerminalDischargeRepository terminalDischargeRepository,
            IDeclarationRepository declarationRepository,
            ITerminalDischargeExternalService terminalDischargeExternalService)
@@ -36,7 +36,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
         }
 
         public async Task<PagedResult<IpasGoodwayBillsResponse>>
-            Handle(GetTerminalDischargeByDeclarationNoQuery request, CancellationToken cancellationToken)
+            Handle(GetGoodwayBillByIpasDeclarationNoQuery request, CancellationToken cancellationToken)
         {
             var declaration = await _declarationRepository.GetByIpasDeclarationNoAsync(request.ipasDeclarationNo);
             if (declaration == null)

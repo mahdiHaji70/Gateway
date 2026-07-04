@@ -2,6 +2,7 @@
 
 using ExternalIntegration.Service.Sync.AutoMapper;
 using ExternalIntegration.Service.Sync.PMO;
+using ExternalIntegration.Service.Sync.TDM;
 
 namespace ExternalIntegration.Service.Sync
 {
@@ -14,6 +15,7 @@ namespace ExternalIntegration.Service.Sync
             services.AddAutoMapper(cfg => { }, typeof(PmoSyncProfile));
 
             services.AddScoped<IPmoSyncService, PmoSyncService>();
+            services.AddScoped<ITDMSyncService, TDMSyncService>();
 
             return services;
         }

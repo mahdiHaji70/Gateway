@@ -3,6 +3,7 @@ using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Sync.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExternalIntegration.Service.Sync.TDM
 {
@@ -19,9 +20,9 @@ namespace ExternalIntegration.Service.Sync.TDM
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
         }
-        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(GetGoodwayBillDto dto)
+        public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
-            var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync(dto);
+            var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync( storageAgreementId,  terminalCode);
             var syncMappingDto = _mapper.Map<Response<IEnumerable<GoodwayBillDto>>>(goodwayBills);
             return syncMappingDto;
 
