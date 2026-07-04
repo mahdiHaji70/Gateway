@@ -18,8 +18,9 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
             CreateMap<DischargePermitDto, DischargePermit>();
             CreateMap(typeof(List<>), typeof(Response<>));
-    
 
-           
+
+
+        }
     }
 }
