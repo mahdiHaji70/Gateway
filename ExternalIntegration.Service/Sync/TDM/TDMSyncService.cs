@@ -23,6 +23,8 @@ namespace ExternalIntegration.Service.Sync.TDM
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
             var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync( storageAgreementId,  terminalCode);
+            var syncMappingDto2 = _mapper.Map<List<GoodwayBillDto>>(goodwayBills);
+
             var syncMappingDto = _mapper.Map<Response<IEnumerable<GoodwayBillDto>>>(goodwayBills);
             return syncMappingDto;
 
