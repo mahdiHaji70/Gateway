@@ -20,22 +20,6 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap(typeof(List<>), typeof(Response<>));
     
 
-            //CreateMap<GoodwayBill, GoodwayBillDto>()
-            //        .ForMember(dest => dest.BulkList,
-            //            opt => opt.MapFrom(src => ParseJsonSafe<List<BulkDto>>(src.BulkList)))
-            //        .ForMember(dest => dest.CargoList,
-            //            opt => opt.MapFrom(src => ParseJsonSafe<List<GeneralCargoDto>>(src.CargoList)))
-            //         .ForMember(dest => dest.ContainerList,
-            //            opt => opt.MapFrom(src => ParseJsonSafe<List<ContainerDto>>(src.ContainerList)));
-
-        }
-        //private T ParseJsonSafe<T>(string json) where T : new()
-        //{
-        //    if (string.IsNullOrWhiteSpace(json) || json == "[]")
-        //        return new T();
-
-        //    return JsonConvert.DeserializeObject<T>(json) ?? new T();
-
-        //}
+           
     }
 }
