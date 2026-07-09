@@ -1,6 +1,6 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
 {
-    public class AllocationContainerDto
+    public class AllocationContainerRequestDto
     {
         public DateTime OperationDate { get; set; }
         public string StorageAreaCode { get; set; }

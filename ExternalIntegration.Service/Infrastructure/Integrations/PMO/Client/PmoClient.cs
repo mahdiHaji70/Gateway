@@ -270,5 +270,46 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<StoreReceiptDto>>(request, dto.TerminalCode);
             return response;
         }
+
+        public async Task<Response<bool>> SendStoreReceiptAllocation(SendStoreReceiptAllocationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+      .WithCredential(_userName, _password)
+      .WithService(_serviceNames.WReceiptsAllocation)
+      .WithParameters(new List<Parameter>
+      {
+              new Parameter{ParameterName = nameof(dto.WarehouseReceiptId), ParameterValue = dto.WarehouseReceiptId},
+              new Parameter{ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
+               new Parameter { ParameterName =nameof(dto.ContainerList),
+                  ParameterValue = JsonConvert.SerializeObject( dto.ContainerList.Select( s=>
+                              new {
+              s.OperationDate,
+              s.StorageAreaCode,
+              s.ContainerNo,
+              s.Quantity
+                              }
+                              ))},
+              new Parameter { ParameterName =nameof(dto.GeneralCargoList),
+                  ParameterValue = JsonConvert.SerializeObject(dto.GeneralCargoList.Select( s=>
+                             new {
+              s.OperationDate,
+              s.StorageAreaCode,
+              s.GeneralCargo
+
+                              }
+                              ))},
+              new Parameter { ParameterName =nameof(dto.BulkList),
+                  ParameterValue = JsonConvert.SerializeObject(dto.BulkList.Select( s=>
+                             new {
+              s.OperationDate,
+              s.StorageAreaCode,
+              s.Bulk
+
+                              }
+                              ))}
+      }).Build();
+            var response = await _requestExecutor.PostAsync<bool>(request);
+            return response;
+        }
     }
 }

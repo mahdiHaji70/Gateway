@@ -4,6 +4,6 @@
     {
         public DateTime OperationDate { get; set; }
         public string StorageAreaCode { get; set; }
-        public StoreReceiptGeneralCargoDto GeneralCargo { get; set; }
+        public StoreReceiptAllocationGeneralCargoDto GeneralCargo { get; set; }
     }
 }

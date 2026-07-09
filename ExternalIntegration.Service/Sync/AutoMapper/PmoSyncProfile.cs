@@ -82,6 +82,8 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => src.GeneralCargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
+            CreateMap<SendStoreReceiptAllocationDto, SendStoreReceiptAllocationRequestDto>();
+
 
         }
     }

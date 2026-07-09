@@ -23,5 +23,6 @@
         public DangerousSpecificationDto DangerousSpecification { get; set; }
         public string Remark { get; set; }
         public Guid? BillOfLadingId { get; set; }
+
     }
 }
