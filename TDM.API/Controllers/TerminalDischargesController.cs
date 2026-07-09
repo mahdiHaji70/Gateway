@@ -9,6 +9,7 @@ using TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDischa
 using TDM.Application.Operation.TerminalDischarges.Queries.GetGetTerminalDischarges;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeById;
+using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByIpasDeclarationNo;
 
 
 namespace TDM.API.Controllers
@@ -77,5 +78,13 @@ namespace TDM.API.Controllers
             var result = await _mediator.Send(new GetGoodwayBillByIpasDeclarationNoQuery(ipasDeclarationNo));
             return Ok(ApiResponse.Success(result));
         }
+      [HttpGet("request-terminaldischarge-id")]
+        public async Task<IActionResult> GetTerminalDischargeByDeclarationId([FromQuery] Guid declarationId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = await _mediator.Send(new GetTerminalDischargeByDeclarationIdQuery(declarationId, pageNumber, pageSize));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
     }
 }

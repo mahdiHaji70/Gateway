@@ -58,7 +58,8 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<TerminalDischarge, TerminalDischargeDto>()
                 .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.DeclarationItem.Declaration.IpasDeclarationNo))
-                .ForMember(dest => dest.DeclarationId, opt => opt.MapFrom(src => src.DeclarationItem.Declaration.Id));
+                .ForMember(dest => dest.DeclarationId, opt => opt.MapFrom(src => src.DeclarationItem.Declaration.Id))
+                .ForMember(dest => dest.IsSend, opt => opt.MapFrom(src => src.IpasTerminalDischargeId != null));
 
 
             CreateMap<DeclarationContainer, DeclarationContainerDto>()

@@ -31,5 +31,8 @@ namespace TDM.Application.Operation.TerminalDischarges.DTOs
         public string Classification { get; set; }
         public decimal  IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
+        public Guid? IpasTerminalDischargeId { get; set; }
+        public DateTime? IpasTerminalDischargeReceivedAt { get; set; }
+        public bool? IsSend { get; set; }
     }
 }
