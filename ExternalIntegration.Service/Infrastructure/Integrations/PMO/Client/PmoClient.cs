@@ -236,5 +236,39 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
+        public async Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.Confirmation)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter {ParameterName = nameof(dto.TerminalCode),ParameterValue = dto.TerminalCode},
+                new Parameter {ParameterName = nameof(dto.RequestId),ParameterValue= dto.RequestId},
+                new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved},
+                new Parameter {ParameterName = nameof(dto.Description),ParameterValue= dto.Description}
+              }).Build();
+            var response = await _requestExecutor.PostAsync<string>(request);
+            return response;
+        }
+
+        public async Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.WRinquiry)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                new Parameter{ ParameterName = nameof(dto.PageIndex), ParameterValue = dto.PageIndex },
+                new Parameter{ ParameterName = nameof(dto.PageSize), ParameterValue = dto.PageSize },
+
+          }).Build();
+
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<StoreReceiptDto>>(request, dto.TerminalCode);
+            return response;
+        }
     }
 }

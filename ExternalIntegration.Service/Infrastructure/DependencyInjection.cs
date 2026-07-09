@@ -27,6 +27,7 @@ namespace ExternalIntegration.Service.Infrastructure
             services.AddScoped<IDischargePermitRepository, DischargePermitRepository>();
             services.AddScoped<IIssueRequestRepository, IssueRequestRepository>();
             services.AddScoped<IVoyageRepository, VoyageRepository>();
+            services.AddScoped<IStoreReceiptRepository, StoreReceiptRepository>();
 
             services.AddSingleton<AesEncryption>();
 

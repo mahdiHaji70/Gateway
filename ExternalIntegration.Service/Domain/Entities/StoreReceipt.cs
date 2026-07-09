@@ -1,27 +1,27 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿namespace ExternalIntegration.Service.Domain.Entities
 {
-    public class StoreReceiptDto
+    public class StoreReceipt
     {
         public Guid Id { get; set; }
-        public string terminalCode { get; set; }
-        public Guid PortId { get; set; }
+        public string PortId { get; set; }
         public string Port { get; set; }
+        public string TerminalCode { get; set; }
         public string Terminal { get; set; }
         public string No { get; set; }
         public DateTime Date { get; set; }
         public DateTime? CreationDate { get; set; }
-        public DateTime? InquiryLastTryDate { get; set; }
         public int InquiryState { get; set; }
         public string InquiryStateName { get; set; }
+        public DateTime? InquiryLastTryDate { get; set; }
         public string OwnerName { get; set; }
+        public string OwnerIdNumber { get; set; }
         public string OwnerCellPhone { get; set; }
         public string OwnerEmail { get; set; }
-        public string OwnerIdNumber { get; set; }
         public string OwnerPostalCode { get; set; }
         public string OwnerAddress { get; set; }
         public DateTime? OwnerDate { get; set; }
-        public int OwnerType { get; set; }
         public Guid? OwnerPartyId { get; set; }
+        public int OwnerType { get; set; }
         public string OwnerRepName { get; set; }
         public string OwnerRepIdNumber { get; set; }
         public string OwnerRepCellPhone { get; set; }
@@ -35,20 +35,20 @@
         public int ItemCount { get; set; }
         public decimal Quantity { get; set; }
         public decimal Quantity_Reserved { get; set; }
+        public string CustomsProcedureCode { get; set; }
+        public bool? DangerousNotNoticed { get; set; }
         public DateTime FirstDischargeDate { get; set; }
         public Guid CreatorId { get; set; }
         public string Creator { get; set; }
-
         public int CustomsProcedureId { get; set; }
         public string CustomsProcedure { get; set; }
         public int State { get; set; }
         public string StateName { get; set; }
-        public bool? IsActive { get; set; }
-        public string customsProcedureCode { get; set; }
+        public bool IsActive { get; set; }
         public Guid? RequestId { get; set; }
-
-        public List<StoreReceiptGeneralCargoDto> GeneralCargoList { get; set; }
-        public List<StoreReceiptBulkDto> BulkList { get; set; }
-        public List<StoreReceiptContainerResponseDto> ContainerList { get; set; }
+        public bool IsIssued { get; set; }
+        public string GeneralCargoList { get; set; }
+        public string BulkList { get; set; }
+        public string ContainerList { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IDischargePermitRepository _dischargePermitRepository;
         private readonly IIssueRequestRepository _issueRequestRepository;
         private readonly IVoyageRepository _voyageRepository;
+        private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
@@ -28,7 +29,8 @@ namespace ExternalIntegration.Service.Sync.PMO
             , IGoodwayBillRepository goodwayBillRepository
             , IDischargePermitRepository dischargePermitRepository
             , IIssueRequestRepository issueRequestRepository
-            , IVoyageRepository voyageRepository)
+            , IVoyageRepository voyageRepository
+            , IStoreReceiptRepository storeReceiptRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;
@@ -38,6 +40,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             _dischargePermitRepository = dischargePermitRepository;
             _issueRequestRepository = issueRequestRepository;
             _voyageRepository = voyageRepository;
+            _storeReceiptRepository = storeReceiptRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
@@ -211,14 +214,46 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public Task<Response<string>> Confirmation(IssueRequestConfirmationDto dto)
+        public async Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationDto dto)
         {
-            throw new NotImplementedException();
+            var syncMappingRequestDto = _mapper.Map<IssueRequestConfirmationRequestDto>(dto);
+            var clientResult = await _client.IssueRequestConfirmation(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<string>>(clientResult);
+
+            return syncMappingDto;
         }
 
-        public Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto)
+        public async Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto)
         {
-            throw new NotImplementedException();
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)
+                localFromDate = await _storeReceiptRepository.GetLastDateAsync();
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
+
+            var pmoDateDto = new PmoDateRangeWithPagingDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode,
+                dto.PageIndex,
+                dto.PageSize);
+
+            var clientResult = await _client.GetStoreReceipts(pmoDateDto);
+
+            var syncMappingDto = _mapper.Map<Response<GetDataWithPagingDto<StoreReceiptDto>>>(clientResult);
+
+            var newData = await _storeReceiptRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _storeReceiptRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
         }
     }
 }
