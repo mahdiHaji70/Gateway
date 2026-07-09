@@ -10,29 +10,29 @@
         <tr>
             <th>Declaration</th>
             <th>Vehicle</th>
-            <th>Place</th>
-            <th>Container</th>
+            <th>Store</th>
+            <th>Way Bill No</th>
             <th>Pack Number</th>
             <th>Weight</th>
             <th>Date</th>
             <th>Actions</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-gate>
+    <ng-template pTemplate="body" let-discharge>
         <tr>
-            <td>{{ gate.declarationNumber }}</td>
-            <td>{{ gate.vehicleName }}</td>
-            <td>{{ gate.placeName }}</td>
-            <td>{{ gate.containerNumber }}</td>
-            <td>{{ gate.packNumber }}</td>
-            <td>{{ gate.weight }}</td>
-            <td>{{ gate.operationDate }}</td>
+            <td>{{ discharge.declarationNumber }}</td>
+            <td>{{ discharge.vehicleNumber }}</td>
+            <td>{{ discharge.storeName }}</td>
+            <td>{{ discharge.wayBillNo }}</td>
+            <td>{{ discharge.packNumber }}</td>
+            <td>{{ discharge.weight }}</td>
+            <td>{{ discharge.dischargeDate }}</td>
             <td>
-                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                    (click)="onEdit(gate.id)">
-                </button>
+                <!-- <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="onEdit(discharge.id)">
+                </button> -->
                 <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,gate.id)">
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,discharge.id)">
                 </button>
             </td>
         </tr>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OperationDetailFull } from '../../../models/discharge-full.model';
+import { DischargeFull } from '../../../models/discharge-full.model';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DischargeService } from '../../../services/discharge.service';
@@ -10,7 +10,7 @@ import { DischargeService } from '../../../services/discharge.service';
   styleUrl: './discharge-list.component.scss'
 })
 export class DischargeListComponent {
-  discharges: OperationDetailFull[] = [];
+  discharges: DischargeFull[] = [];
 
   /**
    *
@@ -28,10 +28,8 @@ export class DischargeListComponent {
   loadDischarges() {
     this.dischargeService.getDischarges().subscribe({
       next: (res: any) => {
-        this.discharges = res.data.map((item: OperationDetailFull) => new OperationDetailFull(item.declarationId, item.declarationNumber, item.vehicleId, item.vehicleName,
-          item.placeId, item.placeName, item.packNumber, item.weight, item.operationDate, item.operationTypeId, item.operationTypeName, item.volume, item.containerId,
-          item.containerNumber, item.storeReceiptId, item.storeReceiptSerial, item.travelId, item.travelNumber, item.id
-        ));
+        this.discharges = res.data.items.map((item: any) => new DischargeFull(item.declarationId, item.ipasDeclarationNo, item.dischargeDate, item.vehicleNumber,
+          item.wayBillNo, item.storeId, item.storeName,item.packNB, item.weight, item.volumeF,item.id));
       },
       error: (error: any) => { }
     });
@@ -41,9 +39,9 @@ export class DischargeListComponent {
     this.router.navigate(['/operation/discharge']);
   }
 
-  onEdit(id: any) {
-    this.router.navigate(['/operation/discharge', id]);
-  }
+  // onEdit(id: any) {
+  //   this.router.navigate(['/operation/discharge', id]);
+  // }
 
   onDelete(event: any, id: any) {
     this.confirmationService.confirm({

@@ -8,7 +8,7 @@ export class Discharge {
     wayBillId: string;
     dischargeDate: Date;
     vehicleNumber: string;
-    packNumber: number;
+    packNb: number;
     weight: number;
     volume?: number;
 
@@ -19,7 +19,7 @@ export class Discharge {
 
     dangerousCode?: string;
     classification?: string;
-    ignitionTemperature?: string;
+    ignitionTemperature?: number;
     ignitionTemperatureUnit?: string;
 
     terminalCode: string;
@@ -32,7 +32,7 @@ export class Discharge {
         wayBillId: string,
         dischargeDate: Date,
         vehicleNumber: string,
-        packNumber: number,
+        packNb: number,
         weight: number,
         terminalCode: string,
         volume?: number,
@@ -42,7 +42,7 @@ export class Discharge {
         isDangerous: boolean = false,
         dangerousCode?: string,
         classification?: string,
-        ignitionTemperature?: string,
+        ignitionTemperature?: number,
         ignitionTemperatureUnit?: string,
         id?: string
     ) {
@@ -54,7 +54,7 @@ export class Discharge {
         this.wayBillId = wayBillId;
         this.dischargeDate = dischargeDate;
         this.vehicleNumber = vehicleNumber;
-        this.packNumber = packNumber;
+        this.packNb = packNb;
         this.weight = weight;
         this.volume = volume;
         this.terminalCode = terminalCode;

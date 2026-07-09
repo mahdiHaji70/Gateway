@@ -7,6 +7,9 @@ namespace TDM.Application.Operation.TerminalDischarges.DTOs
 {
     public class TerminalDischargeDto
     {
+        public Guid Id { get; set; }
+        public Guid DeclarationId { get; set; }
+        public string IpasDeclarationNo { get; set; }
         public string TerminalCode { get; set; }
         public Guid CargoTypeId { get; set; }
         public String CargoTypeName { get; set; }
