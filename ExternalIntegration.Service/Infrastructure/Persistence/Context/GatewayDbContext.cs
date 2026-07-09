@@ -15,7 +15,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<DischargePermit> DischargePermits => Set<DischargePermit>();
         public DbSet<IssueRequest> IssueRequests => Set<IssueRequest>();
         public DbSet<Voyage> Voyages => Set<Voyage>();
-
+        public DbSet<StoreReceipt> StoreReceipts => Set<StoreReceipt>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GatewayDbContext).Assembly);
