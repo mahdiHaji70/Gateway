@@ -49,6 +49,6 @@
 
         public List<StoreReceiptGeneralCargoDto> GeneralCargoList { get; set; }
         public List<StoreReceiptBulkDto> BulkList { get; set; }
-        public List<StoreReceiptContainerResponseDto> ContainerList { get; set; }
+        public List<StoreReceiptContainerDto> ContainerList { get; set; }
     }
 }

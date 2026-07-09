@@ -255,5 +255,12 @@ namespace ExternalIntegration.Service.Sync.PMO
 
             return syncMappingDto;
         }
+
+        public async Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<SendStoreReceiptAllocationRequestDto>(dto);
+            var clientResult = await _client.SendStoreReceiptAllocation(syncMappingRequestDto);
+            return clientResult;
+        }
     }
 }

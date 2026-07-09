@@ -17,6 +17,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<VoyageDto>> GetVoyageByNoticeNo(VoyageByNoticeNoDto dto);
         Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationDto dto);
         Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
+        Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto);
 
     }
 }
