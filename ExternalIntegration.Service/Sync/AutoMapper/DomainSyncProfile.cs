@@ -19,6 +19,11 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<DischargePermitDto, DischargePermit>();
             CreateMap(typeof(List<>), typeof(Response<>));
 
+            CreateMap<IssueRequest, IssueRequestDto>()
+                         .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<BulkDto>>(src.BulkList)))
+                         .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<GeneralCargoDto>>(src.GeneralCargoList)))
+                         .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ContainerDto>>(src.ContainerList)));
+
 
 
         }

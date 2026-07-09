@@ -13,5 +13,6 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<bool>> DeleteStorageAgreement(DeleteStorageAgreementDto dto);
         Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(PmoDateRangeDto dto);
         Task<Response<Guid>> TruckTerminalDischarge(TruckTerminalDischargeRequestDto dto);
+        Task<Response<IEnumerable<IssueRequestResponseDto>>> GetIssueRequest(PmoDateRangeDto dto);
     }
 }

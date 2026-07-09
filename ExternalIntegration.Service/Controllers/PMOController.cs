@@ -55,5 +55,11 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.SubmitTruckTerminalDischarge(dto);
         }
 
+        [HttpGet("GetIssueRequest")]
+        public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest([FromQuery] DateRangeDto dto)
+        {
+            return await _pmoSyncService.GetIssueRequest(dto);
+        }
+
     }
 }
