@@ -25,6 +25,7 @@ namespace ExternalIntegration.Service.Infrastructure
             services.AddScoped<ITerminalRepository, TerminalRepository>();
             services.AddScoped<IGoodwayBillRepository, GoodwayBillRepository>();
             services.AddScoped<IDischargePermitRepository, DischargePermitRepository>();
+            services.AddScoped<IIssueRequestRepository, IssueRequestRepository>();
 
             services.AddSingleton<AesEncryption>();
 

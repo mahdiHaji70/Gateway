@@ -15,13 +15,15 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IMapper _mapper;
         private readonly IGoodwayBillRepository _goodwayBillRepository;
         private readonly IDischargePermitRepository _dischargePermitRepository;
+        private readonly IIssueRequestRepository _issueRequestRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
             ,IMapper mapper
             ,IUnitOfWork unitOfWork
-            , IGoodwayBillRepository goodwayBillRepository,
-            IDischargePermitRepository dischargePermitRepository)
+            , IGoodwayBillRepository goodwayBillRepository
+            ,IDischargePermitRepository dischargePermitRepository
+            ,IIssueRequestRepository issueRequestRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;
@@ -29,6 +31,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
             _dischargePermitRepository = dischargePermitRepository;
+            _issueRequestRepository= issueRequestRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
@@ -119,6 +122,35 @@ namespace ExternalIntegration.Service.Sync.PMO
             var syncMappingDto = _mapper.Map<Response<Guid>>(clientResult);
             return syncMappingDto;
         }
+        public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(DateRangeDto dto)
+        {
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)
+                localFromDate = await _issueRequestRepository.GetLastDateAsync();
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
 
+            var pmoDateDto = new PmoDateRangeDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode);
+
+            var clientResult = await _client.GetIssueRequest(pmoDateDto);
+
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<IssueRequestDto>>>(clientResult);
+
+            var newData = await _issueRequestRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<IssueRequest>>(syncMappingDto.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _issueRequestRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
+        }
     }
 }
