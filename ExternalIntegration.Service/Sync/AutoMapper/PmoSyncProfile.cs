@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
@@ -66,6 +67,9 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
                 .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => src.GeneralCargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
+
+            CreateMap<VoyageDto, Voyage>()
+                      .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.VesselData)));
 
 
         }

@@ -23,11 +23,11 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
-            ,IMapper mapper
-            ,IUnitOfWork unitOfWork
+            , IMapper mapper
+            , IUnitOfWork unitOfWork
             , IGoodwayBillRepository goodwayBillRepository
-            ,IDischargePermitRepository dischargePermitRepository
-            ,IIssueRequestRepository issueRequestRepository
+            , IDischargePermitRepository dischargePermitRepository
+            , IIssueRequestRepository issueRequestRepository
             , IVoyageRepository voyageRepository)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -36,14 +36,14 @@ namespace ExternalIntegration.Service.Sync.PMO
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
             _dischargePermitRepository = dischargePermitRepository;
-            _issueRequestRepository= issueRequestRepository;
+            _issueRequestRepository = issueRequestRepository;
             _voyageRepository = voyageRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
-            if (dto.FromDate == null)            
+            if (dto.FromDate == null)
                 localFromDate = await _goodwayBillRepository.GetLastDateAsync();
             if (dto.ToDate == null)
                 localToDate = DateTime.Now.AddDays(1);
@@ -64,17 +64,17 @@ namespace ExternalIntegration.Service.Sync.PMO
                 dbIdSelector: t => t.Id
             );
 
-            await _goodwayBillRepository.InsertBulkAsync(newData);            
+            await _goodwayBillRepository.InsertBulkAsync(newData);
             await _unitOfWork.SaveChangesAsync();
-           
+
             return syncMappingDto;
         }
 
-        public  async   Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
+        public async Task<Response<CreateStorageAgreementResultDto>> CreateStorageAgreement(CreateStorageAgreementDto dto)
         {
 
             var syncMappingRequestDto = _mapper.Map<CreateStorageAgreementRequestDto>(dto);
-            var clientResult =await _client.CreateStorageAgreement(syncMappingRequestDto);
+            var clientResult = await _client.CreateStorageAgreement(syncMappingRequestDto);
             var syncMappingDto = _mapper.Map<Response<CreateStorageAgreementResultDto>>(clientResult);
             return syncMappingDto;
         }
@@ -179,6 +179,25 @@ namespace ExternalIntegration.Service.Sync.PMO
             var clientResult = await _client.GetVoyages(pmoDateDto);
 
             var syncMappingDto = _mapper.Map<Response<GetDataWithPagingDto<VoyageDto>>>(clientResult);
+
+            var newData = await _voyageRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<Voyage>>(syncMappingDto.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _voyageRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
+        }
+
+        public async Task<Response<VoyageDto>> GetVoyageByNoticeNo(VoyageByNoticeNoDto dto)
+        {
+
+            var syncMappingRequestDto = _mapper.Map<VoyageByNoticeNoRequestDto>(dto);
+            var clientResult = await _client.GetVoyageByNoticeNo(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<VoyageDto>>(clientResult);
 
             var newData = await _voyageRepository.FilterUnpersistedAsync(
                 entities: _mapper.Map<IEnumerable<Voyage>>(syncMappingDto.Data),

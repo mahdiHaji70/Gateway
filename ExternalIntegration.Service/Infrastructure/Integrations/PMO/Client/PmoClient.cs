@@ -220,6 +220,21 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
            
             return response;
         }
+        public async Task<Response<VoyageResponseDto>> GetVoyageByNoticeNo(VoyageByNoticeNoRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+               .WithCredential(_userName, _password)
+               .WithService(_serviceNames.GetVoyagesByNoticeN)
+               .WithParameters(new List<Parameter>
+               {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.NoticeNo), ParameterValue = dto.NoticeNo }
+               }).Build();
+
+            var response = await _requestExecutor.PostAsync<VoyageResponseDto>(request);
+           
+            return response;
+        }
 
     }
 }
