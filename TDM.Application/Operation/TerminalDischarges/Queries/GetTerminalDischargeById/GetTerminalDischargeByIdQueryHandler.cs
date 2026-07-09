@@ -12,11 +12,11 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
 {
     public class GetTerminalDischargeByIdQueryHandler : IRequestHandler<GetTerminalDischargeByIdQuery, TerminalDischargeDto>
     {
-        private readonly IRepository<TerminalDischarge> _TerminalDischargeRepository;
+        private readonly ITerminalDischargeRepository _TerminalDischargeRepository;
         private readonly IMapper _mapper;
 
         public GetTerminalDischargeByIdQueryHandler(IMapper mapper,
-            IRepository<TerminalDischarge> TerminalDischargeRepository)
+            ITerminalDischargeRepository TerminalDischargeRepository)
         {
             _TerminalDischargeRepository = TerminalDischargeRepository;
             _mapper = mapper;

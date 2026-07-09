@@ -10,7 +10,7 @@ export class DischargeService {
   constructor(private apiService: ApiService) { }
 
   getDischarges(): Observable<any> {
-    let _url = ApiEndpoints.Terminal_Discharges + '/GetAll';
+    let _url = ApiEndpoints.Terminal_Discharges;
     return this.apiService.get(_url);
   }
 
@@ -20,11 +20,12 @@ export class DischargeService {
   }
 
   getGoodwayBillsByDeclarationNo(declarationNo: string): Observable<any>{
-    let _url = ApiEndpoints.Terminal_Discharges + `/get_terminal_discharge_by_declaratio_no/${declarationNo}`;
+    let _url = ApiEndpoints.Terminal_Discharges + `/request-goodwayBill-by-ipasDeclarationNo/${declarationNo}`;
     return this.apiService.get(_url);
   }
 
   postDischarge(discharge: Discharge): Observable<any> {
+    debugger
     let _url = ApiEndpoints.Terminal_Discharges;
     return this.apiService.post(_url, discharge);
   }

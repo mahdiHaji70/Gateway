@@ -56,7 +56,9 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<Store, StoreDto>();
 
-            CreateMap<TerminalDischarge, TerminalDischargeDto>();
+            CreateMap<TerminalDischarge, TerminalDischargeDto>()
+                .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.DeclarationItem.Declaration.IpasDeclarationNo))
+                .ForMember(dest => dest.DeclarationId, opt => opt.MapFrom(src => src.DeclarationItem.Declaration.Id));
 
 
             CreateMap<DeclarationContainer, DeclarationContainerDto>()

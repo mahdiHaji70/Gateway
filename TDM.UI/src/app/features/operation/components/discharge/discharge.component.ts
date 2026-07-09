@@ -20,6 +20,7 @@ export class DischargeComponent {
   declarationItems: DropdownOption[] = [];
   cargoTypes: DropdownOption[] = [];
   stores: DropdownOption[] = [];
+  goodwayBillsRaw: any[] = [];
   goodwayBills: DropdownOption[] = [];
 
   form = new FormGroup({
@@ -38,7 +39,7 @@ export class DischargeComponent {
     isDangerous: new FormControl<boolean>(false),
     dangerousCode: new FormControl<string | undefined>(''),
     classification: new FormControl<string | undefined>(''),
-    ignitionTemperature: new FormControl<string | undefined>(''),
+    ignitionTemperature: new FormControl<number | undefined>(0),
     ignitionTemperatureUnit: new FormControl<string | undefined>(''),
   });
 
@@ -58,24 +59,37 @@ export class DischargeComponent {
     this.loadCargoTypes();
     this.loadStores();
 
-    // this.route.params.subscribe((params: any) => {
-    //   if (params.id) {
-    //     this.id = params.id;
-    //     this.operationDetailService.getById(this.id!).subscribe((res: any) => {
-    //       this.form.setValue({
-    //         declaration: new DropdownOption(res.data.declarationId, res.data.declarationNumber),
-    //         vehicle: new DropdownOption(res.data.vehicleId, res.data.vehicleName),
-    //         place: new DropdownOption(res.data.placeId, res.data.placeName),
-    //         packNumber: res.data.packNumber,
-    //         weight: res.data.weight,
-    //         volume: res.data.volume,
-    //         container: new DropdownOption(res.data.containerId, res.data.containerNumber),
-    //         operationDate: new Date(res.data.operationDate),
-    //       });
-    //     });
-    //   }
+    this.route.params.subscribe((params: any) => {
+      if (params.id) {
+        this.id = params.id;
+        this.dischargeService.getById(this.id!).subscribe((res: any) => {
+          this.loadGoodwayBills({name: res.data.ipasDeclarationNo});
+          
+          this.form.setValue({
+            declarationItem: new DropdownOption(res.data.declarationItemId, res.data.ipasDeclarationNo),
+            cargoType: new DropdownOption(res.data.cargoTypeId, res.data.cargoTypeName),
+            store: new DropdownOption(res.data.storeId, res.data.storeName),
+            goodwayBill: new DropdownOption(res.data.waybillId,
+              `WayBiil No: ${res.data.waybillNo} , Vehicle Number: ${res.data.vehicleNumber}`),
+            vehicleNumber: res.data.vehicleNumber,
+            dischargeDate: new Date(res.data.dischargeDate),
+            packNumber: res.data.packNB,
+            weight: res.data.weight,
+            volume: res.data.volume,
+            isNonePalletized: res.data.isNonPalletized,
+            isDamaged: res.data.isDamaged,
+            isVoluminous: res.data.isVoluminous,
+            isDangerous: res.data.isDangerous,
+            dangerousCode: res.data.dangerousCode,
+            classification: res.data.classification,
+            ignitionTemperature: res.data.ignitionTemperature,
+            ignitionTemperatureUnit: res.data.ignitionTemperatureUnit,
 
-    // });
+          });
+        });
+      }
+
+    });
   }
 
   loadDeclarationItems() {
@@ -108,7 +122,9 @@ export class DischargeComponent {
   loadGoodwayBills(event: any) {
     this.dischargeService.getGoodwayBillsByDeclarationNo(event.name).subscribe({
       next: (res: any) => {
-        console.log(res)
+        this.goodwayBillsRaw = res.data;
+        this.goodwayBills = res.data.map((item: any) => new DropdownOption(item.waybillId,
+          `WayBiil No: ${item.waybillNo} , Vehicle Number: ${item.vehicleNumber}`));
       },
       error: (error: any) => { }
     });
@@ -120,12 +136,14 @@ export class DischargeComponent {
       return;
     }
 
+    var selectedGoodwayBill = this.goodwayBillsRaw.filter(item => item.waybillId == this.form.get('goodwayBill')?.value!.id!)[0];
+
     const discharge: Discharge = new Discharge(
       this.form.get('declarationItem')?.value!.id!,
       this.form.get('cargoType')?.value!.id!,
       this.form.get('store')?.value!.id!,
-      this.form.get('goodwayBill')?.value!.name!,
-      this.form.get('goodwayBill')?.value!.id!,
+      selectedGoodwayBill.waybillNo,
+      selectedGoodwayBill.waybillId,
       this.form.get('dischargeDate')?.value!,
       this.form.get('vehicleNumber')?.value!,
       this.form.get('packNumber')?.value!,
@@ -154,7 +172,7 @@ export class DischargeComponent {
           this.router.navigate(['/operation/discharge-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          this.showApiError(error);
         }
       });
 
@@ -165,8 +183,32 @@ export class DischargeComponent {
       this.form.patchValue({
         dangerousCode: '',
         classification: '',
-        ignitionTemperature: '',
+        ignitionTemperature: 0,
         ignitionTemperatureUnit: '',
       });
   }
+  showApiError(error: any) {
+    const message = error?.error?.Message || 'Operation failed';
+    const errors = error?.error?.Errors;
+
+    if (errors) {
+      const detail = Object.values(errors)
+        .flat()
+        .join(' | ');
+
+      this.messageService.add({
+        severity: 'error',
+        summary: message,
+        detail
+      });
+      return;
+    }
+
+    this.messageService.add({
+      severity: 'error',
+      summary: message,
+      detail: error?.message || ''
+    });
+  }
+
 }
