@@ -80,6 +80,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetStoreReceipts(dto);
         }
+        [HttpPost("SendStoreReceiptAllocation")]
+        public async Task<Response<bool>> SendStoreReceiptAllocation([FromBody] SendStoreReceiptAllocationDto dto)
+        {
+            return await _pmoSyncService.SendStoreReceiptAllocation(dto);
+        }
 
 
     }
