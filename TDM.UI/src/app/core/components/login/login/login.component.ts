@@ -37,7 +37,7 @@ export class LoginComponent {
               this.router.navigate(['/']).then().catch();
             },
             error: (failRes: any) => {
-              this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error });
+              this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
             }
           });
 

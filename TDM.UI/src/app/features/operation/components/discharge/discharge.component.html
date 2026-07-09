@@ -25,13 +25,13 @@
 
                 <!-- Second Row -->
                 <div class="grid">
-                    <div class="col-12 sm:col-6 md:col-4 lg:col-2">
+                    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
                         <app-en-calender [formGroup]="form" [controlName]="'dischargeDate'" [required]="true"
                             [showTime]="true">
                         </app-en-calender>
                     </div>
 
-                    <div class="col-12 sm:col-6 md:col-4 lg:col-2">
+                    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
                         <app-input [formGroup]="form" [controlName]="'vehicleNumber'" [required]="true">
                         </app-input>
                     </div>
@@ -53,18 +53,16 @@
                 </div>
                 <div class="grid">
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isNonePalletized'"
-                            [required]="false"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isNonePalletized'"></app-checkbox>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isDamaged'" [required]="false"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isDamaged'"></app-checkbox>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isVoluminous'"
-                            [required]="false"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isVoluminous'" ></app-checkbox>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isDangerous'" [required]="false" (change)="clearDangerousFields($event)"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isDangerous'" (change)="clearDangerousFields($event)"></app-checkbox>
                     </div>
                 </div>
                 @if(form.get('isDangerous')?.value){
