@@ -70,7 +70,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetVoyageByNoticeNo(dto);
         }
-
+        [HttpPost("Confirmation")]
+        public async Task<Response<string>> Confirmation([FromBody] IssueRequestConfirmationDto dto)
+        {
+            return await _pmoSyncService.Confirmation(dto);
+        }
 
     }
 }

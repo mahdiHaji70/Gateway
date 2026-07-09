@@ -1,6 +1,6 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
 {
-    public class StoreReceiptContainerGoodDto
+    public class IssueRequestContainerGoodResponseDto
     {
         public string HSCode { get; set; }
         public string Description { get; set; }

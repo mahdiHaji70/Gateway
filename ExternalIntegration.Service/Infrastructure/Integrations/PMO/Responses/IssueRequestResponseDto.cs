@@ -17,9 +17,9 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
         public OwnerRepDto OwnerRep { get; set; }
         public string RequestRemark { get; set; }
         public DateTime? TaskRegisterDate { get; set; }
-        public List<StoreReceiptGeneralCargoResponseDto> GeneralCargoList { get; set; }
-        public List<StoreReceiptBulkResponseDto> BulkList { get; set; }
-        public List<StoreReceiptContainerResponseDto> ContainerList { get; set; }
+        public List<IssueRequestGeneralCargoResponseDto> GeneralCargoList { get; set; }
+        public List<IssueRequestBulkResponseDto> BulkList { get; set; }
+        public List<IssueRequestContainerResponseDto> ContainerList { get; set; }
         public string StorageAgreementNo { get; set; }
     }
 }

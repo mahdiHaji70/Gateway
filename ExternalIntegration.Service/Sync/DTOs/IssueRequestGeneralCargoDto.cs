@@ -1,8 +1,6 @@
-﻿using ExternalIntegration.Service.Sync.DTOs;
-
-namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
+﻿namespace ExternalIntegration.Service.Sync.DTOs
 {
-    public class StoreReceiptBulkResponseDto
+    public class IssueRequestGeneralCargoDto
     {
         public string HsCode { get; set; }
         public string Description { get; set; }
@@ -12,6 +10,6 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
         public string Remark { get; set; }
         public Guid? BillOfLadingId { get; set; }
         public bool? DangerousNotNoticed { get; set; }
-        public DangerousSpecificationResponseDto DangerousSpecification { get; set; }
+        public DangerousSpecificationDto DangerousSpecification { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
 {
-    public class StoreReceiptGeneralCargoResponseDto
+    public class IssueRequestBulkResponseDto
     {
         public string HsCode { get; set; }
         public string Description { get; set; }
