@@ -1,8 +1,10 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using TOS.Services.Gateway.Infrastructure.Integrations.PMO.Requests;
@@ -200,6 +202,24 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
+        public async Task<Response<GetDataWithPagingDto<VoyageResponseDto>>> GetVoyages(PmoDateRangeWithPagingDto dto)
+        {
+            var request = new PmoRequestBuilder()
+              .WithCredential(_userName, _password)
+              .WithService(_serviceNames.GetVoyages)
+              .WithParameters(new List<Parameter>
+              {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                new Parameter{ ParameterName = nameof(dto.PageIndex), ParameterValue = dto.PageIndex },
+                new Parameter{ ParameterName = nameof(dto.PageSize), ParameterValue = dto.PageSize },
+              }).Build();
+
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<VoyageResponseDto>>(request, dto.TerminalCode);
+           
+            return response;
+        }
 
     }
 }

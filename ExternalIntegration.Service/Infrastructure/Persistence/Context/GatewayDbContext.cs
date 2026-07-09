@@ -14,6 +14,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<GoodwayBill> GoodwayBills => Set<GoodwayBill>();
         public DbSet<DischargePermit> DischargePermits => Set<DischargePermit>();
         public DbSet<IssueRequest> IssueRequests => Set<IssueRequest>();
+        public DbSet<Voyage> Voyages => Set<Voyage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
