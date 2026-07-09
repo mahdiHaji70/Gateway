@@ -15,5 +15,8 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(DateRangeDto dto);
         Task<Response<GetDataWithPagingDto<VoyageDto>>> GetVoyages(DateRangeWithPagingDto dto);
         Task<Response<VoyageDto>> GetVoyageByNoticeNo(VoyageByNoticeNoDto dto);
+        Task<Response<string>> Confirmation(IssueRequestConfirmationDto dto);
+        Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
+
     }
 }

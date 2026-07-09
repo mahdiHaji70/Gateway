@@ -15,9 +15,9 @@
         public OwnerRepDto OwnerRep { get; set; }
         public string RequestRemark { get; set; }
         public DateTime? TaskRegisterDate { get; set; }
-        public List<StoreReceiptGeneralCargoDto> GeneralCargoList { get; set; }
-        public List<StoreReceiptBulkDto> BulkList { get; set; }
-        public List<StoreReceiptContainerDto> ContainerList { get; set; }
+        public List<IssueRequestGeneralCargoDto> GeneralCargoList { get; set; }
+        public List<IssueRequestBulkDto> BulkList { get; set; }
+        public List<IssueRequestContainerDto> ContainerList { get; set; }
         public string StorageAgreementNo { get; set; }
     }
 }

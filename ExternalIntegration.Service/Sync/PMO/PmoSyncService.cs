@@ -210,5 +210,15 @@ namespace ExternalIntegration.Service.Sync.PMO
 
             return syncMappingDto;
         }
+
+        public Task<Response<string>> Confirmation(IssueRequestConfirmationDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

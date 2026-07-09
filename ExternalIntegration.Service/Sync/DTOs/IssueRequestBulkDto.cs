@@ -1,6 +1,6 @@
 ﻿namespace ExternalIntegration.Service.Sync.DTOs
 {
-    public class StoreReceiptBulkDto
+    public class IssueRequestBulkDto
     {
         public string HsCode { get; set; }
         public string Description { get; set; }
