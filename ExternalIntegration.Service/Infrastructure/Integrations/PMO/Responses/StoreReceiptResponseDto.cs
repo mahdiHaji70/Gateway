@@ -1,7 +1,10 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿using ExternalIntegration.Service.Sync.DTOs;
+
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
 {
-    public class StoreReceiptDto
+    public class StoreReceiptResponseDto
     {
+
         public Guid Id { get; set; }
         public string terminalCode { get; set; }
         public Guid PortId { get; set; }
@@ -47,8 +50,8 @@
         public string customsProcedureCode { get; set; }
         public Guid? RequestId { get; set; }
 
-        public List<StoreReceiptGeneralCargoDto> GeneralCargoList { get; set; }
-        public List<StoreReceiptBulkDto> BulkList { get; set; }
+        public List<StoreReceiptGeneralCargoResponseDto> GeneralCargoList { get; set; }
+        public List<StoreReceiptBulkResponseDto> BulkList { get; set; }
         public List<StoreReceiptContainerResponseDto> ContainerList { get; set; }
     }
 }

@@ -236,5 +236,20 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
+        public async Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.Confirmation)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter {ParameterName = nameof(dto.TerminalCode),ParameterValue = dto.TerminalCode},
+                new Parameter {ParameterName = nameof(dto.RequestId),ParameterValue= dto.RequestId},
+                new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved},
+                new Parameter {ParameterName = nameof(dto.Description),ParameterValue= dto.Description}
+              }).Build();
+            var response = await _requestExecutor.PostAsync<string>(request);
+            return response;
+        }
     }
 }

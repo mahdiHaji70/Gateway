@@ -211,9 +211,13 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public Task<Response<string>> Confirmation(IssueRequestConfirmationDto dto)
+        public async Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationDto dto)
         {
-            throw new NotImplementedException();
+            var syncMappingRequestDto = _mapper.Map<IssueRequestConfirmationRequestDto>(dto);
+            var clientResult = await _client.IssueRequestConfirmation(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<string>>(clientResult);
+
+            return syncMappingDto;
         }
 
         public Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto)

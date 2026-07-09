@@ -71,10 +71,16 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.GetVoyageByNoticeNo(dto);
         }
         [HttpPost("Confirmation")]
-        public async Task<Response<string>> Confirmation([FromBody] IssueRequestConfirmationDto dto)
+        public async Task<Response<string>> IssueRequestConfirmation([FromBody] IssueRequestConfirmationDto dto)
         {
-            return await _pmoSyncService.Confirmation(dto);
+            return await _pmoSyncService.IssueRequestConfirmation(dto);
         }
+        [HttpGet("GetStoreReceipts")]
+        public async Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts([FromQuery] DateRangeWithPagingDto dto)
+        {
+            return await _pmoSyncService.GetStoreReceipts(dto);
+        }
+
 
     }
 }
