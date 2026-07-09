@@ -65,6 +65,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetVoyages(dto);
         }
+        [HttpGet("GetVoyageByNoticeNo")]
+        public async Task<Response<VoyageDto>> GetVoyageByNoticeNo([FromQuery] VoyageByNoticeNoDto dto)
+        {
+            return await _pmoSyncService.GetVoyageByNoticeNo(dto);
+        }
 
 
     }

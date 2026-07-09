@@ -14,5 +14,6 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<Guid>> SubmitTruckTerminalDischarge(TruckTerminalDischargeDto dto);
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(DateRangeDto dto);
         Task<Response<GetDataWithPagingDto<VoyageDto>>> GetVoyages(DateRangeWithPagingDto dto);
+        Task<Response<VoyageDto>> GetVoyageByNoticeNo(VoyageByNoticeNoDto dto);
     }
 }
