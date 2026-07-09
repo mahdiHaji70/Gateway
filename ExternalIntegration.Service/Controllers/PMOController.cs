@@ -60,6 +60,12 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetIssueRequest(dto);
         }
+        [HttpGet("GetVoyages")]
+        public async Task<Response<GetDataWithPagingDto<VoyageDto>>> GetVoyages([FromQuery] DateRangeWithPagingDto dto)
+        {
+            return await _pmoSyncService.GetVoyages(dto);
+        }
+
 
     }
 }
