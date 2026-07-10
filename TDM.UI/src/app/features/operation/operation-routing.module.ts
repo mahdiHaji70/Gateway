@@ -18,6 +18,7 @@ import { StoreReceiptRequestComponent } from './components/store-receipt-request
 import { StuffComponent } from './components/stuff/stuff.component';
 import { ExitFromStoreListComponent } from './components/exit-from-store-list/exit-from-store-list.component';
 import { ExitFromStoreComponent } from './components/exit-from-store-list/exit-from-store/exit-from-store.component';
+import { SendDischargeComponent } from './components/discharge/send-discharge/send-discharge.component';
 
 const routes: Routes = [  
   { path: 'gate-in-list', component: GateInListComponent},
@@ -51,7 +52,9 @@ const routes: Routes = [
     
   { path: 'exit-from-store-list', component: ExitFromStoreListComponent},
   { path: 'exit-from-store', component: ExitFromStoreComponent},
-  { path: 'exit-from-store/:id', component: ExitFromStoreComponent}, 
+  { path: 'exit-from-store/:id', component: ExitFromStoreComponent},
+  
+  { path: 'send-discharge', component: SendDischargeComponent},
 ];
 
 @NgModule({

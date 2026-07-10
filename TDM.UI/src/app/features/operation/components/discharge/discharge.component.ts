@@ -130,6 +130,12 @@ export class DischargeComponent {
     });
   }
 
+  setVehicleNumber(event: any){
+    var selectedGoodwayBill = this.goodwayBillsRaw.filter(item => item.waybillId == event.id)[0];
+    this.form.patchValue({
+      vehicleNumber : selectedGoodwayBill.vehicleNumber
+    });
+  }
 
   onSubmit() {
     if (!this.form.valid) {
