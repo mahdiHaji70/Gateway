@@ -30,7 +30,7 @@ namespace TDM.Infrastructure.Integrations.Client
 
             foreach (var item in terminalDischargeDto)
             {
-                var response = await _requestExecutor.PostAsync<Guid>("PMO", "SubmitTruckTerminalDischarge", terminalDischargeDto, cancellationToken);
+                var response = await _requestExecutor.PostAsync<Guid>("PMO", "SubmitTruckTerminalDischarge", item, cancellationToken);
                 if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Terminal Discharge", out var errorMessage))
                     sendIpasTerminalDischargeResponse.Add (new SendIpasTerminalDischargeResponse 
                     { 

@@ -29,7 +29,7 @@ export class DischargeListComponent {
     this.dischargeService.getDischarges().subscribe({
       next: (res: any) => {
         this.discharges = res.data.items.map((item: any) => new DischargeFull(item.declarationId, item.ipasDeclarationNo, item.dischargeDate, item.vehicleNumber,
-          item.wayBillNo, item.storeId, item.storeName,item.packNB, item.weight, item.volumeF,item.id));
+          item.wayBillNo, item.storeId, item.storeName, item.packNB, item.weight, item.volume, item.id));
       },
       error: (error: any) => { }
     });
@@ -37,6 +37,10 @@ export class DischargeListComponent {
 
   onAdd() {
     this.router.navigate(['/operation/discharge']);
+  }
+
+  onSend() {
+    this.router.navigate(['/operation/send-discharge']);
   }
 
   // onEdit(id: any) {

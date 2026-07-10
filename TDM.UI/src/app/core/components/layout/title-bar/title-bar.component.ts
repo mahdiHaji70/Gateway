@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs';
 import { MenuItems } from '../../../constants/menu-items';
+import { RouteItems } from '../../../constants/route-items';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 
@@ -22,15 +23,17 @@ export class TitleBarComponent {
   }
 
   ngOnInit() {
+
+    debugger;
     this.routerSub = this.router.events.subscribe((event: any) => {
-      if (event.routerEvent instanceof NavigationEnd) {        
+      if (event.routerEvent instanceof NavigationEnd) {
         const url = event.routerEvent.urlAfterRedirects || event.routerEvent.url;
         // e.g. '/store-request'
         const mainPath = url.startsWith('/') ? url.replace(/^\/+([^\/]+\/[^\/]+).*/, '$1') : url;
         if (mainPath === '')
           this.title = 'Dashboard';
         else
-          this.title = findLabelByPath(MenuItems, mainPath);
+          this.title = findLabelByPath(MenuItems, RouteItems, mainPath);
       }
     });
   }
@@ -40,13 +43,22 @@ export class TitleBarComponent {
   }
 }
 
-function findLabelByPath(menuItems: any[], targetPath: string): string | undefined {
+function findLabelByPath(menuItems: any[], routeItems: any[], targetPath: string): string | undefined {
+  var founded = false;
   for (const menu of menuItems) {
     if (menu.items) {
       const found = menu.items.find((item: any) => item.path.startsWith(targetPath));
       if (found) {
+        founded = true;
         return found.label;
       }
+    }
+  }
+
+  if (!founded) {
+    const found = routeItems.find((item: any) => item.path.startsWith(targetPath));
+    if (found) {
+      return found.label;
     }
   }
   return undefined;

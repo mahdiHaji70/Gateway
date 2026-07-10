@@ -26,7 +26,7 @@
                 <div class="grid">
                     <div class="col-12">
                         <app-drop-down [options]="goodwayBills" [formGroup]="form" [controlName]="'goodwayBill'"
-                            [required]="true">
+                            [required]="true" (change)="setVehicleNumber($event)">
                         </app-drop-down>
                     </div>
                 </div>

@@ -40,6 +40,7 @@ import { DeclarationService } from './services/declaration.service';
 import { ExitFromStoreListComponent } from './components/exit-from-store-list/exit-from-store-list.component';
 import { ExitFromStoreComponent } from './components/exit-from-store-list/exit-from-store/exit-from-store.component';
 import { DeclarationItemService } from './services/declaration-item.service';
+import { SendDischargeComponent } from './components/discharge/send-discharge/send-discharge.component';
 
 @NgModule({
   declarations: [    
@@ -60,7 +61,8 @@ import { DeclarationItemService } from './services/declaration-item.service';
     StoreReceiptRequestComponent,
     StuffComponent,
     ExitFromStoreListComponent,
-    ExitFromStoreComponent    
+    ExitFromStoreComponent,
+    SendDischargeComponent    
   ],
   imports: [
     CommonModule,
