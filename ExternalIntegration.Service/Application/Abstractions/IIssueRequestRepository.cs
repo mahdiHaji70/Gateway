@@ -7,8 +7,10 @@ namespace ExternalIntegration.Service.Application.Abstractions
 
     public interface IIssueRequestRepository : IRepository<IssueRequest>
     {
-      
+
         Task<DateTime> GetLastDateAsync();
+        Task<List<IssueRequest>> GetByStorageAgreementNoAsync(string storageAgreementNo);
+        void UpdateIssueRequestApprovalAsync(Guid requestId, bool IsApproved);
 
     }
 }

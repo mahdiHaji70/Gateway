@@ -15,10 +15,24 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         {
             _IssueRequestDbSet = _context.Set<IssueRequest>();
         }
-       
+
         public async Task<DateTime> GetLastDateAsync()
         {
             return await _IssueRequestDbSet.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
+        }
+        public async Task<List<IssueRequest>> GetByStorageAgreementNoAsync(string storageAgreementNo)
+        {
+            return await _IssueRequestDbSet
+                .AsNoTracking()
+                .Where(t => t.StorageAgreementNo == storageAgreementNo &&
+                              t.IsApproved == false).ToListAsync();
+        }
+        public async void UpdateIssueRequestApprovalAsync(Guid requestId, bool IsApproved)
+        {
+            var record = _IssueRequestDbSet.FirstOrDefault(t => t.RequestId == requestId);
+            record.IsApproved = IsApproved;
+            var result = await _context.SaveChangesAsync();
+      
         }
     }
 }

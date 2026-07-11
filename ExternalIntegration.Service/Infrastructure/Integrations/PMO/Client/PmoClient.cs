@@ -181,6 +181,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                 }).Build();
 
             var response = await _requestExecutor.PostAsync<Guid>(request, model.TerminalCode);
+           
             return response;
         }
 
