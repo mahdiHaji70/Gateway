@@ -7,5 +7,6 @@ namespace ExternalIntegration.Service.Sync.TDM
     public interface ITDMSyncService
     {
         Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId,string terminalCode);
+        Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(string storageAgreementNo);
     }
 }

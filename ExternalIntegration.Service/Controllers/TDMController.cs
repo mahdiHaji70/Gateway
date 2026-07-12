@@ -22,6 +22,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _tdmSyncService.GetGoodwayBillByStorageAgreementId(storageAgreementId, terminalCode);
         }
+        [HttpGet("GetIssueRequestByStorageAgreementNo")]
+        public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequestByStorageAgreementNo([FromQuery]  string storageAgreementNo)
+        {
+            return await _tdmSyncService.GetIssueRequest(storageAgreementNo);
+        }
 
 
     }

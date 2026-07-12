@@ -218,8 +218,10 @@ namespace ExternalIntegration.Service.Sync.PMO
         {
             var syncMappingRequestDto = _mapper.Map<IssueRequestConfirmationRequestDto>(dto);
             var clientResult = await _client.IssueRequestConfirmation(syncMappingRequestDto);
-            var syncMappingDto = _mapper.Map<Response<string>>(clientResult);
+            if (clientResult.Status != ResponseStatuses.Error)
+                _issueRequestRepository.UpdateIssueRequestApprovalAsync(dto.RequestId, dto.IsApproved);
 
+            var syncMappingDto = _mapper.Map<Response<string>>(clientResult);
             return syncMappingDto;
         }
 
@@ -256,7 +258,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public async Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto)
+        public async Task<Response<bool>> SendStoreReceiptAllocation(SendStoreReceiptAllocationDto dto)
         {
             var syncMappingRequestDto = _mapper.Map<SendStoreReceiptAllocationRequestDto>(dto);
             var clientResult = await _client.SendStoreReceiptAllocation(syncMappingRequestDto);

@@ -1,6 +1,6 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿namespace TDM.Infrastructure.Integrations.Responses
 {
-    public class IssueRequestGeneralCargoDto
+    public class IssueRequestGeneralCargoResponseDto
     {
         public string HsCode { get; set; }
         public string Description { get; set; }
@@ -18,6 +18,5 @@
         public decimal? Length { get; set; }
         public bool IsVoluminous { get; set; }
         public string Remark { get; set; }
-
     }
 }
