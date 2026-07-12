@@ -1,6 +1,6 @@
-﻿namespace ExternalIntegration.Service.Sync.DTOs
+﻿namespace TDM.Infrastructure.Integrations.Responses
 {
-    public class IssueRequestContainerGoodDto
+    public class IssueRequestContainerGoodResponseDto
     {
         public string HSCode { get; set; }
         public string Description { get; set; }

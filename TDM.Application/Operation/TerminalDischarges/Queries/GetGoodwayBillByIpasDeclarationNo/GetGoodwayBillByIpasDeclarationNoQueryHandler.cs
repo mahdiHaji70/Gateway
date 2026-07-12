@@ -47,9 +47,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
                     new IpasGoodwayBillsRequest(declaration.TerminalCode, declaration.IpasDeclarationId.Value));
 
             var terminalDischarges = await _terminalDischargeRepository.GetByDeclarationIdAsync(declaration.Id);
-            if (terminalDischarges == null)
-                throw new Exception("No data received from IPAS.");
-
+           
             var filteredIpasGoodwiyBills = ipasGoodwayBills
                                            .Where(newRecord => !terminalDischarges.Any
                                            (existing =>
