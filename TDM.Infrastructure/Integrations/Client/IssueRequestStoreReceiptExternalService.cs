@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Common.Interfaces;
+using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
+using TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConfirmation;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestByStorageAgreementNo;
 using TDM.Infrastructure.Integrations.Helpers;
 using TDM.Infrastructure.Integrations.Mapper;
+using TDM.Infrastructure.Integrations.Requests;
 using TDM.Infrastructure.Integrations.Responses;
 
 namespace TDM.Infrastructure.Integrations.Client
@@ -30,6 +33,20 @@ namespace TDM.Infrastructure.Integrations.Client
             var IpasIssueRequests = IpasIssueRequestMapper.Map(response.Data!);
 
             return IpasIssueRequests;
+        }
+
+        public async Task<String> IssueRequestConfirmation(IssueRequestConfirmationRequest issueRequestConfirmationRequest, CancellationToken cancellationToken)
+        {
+            var issueRequestConfirmationDto = IssueRequestConfirmationMapper.Map(issueRequestConfirmationRequest);
+
+            var response = await _requestExecutor.GetAsync<string>("PMO", "IssueRequestConfirmation",
+            new
+            {
+                IssueRequestConfirmationDto = issueRequestConfirmationDto
+            });
+
+            ExternalResponseHelper.EnsureSuccess(response, "IssueRequestConfirmation");
+            return response.Data;
         }
     }
 }

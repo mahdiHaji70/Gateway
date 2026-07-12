@@ -40,6 +40,7 @@ namespace TDM.Infrastructure
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IGateRepository, GateRepository>();
             services.AddScoped<IWeightBridgeRepository, WeightBridgeRepository>();
+            services.AddScoped<IIssueRequestStoreReceiptExternalService, IssueRequestStoreReceiptExternalService>();
 
 
             return services;
