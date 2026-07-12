@@ -86,6 +86,5 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.SendStoreReceiptAllocation(dto);
         }
 
-
     }
 }
