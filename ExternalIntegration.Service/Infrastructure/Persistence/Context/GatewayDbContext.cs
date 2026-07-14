@@ -1,4 +1,5 @@
 ﻿using ExternalIntegration.Service.Domain.Entities;
+using ExternalIntegration.Service.Infrastructure.Logging.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
@@ -16,6 +17,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<IssueRequest> IssueRequests => Set<IssueRequest>();
         public DbSet<Voyage> Voyages => Set<Voyage>();
         public DbSet<StoreReceipt> StoreReceipts => Set<StoreReceipt>();
+        public DbSet<PMOLog> IntegrationLogs => Set<PMOLog>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GatewayDbContext).Assembly);
