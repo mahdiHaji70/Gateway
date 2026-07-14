@@ -24,6 +24,13 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => src.CargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
+            CreateMap<GeneralCargoResponseDto, GeneralCargoDto>();
+            CreateMap<BulkResponseDto, BulkDto>();
+            CreateMap<ContainerResponseDto, ContainerDto>()
+                .ForMember(dest => dest.Goods, opt => opt.MapFrom(src => src.Goods));
+
+            CreateMap<ContainersGoodResponseDto, ContainerGoodDto>();
+
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>()
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Owner))
                 .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => src.OwnerRep));
