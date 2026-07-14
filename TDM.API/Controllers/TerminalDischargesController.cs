@@ -65,7 +65,8 @@ namespace TDM.API.Controllers
 
             return Ok(ApiResponse.Success(true, "terminaldischarge deleted"));
         }
-        [HttpPost("request-ipas-terminaldischarge-id/{declarationId:guid}")]
+
+        [HttpPost("send-to-ipas-terminaldischarge-by-id/{declarationId:guid}")]
         public async Task<IActionResult> RequestVerifierId(Guid declarationId)
         {
             var result = await _mediator.Send(new SendIpasTerminalDischargeCommand(declarationId));
