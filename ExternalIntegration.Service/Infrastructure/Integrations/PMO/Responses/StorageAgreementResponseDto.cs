@@ -72,7 +72,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
         public string GoodInsuranceTaskStage { get; set; }
         public string GoodInsuranceTaskStageName { get; set; }
         public Guid? GoodsEntryId { get; set; }
-        public Guid? GoodsEntryStateId { get; set; }
+        public int? GoodsEntryStateId { get; set; }
         public List<GeneralCargoResponseDto> CargoList { get; set; }
         public List<ContainerResponseDto> ContainerList { get; set; }
         public List<BulkResponseDto> BulkList { get; set; }

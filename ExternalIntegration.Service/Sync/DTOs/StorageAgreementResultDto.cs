@@ -72,7 +72,7 @@ namespace ExternalIntegration.Service.Sync.DTOs
         public string GoodInsuranceTaskStage { get; set; } = default!;
         public string GoodInsuranceTaskStageName { get; set; } = default!;
         public Guid? GoodsEntryId { get; set; }
-        public Guid? GoodsEntryStateId { get; set; }
+        public int? GoodsEntryStateId { get; set; }
         public List<GeneralCargoResultDto>? CargoList { get; set; }
         public List<ContainerResultDto>? ContainerList { get; set; }
         public List<BulkResultDto>? BulkList { get; set; }

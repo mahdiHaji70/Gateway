@@ -71,7 +71,7 @@ namespace TDM.Infrastructure.Integrations.Responses
         public string GoodInsuranceTaskStage { get; set; } = default!;
         public string GoodInsuranceTaskStageName { get; set; } = default!;
         public Guid? GoodsEntryId { get; set; }
-        public Guid? GoodsEntryStateId { get; set; }
+        public int? GoodsEntryStateId { get; set; }
         public List<GeneralCargoResponseDto>? CargoList { get; set; }
         public List<ContainerResponseDto>? ContainerList { get; set; }
         public List<BulkResponseDto>? BulkList { get; set; }
