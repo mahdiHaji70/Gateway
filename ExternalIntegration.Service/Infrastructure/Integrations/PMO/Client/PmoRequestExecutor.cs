@@ -1,10 +1,12 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 
 namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 {
@@ -32,6 +34,8 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         public async Task<Response<T>> PostAsync<T>(object requestData, string terminalCode = "", CancellationToken cancellationToken = default)
         {
             var request = await BuildHttpRequestAsync(requestData, terminalCode, cancellationToken);
+            request.Options.Set(new HttpRequestOptionsKey<string>("SystemName"), "PMO");
+            request.Options.Set(new HttpRequestOptionsKey<string>("OperationName"), GetServiceName(requestData));
 
             var responseString = await SendAsync(request, cancellationToken);
 
@@ -88,6 +92,17 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
             //_logger.LogError("PMO error: {Message}", envelope.ResponseText);
             return Response<T>.Error(envelope.ResponseText!);
+        }
+
+        private string GetServiceName(object requestData)
+        {
+            dynamic data = requestData;
+            if (data != null)
+                return data.Service;
+
+            return string.Empty;
+
+
         }
 
     }

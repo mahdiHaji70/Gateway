@@ -3,6 +3,9 @@ using ExternalIntegration.Service.Infrastructure.Encryption;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Handlers;
+using ExternalIntegration.Service.Infrastructure.Logging.Abstractions;
+using ExternalIntegration.Service.Infrastructure.Logging.Services;
 using ExternalIntegration.Service.Infrastructure.Persistence;
 using ExternalIntegration.Service.Infrastructure.Persistence.Context;
 using ExternalIntegration.Service.Infrastructure.Persistence.Repositories;
@@ -41,7 +44,12 @@ namespace ExternalIntegration.Service.Infrastructure
 
             services.AddMemoryCache();
 
-            services.AddHttpClient<IPmoRequestExecutor, PmoRequestExecutor>();
+            services.AddScoped<IIntegrationActivityLogger, IntegrationActivityLogger>();
+
+            services.AddTransient<PMOLoggingHandler>();
+
+            services.AddHttpClient<IPmoRequestExecutor, PmoRequestExecutor>()
+                .AddHttpMessageHandler<PMOLoggingHandler>();
 
             services.AddScoped<IPmoClient, PmoClient>();
 

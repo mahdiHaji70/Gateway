@@ -71,7 +71,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         {
             var request = new PmoRequestBuilder()
            .WithCredential(_userName, _password)
-           .WithService(_serviceNames.StorageAgreement)
+           .WithService(_serviceNames.GetStorageAgreement)
            .WithParameters(new List<Parameter>
            {
                 new Parameter{ ParameterName = nameof(dto.AgreementNo), ParameterValue = dto.AgreementNo },
@@ -249,7 +249,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                 new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved},
                 new Parameter {ParameterName = nameof(dto.Description),ParameterValue= dto.Description}
               }).Build();
-            var response = await _requestExecutor.PostAsync<string>(request);
+            var response = await _requestExecutor.PostAsync<string>(request, dto.TerminalCode);
             return response;
         }
 
