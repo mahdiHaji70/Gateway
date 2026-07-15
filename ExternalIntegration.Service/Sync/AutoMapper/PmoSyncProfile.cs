@@ -48,7 +48,7 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<CreateStorageAgreementDto, CreateStorageAgreementRequestDto>();
 
             CreateMap<CreateStorageAgreementResultDto, CreateStorageAgreementResponseDto>();
-            CreateMap<CreateStorageAgreementResponseDto, CreateStorageAgreementResultDto>();                                 
+            CreateMap<CreateStorageAgreementResponseDto, CreateStorageAgreementResultDto>();
 
             CreateMap<StorageAgreementResponseDto, StorageAgreementResultDto>()
                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
@@ -59,26 +59,32 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<ContainerResponseDto, ContainerResultDto>();
             CreateMap<ContainersGoodResponseDto, ContainerGoodResultDto>();
             CreateMap<BulkResponseDto, BulkResultDto>();
-            
+
             CreateMap<DischargePermitDto, DischargePermitResponseDto>();
-            
-            CreateMap<TruckTerminalDischargeDto, TruckTerminalDischargeRequestDto>();
-            CreateMap<TruckTerminalDischargeRequestDto,TruckTerminalDischargeDto>();
-            CreateMap<GeneralCargoTruckTerminalDischargeDto, GeneralCargoTruckTerminalDischargeRequestDto>();
-            CreateMap<GeneralCargoTruckTerminalDischargeRequestDto,GeneralCargoTruckTerminalDischargeDto>();
-            CreateMap<BulkTruckTerminalDischargeDto, BulkTruckTerminalDischargeRequestDto>();
-            CreateMap<ContainerTruckTerminalDischargeDto, ContainerTruckTerminalDischargeRequestDto>();
-            CreateMap<DangerousSpecificationDto, DangerousSpecificationRequestDto>();
-          
+
+            CreateMap<TruckTerminalDischargeDto, TruckTerminalDischargeRequestDto>().ReverseMap();
+            CreateMap<GeneralCargoTruckTerminalDischargeDto, GeneralCargoTruckTerminalDischargeRequestDto>().ReverseMap();
+            CreateMap<BulkTruckTerminalDischargeDto, BulkTruckTerminalDischargeRequestDto>().ReverseMap();
+            CreateMap<ContainerTruckTerminalDischargeDto, ContainerTruckTerminalDischargeRequestDto>().ReverseMap();
+            CreateMap<DangerousSpecificationDto, DangerousSpecificationRequestDto>().ReverseMap();
+
             CreateMap<IssueRequestDto, IssueRequestResponseDto>()
+                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
+                .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => src.GeneralCargoList))
+                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList))
+                .ReverseMap()
                 .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
                 .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => src.GeneralCargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
-            CreateMap<IssueRequestResponseDto, IssueRequestDto>()
-                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => src.BulkList))
-                .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => src.GeneralCargoList))
-                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
+            CreateMap<IssueRequestGeneralCargoDto, IssueRequestGeneralCargoResponseDto>().ReverseMap();
+            CreateMap<IssueRequestBulkDto, IssueRequestBulkResponseDto>().ReverseMap();
+            CreateMap<IssueRequestContainerDto, IssueRequestContainerResponseDto>()
+            .ForMember(dest => dest.Goods, opt => opt.MapFrom(src => src.Goods))
+            .ReverseMap()
+            .ForMember(dest => dest.Goods, opt => opt.MapFrom(src => src.Goods));
+            CreateMap<IssueRequestContainerGoodDto, IssueRequestContainerGoodResponseDto>().ReverseMap();
+            CreateMap<DangerousSpecificationDto, DangerousSpecificationRequestDto>().ReverseMap();
 
             CreateMap<VoyageDto, Voyage>()
                       .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.VesselData)));

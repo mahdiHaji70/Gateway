@@ -26,12 +26,30 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap(typeof(List<>), typeof(Response<>));
 
             CreateMap<IssueRequest, IssueRequestDto>()
-                         .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<BulkDto>>(src.BulkList)))
-                         .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<GeneralCargoDto>>(src.GeneralCargoList)))
-                         .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ContainerDto>>(src.ContainerList)));
+                     .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<OwnerDto>(src.Owner)))
+                     .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<OwnerRepDto>(src.OwnerRep)))
+                     .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<IssueRequestBulkDto>>(src.BulkList)))
+                     .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<IssueRequestGeneralCargoDto>>(src.GeneralCargoList)))
+                     .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<IssueRequestContainerDto>>(src.ContainerList)))
+            .ReverseMap()
+            .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Owner)))
+            .ForMember(dest => dest.OwnerRep, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.OwnerRep)))
+            .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.BulkList)))
+            .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.GeneralCargoList)))
+            .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
+
+            //CreateMap<IssueRequestDto, IssueRequest>()
+            //    .ForMember(dest => dest.BulkList,
+            //        opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.BulkList)))
+            //    .ForMember(dest => dest.GeneralCargoList,
+            //        opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.GeneralCargoList)))
+            //    .ForMember(dest => dest.ContainerList,
+            //        opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
+
+
 
             CreateMap<Voyage, VoyageDto>()
- .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ContainerResultDto>>(src.VesselData)));
+            .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ContainerResultDto>>(src.VesselData)));
 
             CreateMap<StoreReceipt, StoreReceiptDto>()
                         .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<BulkDto>>(src.BulkList)))
