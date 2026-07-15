@@ -10,7 +10,7 @@ namespace TDM.Domain.Entities
     public class ArrivalType : BaseEntity
     {
         public string Name { get; private set; }
-        public ICollection<StoreReceiptHead> ArrivalTypeTerminalDischarges { get; private set; } = new List<StoreReceiptHead>();
+        public ICollection<StoreReceiptHead> ArrivalTypeStoreReceiptHeads { get; private set; } = new List<StoreReceiptHead>();
 
         public ArrivalType(string name) => SetProperty(name);
 

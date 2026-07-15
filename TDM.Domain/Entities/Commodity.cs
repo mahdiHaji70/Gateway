@@ -10,6 +10,8 @@ namespace TDM.Domain.Entities
 
         public ICollection<DeclarationItem> CommodityDeclarationItems { get; private set; } = new List<DeclarationItem>();
         public ICollection<DeclarationContainerGood> CommodityDeclarationContainerGoods { get; private set; } = new List<DeclarationContainerGood>();
+        public ICollection<StoreReceiptGood> CommodityStoreReceiptGoods { get; private set; } = new List<StoreReceiptGood>();
+        public ICollection<StoreReceiptContainerGood> CommodityStoreReceiptContainerGoods { get; private set; } = new List<StoreReceiptContainerGood>();
 
 
         public Commodity(string name, string hsCode)

@@ -16,6 +16,16 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.HasOne(c => c.Commodity)
+            .WithMany(cn => cn.CommodityStoreReceiptGoods)
+            .HasForeignKey(c => c.CommodityId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.Package)
+            .WithMany(cn => cn.PackageStoreReceiptGoods)
+            .HasForeignKey(c => c.PackageId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

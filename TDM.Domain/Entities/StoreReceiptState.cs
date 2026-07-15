@@ -10,7 +10,7 @@ namespace TDM.Domain.Entities
     public class StoreReceiptState : BaseEntity
     {
         public string Name { get; private set; }
-        public ICollection<StoreReceiptHead> StoreReceiptStateTerminalDischarges { get; private set; } = new List<StoreReceiptHead>();
+        public ICollection<StoreReceiptHead> StoreReceiptStateStoreReceiptHeads { get; private set; } = new List<StoreReceiptHead>();
 
         public StoreReceiptState(string name) => SetProperty(name);
 

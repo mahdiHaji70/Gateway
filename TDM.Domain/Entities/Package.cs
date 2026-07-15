@@ -13,6 +13,9 @@ namespace TDM.Domain.Entities
 
         public ICollection<DeclarationItem> PackageDeclarationItems { get; private set; } = new List<DeclarationItem>();
         public ICollection<DeclarationContainerGood> PackageDeclarationContainerGoods { get; private set; } = new List<DeclarationContainerGood>();
+        public ICollection<StoreReceiptGood> PackageStoreReceiptGoods { get; private set; } = new List<StoreReceiptGood>();
+        public ICollection<StoreReceiptContainerGood> PackageStoreReceiptContainerGoods { get; private set; } = new List<StoreReceiptContainerGood>();
+
 
 
         public Package(string name, string code)
