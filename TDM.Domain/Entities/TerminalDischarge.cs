@@ -12,7 +12,7 @@ namespace TDM.Domain.Entities
     {
         public string TerminalCode { get; set; }
         public Guid CargoTypeId { get; set; }
-        public CargoType CargoType { get; set; } = null!;
+        public CargoType CargoType { get; set; } 
         public Guid StoreId { get; set; }
         public Store Store { get; set; } = null!;
         public Guid DeclarationItemId { get; set; }

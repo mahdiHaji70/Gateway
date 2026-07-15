@@ -7,12 +7,12 @@ using TDM.Domain.Exceptions;
 
 namespace TDM.Domain.Entities
 {
-    public class CargoType : BaseEntity
+    public class StoreReceiptState : BaseEntity
     {
         public string Name { get; private set; }
-        public ICollection<TerminalDischarge> CargoTypeTerminalDischarges { get; private set; } = new List<TerminalDischarge>();
+        public ICollection<StoreReceiptHead> StoreReceiptStateTerminalDischarges { get; private set; } = new List<StoreReceiptHead>();
 
-        public CargoType(string name) => SetProperty(name);
+        public StoreReceiptState(string name) => SetProperty(name);
 
         public void Update(string name) => SetProperty(name);
 
@@ -28,6 +28,5 @@ namespace TDM.Domain.Entities
         }
 
   
-   
     }
   }
