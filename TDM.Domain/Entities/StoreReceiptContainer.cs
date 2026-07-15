@@ -7,6 +7,8 @@ namespace TDM.Domain.Entities
 {
     public class StoreReceiptContainer : BaseEntity
     {
+        public Guid StoreReceiptHeadId { get; set; }
+        public StoreReceiptHead StoreReceiptHead { get; set; }
         public Guid ContainerId { get; set; }
         public Container Container { get; set; }
         public string SealNumber { get; set; }
@@ -15,9 +17,7 @@ namespace TDM.Domain.Entities
         public string Classification { get; set; }
         public decimal IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
-        public Guid StoreReceiptItemId { get; set; }
-        public StoreReceiptItem StoreReceiptItem { get; set; }
-
+      
         public ICollection<StoreReceiptContainerGood> StoreReceiptContainerGoods { get; private set; } = new List<StoreReceiptContainerGood>();
     }
 }

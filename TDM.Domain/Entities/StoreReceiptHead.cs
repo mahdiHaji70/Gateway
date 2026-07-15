@@ -30,8 +30,8 @@ namespace TDM.Domain.Entities
         public Guid? DeclarationId { get; set; }
         public Declaration? Declaration { get; set; } 
         public Guid? BillOfLadingId { get; set; }
-        public ICollection<StoreReceiptItem> StoreReceiptItems { get; private set; } = new List<StoreReceiptItem>();
-      
+        public ICollection<StoreReceiptGood> StoreReceiptGoods { get; private set; } = new List<StoreReceiptGood>();
+        public ICollection<StoreReceiptContainer> StoreReceiptContainers { get; private set; } = new List<StoreReceiptContainer>();
 
     }
 }
