@@ -14,7 +14,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<IEnumerable<DischargePermitResponseDto>>> GetDischargePermit(PmoDateRangeDto dto);
         Task<Response<Guid>> TruckTerminalDischarge(TruckTerminalDischargeRequestDto dto);
         Task<Response<IEnumerable<IssueRequestResponseDto>>> GetIssueRequest(PmoDateRangeDto dto);
-        Task<Response<IEnumerable<VoyageResponseDto>>> GetVoyages(PmoDateRangeWithPagingDto dto);
+        Task<Response<GetDataWithPagingDto<VoyageResponseDto>>> GetVoyages(PmoDateRangeWithPagingDto dto);
         Task<Response<VoyageResponseDto>> GetVoyageByNoticeNo(VoyageByNoticeNoRequestDto dto);
         Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationRequestDto dto);
         Task<Response<GetDataWithPagingDto<StoreReceiptResponseDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto);

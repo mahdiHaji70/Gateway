@@ -181,10 +181,10 @@ namespace ExternalIntegration.Service.Sync.PMO
 
             var clientResult = await _client.GetVoyages(pmoDateDto);
 
-            var syncMappingDto = _mapper.Map<Response<IEnumerable<VoyageDto>>>(clientResult);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<VoyageDto>>>(clientResult.Data.Items);
 
             var newData = await _voyageRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<Voyage>>(syncMappingDto.Data),
+                entities: _mapper.Map<IEnumerable<Voyage>>(clientResult.Data.Items),
                 idSelector: t => t.Id,
                 dbIdSelector: t => t.Id
             );
