@@ -253,7 +253,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<StoreReceiptResponseDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
         {
             var request = new PmoRequestBuilder()
           .WithCredential(_userName, _password)
@@ -268,7 +268,8 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
           }).Build();
 
-            var response = await _requestExecutor.PostAsync<IEnumerable<StoreReceiptDto>>(request, dto.TerminalCode);
+            var response = await _requestExecutor.PostAsync<IEnumerable<StoreReceiptResponseDto>>(request, dto.TerminalCode);
+          
             return response;
         }
 

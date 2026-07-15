@@ -100,6 +100,16 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => src.GeneralCargoList))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => src.ContainerList));
 
+            CreateMap<StoreReceiptGeneralCargoDto, StoreReceiptGeneralCargoResponseDto>().ReverseMap();
+            CreateMap<StoreReceiptBulkDto, StoreReceiptBulkResponseDto>().ReverseMap();
+            CreateMap<StoreReceiptContainerDto, StoreReceiptContainerResponseDto>()
+            .ForMember(dest => dest.Goods, opt => opt.MapFrom(src => src.Goods))
+            .ReverseMap()
+            .ForMember(dest => dest.Goods, opt => opt.MapFrom(src => src.Goods));
+            CreateMap<StoreReceiptContainerGoodDto, StoreReceiptContainerGoodResponseDto>().ReverseMap();
+            CreateMap<DangerousSpecificationDto, DangerousSpecificationResponseDto>().ReverseMap();
+
+
             CreateMap<SendStoreReceiptAllocationDto, SendStoreReceiptAllocationRequestDto>();
 
 
