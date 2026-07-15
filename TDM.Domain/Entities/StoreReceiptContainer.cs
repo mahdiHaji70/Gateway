@@ -16,7 +16,7 @@ namespace TDM.Domain.Entities
         public decimal IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
         public Guid StoreReceiptItemId { get; set; }
-        public StoreReceiptItem StoreReceiptItemItem { get; set; }
+        public StoreReceiptItem StoreReceiptItem { get; set; }
 
         public ICollection<StoreReceiptContainerGood> StoreReceiptContainerGoods { get; private set; } = new List<StoreReceiptContainerGood>();
     }

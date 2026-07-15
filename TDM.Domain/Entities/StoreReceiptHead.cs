@@ -31,6 +31,7 @@ namespace TDM.Domain.Entities
         public Declaration? Declaration { get; set; } 
         public Guid? BillOfLadingId { get; set; }
         public ICollection<StoreReceiptItem> StoreReceiptItems { get; private set; } = new List<StoreReceiptItem>();
+      
 
     }
 }

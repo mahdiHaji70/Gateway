@@ -7,6 +7,8 @@ namespace TDM.Domain.Entities
 {
     public class StoreReceiptContainerGood:BaseEntity
     {
+        public Guid StoreReceiptContainerId { get; set; } 
+        public StoreReceiptContainer StoreReceiptContainer { get; set; }
         public Guid CommodityId { get; set; }
         public Commodity Commodity { get; set; }
         public Guid PackageId { get; set; }

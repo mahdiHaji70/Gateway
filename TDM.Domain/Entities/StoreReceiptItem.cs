@@ -31,5 +31,8 @@ namespace TDM.Domain.Entities
         public string Classification { get; set; }
         public decimal IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
+
+        public ICollection<StoreReceiptContainer> StoreReceiptContainers { get; private set; } = new List<StoreReceiptContainer>();
+
     }
 }
