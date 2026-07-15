@@ -39,11 +39,7 @@ namespace TDM.Infrastructure.Integrations.Client
         {
             var issueRequestConfirmationDto = IssueRequestConfirmationMapper.Map(issueRequestConfirmationRequest);
 
-            var response = await _requestExecutor.GetAsync<string>("PMO", "IssueRequestConfirmation",
-            new
-            {
-                IssueRequestConfirmationDto = issueRequestConfirmationDto
-            });
+            var response = await _requestExecutor.PostAsync<string>("PMO", "IssueRequestConfirmation", issueRequestConfirmationDto);
 
             ExternalResponseHelper.EnsureSuccess(response, "IssueRequestConfirmation");
             return response.Data;
