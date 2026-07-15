@@ -41,6 +41,8 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
            
             CreateMap<Voyage, VoyageDto>()
             .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VoyageVesselDataDto>>(src.VesselData)));
+            CreateMap<Voyage, VoyageResponseDto>()
+           .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VoyageVesselDataResponseDto>>(src.VesselData)));
 
             CreateMap<StoreReceipt, StoreReceiptDto>()
              .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptBulkDto>>(src.BulkList)))
@@ -51,6 +53,14 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
              .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.GeneralCargoList)))
              .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
 
+            CreateMap<StoreReceipt, StoreReceiptResponseDto>()
+            .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptBulkResponseDto>>(src.BulkList)))
+            .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptGeneralCargoResponseDto>>(src.GeneralCargoList)))
+            .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptContainerResponseDto>>(src.ContainerList)))
+            .ReverseMap()
+            .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.BulkList)))
+            .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.GeneralCargoList)))
+            .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
 
 
 

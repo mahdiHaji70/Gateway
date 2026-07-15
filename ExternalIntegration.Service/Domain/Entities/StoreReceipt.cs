@@ -3,7 +3,7 @@
     public class StoreReceipt
     {
         public Guid Id { get; set; }
-        public string PortId { get; set; }
+        public Guid PortId { get; set; }
         public string Port { get; set; }
         public string TerminalCode { get; set; }
         public string Terminal { get; set; }
@@ -44,7 +44,7 @@
         public string CustomsProcedure { get; set; }
         public int State { get; set; }
         public string StateName { get; set; }
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public Guid? RequestId { get; set; }
         public bool IsIssued { get; set; }
         public string GeneralCargoList { get; set; }
