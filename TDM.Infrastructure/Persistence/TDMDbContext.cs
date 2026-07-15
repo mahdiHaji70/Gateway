@@ -20,12 +20,18 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<DeclarationItem> DeclarationItems => Set<DeclarationItem>();
         public DbSet<DeclarationContainer> DeclarationContainers => Set<DeclarationContainer>();
         public DbSet<DeclarationContainerGood> DeclarationContainerGoods => Set<DeclarationContainerGood>();
-        public DbSet<CargoType> CargoTypes=>Set<CargoType>();
+        public DbSet<CargoType> CargoTypes => Set<CargoType>();
         public DbSet<StoreType> StoreTypes => Set<StoreType>();
         public DbSet<Store> Stores => Set<Store>();
         public DbSet<TerminalDischarge> TerminalDischarges => Set<TerminalDischarge>();
         public DbSet<Gate> Gates => Set<Gate>();
         public DbSet<WeightBridge> WeightBridges => Set<WeightBridge>();
+        public DbSet<StoreReceiptHead> StoreReceiptHeads => Set<StoreReceiptHead>();
+        public DbSet<StoreReceiptGood> StoreReceiptGoods => Set<StoreReceiptGood>();
+        public DbSet<StoreReceiptContainer> StoreReceiptContainers => Set<StoreReceiptContainer>();
+        public DbSet<StoreReceiptContainerGood> StoreReceiptContainerGoods => Set<StoreReceiptContainerGood>();
+        public DbSet<StoreReceiptState> StoreReceiptStates => Set<StoreReceiptState>();
+        public DbSet<ArrivalType> ArrivalTypes => Set<ArrivalType>();
 
         public TDMDbContext(DbContextOptions<TDMDbContext> options)
         : base(options)

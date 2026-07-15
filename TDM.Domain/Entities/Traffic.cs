@@ -9,6 +9,7 @@ namespace TDM.Domain.Entities
         public string Code { get; set; }
 
         public ICollection<Declaration> TrafficDeclarations { get; private set; } = new List<Declaration>();
+        public ICollection<StoreReceiptHead> TrafficStoreReceiptHeads { get; private set; } = new List<StoreReceiptHead>();
 
 
         public Traffic(string name, string code)

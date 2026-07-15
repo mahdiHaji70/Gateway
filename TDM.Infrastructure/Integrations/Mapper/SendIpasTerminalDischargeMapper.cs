@@ -46,6 +46,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 HSCode = sendIpasTerminalDischargeRequest.HSCode,
                 Description = sendIpasTerminalDischargeRequest.CommodityName,
                 BrandName = "TO DO",
+                PackageType= sendIpasTerminalDischargeRequest.PackageName,
                 PackageTypeCode = sendIpasTerminalDischargeRequest.PackageCode,
                 PackageQuantity = sendIpasTerminalDischargeRequest.PackNB,
                 GrossWeight = (float)sendIpasTerminalDischargeRequest.Weight,
