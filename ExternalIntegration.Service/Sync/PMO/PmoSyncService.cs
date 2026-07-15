@@ -243,15 +243,10 @@ namespace ExternalIntegration.Service.Sync.PMO
                 dto.PageSize);
 
             var clientResult = await _client.GetStoreReceipts(pmoDateDto);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable< StoreReceiptDto>>>(clientResult.Data.Items);
 
-            var syncMappingDto = _mapper.Map<Response<IEnumerable<StoreReceiptDto>>>(clientResult);
-
-            var syncMappingDto1 = _mapper.Map<StoreReceiptDto>(clientResult.Data);
-            var t = _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data);
-           
-            
             var newData = await _storeReceiptRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data),
+                entities: _mapper.Map<IEnumerable<StoreReceipt>>(clientResult.Data.Items),
                 idSelector: t => t.Id,
                 dbIdSelector: t => t.Id
             );
