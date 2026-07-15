@@ -34,6 +34,7 @@ export class LoginComponent {
             next: (currentTerminalres: any) => {
               this.localStorageService.setItem('terminalId', currentTerminalres.data.terminalId);
               this.localStorageService.setItem('terminalCode', currentTerminalres.data.terminalCode);
+              this.localStorageService.setItem('portCode', currentTerminalres.data.terminalPortCode);
               this.router.navigate(['/']).then().catch();
             },
             error: (failRes: any) => {

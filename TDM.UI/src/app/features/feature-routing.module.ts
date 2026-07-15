@@ -13,9 +13,13 @@ const routes: Routes = [
     path: 'document',
     loadChildren: () => import('./document/document.module').then(m => m.DocumentModule)
   },
+  {
+    path: 'sync',
+    loadChildren: () => import('./sync/sync.module').then(m => m.SyncModule)
+  }
 ];
 
-@NgModule({
+@NgModule({  
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

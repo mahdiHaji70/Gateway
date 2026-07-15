@@ -63,7 +63,6 @@ export class SendDischargeComponent {
         next: (responses: any) => {
             // Iterate through the local UI list
             this.sendDischarges.forEach(discharge => {
-              debugger
                 // Find the matching response for this specific discharge
                 const result = responses.data.find((r: any) => r.terminalDischargeId === discharge.id);
 
@@ -72,7 +71,6 @@ export class SendDischargeComponent {
                     // Note: Guid.Empty in C# usually comes as "00000000-0000-0000-0000-000000000000"
                     const isValidGuid = result.ipasTerminalDischargeId && 
                                         result.ipasTerminalDischargeId !== '00000000-0000-0000-0000-000000000000';
-              debugger
 
                     if (isValidGuid) {
                         discharge.isSend = true;

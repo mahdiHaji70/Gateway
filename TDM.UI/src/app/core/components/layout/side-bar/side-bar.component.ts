@@ -55,6 +55,7 @@ export class SideBarComponent {
   }
 
   onItemClick(path: string) {
+    debugger
     this.router.navigate([path]).then().catch();
   }
 }
