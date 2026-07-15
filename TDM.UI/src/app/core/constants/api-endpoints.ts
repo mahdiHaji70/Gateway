@@ -4,8 +4,9 @@ export class ApiEndpoints {
   //public static readonly BASE_URL = 'http://localhost:5201/api';
   public static readonly BASE_URL = 'https://localhost:7032/api';
   public static readonly BASE_AUTH_URL = 'https://localhost:7202/api/Auth';
+  public static readonly BASE_GATEWAY_URL = 'https://localhost:7144/api';
 
-
+  //For BASE_URL
   public static readonly Traffic = `${this.BASE_URL}/Traffic`;
   public static readonly Traffic_GET_ALL = `${this.BASE_URL}/Traffic/GetAll`;
 
@@ -29,7 +30,15 @@ export class ApiEndpoints {
   public static readonly Operation_Aggregation = `${this.BASE_URL}/OperationAggregation`;    
   public static readonly Store_Receipt_Request = `${this.BASE_URL}/StoreReceiptRequest`;    
   public static readonly Store_Receipt = `${this.BASE_URL}/StoreReceipt`;    
-  public static readonly Stuff = `${this.BASE_URL}/Stuff`;    
+  public static readonly Stuff = `${this.BASE_URL}/Stuff`; 
+  
+  //For BASE_GATEWAY_URL
+  public static readonly Goodway_Bill = `${this.BASE_GATEWAY_URL}/PMO/GetGoodwayBill`; 
+  public static readonly Discharge_Permit = `${this.BASE_GATEWAY_URL}/PMO/GetDischargePermit`; 
+  public static readonly Issue_Request = `${this.BASE_GATEWAY_URL}/PMO/GetIssueRequest`; 
+  public static readonly Voyages = `${this.BASE_GATEWAY_URL}/PMO/GetVoyages`; 
+  public static readonly Store_Receipts = `${this.BASE_GATEWAY_URL}/PMO/GetStoreReceipts`; 
+  
   
 
 }

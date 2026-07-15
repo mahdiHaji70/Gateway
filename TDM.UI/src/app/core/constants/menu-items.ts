@@ -2,7 +2,7 @@ export const MenuItems = [
     {
         label: 'Sync With Ipas',
         icon: 'pi pi-sync',
-        path: 'country-list'
+        path: 'sync/sync-gateway'
     },
     {
         label: 'Operation',

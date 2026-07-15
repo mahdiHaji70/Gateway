@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SyncGatewayComponent } from './components/sync-gateway/sync-gateway.component';
 
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent },
+   { path: 'sync-gateway', component: SyncGatewayComponent },
   // { path: 'home', component: HomeComponent },
 ];
 

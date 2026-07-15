@@ -11,5 +11,6 @@ namespace TDM.Application.BasicInformation.UsersTerminal.DTOs
         public Guid TerminalId { get; set; }
         public string TerminalCode { get; set; } = default!;
         public string TerminalName { get; set; } = default!;
+        public string TerminalPortCode { get; set; } = default!;
     }
 }

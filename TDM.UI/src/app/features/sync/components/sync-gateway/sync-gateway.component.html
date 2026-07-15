@@ -1,0 +1,20 @@
+<p-card header="Gateway Sync Integrations" class="sync-dashboard">
+    @for (syncButton of syncButtons; track $index) {
+    <!-- Integration Row 1 -->
+    <div class="sync-row">
+        <div class="sync-info">
+            <span class="sync-label">{{ syncButton.name }}</span>
+            <span class="sync-status"><p-tag [severity]="syncButton.severity"
+                    [value]="syncButton.severity == 'success' ? 'Synced' : 'Failed'"></p-tag></span>
+        </div>
+        <p-button icon="pi pi-refresh" [label]="syncButton.styleClass == '' ? 'Sync' : 'Retry'"
+            [styleClass]="syncButton.styleClass" [loading]="syncButton.loading" [disabled]="syncButton.loading" (onClick)="onSync(syncButton)">            
+        </p-button>
+    </div>
+
+    <p-divider></p-divider>
+
+    }
+</p-card>
+
+<p-toast />

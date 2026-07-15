@@ -23,8 +23,6 @@ export class TitleBarComponent {
   }
 
   ngOnInit() {
-
-    debugger;
     this.routerSub = this.router.events.subscribe((event: any) => {
       if (event.routerEvent instanceof NavigationEnd) {
         const url = event.routerEvent.urlAfterRedirects || event.routerEvent.url;

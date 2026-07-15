@@ -1,0 +1,22 @@
+.sync-dashboard {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.sync-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.sync-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sync-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
