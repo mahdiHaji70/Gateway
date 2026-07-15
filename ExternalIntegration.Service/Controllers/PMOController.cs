@@ -61,7 +61,7 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.GetIssueRequest(dto);
         }
         [HttpGet("GetVoyages")]
-        public async Task<Response<GetDataWithPagingDto<VoyageDto>>> GetVoyages([FromQuery] DateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<VoyageDto>>> GetVoyages([FromQuery] DateRangeWithPagingDto dto)
         {
             return await _pmoSyncService.GetVoyages(dto);
         }
@@ -76,7 +76,7 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.IssueRequestConfirmation(dto);
         }
         [HttpGet("GetStoreReceipts")]
-        public async Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts([FromQuery] DateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts([FromQuery] DateRangeWithPagingDto dto)
         {
             return await _pmoSyncService.GetStoreReceipts(dto);
         }

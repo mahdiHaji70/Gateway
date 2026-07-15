@@ -13,10 +13,10 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<IEnumerable<DischargePermitDto>>> GetDischargePermit(DateRangeDto dto);
         Task<Response<Guid>> SubmitTruckTerminalDischarge(TruckTerminalDischargeDto dto);
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(DateRangeDto dto);
-        Task<Response<GetDataWithPagingDto<VoyageDto>>> GetVoyages(DateRangeWithPagingDto dto);
+        Task<Response<IEnumerable<VoyageDto>>> GetVoyages(DateRangeWithPagingDto dto);
         Task<Response<VoyageDto>> GetVoyageByNoticeNo(VoyageByNoticeNoDto dto);
         Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationDto dto);
-        Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
+        Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
         Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto);
 
     }

@@ -162,7 +162,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public async Task<Response<GetDataWithPagingDto<VoyageDto>>> GetVoyages([FromBody] DateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<VoyageDto>>> GetVoyages([FromBody] DateRangeWithPagingDto dto)
         {
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
@@ -181,7 +181,7 @@ namespace ExternalIntegration.Service.Sync.PMO
 
             var clientResult = await _client.GetVoyages(pmoDateDto);
 
-            var syncMappingDto = _mapper.Map<Response<GetDataWithPagingDto<VoyageDto>>>(clientResult);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<VoyageDto>>>(clientResult);
 
             var newData = await _voyageRepository.FilterUnpersistedAsync(
                 entities: _mapper.Map<IEnumerable<Voyage>>(syncMappingDto.Data),
@@ -225,7 +225,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public async Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto)
         {
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
@@ -244,8 +244,12 @@ namespace ExternalIntegration.Service.Sync.PMO
 
             var clientResult = await _client.GetStoreReceipts(pmoDateDto);
 
-            var syncMappingDto = _mapper.Map<Response<GetDataWithPagingDto<StoreReceiptDto>>>(clientResult);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<StoreReceiptDto>>>(clientResult);
 
+            var syncMappingDto1 = _mapper.Map<StoreReceiptDto>(clientResult.Data);
+            var t = _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data);
+           
+            
             var newData = await _storeReceiptRepository.FilterUnpersistedAsync(
                 entities: _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data),
                 idSelector: t => t.Id,

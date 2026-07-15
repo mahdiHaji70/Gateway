@@ -20,7 +20,7 @@
         public bool? IsHeavy { get; set; }
         public bool? NoBrandName { get; set; }
         public bool? DangerousNotNoticed { get; set; }
-        public DangerousSpecificationDto DangerousSpecification { get; set; }
+       // public DangerousSpecificationDto? DangerousSpecification { get; set; }
         public string Remark { get; set; }
         public Guid? BillOfLadingId { get; set; }
 

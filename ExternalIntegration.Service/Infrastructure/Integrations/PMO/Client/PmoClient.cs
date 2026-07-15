@@ -203,7 +203,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<GetDataWithPagingDto<VoyageResponseDto>>> GetVoyages(PmoDateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<VoyageResponseDto>>> GetVoyages(PmoDateRangeWithPagingDto dto)
         {
             var request = new PmoRequestBuilder()
               .WithCredential(_userName, _password)
@@ -217,7 +217,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                 new Parameter{ ParameterName = nameof(dto.PageSize), ParameterValue = dto.PageSize },
               }).Build();
 
-            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<VoyageResponseDto>>(request, dto.TerminalCode);
+            var response = await _requestExecutor.PostAsync<IEnumerable<VoyageResponseDto>>(request, dto.TerminalCode);
            
             return response;
         }
@@ -253,7 +253,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<GetDataWithPagingDto<StoreReceiptDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
         {
             var request = new PmoRequestBuilder()
           .WithCredential(_userName, _password)
@@ -268,7 +268,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
           }).Build();
 
-            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<StoreReceiptDto>>(request, dto.TerminalCode);
+            var response = await _requestExecutor.PostAsync<IEnumerable<StoreReceiptDto>>(request, dto.TerminalCode);
             return response;
         }
 
