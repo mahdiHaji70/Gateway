@@ -10,8 +10,5 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
         public decimal? Volume { get; set; }
         public bool? IsDangerous { get; set; }
         public string Remark { get; set; }
-        public Guid? BillOfLadingId { get; set; }
-        public bool? DangerousNotNoticed { get; set; }
-        public DangerousSpecificationResponseDto DangerousSpecification { get; set; }
     }
 }
