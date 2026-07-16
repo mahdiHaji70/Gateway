@@ -41,6 +41,10 @@ namespace TDM.Infrastructure
             services.AddScoped<IGateRepository, GateRepository>();
             services.AddScoped<IWeightBridgeRepository, WeightBridgeRepository>();
             services.AddScoped<IIssueRequestStoreReceiptExternalService, IssueRequestStoreReceiptExternalService>();
+            services.AddScoped<IStoreReceiptHeadRepository, StoreReceiptHeadRepository>();
+            services.AddScoped<IStoreReceiptGoodRepository, StoreReceiptGoodRepository>();
+            services.AddScoped<IStoreReceiptContainerRepository, StoreReceiptContainerRepository>();
+            services.AddScoped<IStoreReceiptContainerGoodRepository, StoreReceiptContainerGoodRepository>();
 
 
             return services;
