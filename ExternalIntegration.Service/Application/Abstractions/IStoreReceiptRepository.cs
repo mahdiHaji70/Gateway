@@ -9,6 +9,7 @@ namespace ExternalIntegration.Service.Application.Abstractions
     {
       
         Task<DateTime> GetLastDateAsync();
-
+        Task<List<StoreReceipt>> GetByStorageAgreementNoAsync(string storageAgreementNo);
+        Task<StoreReceipt> GetByNoAsync(string no);
     }
 }

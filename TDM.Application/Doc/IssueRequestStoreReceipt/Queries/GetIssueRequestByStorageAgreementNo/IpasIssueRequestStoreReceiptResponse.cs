@@ -28,7 +28,7 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestBy
         public string PackageTypeCode { get; set; } 
         public string PackageType { get; set; }
         public decimal? PackageQuantity { get; set; }
-        public decimal GetWeight { get; set; }
+        public decimal Weight { get; set; }
         public decimal? Volume { get; set; }
         public string ContainerNo { get; set; }
       

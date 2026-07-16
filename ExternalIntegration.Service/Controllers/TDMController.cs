@@ -27,7 +27,16 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _tdmSyncService.GetIssueRequest(storageAgreementNo);
         }
-
+        [HttpGet("GetStoreReceiptByStorageAgreementNo")]
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByStorageAgreementNo([FromQuery] string storageAgreementNo)
+        {
+            return await _tdmSyncService.GetStoreReceiptByStorageAgreementNo(storageAgreementNo);
+        }
+        [HttpGet("GetStoreReceiptByNo")]
+        public async Task<Response<StoreReceiptDto>> GetStoreReceiptByNo([FromQuery] string no)
+        {
+            return await _tdmSyncService.GetStoreReceiptByNo(no);
+        }
 
     }
 }

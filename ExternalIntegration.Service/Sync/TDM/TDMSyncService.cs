@@ -14,16 +14,19 @@ namespace ExternalIntegration.Service.Sync.TDM
         private readonly IMapper _mapper;
         private readonly IGoodwayBillRepository _goodwayBillRepository;
         private readonly IIssueRequestRepository _IssueRequestRepository;
+        private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public TDMSyncService(IMapper mapper, IUnitOfWork unitOfWork
            , IGoodwayBillRepository goodwayBillRepository
-           , IIssueRequestRepository issueRequestRepository)
+           , IIssueRequestRepository issueRequestRepository
+           , IStoreReceiptRepository storerReceiptRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _goodwayBillRepository = goodwayBillRepository;
             _IssueRequestRepository = issueRequestRepository;
+            _storeReceiptRepository= storerReceiptRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
@@ -42,6 +45,26 @@ namespace ExternalIntegration.Service.Sync.TDM
 
             return Response<IEnumerable<IssueRequestDto>>.Success(_mapper.Map<IEnumerable<IssueRequestDto>>(result));
         }
+     
+       public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByStorageAgreementNo(string storageAgreementNo)
+        {
+            var result = await _storeReceiptRepository.GetByStorageAgreementNoAsync(storageAgreementNo);
 
+            if (result == null)
+                return Response<IEnumerable<StoreReceiptDto>>.Error("Not Found");
+
+            return Response<IEnumerable<StoreReceiptDto>>.Success(_mapper.Map<IEnumerable<StoreReceiptDto>>(result));
+
+        }
+        public async Task<Response<StoreReceiptDto>> GetStoreReceiptByNo(string no)
+        {
+            var result = await _storeReceiptRepository.GetByNoAsync(no);
+
+            if (result == null)
+                return Response<StoreReceiptDto>.Error("Not Found");
+
+            return Response<StoreReceiptDto>.Success(_mapper.Map<StoreReceiptDto>(result));
+
+        }
     }
 }

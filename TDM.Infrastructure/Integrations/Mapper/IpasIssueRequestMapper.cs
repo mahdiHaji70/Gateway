@@ -30,7 +30,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 TaskRegisterDate = dto.TaskRegisterDate,
                 HsCode = GetHSCode(dto),
                 Description = GetCommodityName(dto),
-                GetWeight = GetWeight(dto),
+                Weight = GetWeight(dto),
                 Volume = GetVolume(dto),
                 ContainerNo = GetContainerNo(dto),
                 StorageAgreementNo = dto.StorageAgreementNo,
