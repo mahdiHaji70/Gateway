@@ -56,7 +56,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             return Response<IEnumerable<StoreReceiptDto>>.Success(_mapper.Map<IEnumerable<StoreReceiptDto>>(result));
 
         }
-        public async Task<Response<StoreReceiptDto> GetStoreReceiptByNo(string no)
+        public async Task<Response<StoreReceiptDto>> GetStoreReceiptByNo(string no)
         {
             var result = await _storeReceiptRepository.GetByNoAsync(no);
 
