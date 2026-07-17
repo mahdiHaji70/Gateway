@@ -13,6 +13,7 @@ export class ApiEndpoints {
   public static readonly Declarations = `${this.BASE_URL}/Declarations`;
   public static readonly Request_Ipas_Declaration_Id = `${this.BASE_URL}/Declarations/request-ipas-declaration-id`;
   public static readonly Request_Ipas_Declaration_Items = `${this.BASE_URL}/DeclarationItems/request-ipas-declaration-items`;
+  public static readonly Store_Receipt_Issue_Request = `${this.BASE_URL}/IssueRequestStoreReceipt`;
   public static readonly Declaration_Items = `${this.BASE_URL}/DeclarationItems`;
   public static readonly Declaration_Container = `${this.BASE_URL}/DeclarationContainer`;
   public static readonly Get_Declaration_Items_By_Declaration_Id = `${this.BASE_URL}/declarationItems/get_by_declaration_id`;

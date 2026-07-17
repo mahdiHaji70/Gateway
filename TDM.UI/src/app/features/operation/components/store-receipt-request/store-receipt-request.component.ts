@@ -49,7 +49,6 @@ export class StoreReceiptRequestComponent {
     this.storeReceiptRequestService.getFinalInventoryForDeclaration(event.value.id).subscribe({
       next: (res: any) => {
         this.declarationInventory = res.data;
-        console.log(this.declarationInventory);
       },
       error: (error: any) => { }
     });

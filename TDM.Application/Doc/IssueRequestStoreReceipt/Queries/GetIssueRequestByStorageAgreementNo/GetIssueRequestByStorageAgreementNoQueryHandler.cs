@@ -27,8 +27,7 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestBy
         public async Task<IEnumerable<IpasIssueRequestStoreReceiptResponse>>
             Handle(GetIssueRequestByStorageAgreementNoQuery request, CancellationToken cancellationToken)
         {
-            var declaration = await _declarationRepository.GetByIpasDeclarationNoAsync(request.ipasDeclarationNo);
-            if (declaration == null)
+            if (!_declarationRepository.ExistsByIpasDeclarationNo(request.ipasDeclarationNo))
                 throw new Exception("Declaration not found");
 
             var ipasIssueRequests =

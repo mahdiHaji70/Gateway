@@ -27,7 +27,7 @@ export const MenuItems = [
         icon: 'pi pi-file',
         items: [
             { label: 'Declaration', path: 'document/declaration-list' },
-            { label: 'Store Receipt Issue', path: 'document/store-receipt-issue' },
+            { label: 'Issue Request', path: 'document/store-receipt-issue-request' },
         ]
     },
     {

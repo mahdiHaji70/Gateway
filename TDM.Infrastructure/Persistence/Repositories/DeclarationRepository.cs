@@ -49,9 +49,9 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
    
-       public async Task<bool> ExistsByIpasDeclarationNo(string IpasDeclarationNo)
+       public bool ExistsByIpasDeclarationNo(string IpasDeclarationNo)
         {
-            return await _dbSet.AnyAsync(x => x.IpasDeclarationNo .Contains( IpasDeclarationNo));
+            return _dbSet.Any(x => x.IpasDeclarationNo.Contains(IpasDeclarationNo));
         }
         public async  Task<Declaration?> GetByIpasDeclarationNoAsync(string ipasDeclarationNo)
         {

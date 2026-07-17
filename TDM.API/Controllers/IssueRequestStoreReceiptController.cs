@@ -25,7 +25,7 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(result));
         }
 
-        [HttpPost]
+        [HttpPost("issue-request-confirmation")]
         public async Task<IActionResult> IssueRequestConfirmation([FromBody] IssueRequestConfirmationCommand command, CancellationToken cancellationToken)
         {
             var id = await _mediator.Send(command, cancellationToken);

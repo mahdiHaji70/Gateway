@@ -1,0 +1,49 @@
+<div class="p-fluid p-formgrid grid">
+    <div class="col-12 group-box">
+        <form [formGroup]="form" ngNativeValidate>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-4">
+                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'"
+                        [required]="true" (change)="loadIssueRequests($event)">
+                    </app-drop-down>
+                </div>
+            </div>
+        </form>
+        <p-table [value]="storeReceiptIssueRequests" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Owner</th>
+                    <th>Owner Rep</th>
+                    <th>Date</th>
+                    <th>HS code</th>
+                    <th>Description</th>
+                    <th>PackNb</th>
+                    <th>Weight</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-issueRequest>
+                <tr>
+                    <td>{{ issueRequest.ownerName }}</td>
+                    <td>{{ issueRequest.ownerRepName }}</td>
+                    <td>{{ issueRequest.date }}</td>
+                    <td>{{ issueRequest.hsCode }}</td>
+                    <td>{{ issueRequest.hsDescription }}</td>
+                    <td>{{ issueRequest.packNb }}</td>
+                    <td>{{ issueRequest.weight }}</td>
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-check"
+                            class="p-button-rounded p-button-text p-button-success"
+                            (click)="onConfirmRequest(issueRequest.requestId, true)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-text p-button-danger"
+                            (click)="onConfirmRequest(issueRequest.requestId, false)">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<p-toast />
