@@ -10,21 +10,40 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  constructor(private localStorageService: LocalStorageService,    
+  constructor(private localStorageService: LocalStorageService,
     private apiService: ApiService
   ) { }
 
 
   isAuthenticated(): boolean {
-    return !!this.localStorageService.getItem('token');
+    const token = this.localStorageService.getItem('token');
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const exp = payload.exp;
+
+      if (!exp) {
+        return false;
+      }
+
+      const nowInSeconds = Math.floor(Date.now() / 1000);
+      return exp > nowInSeconds;
+    } catch (error) {
+      return false;
+    }
   }
+
 
   login(nationalid: string, password: string): Observable<any> {
     let _url = ApiEndpoints.BASE_AUTH_URL + '/login';
     return this.apiService.post(_url, { nationalId: nationalid, password: password });
   }
 
-  getCurrentTerminal(){
+  getCurrentTerminal() {
     let _url = ApiEndpoints.BASE_URL + '/UsersTerminal/GetCurrentUserTerminal';
     return this.apiService.get(_url);
   }

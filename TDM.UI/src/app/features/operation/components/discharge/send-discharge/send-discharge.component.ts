@@ -36,14 +36,12 @@ export class SendDischargeComponent {
     this.declarationService.getDeclarations().subscribe({
       next: (res: any) => {
         this.declarations = res.data.items.map((item: any) => new DropdownOption(item.id, item.ipasDeclarationNo));
-        console.log(this.declarations)
       },
       error: (error: any) => { }
     });
   }
 
   loadDischarges(event: any) {
-    console.log(event);
     this.dischargeService.getDischargesForSend(event.id).subscribe({
       next: (res: any) => {
         this.sendDischarges = res.data.items.map((item: any) => new SendDischarge(item.declarationId, item.ipasDeclarationNo,

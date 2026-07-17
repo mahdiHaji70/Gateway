@@ -209,7 +209,6 @@ export class DeclarationComponent {
   }
 
   sendDeclarationToIpas(id: string) {
-    console.log(id)
     this.declarationService.requestIpasDeclarationId(id).subscribe({
       next: (res: any) => {
         this.messageService.add({ severity: 'success', summary: res.message });

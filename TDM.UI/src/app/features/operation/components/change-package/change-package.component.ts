@@ -65,7 +65,6 @@ export class ChangePackageComponent {
     this.operationAggregationService.getFinalInventoryForDeclaration(event.value.id).subscribe({
       next: (res: any) => {
         this.declarationInventory = res.data;
-        console.log(this.declarationInventory);
       },
       error: (error: any) => { }
     });

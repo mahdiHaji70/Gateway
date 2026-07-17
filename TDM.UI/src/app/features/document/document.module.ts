@@ -22,6 +22,9 @@ import { DeclarationContainerComponent } from './components/declaration-containe
 import { DeclarationContainerInfoComponent } from './components/declaration-container-info/declaration-container-info.component';
 import { StoreReceiptIssueComponent } from './components/store-receipt-issue/store-receipt-issue.component';
 import { StoreReceiptService } from './services/store-receipt.service';
+import { StoreReceiptIssueRequestComponent } from './components/store-receipt-issue-request/store-receipt-issue-request.component';
+import { StoreReceiptIssueRequestService } from './services/store-receipt-issue-request.service';
+import { RequestConfirmationService } from './services/request-confirmation.service';
 
 
 
@@ -33,6 +36,7 @@ import { StoreReceiptService } from './services/store-receipt.service';
     DeclarationContainerComponent,
     DeclarationContainerInfoComponent,
     StoreReceiptIssueComponent,
+    StoreReceiptIssueRequestComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +57,9 @@ import { StoreReceiptService } from './services/store-receipt.service';
     DeclarationItemService,
     DeclarationContainerService,
     DeclarationContainerInfoService,
-    StoreReceiptService
+    StoreReceiptService,
+    StoreReceiptIssueRequestService,
+    RequestConfirmationService
   ]
 })
 export class DocumentModule { }
