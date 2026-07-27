@@ -6,9 +6,9 @@ using TDM.Application.BasicInformation.Declarations.Commands.RemoveDeclaration;
 
 namespace TDM.Application.Doc.StoreReceipt.Command.DeleteStoreReceipt
 {
-    public class DeleteStoreReceiptCommandValidator : AbstractValidator<DeleteStoreReceiptCommand>
+    public class DeleteStoreReceiptHeadCommandValidator : AbstractValidator<DeleteStoreReceiptHeadCommand>
     {
-        public DeleteStoreReceiptCommandValidator()
+        public DeleteStoreReceiptHeadCommandValidator()
         {
             RuleFor(x => x.Id)
                 .NotEmpty();

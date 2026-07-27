@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Domain.Entities;
 
-namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
+namespace TDM.Application.Doc.StoreReceipt.Command.UpdateStoreReceipt
 {
-    public class CreateStoreReceiptCommand : IRequest<Guid>
+   
+    public record UpdateStoreReceiptHeadCommand : IRequest<Guid>
     {
+        public Guid Id { get; set; }
         public string TerminalCode { get; set; }
         public string IPASStoreReceiptNo { get; set; }
         public DateTime IssueDate { get; set; }

@@ -8,19 +8,19 @@ using TDM.Domain.Entities;
 
 namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
 {
-    public class CreateStoreReceiptCommandHandler : IRequestHandler<CreateStoreReceiptCommand, Guid>
+    public class CreateStoreReceiptHeadCommandHandler : IRequestHandler<CreateStoreReceiptHeadCommand, Guid>
     {
         private readonly IRepository<StoreReceiptHead> _storeReceiptHeadRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateStoreReceiptCommandHandler(IUnitOfWork unitOfWork
+        public CreateStoreReceiptHeadCommandHandler(IUnitOfWork unitOfWork
             , IRepository<StoreReceiptHead> storeReceiptHeadRepository)
         {
             _unitOfWork = unitOfWork;
             _storeReceiptHeadRepository = storeReceiptHeadRepository;
         }
 
-        public async Task<Guid> Handle(CreateStoreReceiptCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateStoreReceiptHeadCommand request, CancellationToken cancellationToken)
         {
           
             var storeReceiptHead = new StoreReceiptHead(

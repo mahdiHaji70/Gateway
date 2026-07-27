@@ -9,20 +9,20 @@ using TDM.Domain.Entities;
 namespace TDM.Application.Doc.StoreReceipt.Command.DeleteStoreReceipt
 {
     
-    public class DeleteStoreReceiptCommandHandler : IRequestHandler<DeleteStoreReceiptCommand, bool>
+    public class DeleteStoreReceiptHeadCommandHandler : IRequestHandler<DeleteStoreReceiptHeadCommand, bool>
     {
       
         private readonly IRepository<StoreReceiptHead> _storeReceiptHeadRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteStoreReceiptCommandHandler(IUnitOfWork unitOfWork
+        public DeleteStoreReceiptHeadCommandHandler(IUnitOfWork unitOfWork
             , IRepository<StoreReceiptHead> storeReceiptHeadRepository)
         {
             _unitOfWork = unitOfWork;
             _storeReceiptHeadRepository = storeReceiptHeadRepository;
         }
 
-        public async Task<bool> Handle(DeleteStoreReceiptCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteStoreReceiptHeadCommand request, CancellationToken cancellationToken)
         {
             var storeReceiptHead = await _storeReceiptHeadRepository.GetAsync(request.Id);
 
