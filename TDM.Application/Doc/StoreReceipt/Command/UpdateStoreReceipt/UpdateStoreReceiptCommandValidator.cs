@@ -2,19 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.Declarations.Commands.CreateDeclaration;
+using TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt;
 
-namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
+namespace TDM.Application.Doc.StoreReceipt.Command.UpdateStoreReceipt
 {
-
-    public class CreateStoreReceiptCommandValidator : AbstractValidator<CreateStoreReceiptCommand>
+    
+    public class UpdateStoreReceiptCommandValidator : AbstractValidator<UpdateStoreReceiptCommand>
     {
-        public CreateStoreReceiptCommandValidator()
+        public UpdateStoreReceiptCommandValidator()
         {
+            RuleFor(x => x.Id)
+               .NotEmpty();
+
             RuleFor(x => x.TerminalCode)
-         .NotEmpty()
-         .MaximumLength(50)
-         .WithMessage("Terminal code is required.");
+             .NotEmpty()
+             .MaximumLength(50)
+             .WithMessage("Terminal code is required.");
 
             RuleFor(x => x.IPASStoreReceiptNo)
                 .NotEmpty()
@@ -67,4 +70,5 @@ namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
                 .WithMessage("Provide either DeclarationId or BillOfLadingId, but not both.");
         }
     }
+
 }

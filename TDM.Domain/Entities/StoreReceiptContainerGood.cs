@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TDM.Domain.Common;
+using TDM.Domain.Exceptions;
 
 namespace TDM.Domain.Entities
 {
@@ -25,5 +26,153 @@ namespace TDM.Domain.Entities
         public bool IsVoluminous { get; set; } = false;
         public bool IsDangerous { get; set; } = false;
         public bool DangerousNotNoticed { get; set; } = false;
+        StoreReceiptContainerGood()
+        {
+        }
+
+        public StoreReceiptContainerGood(
+            Guid storeReceiptContainerId,
+            Guid commodityId,
+            Guid packageId,
+            string brandName,
+            bool noBrandName,
+            decimal packageQuantity,
+            decimal grossWeight,
+            decimal netWeight,
+            decimal volume,
+            bool isHeavy,
+            bool isNonPalletized,
+            bool isDamaged,
+            bool isVoluminous,
+            bool isDangerous,
+            bool dangerousNotNoticed)
+        {
+            SetProperty(
+                storeReceiptContainerId,
+                commodityId,
+                packageId,
+                brandName,
+                noBrandName,
+                packageQuantity,
+                grossWeight,
+                netWeight,
+                volume,
+                isHeavy,
+                isNonPalletized,
+                isDamaged,
+                isVoluminous,
+                isDangerous,
+                dangerousNotNoticed);
+        }
+
+        public void Update(
+            Guid storeReceiptContainerId,
+            Guid commodityId,
+            Guid packageId,
+            string brandName,
+            bool noBrandName,
+            decimal packageQuantity,
+            decimal grossWeight,
+            decimal netWeight,
+            decimal volume,
+            bool isHeavy,
+            bool isNonPalletized,
+            bool isDamaged,
+            bool isVoluminous,
+            bool isDangerous,
+            bool dangerousNotNoticed)
+        {
+            SetProperty(
+                storeReceiptContainerId,
+                commodityId,
+                packageId,
+                brandName,
+                noBrandName,
+                packageQuantity,
+                grossWeight,
+                netWeight,
+                volume,
+                isHeavy,
+                isNonPalletized,
+                isDamaged,
+                isVoluminous,
+                isDangerous,
+                dangerousNotNoticed);
+        }
+
+        private void SetProperty(
+            Guid storeReceiptContainerId,
+            Guid commodityId,
+            Guid packageId,
+            string brandName,
+            bool noBrandName,
+            decimal packageQuantity,
+            decimal grossWeight,
+            decimal netWeight,
+            decimal volume,
+            bool isHeavy,
+            bool isNonPalletized,
+            bool isDamaged,
+            bool isVoluminous,
+            bool isDangerous,
+            bool dangerousNotNoticed)
+        {
+            Validate(
+                storeReceiptContainerId,
+                commodityId,
+                packageId,
+                packageQuantity,
+                grossWeight,
+                netWeight,
+                volume);
+
+            StoreReceiptContainerId = storeReceiptContainerId;
+            CommodityId = commodityId;
+            PackageId = packageId;
+            BrandName = brandName;
+            NoBrandName = noBrandName;
+            PackageQuantity = packageQuantity;
+            GrossWeight = grossWeight;
+            NetWeight = netWeight;
+            Volume = volume;
+            IsHeavy = isHeavy;
+            IsNonPalletized = isNonPalletized;
+            IsDamaged = isDamaged;
+            IsVoluminous = isVoluminous;
+            IsDangerous = isDangerous;
+            DangerousNotNoticed = dangerousNotNoticed;
+        }
+
+        private void Validate(
+            Guid storeReceiptContainerId,
+            Guid commodityId,
+            Guid packageId,
+            decimal packageQuantity,
+            decimal grossWeight,
+            decimal netWeight,
+            decimal volume)
+        {
+            if (storeReceiptContainerId == Guid.Empty)
+                throw new DomainValidationException("Store receipt container is required.");
+
+            if (commodityId == Guid.Empty)
+                throw new DomainValidationException("Commodity is required.");
+
+            if (packageId == Guid.Empty)
+                throw new DomainValidationException("Package is required.");
+
+            if (packageQuantity < 0)
+                throw new DomainValidationException("Package quantity cannot be negative.");
+
+            if (grossWeight < 0)
+                throw new DomainValidationException("Gross weight cannot be negative.");
+
+            if (netWeight < 0)
+                throw new DomainValidationException("Net weight cannot be negative.");
+
+            if (volume < 0)
+                throw new DomainValidationException("Volume cannot be negative.");
+        }
     }
 }
+
