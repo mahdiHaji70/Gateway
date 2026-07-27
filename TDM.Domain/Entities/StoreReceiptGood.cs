@@ -16,7 +16,7 @@ namespace TDM.Domain.Entities
         public Package Package { get; set; }
         public string BrandName { get; set; }
         public bool NoBrandName { get; set; }
-        public decimal PackageQuantity { get; set; }
+        public decimal PackNB { get; set; }
         public decimal GrossWeight { get; set; }
         public decimal NetWeight { get; set; }
         public decimal Volume { get; set; }
@@ -38,7 +38,7 @@ namespace TDM.Domain.Entities
            Guid packageId,
            string brandName,
            bool noBrandName,
-           decimal packageQuantity,
+           decimal packNB,
            decimal grossWeight,
            decimal netWeight,
            decimal volume,
@@ -60,7 +60,7 @@ namespace TDM.Domain.Entities
                 packageId,
                 brandName,
                 noBrandName,
-                packageQuantity,
+                packNB,
                 grossWeight,
                 netWeight,
                 volume,
@@ -83,7 +83,7 @@ namespace TDM.Domain.Entities
             Guid packageId,
             string brandName,
             bool noBrandName,
-            decimal packageQuantity,
+            decimal packNB,
             decimal grossWeight,
             decimal netWeight,
             decimal volume,
@@ -105,7 +105,7 @@ namespace TDM.Domain.Entities
                 packageId,
                 brandName,
                 noBrandName,
-                packageQuantity,
+                packNB,
                 grossWeight,
                 netWeight,
                 volume,
@@ -128,7 +128,7 @@ namespace TDM.Domain.Entities
             Guid packageId,
             string brandName,
             bool noBrandName,
-            decimal packageQuantity,
+            decimal packNB,
             decimal grossWeight,
             decimal netWeight,
             decimal volume,
@@ -148,7 +148,7 @@ namespace TDM.Domain.Entities
                 storeReceiptHeadId,
                 commodityId,
                 packageId,
-                packageQuantity,
+                packNB,
                 grossWeight,
                 netWeight,
                 volume,
@@ -162,7 +162,7 @@ namespace TDM.Domain.Entities
             PackageId = packageId;
             BrandName = brandName;
             NoBrandName = noBrandName;
-            PackageQuantity = packageQuantity;
+            PackNB = packNB;
             GrossWeight = grossWeight;
             NetWeight = netWeight;
             Volume = volume;
@@ -183,7 +183,7 @@ namespace TDM.Domain.Entities
             Guid storeReceiptHeadId,
             Guid commodityId,
             Guid packageId,
-            decimal packageQuantity,
+            decimal packNB,
             decimal grossWeight,
             decimal netWeight,
             decimal volume,
@@ -201,7 +201,7 @@ namespace TDM.Domain.Entities
             if (packageId == Guid.Empty)
                 throw new DomainValidationException("Package is required.");
 
-            if (packageQuantity < 0)
+            if (packNB < 0)
                 throw new DomainValidationException("Package quantity cannot be negative.");
 
             if (grossWeight < 0)
