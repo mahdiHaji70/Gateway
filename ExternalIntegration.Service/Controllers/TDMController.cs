@@ -38,5 +38,35 @@ namespace ExternalIntegration.Service.Controllers
             return await _tdmSyncService.GetStoreReceiptByNo(no);
         }
 
+        [HttpGet("GetDischargePermitsLastDate")]
+        public async Task<Response<DateTime>> GetDischargePermitsLastDate([FromQuery] string terminalCode)
+        {
+            return await _tdmSyncService.GetDischargePermitsLastDate(terminalCode);
+        }
+
+        [HttpGet("GetGoodwayBillsLastDate")]
+        public async Task<Response<DateTime>> GetGoodwayBillsLastDate([FromQuery] string terminalCode)
+        {
+            return await _tdmSyncService.GetGoodwayBillsLastDate(terminalCode);
+        }
+
+        [HttpGet("GetIssueRequestsLastDate")]
+        public async Task<Response<DateTime>> GetIssueRequestsLastDate([FromQuery] string terminalCode)
+        {
+            return await _tdmSyncService.GetIssueRequestsLastDate(terminalCode);
+        }
+
+        [HttpGet("GetVoyagesLastDate")]
+        public async Task<Response<DateTime>> GetVoyagesLastDate()
+        {
+            return await _tdmSyncService.GetVoyagesLastDate();
+        }
+
+        [HttpGet("GetStoreReceiptsLastDate")]
+        public async Task<Response<DateTime>> GetStoreReceiptsLastDate([FromQuery] string terminalCode)
+        {
+            return await _tdmSyncService.GetStoreReceiptsLastDate(terminalCode);
+        }
+
     }
 }

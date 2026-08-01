@@ -8,7 +8,7 @@ namespace ExternalIntegration.Service.Application.Abstractions
     public interface IStoreReceiptRepository : IRepository<StoreReceipt>
     {
       
-        Task<DateTime> GetLastDateAsync();
+        Task<DateTime> GetLastDateAsync(string terminalCode);
         Task<List<StoreReceipt>> GetByStorageAgreementNoAsync(string storageAgreementNo);
         Task<StoreReceipt> GetByNoAsync(string no);
     }

@@ -46,7 +46,7 @@ export class StoreReceiptIssueRequestComponent {
       next: (res: any) => {
         this.storeReceiptIssueRequests = res.data.map((item: any) =>
           new StoreReceiptIssueRequest(item.requestId, item.date, item.ownerName, item.ownerNationalID, item.ownerRepName,
-            item.ownerRepNationalID, item.hsCode, item.description, item.packageQuantity, item.getWeight));
+            item.ownerRepNationalID, item.hsCode, item.description, item.packageQuantity, item.weight));
       },
       error: (error: any) => { }
     });

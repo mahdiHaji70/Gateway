@@ -15,9 +15,11 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
             _dischargePermitDbSet = _context.Set<DischargePermit>();
         }
 
-        public async Task<DateTime> GetLastDateAsync()
+        public async Task<DateTime> GetLastDateAsync(string terminalCode)
         {
-            return await _dischargePermitDbSet.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
+            return await _dischargePermitDbSet
+                .Where(x => x.TerminalCode == terminalCode)
+                .OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
         }
     }
 }

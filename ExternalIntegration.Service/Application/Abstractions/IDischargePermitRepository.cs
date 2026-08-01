@@ -6,6 +6,6 @@ namespace ExternalIntegration.Service.Application.Abstractions
 
     public interface IDischargePermitRepository : IRepository<DischargePermit>
     {        
-        Task<DateTime> GetLastDateAsync();
+        Task<DateTime> GetLastDateAsync(string terminalCode);
     }
 }

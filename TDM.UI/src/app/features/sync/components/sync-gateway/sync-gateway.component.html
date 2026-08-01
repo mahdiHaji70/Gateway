@@ -5,10 +5,13 @@
         <div class="sync-info">
             <span class="sync-label">{{ syncButton.name }}</span>
             <span class="sync-status"><p-tag [severity]="syncButton.severity"
-                    [value]="syncButton.severity == 'success' ? 'Synced' : 'Failed'"></p-tag></span>
+                    [value]="syncButton.severity == 'success' ? 'Synced' : syncButton.severity == 'warning' ? 'waiting' : 'Failed'"></p-tag></span>
+            <span class="sync-status"><p-tag [severity]="syncButton.severity"
+                    [value]="syncButton.lastDate"></p-tag></span>
         </div>
-        <p-button icon="pi pi-refresh" [label]="syncButton.styleClass == '' ? 'Sync' : 'Retry'"
-            [styleClass]="syncButton.styleClass" [loading]="syncButton.loading" [disabled]="syncButton.loading" (onClick)="onSync(syncButton)">            
+        <p-button icon="pi pi-refresh" [label]="syncButton.styleClass != 'p-button-danger' ? 'Sync' : 'Retry'"
+            [styleClass]="syncButton.styleClass" [loading]="syncButton.loading" [disabled]="syncButton.loading"
+            (onClick)="onSync(syncButton)">
         </p-button>
     </div>
 

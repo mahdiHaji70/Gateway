@@ -16,9 +16,11 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
             _IssueRequestDbSet = _context.Set<IssueRequest>();
         }
 
-        public async Task<DateTime> GetLastDateAsync()
+        public async Task<DateTime> GetLastDateAsync(string terminalCode)
         {
-            return await _IssueRequestDbSet.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
+            return await _IssueRequestDbSet
+                .Where(x => x.TerminalCode == terminalCode)
+                .OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
         }
         public async Task<List<IssueRequest>> GetByStorageAgreementNoAsync(string storageAgreementNo)
         {
