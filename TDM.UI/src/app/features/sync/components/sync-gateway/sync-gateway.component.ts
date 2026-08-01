@@ -11,6 +11,7 @@ interface SyncButton {
   api: string;
   loading: boolean;
   severity: TagSeverity;
+  lastDate?: string;
 }
 
 @Component({
@@ -25,38 +26,43 @@ export class SyncGatewayComponent {
     [
       {
         name: 'DischargePermit',
-        severity: 'success',
-        styleClass: '',
+        severity: 'warning',
+        styleClass: 'p-button-warning',
         loading: false,
-        api: 'DischargePermit'
+        api: 'DischargePermit',
+        lastDate: undefined
       },
       {
         name: 'Goodway Bill',
-        severity: 'success',
-        styleClass: '',
+        severity: 'warning',
+        styleClass: 'p-button-warning',
         loading: false,
-        api: 'GoodwayBill'
+        api: 'GoodwayBill',
+        lastDate: undefined
       },
       {
         name: 'Issue Request',
-        severity: 'success',
-        styleClass: '',
+        severity: 'warning',
+        styleClass: 'p-button-warning',
         loading: false,
-        api: 'IssueRequest'
+        api: 'IssueRequest',
+        lastDate: undefined
       },
       {
         name: 'Voyage',
-        severity: 'success',
-        styleClass: '',
+        severity: 'warning',
+        styleClass: 'p-button-warning',
         loading: false,
-        api: 'Voyage'
+        api: 'Voyage',
+        lastDate: undefined
       },
       {
         name: 'Store Receipt',
-        severity: 'success',
-        styleClass: '',
+        severity: 'warning',
+        styleClass: 'p-button-warning',
         loading: false,
-        api: 'StoreReceipt'
+        api: 'StoreReceipt',
+        lastDate: undefined
       }
     ]
 
@@ -68,6 +74,11 @@ export class SyncGatewayComponent {
   ) { }
 
   ngOnInit() {
+    this.getDischargePermitLastDate();
+    this.getGoodwayBillsLastDate();
+    this.getIssueRequestsLastDate();
+    this.getVoyagesLastDate();
+    this.getStoreReceiptsLastDate();
   }
 
   onSync(syncButton: SyncButton) {
@@ -96,10 +107,71 @@ export class SyncGatewayComponent {
     }
   }
 
+  getDischargePermitLastDate() {
+    this.syncService.getDischargePermitsLastDate().subscribe({
+      next: (res: any) => {
+        if (res.status == 1)
+          this.syncButtons[0].lastDate = 'Last date: ' +  new Date(res.data).toDateString();
+        else
+          this.syncButtons[0].lastDate = 'Not synced yet for your current terminal';
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  getGoodwayBillsLastDate() {
+    this.syncService.getGoodwayBillsLastDate().subscribe({
+      next: (res: any) => {
+        if (res.status == 1)
+          this.syncButtons[1].lastDate = new Date(res.data).toDateString();
+        else
+          this.syncButtons[1].lastDate = 'Not synced yet for your current terminal';
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  getIssueRequestsLastDate() {
+    this.syncService.getIssueRequestsLastDate().subscribe({
+      next: (res: any) => {
+        if (res.status == 1)
+          this.syncButtons[2].lastDate = new Date(res.data).toDateString();
+        else
+          this.syncButtons[2].lastDate = 'Not synced yet for your current terminal';
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  getVoyagesLastDate() {
+    this.syncService.getVoyagesLastDate().subscribe({
+      next: (res: any) => {
+        if (res.status == 1)
+          this.syncButtons[3].lastDate = new Date(res.data).toDateString();
+        else
+          this.syncButtons[3].lastDate = 'Not synced yet';
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  getStoreReceiptsLastDate() {
+    this.syncService.getStoreReceiptsLastDate().subscribe({
+      next: (res: any) => {
+        if (res.status == 1)
+          this.syncButtons[4].lastDate = new Date(res.data).toDateString();
+        else
+          this.syncButtons[4].lastDate = 'Not synced yet for your current terminal';
+      },
+      error: (error: any) => { }
+    });
+  }
+
   syncGoodwayBills(syncButton: SyncButton) {
     this.syncService.getGoodwayBills().pipe(
       finalize(() => {
         syncButton.loading = false;
+        this.getGoodwayBillsLastDate();
       })
     )
       .subscribe({
@@ -116,6 +188,7 @@ export class SyncGatewayComponent {
     this.syncService.getDischargePermits().pipe(
       finalize(() => {
         syncButton.loading = false;
+        this.getDischargePermitLastDate();
       })
     )
       .subscribe({
@@ -132,6 +205,7 @@ export class SyncGatewayComponent {
     this.syncService.getIssueRequests().pipe(
       finalize(() => {
         syncButton.loading = false;
+        this.getIssueRequestsLastDate();
       })
     )
       .subscribe({
@@ -148,6 +222,7 @@ export class SyncGatewayComponent {
     this.syncService.getVoyages().pipe(
       finalize(() => {
         syncButton.loading = false;
+        this.getVoyagesLastDate();
       })
     )
       .subscribe({
@@ -164,6 +239,7 @@ export class SyncGatewayComponent {
     this.syncService.getStoreReceipts().pipe(
       finalize(() => {
         syncButton.loading = false;
+        this.getStoreReceiptsLastDate();
       })
     )
       .subscribe({
@@ -178,7 +254,7 @@ export class SyncGatewayComponent {
 
   handleSuccess(syncButton: SyncButton) {
     syncButton.severity = 'success';
-    syncButton.styleClass = '';
+    syncButton.styleClass = 'p-button-success';
     this.messageService.add({ severity: 'info', summary: 'Operation successfully done.', detail: 'Done' });
   }
 

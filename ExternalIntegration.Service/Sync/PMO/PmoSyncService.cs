@@ -47,7 +47,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
             if (dto.FromDate == null)
-                localFromDate = await _goodwayBillRepository.GetLastDateAsync();
+                localFromDate = await _goodwayBillRepository.GetLastDateAsync(dto.TerminalCode);
             if (dto.ToDate == null)
                 localToDate = DateTime.Now.AddDays(1);
 
@@ -99,7 +99,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
             if (dto.FromDate == null)
-                localFromDate = await _dischargePermitRepository.GetLastDateAsync();
+                localFromDate = await _dischargePermitRepository.GetLastDateAsync(dto.TerminalCode);
             if (dto.ToDate == null)
                 localToDate = DateTime.Now.AddDays(1);
 
@@ -136,7 +136,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
             if (dto.FromDate == null)
-                localFromDate = await _issueRequestRepository.GetLastDateAsync();
+                localFromDate = await _issueRequestRepository.GetLastDateAsync(dto.TerminalCode);
             if (dto.ToDate == null)
                 localToDate = DateTime.Now.AddDays(1);
 
@@ -230,7 +230,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             DateTime localFromDate = DateTime.Now;
             DateTime localToDate = DateTime.Now;
             if (dto.FromDate == null)
-                localFromDate = await _storeReceiptRepository.GetLastDateAsync();
+                localFromDate = await _storeReceiptRepository.GetLastDateAsync(dto.TerminalCode);
             if (dto.ToDate == null)
                 localToDate = DateTime.Now.AddDays(1);
 

@@ -39,6 +39,11 @@ export class ApiEndpoints {
   public static readonly Issue_Request = `${this.BASE_GATEWAY_URL}/PMO/GetIssueRequest`; 
   public static readonly Voyages = `${this.BASE_GATEWAY_URL}/PMO/GetVoyages`; 
   public static readonly Store_Receipts = `${this.BASE_GATEWAY_URL}/PMO/GetStoreReceipts`; 
+  public static readonly Last_Discharge_Permits_Date = `${this.BASE_GATEWAY_URL}/TDM/GetDischargePermitsLastDate`; 
+  public static readonly Last_Goodway_Bills_Date = `${this.BASE_GATEWAY_URL}/TDM/GetGoodwayBillsLastDate`; 
+  public static readonly Last_Issue_Requests_Date = `${this.BASE_GATEWAY_URL}/TDM/GetIssueRequestsLastDate`; 
+  public static readonly Last_Voyages_Date = `${this.BASE_GATEWAY_URL}/TDM/GetVoyagesLastDate`; 
+  public static readonly Last_Store_receipts_Date = `${this.BASE_GATEWAY_URL}/TDM/GetStoreReceiptsLastDate`; 
   
   
 

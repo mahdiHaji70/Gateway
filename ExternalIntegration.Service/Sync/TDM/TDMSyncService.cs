@@ -12,21 +12,27 @@ namespace ExternalIntegration.Service.Sync.TDM
     public class TDMSyncService : ITDMSyncService
     {
         private readonly IMapper _mapper;
+        private readonly IDischargePermitRepository _dischargePermitRepository;
         private readonly IGoodwayBillRepository _goodwayBillRepository;
-        private readonly IIssueRequestRepository _IssueRequestRepository;
+        private readonly IIssueRequestRepository _issueRequestRepository;
+        private readonly IVoyageRepository _voyageRepository;
         private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TDMSyncService(IMapper mapper, IUnitOfWork unitOfWork
+        public TDMSyncService(IMapper mapper, IUnitOfWork unitOfWork,
+            IDischargePermitRepository dischargePermitRepository
            , IGoodwayBillRepository goodwayBillRepository
-           , IIssueRequestRepository issueRequestRepository
+           , IIssueRequestRepository issueRequestRepository,
+            IVoyageRepository voyageRepository
            , IStoreReceiptRepository storerReceiptRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _dischargePermitRepository = dischargePermitRepository;
             _goodwayBillRepository = goodwayBillRepository;
-            _IssueRequestRepository = issueRequestRepository;
-            _storeReceiptRepository= storerReceiptRepository;
+            _issueRequestRepository = issueRequestRepository;
+            _voyageRepository = voyageRepository;
+            _storeReceiptRepository = storerReceiptRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
@@ -38,7 +44,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         }
         public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(string storageAgreementNo)
         {
-            var result = await _IssueRequestRepository.GetByStorageAgreementNoAsync(storageAgreementNo);
+            var result = await _issueRequestRepository.GetByStorageAgreementNoAsync(storageAgreementNo);
 
             if (result == null)
                 return Response<IEnumerable<IssueRequestDto>>.Error("Not Found");
@@ -65,6 +71,46 @@ namespace ExternalIntegration.Service.Sync.TDM
 
             return Response<StoreReceiptDto>.Success(_mapper.Map<StoreReceiptDto>(result));
 
+        }
+
+        public async Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode)
+        {
+            var lastDate = await _dischargePermitRepository.GetLastDateAsync(terminalCode);
+            if (lastDate.Equals(DateTime.MinValue))
+                return Response<DateTime>.Error("No data found");
+            return Response<DateTime>.Success(lastDate);
+        }
+
+        public async Task<Response<DateTime>> GetGoodwayBillsLastDate(string terminalCode)
+        {
+            var lastDate = await _goodwayBillRepository.GetLastDateAsync(terminalCode);
+            if (lastDate.Equals(DateTime.MinValue))
+                return Response<DateTime>.Error("No data found");
+            return Response<DateTime>.Success(lastDate);
+        }
+
+        public async Task<Response<DateTime>> GetIssueRequestsLastDate(string terminalCode)
+        {
+            var lastDate = await _issueRequestRepository.GetLastDateAsync(terminalCode);
+            if (lastDate.Equals(DateTime.MinValue))
+                return Response<DateTime>.Error("No data found");
+            return Response<DateTime>.Success(lastDate);
+        }
+
+        public async Task<Response<DateTime>> GetVoyagesLastDate()
+        {
+            var lastDate = await _voyageRepository.GetLastDateAsync();
+            if (lastDate.Equals(DateTime.MinValue))
+                return Response<DateTime>.Error("No data found");
+            return Response<DateTime>.Success(lastDate);
+        }
+
+        public async Task<Response<DateTime>> GetStoreReceiptsLastDate(string terminalCode)
+        {
+            var lastDate = await _storeReceiptRepository.GetLastDateAsync(terminalCode);
+            if (lastDate.Equals(DateTime.MinValue))
+                return Response<DateTime>.Error("No data found");
+            return Response<DateTime>.Success(lastDate);
         }
     }
 }

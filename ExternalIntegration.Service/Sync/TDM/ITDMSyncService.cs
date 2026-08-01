@@ -10,5 +10,10 @@ namespace ExternalIntegration.Service.Sync.TDM
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(string storageAgreementNo);
         Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByStorageAgreementNo(string storageAgreementNo);
         Task<Response<StoreReceiptDto>> GetStoreReceiptByNo(string no);
+        Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode);
+        Task<Response<DateTime>> GetGoodwayBillsLastDate(string terminalCode);
+        Task<Response<DateTime>> GetIssueRequestsLastDate(string terminalCode);
+        Task<Response<DateTime>> GetVoyagesLastDate();
+        Task<Response<DateTime>> GetStoreReceiptsLastDate(string terminalCode);
     }
 }

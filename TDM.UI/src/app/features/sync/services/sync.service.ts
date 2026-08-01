@@ -44,4 +44,33 @@ export class SyncService {
     let _url = ApiEndpoints.Store_Receipt;
     return this.apiService.get(_url, { TerminalCode: terminalcode, PortCode: portcode, PageIndex: 0, PageSize: 100 });
   }
+
+  getDischargePermitsLastDate() {
+    var terminalcode = this.localStorageService.getItem('terminalCode');
+    let _url = ApiEndpoints.Last_Discharge_Permits_Date;
+    return this.apiService.get(_url, { terminalCode: terminalcode });
+  }
+
+  getGoodwayBillsLastDate() {
+    var terminalcode = this.localStorageService.getItem('terminalCode');
+    let _url = ApiEndpoints.Last_Goodway_Bills_Date;
+    return this.apiService.get(_url, { terminalCode: terminalcode });
+  }
+
+  getIssueRequestsLastDate() {
+    var terminalcode = this.localStorageService.getItem('terminalCode');
+    let _url = ApiEndpoints.Last_Issue_Requests_Date;
+    return this.apiService.get(_url, { terminalCode: terminalcode });
+  }
+
+  getVoyagesLastDate() {
+    let _url = ApiEndpoints.Last_Voyages_Date;
+    return this.apiService.get(_url);
+  }
+
+  getStoreReceiptsLastDate() {
+    var terminalcode = this.localStorageService.getItem('terminalCode');
+    let _url = ApiEndpoints.Last_Store_receipts_Date;
+    return this.apiService.get(_url, { terminalCode: terminalcode });
+  }
 }

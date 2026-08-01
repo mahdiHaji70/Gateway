@@ -23,9 +23,11 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                              t.TerminalCode == terminalCode).ToListAsync();
         }
 
-        public async Task<DateTime> GetLastDateAsync()
+        public async Task<DateTime> GetLastDateAsync(string terminalCode)
         {
-            return await _goodwayBillDbSet.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
+            return await _goodwayBillDbSet
+                .Where(x => x.TerminalCode == terminalCode)
+                .OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ExternalIntegration.Service.Application.Abstractions
     {
         Task<List<GoodwayBill>> GetByStorageAgreementIdAsync(Guid storageAgreementId, string terminalCode);
 
-        Task<DateTime> GetLastDateAsync();
+        Task<DateTime> GetLastDateAsync(string terminalCode);
 
     }
 }
