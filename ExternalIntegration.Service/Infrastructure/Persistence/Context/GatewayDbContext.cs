@@ -18,6 +18,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<Voyage> Voyages => Set<Voyage>();
         public DbSet<StoreReceipt> StoreReceipts => Set<StoreReceipt>();
         public DbSet<PMOLog> IntegrationLogs => Set<PMOLog>();
+        public DbSet<Manifest> Manifests => Set<Manifest>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GatewayDbContext).Assembly);

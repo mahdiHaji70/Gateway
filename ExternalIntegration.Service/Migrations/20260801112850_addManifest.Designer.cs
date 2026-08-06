@@ -4,6 +4,7 @@ using ExternalIntegration.Service.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExternalIntegration.Service.Migrations
 {
     [DbContext(typeof(GatewayDbContext))]
-    partial class GatewayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260801112850_addManifest")]
+    partial class addManifest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -460,54 +463,6 @@ namespace ExternalIntegration.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("IssueRequests", (string)null);
-                });
-
-            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.Manifest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsEDI")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Items")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ManifestRegistrationNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SerialNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SignatureDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Signed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TerminalCodeDischarge")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TerminalCodeLoading")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Voyage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Manifests", (string)null);
                 });
 
             modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.StoreReceipt", b =>
