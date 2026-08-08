@@ -55,8 +55,14 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
              .ForMember(dest => dest.Voyage, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<ManifestVoyageDto>(src.Voyage)))
              .ForMember(dest => dest.Items, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ManifestItemDto>>(src.Items)))             
              .ReverseMap()
+             .ForMember(dest => dest.NoticeNo, opt => opt.MapFrom(src => src.Voyage.NoticeNo))
+             .ForMember(dest => dest.VoyageNo, opt => opt.MapFrom(src => src.Voyage.VoyageNo))
              .ForMember(dest => dest.Voyage, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Voyage)))
              .ForMember(dest => dest.Items, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Items)));
+
+            CreateMap<string, List<ManifestItemDto>>()
+            .ConvertUsing(src => JsonConvert.DeserializeObject<List<ManifestItemDto>>(src)!);
+
 
         }
     }

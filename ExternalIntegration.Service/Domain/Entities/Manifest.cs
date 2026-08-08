@@ -14,7 +14,10 @@ namespace ExternalIntegration.Service.Domain.Entities
         public DateTime SignatureDate { get; set; }
         public string? TerminalCodeDischarge { get; set; }
         public string? TerminalCodeLoading { get; set; }
+        public string NoticeNo { get; set; }
+        public string VoyageNo { get; set; }
         public string Voyage { get; set; }
         public string Items { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

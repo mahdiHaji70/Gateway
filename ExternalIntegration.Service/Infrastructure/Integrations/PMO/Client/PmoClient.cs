@@ -253,7 +253,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<GetDataWithPagingDto<StoreReceiptResponseDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<StoreReceiptResponseDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
         {
             var request = new PmoRequestBuilder()
           .WithCredential(_userName, _password)

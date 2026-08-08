@@ -11,7 +11,7 @@
         public bool Signed { get; set; }
         public DateTime? SignatureDate { get; set; }
         public string TerminalCodeDischarge { get; set; }
-        public string TerminalCodeLoading { get; set; }
+        public string TerminalCodeLoading { get; set; }        
         public ManifestVoyageDto Voyage { get; set; }
         public List<ManifestItemDto> Items { get; set; }
     }

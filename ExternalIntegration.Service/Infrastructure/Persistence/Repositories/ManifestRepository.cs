@@ -1,4 +1,5 @@
 ﻿using ExternalIntegration.Service.Application.Abstractions;
+using ExternalIntegration.Service.Application.DTOs;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,40 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
             return await _manifestDbSet
                 .Where(x => x.TerminalCodeDischarge == terminalCode)
                 .OrderByDescending(x => x.CreationDate).Select(x => x.CreationDate).FirstOrDefaultAsync();
+        }
+        
+        public async Task<IEnumerable<ManifestNoticeToApproveDto>> GetManifestsNoticeNoToApprove(string terminalCode)
+        {
+            return await _manifestDbSet
+               .AsNoTracking()
+               .Where(x => x.TerminalCodeDischarge == terminalCode && !x.IsApproved)
+                .Select(x => new ManifestNoticeToApproveDto
+                {
+                      Id = x.Id,
+                      NoticeNo = x.NoticeNo
+                })
+                .ToListAsync();
+        }
+
+        public async Task<string> GetManifestItemsById(Guid id)
+        {
+            var result = await _manifestDbSet.Where(x => x.Id == id).Select(x => x.Items).FirstOrDefaultAsync();
+            if (result != null)
+                return result;
+            else 
+                return string.Empty;
+        }
+
+        public async Task<bool> ApproveManifestAsync(Guid id)
+        {
+            var manifest = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            if (manifest == null)
+                return false;
+
+            manifest.IsApproved = true;
+            _dbSet.Update(manifest);
+
+            return true;
         }
     }
 }
