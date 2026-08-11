@@ -22,6 +22,8 @@ namespace TDM.Domain.Entities
         public ICollection<Declaration> ConsigneeRepDeclarations { get; private set; } = new List<Declaration>();
         public ICollection<StoreReceiptHead> ConsigneeStoreReceiptHeads { get; private set; } = new List<StoreReceiptHead>();
         public ICollection<StoreReceiptHead> ConsigneeRepStoreReceiptHeads { get; private set; } = new List<StoreReceiptHead>();
+        public ICollection<ManifestItem> ConsigneeManifestItems { get; private set; } = new List<ManifestItem>();
+        public ICollection<ManifestItem> ShipAgentManifestItems { get; private set; } = new List<ManifestItem>();
 
         public Company(CompanyType companyType,
             string name,

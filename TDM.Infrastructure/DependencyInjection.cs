@@ -46,6 +46,7 @@ namespace TDM.Infrastructure
             services.AddScoped<IStoreReceiptContainerRepository, StoreReceiptContainerRepository>();
             services.AddScoped<IStoreReceiptContainerGoodRepository, StoreReceiptContainerGoodRepository>();
             services.AddScoped<IStoreReceiptExternalService, StoreReceiptExternalService>();
+            services.AddScoped<IManifestExternalService, ManifestExternalService>();
 
 
             return services;

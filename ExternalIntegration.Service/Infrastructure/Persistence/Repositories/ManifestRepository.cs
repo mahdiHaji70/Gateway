@@ -35,13 +35,9 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<string> GetManifestItemsById(Guid id)
+        public async Task<Manifest?> GetManifestById(Guid id)
         {
-            var result = await _manifestDbSet.Where(x => x.Id == id).Select(x => x.Items).FirstOrDefaultAsync();
-            if (result != null)
-                return result;
-            else 
-                return string.Empty;
+            return await _manifestDbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> ApproveManifestAsync(Guid id)

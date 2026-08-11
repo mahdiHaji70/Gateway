@@ -11,6 +11,9 @@ namespace TDM.Domain.Entities
         public Guid ContainerId { get; set; }
         public Container Container { get; set; }
 
+        public Guid ManifestItemId { get; set; }
+        public ManifestItem ManifestItem { get; set; }
+
         public Guid? BillOfLadingId { get; set; }
         public string SealNumber { get; set; }
         public string Remark { get; set; }
@@ -21,9 +24,9 @@ namespace TDM.Domain.Entities
 
         public ICollection<ManifestContainerGood> ManifestContainerGoods { get; private set; } = new List<ManifestContainerGood>();
 
-
         public ManifestContainer(
             Guid containerId,
+            Guid manifestItemId,
             Guid? billOfLadingId,
             string sealNumber,
             string remark,
@@ -34,6 +37,7 @@ namespace TDM.Domain.Entities
         {
             SetProperty(
                 containerId,
+                manifestItemId,
                 billOfLadingId,
                 sealNumber,
                 remark,
@@ -45,6 +49,7 @@ namespace TDM.Domain.Entities
 
         public void Update(
             Guid containerId,
+            Guid manifestItemId,
             Guid? billOfLadingId,
             string sealNumber,
             string remark,
@@ -55,6 +60,7 @@ namespace TDM.Domain.Entities
         {
             SetProperty(
                 containerId,
+                manifestItemId,
                 billOfLadingId,
                 sealNumber,
                 remark,
@@ -66,6 +72,7 @@ namespace TDM.Domain.Entities
 
         private void SetProperty(
             Guid containerId,
+            Guid manifestItemId,
             Guid? billOfLadingId,
             string sealNumber,
             string remark,
@@ -74,9 +81,10 @@ namespace TDM.Domain.Entities
             decimal ignitionTemperature,
             string ignitionTemperatureUnit)
         {
-            Validate(containerId);
+            Validate(containerId, manifestItemId);
 
             ContainerId = containerId;
+            ManifestItemId = manifestItemId;
             BillOfLadingId = billOfLadingId;
             SealNumber = sealNumber;
             Remark = remark;
@@ -86,10 +94,13 @@ namespace TDM.Domain.Entities
             IgnitionTemperatureUnit = ignitionTemperatureUnit;
         }
 
-        private void Validate(Guid containerId)
+        private void Validate(Guid containerId, Guid manifestItemId)
         {
             if (containerId == Guid.Empty)
                 throw new DomainValidationException("Container is required.");
+
+            if (manifestItemId == Guid.Empty)
+                throw new DomainValidationException("Manifest item is required.");
         }
     }
 }

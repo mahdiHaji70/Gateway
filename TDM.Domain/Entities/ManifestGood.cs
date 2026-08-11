@@ -12,6 +12,9 @@ namespace TDM.Domain.Entities
         public string BrandName { get; set; }
         public string Description { get; set; }
 
+        public Guid ManifestItemId { get; set; }
+        public ManifestItem ManifestItem { get; set; }
+
         public Guid CommodityId { get; set; }
         public Commodity Commodity { get; set; }
 
@@ -19,6 +22,7 @@ namespace TDM.Domain.Entities
         public Package Package { get; set; }
 
         public ManifestGood(
+            Guid manifestItemId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
@@ -29,6 +33,7 @@ namespace TDM.Domain.Entities
             Guid packageId)
         {
             SetProperty(
+                manifestItemId,
                 packNb,
                 grossWeight,
                 netWeight,
@@ -40,6 +45,7 @@ namespace TDM.Domain.Entities
         }
 
         public void Update(
+            Guid manifestItemId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
@@ -50,6 +56,7 @@ namespace TDM.Domain.Entities
             Guid packageId)
         {
             SetProperty(
+                manifestItemId,
                 packNb,
                 grossWeight,
                 netWeight,
@@ -61,6 +68,7 @@ namespace TDM.Domain.Entities
         }
 
         private void SetProperty(
+            Guid manifestItemId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
@@ -71,6 +79,7 @@ namespace TDM.Domain.Entities
             Guid packageId)
         {
             Validate(
+                manifestItemId,
                 packNb,
                 grossWeight,
                 netWeight,
@@ -78,6 +87,7 @@ namespace TDM.Domain.Entities
                 commodityId,
                 packageId);
 
+            ManifestItemId = manifestItemId;
             PackNb = packNb;
             GrossWeight = grossWeight;
             NetWeight = netWeight;
@@ -89,13 +99,17 @@ namespace TDM.Domain.Entities
         }
 
         private void Validate(
+            Guid manifestItemId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
             decimal volume,
             Guid commodityId,
             Guid packageId)
-        {           
+        {
+            if (manifestItemId == Guid.Empty)
+                throw new DomainValidationException("Manifest item is required.");
+
             if (packNb <= 0)
                 throw new DomainValidationException("Package number must be greater than zero.");
 

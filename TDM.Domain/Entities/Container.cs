@@ -17,6 +17,7 @@ namespace TDM.Domain.Entities
 
         public ICollection<Container> ContainerDeclarations { get; private set; } = new List<Container>();
         public ICollection<StoreReceiptContainer> ContainerStoreReceipts { get; private set; } = new List<StoreReceiptContainer>();
+        public ICollection<ManifestContainer> ContainerManifests { get; private set; } = new List<ManifestContainer>();
 
 
         public Container(string no, Guid containerTypeAndSizeId)

@@ -7,7 +7,7 @@ namespace ExternalIntegration.Service.Application.Abstractions
     {
         Task<DateTime> GetLastDateAsync(string terminalCode);
         Task<IEnumerable<ManifestNoticeToApproveDto>> GetManifestsNoticeNoToApprove(string terminalCode);
-        Task<string> GetManifestItemsById(Guid id);
+        Task<Manifest?> GetManifestById(Guid id);
         Task<bool> ApproveManifestAsync(Guid id);
 
     }

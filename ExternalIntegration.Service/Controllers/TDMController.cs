@@ -75,10 +75,10 @@ namespace ExternalIntegration.Service.Controllers
             return await _tdmSyncService.GetManifestsNoticeNoToApprove(terminalCode);
         }
 
-        [HttpGet("GetManifestItemsById")]
-        public async Task<Response<IEnumerable<ManifestItemDto>>> GetManifestItemsById([FromQuery] Guid id)
+        [HttpGet("GetManifestById")]
+        public async Task<Response<ManifestDto>> GetManifestItemsById([FromQuery] Guid id)
         {
-            return await _tdmSyncService.GetManifestItemsById(id);
+            return await _tdmSyncService.GetManifestById(id);
         }
 
         [HttpGet("ApproveManifestAsync")]

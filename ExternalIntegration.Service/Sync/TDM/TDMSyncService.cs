@@ -122,11 +122,13 @@ namespace ExternalIntegration.Service.Sync.TDM
             return Response<IEnumerable<ManifestNoticeToApproveDto>>.Success(manifestsToApprove);
         }
 
-        public async Task<Response<IEnumerable<ManifestItemDto>>> GetManifestItemsById(Guid id)
+        public async Task<Response<ManifestDto>> GetManifestById(Guid id)
         {
-            var manifestItems = await _manifestRepository.GetManifestItemsById(id);
+            var manifest = await _manifestRepository.GetManifestById(id);
+            if(manifest == null)
+                return Response<ManifestDto>.Error($"Manifest with ID '{id}' was not found.");
 
-            return Response<IEnumerable<ManifestItemDto>>.Success(_mapper.Map<IEnumerable<ManifestItemDto>>(manifestItems));
+            return Response<ManifestDto>.Success(_mapper.Map<ManifestDto>(manifest));
 
         }
 
