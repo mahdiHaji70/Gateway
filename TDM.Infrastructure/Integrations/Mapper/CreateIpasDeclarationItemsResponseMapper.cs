@@ -67,7 +67,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                             HSCode = g.HSCode!,
                             PackageCode = g.PackageTypeCode!,
                             Quantity = Convert.ToInt64(g.PackageQuantity),
-                            Weight = Convert.ToInt64(g.PackageQuantity) * Convert.ToDecimal(g.weight)
+                            Weight = Convert.ToDecimal(g.weight)
                         })
                         .ToList()
                 }

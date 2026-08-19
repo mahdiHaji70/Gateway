@@ -34,7 +34,7 @@ namespace TDM.Domain.Entities
         public string IgnitionTemperatureUnit { get; set; }
         public Guid? IpasTerminalDischargeId { get; set; }
         public DateTime? IpasTerminalDischargeReceivedAt { get; set; }
-
+        public Guid? IssueRequestId { get; set; }
         public TerminalDischarge(
      string terminalCode,
      Guid cargoTypeId,
@@ -54,11 +54,12 @@ namespace TDM.Domain.Entities
      string dangerousCode = null,
      string classification = null,
      decimal ignitionTemperature = 0,
-     string ignitionTemperatureUnit = null)
+     string ignitionTemperatureUnit = null,
+     Guid? issueRequestId=null)
      => SetProperty(terminalCode, cargoTypeId, storeId, declarationItemId, wayBillNo,
                     wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
                     isNonPalletized, isDamaged, isVoluminous, isDangerous,
-                    dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit);
+                    dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId);
 
         public void Update(
             string terminalCode,
@@ -79,11 +80,12 @@ namespace TDM.Domain.Entities
             string dangerousCode = null,
             string classification = null,
             decimal ignitionTemperature = 0,
-            string ignitionTemperatureUnit = null)
+            string ignitionTemperatureUnit = null,
+            Guid? issueRequestId = null)
             => SetProperty(terminalCode, cargoTypeId, storeId, declarationItemId, wayBillNo,
                            wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
                            isNonPalletized, isDamaged, isVoluminous, isDangerous,
-                           dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit);
+                           dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId);
 
         private void SetProperty(
             string terminalCode,
@@ -104,7 +106,8 @@ namespace TDM.Domain.Entities
             string dangerousCode,
             string classification,
             decimal ignitionTemperature,
-            string ignitionTemperatureUnit)
+            string ignitionTemperatureUnit,
+            Guid? issueRequestId)
         {
             Validate(terminalCode, cargoTypeId, storeId, declarationItemId,
                      wayBillNo, wayBillId, dischargeDate, vehicleNumber,
@@ -130,6 +133,7 @@ namespace TDM.Domain.Entities
             Classification = classification;
             IgnitionTemperature = ignitionTemperature;
             IgnitionTemperatureUnit = ignitionTemperatureUnit;
+            IssueRequestId = issueRequestId;
         }
 
         private void Validate(

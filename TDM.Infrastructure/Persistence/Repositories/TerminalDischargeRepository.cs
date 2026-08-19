@@ -102,5 +102,17 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 PageSize = pageSize
             };
         }
+        public async Task<List<TerminalDischarge>> GetIpasSubmissionByIPASDeclarationNoAsync(string ipasDeclarationNo)
+        {
+            return await _dbSet
+                       .Include(x => x.DeclarationItem)
+                       .Include(x => x.DeclarationItem.Declaration)
+                       .Include(x => x.DeclarationItem.Commodity)
+                       .Include(x => x.DeclarationItem.Package)
+                       .Where(x => x.DeclarationItem.Declaration.IpasDeclarationNo == ipasDeclarationNo
+                                && x.IpasTerminalDischargeId == null)
+                       .ToListAsync();
+        }
+
     }
 }

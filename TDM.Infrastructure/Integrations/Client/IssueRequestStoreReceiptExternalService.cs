@@ -44,5 +44,19 @@ namespace TDM.Infrastructure.Integrations.Client
             ExternalResponseHelper.EnsureSuccess(response, "IssueRequestConfirmation");
             return response.Data;
         }
+        public async Task<List<IpasIssueRequestStoreReceiptResponse>> GetIssueReceiptById(Guid id, CancellationToken cancellationToken)
+        {
+            var response = await _requestExecutor.GetAsync<List<IssueRequestResponseDto>>("TDM", "GetIssueRequestById",
+            new
+            {
+                id = id
+            });
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetIssueRequestById");
+
+            var IpasIssueRequests = IpasIssueRequestDetailMapper.Map(response.Data!);
+
+            return IpasIssueRequests;
+        }
     }
 }

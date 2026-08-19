@@ -23,4 +23,8 @@
     <ProjectReference Include="..\TDM.Domain\TDM.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Doc\IssueRequestStoreReceipts\Commands\DTOs\" />
+  </ItemGroup>
+
 </Project>
