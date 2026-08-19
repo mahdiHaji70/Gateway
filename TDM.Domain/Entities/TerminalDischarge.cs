@@ -54,11 +54,12 @@ namespace TDM.Domain.Entities
      string classification = null,
      decimal ignitionTemperature = 0,
      string ignitionTemperatureUnit = null,
-     Guid? issueRequestId=null)
-     => SetProperty(terminalCode,  storeId, declarationItemId, wayBillNo,
+     Guid? issueRequestId = null,
+     decimal unitWeight = 0)
+     => SetProperty(terminalCode, storeId, declarationItemId, wayBillNo,
                     wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
                     isNonPalletized, isDamaged, isVoluminous, isDangerous,
-                    dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId);
+                    dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId, unitWeight);
 
         public void Update(
             string terminalCode,
@@ -79,11 +80,12 @@ namespace TDM.Domain.Entities
             string classification = null,
             decimal ignitionTemperature = 0,
             string ignitionTemperatureUnit = null,
-            Guid? issueRequestId = null)
+            Guid? issueRequestId = null,
+            decimal unitWeight = 0)
             => SetProperty(terminalCode, storeId, declarationItemId, wayBillNo,
                            wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
                            isNonPalletized, isDamaged, isVoluminous, isDangerous,
-                           dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId);
+                           dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId, unitWeight);
 
         private void SetProperty(
             string terminalCode,
@@ -104,9 +106,10 @@ namespace TDM.Domain.Entities
             string classification,
             decimal ignitionTemperature,
             string ignitionTemperatureUnit,
-            Guid? issueRequestId)
+            Guid? issueRequestId,
+            decimal unitWeight= 0)
         {
-            Validate(terminalCode,  storeId, declarationItemId,
+            Validate(terminalCode, storeId, declarationItemId,
                      wayBillNo, wayBillId, dischargeDate, vehicleNumber,
                      packNB, weight, volume, isDangerous, dangerousCode,
                      ignitionTemperature, ignitionTemperatureUnit);
@@ -130,6 +133,7 @@ namespace TDM.Domain.Entities
             IgnitionTemperature = ignitionTemperature;
             IgnitionTemperatureUnit = ignitionTemperatureUnit;
             IssueRequestId = issueRequestId;
+            UnitWeight = unitWeight;
         }
 
         private void Validate(
@@ -150,7 +154,7 @@ namespace TDM.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(terminalCode))
                 throw new DomainValidationException("TerminalCode is required.");
- 
+
             if (storeId == Guid.Empty)
                 throw new DomainValidationException("StoreId is required.");
 
