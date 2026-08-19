@@ -110,7 +110,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
 
             var response = await _requestExecutor.PostAsync<IEnumerable<DischargePermitResponseDto>>(request, dto.TerminalCode);
-            
+
             return response;
 
         }
@@ -181,7 +181,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                 }).Build();
 
             var response = await _requestExecutor.PostAsync<Guid>(request, model.TerminalCode);
-           
+
             return response;
         }
 
@@ -218,7 +218,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
               }).Build();
 
             var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<VoyageResponseDto>>(request, dto.TerminalCode);
-           
+
             return response;
         }
         public async Task<Response<VoyageResponseDto>> GetVoyageByNoticeNo(VoyageByNoticeNoRequestDto dto)
@@ -233,7 +233,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                }).Build();
 
             var response = await _requestExecutor.PostAsync<VoyageResponseDto>(request);
-           
+
             return response;
         }
 
@@ -253,7 +253,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<GetDataWithPagingDto<StoreReceiptResponseDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
+        public async Task<Response<IEnumerable<StoreReceiptResponseDto>>> GetStoreReceipts(PmoDateRangeWithPagingDto dto)
         {
             var request = new PmoRequestBuilder()
           .WithCredential(_userName, _password)
@@ -269,17 +269,25 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
           }).Build();
 
             var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<StoreReceiptResponseDto>>(request, dto.TerminalCode);
-          
-            return response;
+
+            var finalResult = new Response<IEnumerable<StoreReceiptResponseDto>>
+            {
+                Status = response.Status,
+                Message = response.Message,
+                Errors = response.Errors,
+                Data = response.Data.Items
+            };
+
+            return finalResult;
         }
 
         public async Task<Response<bool>> SendStoreReceiptAllocation(SendStoreReceiptAllocationRequestDto dto)
         {
             var request = new PmoRequestBuilder()
-      .WithCredential(_userName, _password)
-      .WithService(_serviceNames.WReceiptsAllocation)
-      .WithParameters(new List<Parameter>
-      {
+            .WithCredential(_userName, _password)
+            .WithService(_serviceNames.WReceiptsAllocation)
+            .WithParameters(new List<Parameter>
+            {
               new Parameter{ParameterName = nameof(dto.WarehouseReceiptId), ParameterValue = dto.WarehouseReceiptId},
               new Parameter{ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
                new Parameter { ParameterName =nameof(dto.ContainerList),
@@ -309,9 +317,38 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
                               }
                               ))}
-      }).Build();
+               }).Build();
             var response = await _requestExecutor.PostAsync<bool>(request);
             return response;
+        }
+
+
+        public async Task<Response<IEnumerable<ManifestResponseDto>>> GetManifests(PmoDateRangeWithPagingDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.Manifests)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                new Parameter{ ParameterName = nameof(dto.PageIndex), ParameterValue = dto.PageIndex },
+                new Parameter{ ParameterName = nameof(dto.PageSize), ParameterValue = dto.PageSize },
+
+          }).Build();
+
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<ManifestResponseDto>>(request, dto.TerminalCode);
+
+            var finalResult = new Response<IEnumerable<ManifestResponseDto>>
+            {
+                Status = response.Status,
+                Message = response.Message,
+                Errors = response.Errors,
+                Data = response.Data.Items
+            };
+
+            return finalResult;
         }
     }
 }

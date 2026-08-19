@@ -4,10 +4,9 @@ using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
-using ExternalIntegration.Service.Infrastructure.Persistence.Repositories;
 using ExternalIntegration.Service.Sync.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using TOS.Services.Gateway.Infrastructure.Integrations.PMO.Requests;
+
 
 namespace ExternalIntegration.Service.Sync.PMO
 {
@@ -21,6 +20,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IIssueRequestRepository _issueRequestRepository;
         private readonly IVoyageRepository _voyageRepository;
         private readonly IStoreReceiptRepository _storeReceiptRepository;
+        private readonly IManifestRepository _manifestRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
@@ -30,7 +30,8 @@ namespace ExternalIntegration.Service.Sync.PMO
             , IDischargePermitRepository dischargePermitRepository
             , IIssueRequestRepository issueRequestRepository
             , IVoyageRepository voyageRepository
-            , IStoreReceiptRepository storeReceiptRepository)
+            , IStoreReceiptRepository storeReceiptRepository
+            , IManifestRepository manifestRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;
@@ -41,6 +42,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             _issueRequestRepository = issueRequestRepository;
             _voyageRepository = voyageRepository;
             _storeReceiptRepository = storeReceiptRepository;
+            _manifestRepository = manifestRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
@@ -243,10 +245,10 @@ namespace ExternalIntegration.Service.Sync.PMO
                 dto.PageSize);
 
             var clientResult = await _client.GetStoreReceipts(pmoDateDto);
-            var syncMappingDto = _mapper.Map<Response<IEnumerable< StoreReceiptDto>>>(clientResult.Data.Items);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<StoreReceiptDto>>>(clientResult);
 
             var newData = await _storeReceiptRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<StoreReceipt>>(clientResult.Data.Items),
+                entities: _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data),
                 idSelector: t => t.Id,
                 dbIdSelector: t => t.Id
             );
@@ -262,6 +264,38 @@ namespace ExternalIntegration.Service.Sync.PMO
             var syncMappingRequestDto = _mapper.Map<SendStoreReceiptAllocationRequestDto>(dto);
             var clientResult = await _client.SendStoreReceiptAllocation(syncMappingRequestDto);
             return clientResult;
+        }
+
+        public async Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto)
+        {
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)
+                localFromDate = await _manifestRepository.GetLastDateAsync(dto.TerminalCode);
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
+
+            var pmoDateDto = new PmoDateRangeWithPagingDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode,
+                dto.PageIndex,
+                dto.PageSize);
+
+            var clientResult = await _client.GetManifests(pmoDateDto);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<ManifestDto>>>(clientResult);
+
+            var newData = await _manifestRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<Manifest>>(syncMappingDto.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _manifestRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
         }
     }
 }

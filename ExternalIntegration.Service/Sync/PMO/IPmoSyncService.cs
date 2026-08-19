@@ -18,6 +18,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationDto dto);
         Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
         Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto);
+        Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto);
 
     }
 }

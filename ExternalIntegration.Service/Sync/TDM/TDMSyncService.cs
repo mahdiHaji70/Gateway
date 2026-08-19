@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using ExternalIntegration.Service.Application.Abstractions;
+using ExternalIntegration.Service.Application.DTOs;
 using ExternalIntegration.Service.Application.Shared;
-using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Sync.DTOs;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ExternalIntegration.Service.Sync.TDM
 {
@@ -17,6 +14,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         private readonly IIssueRequestRepository _issueRequestRepository;
         private readonly IVoyageRepository _voyageRepository;
         private readonly IStoreReceiptRepository _storeReceiptRepository;
+        private readonly IManifestRepository _manifestRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public TDMSyncService(IMapper mapper, IUnitOfWork unitOfWork,
@@ -24,7 +22,8 @@ namespace ExternalIntegration.Service.Sync.TDM
            , IGoodwayBillRepository goodwayBillRepository
            , IIssueRequestRepository issueRequestRepository,
             IVoyageRepository voyageRepository
-           , IStoreReceiptRepository storerReceiptRepository)
+           , IStoreReceiptRepository storerReceiptRepository
+            , IManifestRepository manifestRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -33,10 +32,11 @@ namespace ExternalIntegration.Service.Sync.TDM
             _issueRequestRepository = issueRequestRepository;
             _voyageRepository = voyageRepository;
             _storeReceiptRepository = storerReceiptRepository;
+            _manifestRepository = manifestRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
-            var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync( storageAgreementId,  terminalCode);
+            var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync(storageAgreementId, terminalCode);
 
             if (goodwayBills == null)
                 return Response<IEnumerable<GoodwayBillDto>>.Error("Not Found");
@@ -51,8 +51,8 @@ namespace ExternalIntegration.Service.Sync.TDM
 
             return Response<IEnumerable<IssueRequestDto>>.Success(_mapper.Map<IEnumerable<IssueRequestDto>>(result));
         }
-     
-       public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByStorageAgreementNo(string storageAgreementNo)
+
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByStorageAgreementNo(string storageAgreementNo)
         {
             var result = await _storeReceiptRepository.GetByStorageAgreementNoAsync(storageAgreementNo);
 
@@ -111,6 +111,36 @@ namespace ExternalIntegration.Service.Sync.TDM
             if (lastDate.Equals(DateTime.MinValue))
                 return Response<DateTime>.Error("No data found");
             return Response<DateTime>.Success(lastDate);
+        }
+
+        public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(string terminalCode)
+        {
+            var manifestsToApprove = await _manifestRepository.GetManifestsNoticeNoToApprove(terminalCode);
+            if (manifestsToApprove == null && manifestsToApprove!.Count() == 0)
+                return Response<IEnumerable<ManifestNoticeToApproveDto>>.Error("No data found");
+
+            return Response<IEnumerable<ManifestNoticeToApproveDto>>.Success(manifestsToApprove);
+        }
+
+        public async Task<Response<ManifestDto>> GetManifestById(Guid id)
+        {
+            var manifest = await _manifestRepository.GetManifestById(id);
+            if(manifest == null)
+                return Response<ManifestDto>.Error($"Manifest with ID '{id}' was not found.");
+
+            return Response<ManifestDto>.Success(_mapper.Map<ManifestDto>(manifest));
+
+        }
+
+        public async Task<Response<bool>> ApproveManifestAsync(Guid id)
+        {
+            var result = await _manifestRepository.ApproveManifestAsync(id);
+            if(!result)
+                return Response<bool>.Error("Manifest not found");
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return Response<bool>.Success(result);          
         }
     }
 }

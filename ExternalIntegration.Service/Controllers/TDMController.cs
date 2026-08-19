@@ -1,4 +1,5 @@
-﻿using ExternalIntegration.Service.Application.Shared;
+﻿using ExternalIntegration.Service.Application.DTOs;
+using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Sync.DTOs;
 using ExternalIntegration.Service.Sync.TDM;
 using Microsoft.AspNetCore.Authorization;
@@ -68,5 +69,22 @@ namespace ExternalIntegration.Service.Controllers
             return await _tdmSyncService.GetStoreReceiptsLastDate(terminalCode);
         }
 
+        [HttpGet("GetManifestsNoticeNoToApprove")]
+        public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove([FromQuery] string terminalCode)
+        {
+            return await _tdmSyncService.GetManifestsNoticeNoToApprove(terminalCode);
+        }
+
+        [HttpGet("GetManifestById")]
+        public async Task<Response<ManifestDto>> GetManifestItemsById([FromQuery] Guid id)
+        {
+            return await _tdmSyncService.GetManifestById(id);
+        }
+
+        [HttpGet("ApproveManifestAsync")]
+        public async Task<Response<bool>> ApproveManifestAsync([FromQuery] Guid id)
+        {
+            return await _tdmSyncService.ApproveManifestAsync(id);
+        }
     }
 }

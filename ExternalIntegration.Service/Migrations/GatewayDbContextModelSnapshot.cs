@@ -462,6 +462,65 @@ namespace ExternalIntegration.Service.Migrations
                     b.ToTable("IssueRequests", (string)null);
                 });
 
+            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.Manifest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEDI")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Items")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ManifestRegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoticeNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SerialNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SignatureDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Signed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TerminalCodeDischarge")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TerminalCodeLoading")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Voyage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VoyageNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Manifests", (string)null);
+                });
+
             modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.StoreReceipt", b =>
                 {
                     b.Property<Guid>("Id")
@@ -524,7 +583,7 @@ namespace ExternalIntegration.Service.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsIssued")
@@ -607,9 +666,8 @@ namespace ExternalIntegration.Service.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PortId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("PortId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");

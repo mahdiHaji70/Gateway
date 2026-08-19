@@ -556,6 +556,308 @@ namespace TDM.Infrastructure.Migrations
                     b.ToTable("Gates", "operation");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.Manifest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ETA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ETD")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Imo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ManifestRegistrationNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NoticeNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("SerialNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ShipAgent")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ShipLine")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("TerminalCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("VesselName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("VoyageNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Manifests", "doc");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestContainer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BillOfLadingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Classification")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("ContainerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ContainerId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DangerousCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("IgnitionTemperature")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("IgnitionTemperatureUnit")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("ManifestItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SealNumber")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContainerId");
+
+                    b.HasIndex("ContainerId1");
+
+                    b.HasIndex("ManifestItemId");
+
+                    b.ToTable("ManifestContainers", "doc");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestContainerGood", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CommodityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("GrossWeight")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<Guid>("ManifestContainerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("NetWeight")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<long>("PackNb")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("PackageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommodityId");
+
+                    b.HasIndex("ManifestContainerId");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("ManifestContainerGoods", "doc");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestGood", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BrandName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("CommodityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("GrossWeight")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<Guid>("ManifestItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("NetWeight")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<long>("PackNb")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("PackageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Volume")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommodityId");
+
+                    b.HasIndex("ManifestItemId");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("ManifestGoods", "doc");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ConsigneeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Consignor")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ManifestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ManifestItemNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ManifestNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("ShipAgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ShipLine")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("TrafficId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsigneeId");
+
+                    b.HasIndex("ManifestId");
+
+                    b.HasIndex("ShipAgentId");
+
+                    b.HasIndex("TrafficId");
+
+                    b.ToTable("ManifestItems", "doc");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
                 {
                     b.Property<Guid>("Id")
@@ -724,11 +1026,11 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<bool>("NoBrandName")
                         .HasColumnType("bit");
 
+                    b.Property<decimal>("PackNB")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("PackageId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("PackageQuantity")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("StoreReceiptContainerId")
                         .HasColumnType("uniqueidentifier");
@@ -814,11 +1116,11 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<bool>("NoBrandName")
                         .HasColumnType("bit");
 
+                    b.Property<decimal>("PackNB")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("PackageId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("PackageQuantity")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Remark")
                         .IsRequired()
@@ -1390,6 +1692,118 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("Declaration");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestContainer", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.Container", "Container")
+                        .WithMany()
+                        .HasForeignKey("ContainerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Container", null)
+                        .WithMany("ContainerManifests")
+                        .HasForeignKey("ContainerId1");
+
+                    b.HasOne("TDM.Domain.Entities.ManifestItem", "ManifestItem")
+                        .WithMany("ManifestContainers")
+                        .HasForeignKey("ManifestItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Container");
+
+                    b.Navigation("ManifestItem");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestContainerGood", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.Commodity", "Commodity")
+                        .WithMany("CommodityManifestContainerGoods")
+                        .HasForeignKey("CommodityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.ManifestContainer", "ManifestContainer")
+                        .WithMany("ManifestContainerGoods")
+                        .HasForeignKey("ManifestContainerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Package", "Package")
+                        .WithMany("PackageManifestContainerGoods")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Commodity");
+
+                    b.Navigation("ManifestContainer");
+
+                    b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestGood", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.Commodity", "Commodity")
+                        .WithMany("CommodityManifestGoods")
+                        .HasForeignKey("CommodityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.ManifestItem", "ManifestItem")
+                        .WithMany("ManifestGoods")
+                        .HasForeignKey("ManifestItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Package", "Package")
+                        .WithMany("PackageManifestGoods")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Commodity");
+
+                    b.Navigation("ManifestItem");
+
+                    b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestItem", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.Company", "Consignee")
+                        .WithMany("ConsigneeManifestItems")
+                        .HasForeignKey("ConsigneeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Manifest", "Manifest")
+                        .WithMany("ManifestItems")
+                        .HasForeignKey("ManifestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Company", "ShipAgent")
+                        .WithMany("ShipAgentManifestItems")
+                        .HasForeignKey("ShipAgentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Traffic", "Traffic")
+                        .WithMany("TrafficManifestItems")
+                        .HasForeignKey("TrafficId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Consignee");
+
+                    b.Navigation("Manifest");
+
+                    b.Navigation("ShipAgent");
+
+                    b.Navigation("Traffic");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
                 {
                     b.HasOne("TDM.Domain.Entities.StoreType", "StoreType")
@@ -1606,6 +2020,10 @@ namespace TDM.Infrastructure.Migrations
 
                     b.Navigation("CommodityDeclarationItems");
 
+                    b.Navigation("CommodityManifestContainerGoods");
+
+                    b.Navigation("CommodityManifestGoods");
+
                     b.Navigation("CommodityStoreReceiptContainerGoods");
 
                     b.Navigation("CommodityStoreReceiptGoods");
@@ -1615,16 +2033,22 @@ namespace TDM.Infrastructure.Migrations
                 {
                     b.Navigation("ConsigneeDeclarations");
 
+                    b.Navigation("ConsigneeManifestItems");
+
                     b.Navigation("ConsigneeRepDeclarations");
 
                     b.Navigation("ConsigneeRepStoreReceiptHeads");
 
                     b.Navigation("ConsigneeStoreReceiptHeads");
+
+                    b.Navigation("ShipAgentManifestItems");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.Container", b =>
                 {
                     b.Navigation("ContainerDeclarations");
+
+                    b.Navigation("ContainerManifests");
 
                     b.Navigation("ContainerStoreReceipts");
                 });
@@ -1656,11 +2080,32 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("TerminalDischarges");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.Manifest", b =>
+                {
+                    b.Navigation("ManifestItems");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestContainer", b =>
+                {
+                    b.Navigation("ManifestContainerGoods");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.ManifestItem", b =>
+                {
+                    b.Navigation("ManifestContainers");
+
+                    b.Navigation("ManifestGoods");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
                 {
                     b.Navigation("PackageDeclarationContainerGoods");
 
                     b.Navigation("PackageDeclarationItems");
+
+                    b.Navigation("PackageManifestContainerGoods");
+
+                    b.Navigation("PackageManifestGoods");
 
                     b.Navigation("PackageStoreReceiptContainerGoods");
 
@@ -1702,6 +2147,8 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.Traffic", b =>
                 {
                     b.Navigation("TrafficDeclarations");
+
+                    b.Navigation("TrafficManifestItems");
 
                     b.Navigation("TrafficStoreReceiptHeads");
                 });
