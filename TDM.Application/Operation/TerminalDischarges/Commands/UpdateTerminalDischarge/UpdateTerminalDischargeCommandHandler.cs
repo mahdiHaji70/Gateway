@@ -29,7 +29,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDi
                 throw new Exception("terminaldischarge not found");
 
             terminalDischarge.Update(  request.TerminalCode,
-                                       request.CargoTypeId,
                                        request.StoreId,
                                        request.DeclarationItemId,
                                        request.WayBillNo,

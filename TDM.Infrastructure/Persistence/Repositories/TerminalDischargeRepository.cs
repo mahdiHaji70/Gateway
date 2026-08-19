@@ -20,9 +20,8 @@ namespace TDM.Infrastructure.Persistence.Repositories
            .AsNoTracking()
            .Include(x => x.Store)
            .Include(x => x.DeclarationItem)
-           .ThenInclude(x => x.Declaration)
-           .Include(x => x.CargoType);
-
+           .ThenInclude(x => x.Declaration);
+          
             var totalCount = await query.CountAsync();
 
             var items = await query
@@ -46,7 +45,6 @@ namespace TDM.Infrastructure.Persistence.Repositories
             return await _dbSet
                         .AsNoTracking()
                         .Include(x => x.Store)
-                        .Include(x => x.CargoType)
                         .Include(x => x.DeclarationItem)
                         .ThenInclude(x => x.Declaration)
                         .FirstOrDefaultAsync(x => x.Id == id);
@@ -56,7 +54,6 @@ namespace TDM.Infrastructure.Persistence.Repositories
             return await _dbSet
                         .AsNoTracking()
                         .Include(x => x.Store)
-                        .Include(x => x.CargoType)
                         .Include(x => x.DeclarationItem)
                         .Where(x => x.DeclarationItem.DeclarationId == id).ToListAsync();
         }
@@ -64,7 +61,6 @@ namespace TDM.Infrastructure.Persistence.Repositories
         {
             return await _dbSet
                        .Include(x => x.Store)
-                       .Include(x => x.CargoType)
                        .Include(x => x.DeclarationItem)
                        .Include(x => x.DeclarationItem.Declaration)
                        .Include(x => x.DeclarationItem.Commodity)
@@ -82,7 +78,6 @@ namespace TDM.Infrastructure.Persistence.Repositories
            .Include(x => x.Store)
            .Include(x => x.DeclarationItem)
            .ThenInclude(x => x.Declaration)
-           .Include(x => x.CargoType)
            .Where(x => x.DeclarationItem.Declaration.Id == declarationId);
 
 
@@ -102,5 +97,17 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 PageSize = pageSize
             };
         }
+        public async Task<List<TerminalDischarge>> GetIpasSubmissionByIPASDeclarationNoAsync(string ipasDeclarationNo)
+        {
+            return await _dbSet
+                       .Include(x => x.DeclarationItem)
+                       .Include(x => x.DeclarationItem.Declaration)
+                       .Include(x => x.DeclarationItem.Commodity)
+                       .Include(x => x.DeclarationItem.Package)
+                       .Where(x => x.DeclarationItem.Declaration.IpasDeclarationNo == ipasDeclarationNo
+                                && x.IpasTerminalDischargeId == null)
+                       .ToListAsync();
+        }
+
     }
 }

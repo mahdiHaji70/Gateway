@@ -7,6 +7,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
         public decimal NetWeight { get; init; } = default!;
         public string HSCode { get; set; } = default!;
         public string PackageCode { get; set; } = default!;
+        public Guid CargoTypeId { get; set; } = default!;
 
         public List<IpasDeclarationContainerResponse>? Containers { get; set; }
 

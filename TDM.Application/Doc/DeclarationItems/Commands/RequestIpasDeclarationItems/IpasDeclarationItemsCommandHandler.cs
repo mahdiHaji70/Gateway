@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
+using TDM.Domain.Enums;
 
 namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems
 {
@@ -112,7 +113,8 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpas
                     itemDto.NetWeight,
                     request.DeclarationId,
                     commodityId,
-                    packageId
+                    packageId,
+                    itemDto.CargoTypeId
                     );                
 
                 if(itemDto.Containers != null && itemDto.Containers.Any() == true)

@@ -36,5 +36,13 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
             var result = await _context.SaveChangesAsync();
       
         }
+
+        public  async Task<List<IssueRequest>> GetByIdNoAsync(Guid id)
+        {
+            return await _IssueRequestDbSet
+                .AsNoTracking()
+                .Where(t => t.RequestId == id &&
+                              t.IsApproved == true).ToListAsync();
+        }
     }
 }

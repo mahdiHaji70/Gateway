@@ -112,6 +112,15 @@ namespace ExternalIntegration.Service.Sync.TDM
                 return Response<DateTime>.Error("No data found");
             return Response<DateTime>.Success(lastDate);
         }
+        public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequestById(Guid id)
+        {
+            var result = await _issueRequestRepository.GetByIdNoAsync(id);
+
+            if (result == null)
+                return Response<IEnumerable<IssueRequestDto>>.Error("Not Found");
+
+            return Response<IEnumerable<IssueRequestDto>>.Success(_mapper.Map<IEnumerable<IssueRequestDto>>(result));
+        }
 
         public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(string terminalCode)
         {

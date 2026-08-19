@@ -12,6 +12,7 @@ namespace TDM.Application.Common.Interfaces
         public Task<List<TerminalDischarge>> GetPendingIpasSubmissionByDeclarationIdAsync(Guid declarationId);
         public Task<PagedResult<TerminalDischarge>?> GetTerminalDischargesByDeclarationIdPagedAsync(
             Guid declarationId, int pageNumber, int pageSize);
+        public Task<List<TerminalDischarge>> GetIpasSubmissionByIPASDeclarationNoAsync(string ipasDeclarationNo);
 
 
     }

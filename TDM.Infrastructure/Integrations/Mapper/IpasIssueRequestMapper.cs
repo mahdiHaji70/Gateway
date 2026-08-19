@@ -51,28 +51,31 @@ namespace TDM.Infrastructure.Integrations.Mapper
         private static decimal GetWeight(IssueRequestResponseDto dto)
         {
             if (dto.GeneralCargoList?.Any() == true)
-                return (decimal)dto.GeneralCargoList.First().GrossWeight;
+                return (decimal)dto.GeneralCargoList.Sum(x => x.GrossWeight);
 
             if (dto.BulkList?.Any() == true)
-                return (decimal)dto.BulkList.First().Weight;
+                return (decimal)dto.BulkList.Sum(x => x.Weight);
 
             return 0;
         }
 
         private static long GetPackNB(IssueRequestResponseDto dto)
         {
-            return (long)(dto.GeneralCargoList?.FirstOrDefault()?.PackageQuantity ?? 0);
+            return (long)(dto.GeneralCargoList?
+                        .Where(x => x.PackageQuantity.HasValue)
+                        .Sum(x => x.PackageQuantity!.Value) ?? 0);
         }
         private static decimal GetVolume(IssueRequestResponseDto dto)
         {
-            if (dto.GeneralCargoList?.Any() == true)
-                return (dto.GeneralCargoList != null && dto.GeneralCargoList.Any())
-                        ? (decimal)((dto.GeneralCargoList.First().Width ?? 0) * (dto.GeneralCargoList.First().Height ?? 0) * (dto.GeneralCargoList.First().Length ?? 0))
-                        : 0m;
-            if (dto.BulkList?.Any() == true)
-                return dto.BulkList.First().Volume ?? dto.BulkList?.FirstOrDefault()?.Volume ?? 0;
+            var generalVolume = dto.GeneralCargoList?
+         .Where(x => x.Width.HasValue && x.Height.HasValue && x.Length.HasValue)
+         .Sum(x => (decimal)(x.Width!.Value * x.Height!.Value * x.Length!.Value)) ?? 0m;
 
-            return 0;
+            var bulkVolume = dto.BulkList?
+                .Where(x => x.Volume.HasValue)
+                .Sum(x => x.Volume!.Value) ?? 0m;
+
+            return generalVolume + bulkVolume;
         }
 
         private static string GetBrandName(IssueRequestResponseDto dto)

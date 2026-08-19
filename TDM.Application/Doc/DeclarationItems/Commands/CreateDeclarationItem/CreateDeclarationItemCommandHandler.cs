@@ -24,7 +24,8 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.CreateDecla
                 request.NetWeight,
                 request.DeclarationId,
                 request.CommodityId,
-                request.PackageId);
+                request.PackageId,
+                request.CargoTypeId);
 
             await _declarationItemRepository.InsertAsync(declarationItem);
 

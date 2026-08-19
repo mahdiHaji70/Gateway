@@ -5,6 +5,7 @@ using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.Terminals.Commands.CreateTerminal;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConfirmation;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestByStorageAgreementNo;
+using TDM.Application.Doc.IssueRequestStoreReceipts.Commands.LinkIssueRequestToTerminalDischarge;
 
 namespace TDM.API.Controllers
 {
@@ -27,6 +28,12 @@ namespace TDM.API.Controllers
 
         [HttpPost("issue-request-confirmation")]
         public async Task<IActionResult> IssueRequestConfirmation([FromBody] IssueRequestConfirmationCommand command, CancellationToken cancellationToken)
+        {
+            var id = await _mediator.Send(command, cancellationToken);
+            return Ok(ApiResponse.Success(id));
+        }
+        [HttpPost("link-issue-request-to-terminalDischarge")]
+        public async Task<IActionResult> LinkIssueRequestToTerminalDischarge([FromBody] LinkIssueRequestToTerminalDischargeCommand command, CancellationToken cancellationToken)
         {
             var id = await _mediator.Send(command, cancellationToken);
             return Ok(ApiResponse.Success(id));

@@ -29,7 +29,8 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDecla
                 request.NetWeight,
                 request.DeclarationId,
                 request.CommodityId,
-                request.PackageId);
+                request.PackageId,
+                request.CargoTypeId);
 
             _declarationItemRepository.Update(declarationItem);
 
