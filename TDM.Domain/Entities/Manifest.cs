@@ -22,7 +22,10 @@ namespace TDM.Domain.Entities
 
         public ICollection<ManifestItem> ManifestItems { get; private set; } = new List<ManifestItem>();
 
-
+        public Manifest()
+        {
+            
+        }
         public Manifest(
             string serialNo,
             string manifestRegistrationNumber,
@@ -104,6 +107,8 @@ namespace TDM.Domain.Entities
             Imo = imo;
             TerminalCode = terminalCode;
         }
+
+        public void AddManifestItem(ManifestItem manifestItem) => ManifestItems.Add(manifestItem);
 
         private void Validate(
             string serialNo,

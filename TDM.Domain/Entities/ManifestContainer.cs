@@ -24,9 +24,13 @@ namespace TDM.Domain.Entities
 
         public ICollection<ManifestContainerGood> ManifestContainerGoods { get; private set; } = new List<ManifestContainerGood>();
 
+        public ManifestContainer()
+        {
+            
+        }
+
         public ManifestContainer(
             Guid containerId,
-            Guid manifestItemId,
             Guid? billOfLadingId,
             string sealNumber,
             string remark,
@@ -37,7 +41,6 @@ namespace TDM.Domain.Entities
         {
             SetProperty(
                 containerId,
-                manifestItemId,
                 billOfLadingId,
                 sealNumber,
                 remark,
@@ -49,7 +52,6 @@ namespace TDM.Domain.Entities
 
         public void Update(
             Guid containerId,
-            Guid manifestItemId,
             Guid? billOfLadingId,
             string sealNumber,
             string remark,
@@ -60,7 +62,6 @@ namespace TDM.Domain.Entities
         {
             SetProperty(
                 containerId,
-                manifestItemId,
                 billOfLadingId,
                 sealNumber,
                 remark,
@@ -72,7 +73,6 @@ namespace TDM.Domain.Entities
 
         private void SetProperty(
             Guid containerId,
-            Guid manifestItemId,
             Guid? billOfLadingId,
             string sealNumber,
             string remark,
@@ -81,10 +81,9 @@ namespace TDM.Domain.Entities
             decimal ignitionTemperature,
             string ignitionTemperatureUnit)
         {
-            Validate(containerId, manifestItemId);
+            Validate(containerId);
 
             ContainerId = containerId;
-            ManifestItemId = manifestItemId;
             BillOfLadingId = billOfLadingId;
             SealNumber = sealNumber;
             Remark = remark;
@@ -94,13 +93,13 @@ namespace TDM.Domain.Entities
             IgnitionTemperatureUnit = ignitionTemperatureUnit;
         }
 
-        private void Validate(Guid containerId, Guid manifestItemId)
+        public void AddManifestContainerGood(ManifestContainerGood manifestContainerGood) => ManifestContainerGoods.Add(manifestContainerGood);
+
+        private void Validate(Guid containerId)
         {
             if (containerId == Guid.Empty)
                 throw new DomainValidationException("Container is required.");
-
-            if (manifestItemId == Guid.Empty)
-                throw new DomainValidationException("Manifest item is required.");
+           
         }
     }
 }

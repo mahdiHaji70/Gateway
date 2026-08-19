@@ -26,7 +26,9 @@ namespace TDM.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICommodityRepository, CommodityRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IPackageRepository, PackageRepository>();
+            services.AddScoped<ITrafficRepository, TrafficRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
             services.AddScoped<IUserTerminalRepository, UserTerminalRepository>();
             services.AddScoped<IDeclarationRepository, DeclarationRepository>();
@@ -47,6 +49,7 @@ namespace TDM.Infrastructure
             services.AddScoped<IStoreReceiptContainerGoodRepository, StoreReceiptContainerGoodRepository>();
             services.AddScoped<IStoreReceiptExternalService, StoreReceiptExternalService>();
             services.AddScoped<IManifestExternalService, ManifestExternalService>();
+            services.AddScoped<IManifestRepository, ManifestRepository>();
 
 
             return services;

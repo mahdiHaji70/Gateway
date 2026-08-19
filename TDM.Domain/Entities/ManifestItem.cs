@@ -28,9 +28,12 @@ namespace TDM.Domain.Entities
         public ICollection<ManifestGood> ManifestGoods { get; private set; } = new List<ManifestGood>();
         public ICollection<ManifestContainer> ManifestContainers { get; private set; } = new List<ManifestContainer>();
 
+        public ManifestItem()
+        {
+            
+        }
 
         public ManifestItem(
-            Guid manifestId,
             string manifestItemNo,
             string manifestNo,
             string consignor,
@@ -40,7 +43,6 @@ namespace TDM.Domain.Entities
             Guid shipAgentId)
         {
             SetProperty(
-                manifestId,
                 manifestItemNo,
                 manifestNo,
                 consignor,
@@ -51,7 +53,6 @@ namespace TDM.Domain.Entities
         }
 
         public void Update(
-            Guid manifestId,
             string manifestItemNo,
             string manifestNo,
             string consignor,
@@ -61,7 +62,6 @@ namespace TDM.Domain.Entities
             Guid shipAgentId)
         {
             SetProperty(
-                manifestId,
                 manifestItemNo,
                 manifestNo,
                 consignor,
@@ -72,7 +72,6 @@ namespace TDM.Domain.Entities
         }
 
         private void SetProperty(
-            Guid manifestId,
             string manifestItemNo,
             string manifestNo,
             string consignor,
@@ -82,14 +81,12 @@ namespace TDM.Domain.Entities
             Guid shipAgentId)
         {
             Validate(
-                manifestId,
                 manifestItemNo,
                 manifestNo,
                 trafficId,
                 consigneeId,
                 shipAgentId);
 
-            ManifestId = manifestId;
             ManifestItemNo = manifestItemNo;
             ManifestNo = manifestNo;
             Consignor = consignor;
@@ -99,17 +96,17 @@ namespace TDM.Domain.Entities
             ShipAgentId = shipAgentId;
         }
 
+        public void AddManifestGood(ManifestGood manifestGood) => ManifestGoods.Add(manifestGood);
+
+        public void AddManifestContainer(ManifestContainer manifestContainer) => ManifestContainers.Add(manifestContainer);
+
         private void Validate(
-            Guid manifestId,
             string manifestItemNo,
             string manifestNo,
             Guid trafficId,
             Guid consigneeId,
             Guid shipAgentId)
-        {
-            if (manifestId == Guid.Empty)
-                throw new DomainValidationException("Manifest is required.");
-
+        {            
             if (string.IsNullOrWhiteSpace(manifestItemNo))
                 throw new DomainValidationException("Manifest item number is required.");
 

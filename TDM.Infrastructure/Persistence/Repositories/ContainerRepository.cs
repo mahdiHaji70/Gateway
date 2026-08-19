@@ -57,9 +57,10 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 var tempTypeCode = typeCode;
 
                 query = query.Union(
-                    _dbSet.AsNoTracking()
-                          .Where(x => x.No == tempNo && x.ContainerTypeAndSize.TypeAndSizeCode == tempTypeCode)
-                );
+                   _dbSet.AsNoTracking()
+                  .Include(x => x.ContainerTypeAndSize)
+                  .Where(x => x.No == tempNo && x.ContainerTypeAndSize.TypeAndSizeCode == tempTypeCode)
+        );
             }
 
             return await query.ToListAsync(cancellationToken);

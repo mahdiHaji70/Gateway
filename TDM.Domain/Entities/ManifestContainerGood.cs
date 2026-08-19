@@ -23,38 +23,34 @@ namespace TDM.Domain.Entities
         }
 
         public ManifestContainerGood(
-            Guid manifestContainerId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
             Guid packageId,
             Guid commodityId)
         {
-            SetProperty(manifestContainerId, packNb, grossWeight, netWeight, packageId, commodityId);
+            SetProperty( packNb, grossWeight, netWeight, packageId, commodityId);
         }
 
         public void Update(
-            Guid manifestContainerId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
             Guid packageId,
             Guid commodityId)
         {
-            SetProperty(manifestContainerId, packNb, grossWeight, netWeight, packageId, commodityId);
+            SetProperty( packNb, grossWeight, netWeight, packageId, commodityId);
         }
 
         private void SetProperty(
-            Guid manifestContainerId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
             Guid packageId,
             Guid commodityId)
         {
-            Validate(manifestContainerId, packNb, grossWeight, netWeight, packageId, commodityId);
+            Validate( packNb, grossWeight, netWeight, packageId, commodityId);
 
-            ManifestContainerId = manifestContainerId;
             PackNb = packNb;
             GrossWeight = grossWeight;
             NetWeight = netWeight;
@@ -63,16 +59,12 @@ namespace TDM.Domain.Entities
         }
 
         private void Validate(
-            Guid manifestContainerId,
             long packNb,
             decimal grossWeight,
             decimal netWeight,
             Guid packageId,
             Guid commodityId)
-        {
-            if (manifestContainerId == Guid.Empty)
-                throw new DomainValidationException("Manifest container is required.");
-
+        {            
             if (packNb <= 0)
                 throw new DomainValidationException("Package number must be greater than zero.");
 

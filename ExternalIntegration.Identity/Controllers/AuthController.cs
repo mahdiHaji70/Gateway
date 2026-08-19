@@ -66,10 +66,14 @@ namespace IntegratedIdentity.Controllers
 
             var accessToken = _tokenService.GenerateAccessToken(user);
 
-            return Ok(new
-            {
-                accessToken
-            });
+            //to do
+            var finalResult = new {
+                accessToken = accessToken,
+                refreshToken = string.Empty,
+                time = DateTimeOffset.UtcNow
+            };
+
+            return Ok(finalResult);
         }
 
         [HttpGet("get_all_users")]

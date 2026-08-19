@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
+using TDM.Application.Doc.Manifests.Commands.CreateManifest;
 using TDM.Application.Doc.Manifests.Queries.GetExternalManifestById;
 using TDM.Application.Doc.Manifests.Queries.GetVoyageNumbers;
 
@@ -31,6 +32,13 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> GetManifestById(Guid id)
         {
             var result = await _mediator.Send(new GetExternalManifestByIdQuery(id));
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpPost("create-manifest")]
+        public async Task<IActionResult> CreateManifest(CreateManifestCommand command)
+        {
+            var result = await _mediator.Send(command);
             return Ok(ApiResponse.Success(result));
         }
     }
