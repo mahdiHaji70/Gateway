@@ -170,7 +170,6 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
                         containerId,
                         containerCommand.BillOfLadingId,
                         containerCommand.SealNumber,
-                        containerCommand.Remark,
                         containerCommand.DangerousCode,
                         containerCommand.Classification,
                         containerCommand.IgnitionTemperature,

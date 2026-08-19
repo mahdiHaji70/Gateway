@@ -9,7 +9,7 @@ namespace TDM.Application.Doc.Manifests.DTOs
     {
         public long PackNb { get; set; }
         public decimal GrossWeight { get; set; }
-        public decimal NetWeight { get; set; }
+        public decimal? NetWeight { get; set; }
 
         public Guid ManifestContainerId { get; set; }
 

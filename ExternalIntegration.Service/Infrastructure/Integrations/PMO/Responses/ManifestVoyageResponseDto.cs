@@ -18,6 +18,6 @@
         public string ShippingLine { get; set; }
         public string ShippingAgentCompanyIdNumber { get; set; }
         public string ShippingAgent { get; set; }
-        public ManifestVoyageVesselDataResponseDto VessleData { get; set; } 
+        public ManifestVoyageVesselDataResponseDto VesselData { get; set; } 
     }
 }

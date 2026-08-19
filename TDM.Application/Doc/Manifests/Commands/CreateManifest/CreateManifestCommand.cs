@@ -55,11 +55,10 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
         public Guid? BillOfLadingId { get; set; }
         public string TypeCode { get; set; }
         public string SealNumber { get; set; }
-        public string Remark { get; set; }
-        public string DangerousCode { get; set; }
-        public string Classification { get; set; }
-        public decimal IgnitionTemperature { get; set; }
-        public string IgnitionTemperatureUnit { get; set; }
+        public string? DangerousCode { get; set; }
+        public string? Classification { get; set; }
+        public decimal? IgnitionTemperature { get; set; }
+        public string? IgnitionTemperatureUnit { get; set; }
 
         public List<CreateManifestContainerGoodCommand> ManifestContainerGoods { get; set; }
 
