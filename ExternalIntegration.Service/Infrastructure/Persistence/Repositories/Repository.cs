@@ -32,7 +32,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
             await _dbSet.AddRangeAsync(entities);
         }
 
-        public async Task<List<TEntity>> FilterUnpersistedAsync<TId>(IEnumerable<TEntity> entities, 
+        public async virtual Task<List<TEntity>> FilterUnpersistedAsync<TId>(IEnumerable<TEntity> entities, 
             Func<TEntity, TId> idSelector, Expression<Func<TEntity, TId>> dbIdSelector)
         {
             var entityList = entities.ToList();

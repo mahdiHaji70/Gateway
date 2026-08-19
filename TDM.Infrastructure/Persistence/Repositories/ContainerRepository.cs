@@ -58,12 +58,13 @@ namespace TDM.Infrastructure.Persistence.Repositories
 
                 query = query.Union(
                    _dbSet.AsNoTracking()
-                  .Include(x => x.ContainerTypeAndSize)
                   .Where(x => x.No == tempNo && x.ContainerTypeAndSize.TypeAndSizeCode == tempTypeCode)
         );
             }
 
-            return await query.ToListAsync(cancellationToken);
+            return await query
+                .Include(x => x.ContainerTypeAndSize)
+                .ToListAsync(cancellationToken);
 
         }
     }

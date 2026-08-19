@@ -12,9 +12,6 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.ContainerId)
-                .IsRequired();
-
             builder.Property(x => x.ManifestItemId)
                 .IsRequired();
 
@@ -25,9 +22,6 @@ namespace TDM.Infrastructure.Persistence.Configurations
                 .IsRequired(false)
                 .HasMaxLength(200);
 
-            builder.Property(x => x.Remark)
-                .IsRequired(false);
-
             builder.Property(x => x.DangerousCode)
                 .IsRequired(false)
                 .HasMaxLength(50);
@@ -36,8 +30,7 @@ namespace TDM.Infrastructure.Persistence.Configurations
                 .IsRequired(false)
                 .HasMaxLength(50);
 
-            builder.Property(x => x.IgnitionTemperature)
-                .IsRequired()
+            builder.Property(x => x.IgnitionTemperature)                
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(x => x.IgnitionTemperatureUnit)

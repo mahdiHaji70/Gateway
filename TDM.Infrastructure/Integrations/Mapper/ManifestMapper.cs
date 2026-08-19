@@ -23,8 +23,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 ShipLine = src.Voyage?.ShippingLine ?? string.Empty,
                 ShipAgent = src.Voyage?.ShippingAgent ?? string.Empty,
                 ShipAgentNationalId = src.Voyage?.ShippingAgentCompanyIdNumber ?? string.Empty,
-                VesselName = src.Voyage?.VessleData?.Name ?? string.Empty,
-                Imo = src.Voyage?.VessleData?.Imo ?? string.Empty,
+                VesselName = src.Voyage?.VesselData?.Name ?? string.Empty,
+                Imo = src.Voyage?.VesselData?.Imo ?? string.Empty,
                 TerminalCode = src.TerminalCodeDischarge,
                 ManifestItems = src.Items?.Select(MapItem).ToList() ?? new List<ManifestItemDto>()
             };

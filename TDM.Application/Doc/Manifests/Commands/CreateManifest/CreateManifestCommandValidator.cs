@@ -148,9 +148,6 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
             RuleFor(x => x.IgnitionTemperatureUnit)
                 .MaximumLength(10);
 
-            RuleFor(x => x.Remark)
-                .MaximumLength(500);
-
             RuleForEach(x => x.ManifestContainerGoods)
                 .SetValidator(new CreateManifestContainerGoodCommandValidator())
                 .When(x => x.ManifestContainerGoods != null);

@@ -16,11 +16,10 @@ namespace TDM.Domain.Entities
 
         public Guid? BillOfLadingId { get; set; }
         public string SealNumber { get; set; }
-        public string Remark { get; set; }
-        public string DangerousCode { get; set; }
-        public string Classification { get; set; }
-        public decimal IgnitionTemperature { get; set; }
-        public string IgnitionTemperatureUnit { get; set; }
+        public string? DangerousCode { get; set; }
+        public string? Classification { get; set; }
+        public decimal? IgnitionTemperature { get; set; }
+        public string? IgnitionTemperatureUnit { get; set; }
 
         public ICollection<ManifestContainerGood> ManifestContainerGoods { get; private set; } = new List<ManifestContainerGood>();
 
@@ -33,17 +32,15 @@ namespace TDM.Domain.Entities
             Guid containerId,
             Guid? billOfLadingId,
             string sealNumber,
-            string remark,
             string dangerousCode,
             string classification,
-            decimal ignitionTemperature,
+            decimal? ignitionTemperature,
             string ignitionTemperatureUnit)
         {
             SetProperty(
                 containerId,
                 billOfLadingId,
                 sealNumber,
-                remark,
                 dangerousCode,
                 classification,
                 ignitionTemperature,
@@ -54,17 +51,15 @@ namespace TDM.Domain.Entities
             Guid containerId,
             Guid? billOfLadingId,
             string sealNumber,
-            string remark,
             string dangerousCode,
             string classification,
-            decimal ignitionTemperature,
+            decimal? ignitionTemperature,
             string ignitionTemperatureUnit)
         {
             SetProperty(
                 containerId,
                 billOfLadingId,
                 sealNumber,
-                remark,
                 dangerousCode,
                 classification,
                 ignitionTemperature,
@@ -75,10 +70,9 @@ namespace TDM.Domain.Entities
             Guid containerId,
             Guid? billOfLadingId,
             string sealNumber,
-            string remark,
             string dangerousCode,
             string classification,
-            decimal ignitionTemperature,
+            decimal? ignitionTemperature,
             string ignitionTemperatureUnit)
         {
             Validate(containerId);
@@ -86,7 +80,6 @@ namespace TDM.Domain.Entities
             ContainerId = containerId;
             BillOfLadingId = billOfLadingId;
             SealNumber = sealNumber;
-            Remark = remark;
             DangerousCode = dangerousCode;
             Classification = classification;
             IgnitionTemperature = ignitionTemperature;

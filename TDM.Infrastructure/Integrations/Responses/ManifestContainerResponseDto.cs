@@ -13,7 +13,7 @@ namespace TDM.Infrastructure.Integrations.Responses
         public string Type { get; set; }
         public string TypeCode { get; set; }
         public decimal GrossWeight { get; set; }
-        public decimal NetWeight { get; set; }
+        public decimal? NetWeight { get; set; }
         public string UnitOfMeasurement { get; set; }
         public string SealNumber { get; set; }
         public string Sealer { get; set; }
@@ -24,9 +24,9 @@ namespace TDM.Infrastructure.Integrations.Responses
         public string DangerousCode { get; set; }
         public string DangerousClassification { get; set; }
         public string TemperatureType { get; set; }
-        public decimal TemperatureValue { get; set; }
+        public decimal? TemperatureValue { get; set; }
         public string TemperatureUnitOfMeasurement { get; set; }
-        public decimal IgnitionTemperature { get; set; }
+        public decimal? IgnitionTemperature { get; set; }
         public string IgnitionTemperatureUnit { get; set; }
         public string RepresentativeOfContainerOwner { get; set; }
         public string ContainerOwner { get; set; }

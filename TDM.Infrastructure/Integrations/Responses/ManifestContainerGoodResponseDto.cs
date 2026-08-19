@@ -12,6 +12,6 @@ namespace TDM.Infrastructure.Integrations.Responses
         public string PackageTypeCode { get; set; }
         public decimal PackageCount { get; set; }
         public decimal GrossWeight { get; set; }
-        public decimal NetWeight { get; set; }
+        public decimal? NetWeight { get; set; }
     }
 }
