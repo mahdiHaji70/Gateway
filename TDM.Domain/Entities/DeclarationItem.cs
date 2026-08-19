@@ -19,6 +19,9 @@ namespace TDM.Domain.Entities
         public Guid PackageId { get; set; }
         public Package Package { get; set; }
 
+        public Guid CargoTypeId { get; set; }
+        public CargoType CargoType { get; set; }
+
         public ICollection<DeclarationContainer> DeclarationContainers { get; private set; } = new List<DeclarationContainer>();
 
         public ICollection<TerminalDischarge> TerminalDischarges { get; private set; } = new List<TerminalDischarge>();
@@ -29,9 +32,10 @@ namespace TDM.Domain.Entities
             decimal netWeight,
             Guid declarationId,
             Guid commodityId,
-            Guid packageId)
+            Guid packageId,
+            Guid cargoTypeId)
         {
-            Validate(quantity, grossWeight, netWeight, declarationId, commodityId, packageId);
+            Validate(quantity, grossWeight, netWeight, declarationId, commodityId, packageId,cargoTypeId);
 
             Quantity = quantity;
             GrossWeight = grossWeight;
@@ -39,6 +43,7 @@ namespace TDM.Domain.Entities
             DeclarationId = declarationId;
             CommodityId = commodityId;
             PackageId = packageId;
+            CargoTypeId = cargoTypeId;
         }
 
         public void Update(
@@ -47,9 +52,10 @@ namespace TDM.Domain.Entities
             decimal netWeight,
             Guid declarationId,
             Guid commodityId,
-            Guid packageId)
+            Guid packageId,
+            Guid cargoTypeId)
         {
-            Validate(quantity, grossWeight, netWeight, declarationId, commodityId, packageId);
+            Validate(quantity, grossWeight, netWeight, declarationId, commodityId, packageId,cargoTypeId);
 
             Quantity = quantity;
             GrossWeight = grossWeight;
@@ -57,6 +63,7 @@ namespace TDM.Domain.Entities
             DeclarationId = declarationId;
             CommodityId = commodityId;
             PackageId = packageId;
+            CargoTypeId = cargoTypeId;
         }
 
         public void AddContainer(DeclarationContainer container)
@@ -64,7 +71,8 @@ namespace TDM.Domain.Entities
             DeclarationContainers.Add(container);
         }
 
-        private void Validate(long quantity, decimal grossWeight, decimal netWeight, Guid declarationId, Guid commodityId, Guid packageId)
+        private void Validate(long quantity, decimal grossWeight, decimal netWeight, Guid declarationId, Guid commodityId, Guid packageId,
+            Guid cargoTypeId)
         {
             if (quantity <= 0)
                 throw new DomainValidationException("Quantity must be greater than zero.");
@@ -86,6 +94,9 @@ namespace TDM.Domain.Entities
 
             if (packageId == Guid.Empty)
                 throw new DomainValidationException("Package Id is required.");
+
+            if (cargoTypeId == Guid.Empty)
+                throw new DomainValidationException("CargoType Id is required.");
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
+using TDM.Domain.Enums;
 using TDM.Infrastructure.Integrations.Requests;
 using TDM.Infrastructure.Integrations.Responses;
 
@@ -23,7 +24,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     GrossWeight = Convert.ToDecimal(x.GrossWeight),
                     NetWeight = Convert.ToDecimal(x.NetWeight),
                     HSCode = x.HSCode!,
-                    PackageCode = x.PackageTypeCode!
+                    PackageCode = x.PackageTypeCode!,
+                    CargoTypeId= Domain.Enums.CargoTypes.GeneralCargo
                 }));
             }
 
@@ -37,7 +39,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     GrossWeight = Convert.ToDecimal(x.Weight),
                     NetWeight = Convert.ToDecimal(x.Weight),
                     HSCode = x.HsCode!,
-                    PackageCode = string.Empty
+                    PackageCode = string.Empty,
+                    CargoTypeId = Domain.Enums.CargoTypes.Bulk
                 }));
             }
 
@@ -52,6 +55,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                         NetWeight = 1,
                         HSCode = "86090000",
                         PackageCode = "SX",
+                        CargoTypeId = Domain.Enums.CargoTypes.Container ,
 
                         Containers = new List<IpasDeclarationContainerResponse>
                         {

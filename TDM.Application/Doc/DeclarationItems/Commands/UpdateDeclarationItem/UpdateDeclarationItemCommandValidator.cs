@@ -35,6 +35,10 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDecla
             RuleFor(x => x.PackageId)
                 .NotEmpty()
                 .WithMessage("PackageId is required.");
+
+            RuleFor(x => x.CargoTypeId)
+                .NotEmpty()
+                .WithMessage("CargoTypeId is required.");
         }
     }
 }

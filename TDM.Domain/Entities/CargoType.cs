@@ -12,6 +12,8 @@ namespace TDM.Domain.Entities
         public string Name { get; private set; }
         public ICollection<TerminalDischarge> CargoTypeTerminalDischarges { get; private set; } = new List<TerminalDischarge>();
         public ICollection<StoreReceiptHead> CargoTypeStoreReceiptHeads { get; private set; } = new List<StoreReceiptHead>();
+        public ICollection<DeclarationItem> CargoTypeDeclarationItems { get; private set; } = new List<DeclarationItem>();
+
 
         public CargoType(string name) => SetProperty(name);
 

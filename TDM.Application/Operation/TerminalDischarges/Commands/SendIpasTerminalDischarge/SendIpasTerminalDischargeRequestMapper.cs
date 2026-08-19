@@ -18,8 +18,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
                 WaybillNo = terminalDischarge.WayBillNo,
                 DischargeDate = terminalDischarge.DischargeDate,
                 VehicleNumber = terminalDischarge.VehicleNumber,
-                CargoTypeId = terminalDischarge.CargoTypeId,
-                CargoTypeName = terminalDischarge.CargoType.Name,
                 HSCode = terminalDischarge.DeclarationItem.Commodity.HsCode,
                 CommodityId = terminalDischarge.DeclarationItem.Commodity.Id,
                 CommodityName = terminalDischarge.DeclarationItem.Commodity.Name,

@@ -11,5 +11,7 @@ namespace TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDecla
         public Guid DeclarationId { get; set; }
         public Guid CommodityId { get; set; }
         public Guid PackageId { get; set; }
+        public Guid CargoTypeId { get; set; }
+
     }
 }

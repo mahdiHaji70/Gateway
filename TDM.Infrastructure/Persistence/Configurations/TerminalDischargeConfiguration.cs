@@ -19,9 +19,6 @@ namespace TDM.Infrastructure.Persistence.Configurations
                 .IsRequired()
                .HasMaxLength(4);
 
-            builder.Property(x => x.CargoTypeId)
-               .IsRequired();
-
             builder.Property(x => x.DeclarationItemId)
               .IsRequired();
 
@@ -39,11 +36,7 @@ namespace TDM.Infrastructure.Persistence.Configurations
           .WithMany(cn => cn.TerminalDischarges)
           .HasForeignKey(c => c.DeclarationItemId)
           .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(c => c.CargoType)
-           .WithMany(cn => cn.CargoTypeTerminalDischarges)
-           .HasForeignKey(c => c.CargoTypeId)
-           .OnDelete(DeleteBehavior.Restrict);
+   
 
             builder.HasOne(c => c.Store)
             .WithMany(cn => cn.StoreTerminalDischarges)
