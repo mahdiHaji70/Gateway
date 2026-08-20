@@ -91,5 +91,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _tdmSyncService.ApproveManifestAsync(id);
         }
+
+        [HttpGet("GetManifestChanges")]
+        public async Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges([FromQuery] string terminalCode)
+        {
+            return await _tdmSyncService.GetManifestChangesByTerminalCode(terminalCode);
+        }
     }
 }

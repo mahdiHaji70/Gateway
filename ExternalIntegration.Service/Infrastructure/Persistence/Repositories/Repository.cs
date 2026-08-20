@@ -65,5 +65,10 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .Where(e => !existingSet.Contains(idSelector(e)))
                 .ToList();
         }
+
+        public void Delete(TEntity entity)
+        {
+              _dbSet.Remove(entity);
+        }
     }
 }

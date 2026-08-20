@@ -122,6 +122,8 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<ManifestContainerResponseDto, ManifestContainerDto>();
             CreateMap<ManifestContainerGoodResponseDto, ManifestContainerGoodDto>();
 
+            CreateMap<ManifestChangeResponseDto, ManifestChangeDto>();
+            CreateMap<ManifestChangeLogResponseDto, ManifestChangeLogDto>();
         }
     }
 }

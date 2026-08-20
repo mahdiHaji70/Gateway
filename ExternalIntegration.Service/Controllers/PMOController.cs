@@ -91,5 +91,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetManifests(dto);
         }
+
+        [HttpGet("GetManifestChanges")]
+        public async Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges([FromQuery] DateRangeWithPagingDto dto)
+        {
+            return await _pmoSyncService.GetManifestChanges(dto);
+        }
     }
 }

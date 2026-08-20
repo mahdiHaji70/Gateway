@@ -1,4 +1,5 @@
 ﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
         Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto);
         Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto);
-
+        Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges(DateRangeWithPagingDto dto);
+        Task<Response<ManifestDto>> GetManifestById(Guid id, string terminalCode);
     }
 }

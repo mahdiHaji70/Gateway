@@ -114,6 +114,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
 
         }
+
         public async Task<Response<Guid>> TruckTerminalDischarge(TruckTerminalDischargeRequestDto model)
         {
             var request = new PmoRequestBuilder()
@@ -349,6 +350,48 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             };
 
             return finalResult;
+        }
+
+        public async Task<Response<IEnumerable<ManifestChangeResponseDto>>> GetManifestChanges(PmoDateRangeWithPagingDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.ManifestChange)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+
+                }).Build();
+
+
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<ManifestChangeResponseDto>>(request, dto.TerminalCode);
+
+            var finalResult = new Response<IEnumerable<ManifestChangeResponseDto>>
+            {
+                Status = response.Status,
+                Message = response.Message,
+                Errors = response.Errors,
+                Data = response.Data.Items
+            };
+
+            return finalResult;
+        }
+
+        public async Task<Response<ManifestResponseDto>> GetManifestById(Guid id, string terminalCode)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.ManifestChangeDetail)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter{ ParameterName = nameof(id), ParameterValue = id}           
+          }).Build();
+
+            var response = await _requestExecutor.PostAsync<ManifestResponseDto>(request, terminalCode);
+
+            return response;
         }
     }
 }

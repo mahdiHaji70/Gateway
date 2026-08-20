@@ -9,6 +9,5 @@ namespace ExternalIntegration.Service.Application.Abstractions
         Task<IEnumerable<ManifestNoticeToApproveDto>> GetManifestsNoticeNoToApprove(string terminalCode);
         Task<Manifest?> GetManifestById(Guid id);
         Task<bool> ApproveManifestAsync(Guid id);
-
     }
 }
