@@ -37,10 +37,10 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.GeneralCargoList)))
             .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
 
-           
+
             CreateMap<Voyage, VoyageDto>()
             .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VoyageVesselDataDto>>(src.VesselData)));
-            
+
             CreateMap<StoreReceipt, StoreReceiptDto>()
              .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptBulkDto>>(src.BulkList)))
              .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptGeneralCargoDto>>(src.GeneralCargoList)))
@@ -53,7 +53,7 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
             CreateMap<Manifest, ManifestDto>()
              .ForMember(dest => dest.Voyage, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<ManifestVoyageDto>(src.Voyage)))
-             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ManifestItemDto>>(src.Items)))             
+             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ManifestItemDto>>(src.Items)))
              .ReverseMap()
              .ForMember(dest => dest.NoticeNo, opt => opt.MapFrom(src => src.Voyage.NoticeNo))
              .ForMember(dest => dest.VoyageNo, opt => opt.MapFrom(src => src.Voyage.VoyageNo))
@@ -63,7 +63,10 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<string, List<ManifestItemDto>>()
             .ConvertUsing(src => JsonConvert.DeserializeObject<List<ManifestItemDto>>(src)!);
 
-
+            CreateMap<ManifestChangeDto, ManifestChange>()
+             .ForMember(dest => dest.ChangeLogs, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ChangeLogs)))
+             .ReverseMap()
+             .ForMember(dest => dest.ChangeLogs, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<ManifestChangeLogDto>(src.ChangeLogs)));
         }
     }
 }

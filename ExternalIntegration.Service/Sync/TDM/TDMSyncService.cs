@@ -15,6 +15,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         private readonly IVoyageRepository _voyageRepository;
         private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IManifestRepository _manifestRepository;
+        private readonly IManifestChangeRepository _manifestChangeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public TDMSyncService(IMapper mapper, IUnitOfWork unitOfWork,
@@ -23,7 +24,8 @@ namespace ExternalIntegration.Service.Sync.TDM
            , IIssueRequestRepository issueRequestRepository,
             IVoyageRepository voyageRepository
            , IStoreReceiptRepository storerReceiptRepository
-            , IManifestRepository manifestRepository)
+            , IManifestRepository manifestRepository
+            , IManifestChangeRepository manifestChangeRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -33,6 +35,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             _voyageRepository = voyageRepository;
             _storeReceiptRepository = storerReceiptRepository;
             _manifestRepository = manifestRepository;
+            _manifestChangeRepository = manifestChangeRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
@@ -150,6 +153,15 @@ namespace ExternalIntegration.Service.Sync.TDM
             await _unitOfWork.SaveChangesAsync();
 
             return Response<bool>.Success(result);          
+        }
+
+        public async Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChangesByTerminalCode(string terminalCode)
+        {
+            var manifestChanges = await _manifestChangeRepository.GetByTerminalCode(terminalCode);
+            if (manifestChanges == null)
+                return Response<IEnumerable<ManifestChangeDto>>.Error($"Manifest changes with terminal code '{terminalCode}' was not found.");
+
+            return Response<IEnumerable<ManifestChangeDto>>.Success(_mapper.Map<IEnumerable<ManifestChangeDto>>(manifestChanges));
         }
     }
 }

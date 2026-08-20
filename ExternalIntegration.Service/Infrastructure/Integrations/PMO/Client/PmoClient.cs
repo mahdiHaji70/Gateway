@@ -356,7 +356,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         {
             var request = new PmoRequestBuilder()
                 .WithCredential(_userName, _password)
-                .WithService(_serviceNames.DischargPermit)
+                .WithService(_serviceNames.ManifestChange)
                 .WithParameters(new List<Parameter>
                 {
                 new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
@@ -377,6 +377,21 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             };
 
             return finalResult;
+        }
+
+        public async Task<Response<ManifestResponseDto>> GetManifestById(Guid id, string terminalCode)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.ManifestChangeDetail)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter{ ParameterName = nameof(id), ParameterValue = id}           
+          }).Build();
+
+            var response = await _requestExecutor.PostAsync<ManifestResponseDto>(request, terminalCode);
+
+            return response;
         }
     }
 }

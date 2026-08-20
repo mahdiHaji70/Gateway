@@ -32,6 +32,7 @@ namespace ExternalIntegration.Service.Infrastructure
             services.AddScoped<IVoyageRepository, VoyageRepository>();
             services.AddScoped<IStoreReceiptRepository, StoreReceiptRepository>();
             services.AddScoped<IManifestRepository, ManifestRepository>();
+            services.AddScoped<IManifestChangeRepository, ManifestChangeRepository>();
 
             services.AddSingleton<AesEncryption>();
 

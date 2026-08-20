@@ -4,6 +4,7 @@ using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IVoyageRepository _voyageRepository;
         private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IManifestRepository _manifestRepository;
+        private readonly IManifestChangeRepository _manifestChangeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
@@ -31,7 +33,8 @@ namespace ExternalIntegration.Service.Sync.PMO
             , IIssueRequestRepository issueRequestRepository
             , IVoyageRepository voyageRepository
             , IStoreReceiptRepository storeReceiptRepository
-            , IManifestRepository manifestRepository)
+            , IManifestRepository manifestRepository
+            , IManifestChangeRepository manifestChangeRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;
@@ -43,6 +46,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             _voyageRepository = voyageRepository;
             _storeReceiptRepository = storeReceiptRepository;
             _manifestRepository = manifestRepository;
+            _manifestChangeRepository = manifestChangeRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
@@ -293,6 +297,54 @@ namespace ExternalIntegration.Service.Sync.PMO
             );
 
             await _manifestRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
+        }
+
+        public async Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges(DateRangeWithPagingDto dto)
+        {
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)
+                localFromDate = await _manifestChangeRepository.GetLastDateAsync(dto.TerminalCode);
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
+
+            var pmoDateDto = new PmoDateRangeWithPagingDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode,
+                dto.PageIndex,
+                dto.PageSize);
+
+            var clientResult = await _client.GetManifestChanges(pmoDateDto);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<ManifestChangeDto>>>(clientResult);
+
+            var newData = await _manifestChangeRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<ManifestChange>>(syncMappingDto.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _manifestChangeRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
+        }
+
+        public async Task<Response<ManifestDto>> GetManifestById(Guid id, string terminalCode)
+        {
+            var clientResult = await _client.GetManifestById(id, terminalCode);
+            var syncMappingDto = _mapper.Map<Response<ManifestDto>>(clientResult);
+
+            var manifest = await _manifestRepository.GetAsync(id);
+            if(manifest == null)
+                return Response<ManifestDto>.Error($"Manifest with ID '{id}' was not found.");
+
+            _manifestRepository.Delete(id);
+            await _manifestRepository.InsertAsync(manifest);
             await _unitOfWork.SaveChangesAsync();
 
             return syncMappingDto;

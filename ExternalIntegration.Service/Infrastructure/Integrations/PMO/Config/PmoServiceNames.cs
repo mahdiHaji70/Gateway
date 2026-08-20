@@ -42,8 +42,9 @@
         public string DeliveriesReturns { get; init; } = default!;
         public string AccountToken { get; init; } = default!;
         public string EmptyContainerCSA { get; init; } = default!;
-        public string ShippingLinesandAgents { get; init; } = default!;        
-
+        public string ShippingLinesandAgents { get; init; } = default!;
+        public string ManifestChange { get; set; } = default!;
+        public string ManifestChangeDetail { get; set; } = default!;
 
     }
 }

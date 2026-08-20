@@ -2,6 +2,6 @@
 {
     public class ManifestChangeLogResponseDto
     {
-        public string billOfLadingLocalNo { get; set; }
+        public string BillOfLadingLocalNo { get; set; }
     }
 }

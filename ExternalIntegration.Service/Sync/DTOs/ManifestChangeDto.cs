@@ -1,6 +1,8 @@
-﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
+﻿using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
+
+namespace ExternalIntegration.Service.Sync.DTOs
 {
-    public class ManifestChangeResponseDto
+    public class ManifestChangeDto
     {
         public Guid Id { get; set; }
         public decimal RevisionNo { get; set; }
@@ -16,6 +18,6 @@
         public string ShippingAgentIdNumber { get; set; }
         public string ShippingAgent { get; set; }
 
-        public List<ManifestChangeLogResponseDto> ChangeLogs { get; set; }
+        public List<ManifestChangeLogDto> ChangeLogs { get; set; }
     }
 }
