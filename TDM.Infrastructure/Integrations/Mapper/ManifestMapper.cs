@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Doc.Manifests.DTOs;
+using TDM.Domain.Enums;
 using TDM.Infrastructure.Integrations.Responses;
 
 namespace TDM.Infrastructure.Integrations.Mapper
@@ -45,11 +46,12 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 ConsigneeNationalId = src.ConsigneeIdNumber,
                 ShipAgentName = src.ShippingAgent,
                 ShipAgentNationalId = src.ShippingAgentIdNumber,
+                IpasItemId = src.Id,
                 ManifestGoods = new List<ManifestGoodDto>(),
                 ManifestContainers = src.ContainersList?.Select(MapContainer).ToList() ?? new List<ManifestContainerDto>()
             };
 
-            if (src.GeneralCargoList != null)
+            if (src.GeneralCargoList != null && src.GeneralCargoList.Count > 0)
             {
                 itemDto.ManifestGoods.AddRange(src.GeneralCargoList.Select(g => new ManifestGoodDto
                 {
@@ -62,9 +64,11 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     HSCode = g.HSCode,
                     PackageCode = g.PackageTypeCode
                 }));
+
+                itemDto.CargoTypeId = CargoTypes.GeneralCargo;
             }
 
-            if (src.BulkList != null)
+            if (src.BulkList != null && src.BulkList.Count > 0)
             {
                 itemDto.ManifestGoods.AddRange(src.BulkList.Select(b => new ManifestGoodDto
                 {
@@ -75,6 +79,14 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     Description = b.Description,
                     HSCode = b.HSCode
                 }));
+
+                itemDto.CargoTypeId = CargoTypes.Bulk;
+            }
+
+            if(src.ContainersList != null && src.ContainersList.Count > 0)
+            {
+                itemDto.ManifestContainers.AddRange(src.ContainersList.Select(MapContainer));
+                itemDto.CargoTypeId = CargoTypes.Container;
             }
 
             return itemDto;

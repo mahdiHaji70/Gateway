@@ -97,5 +97,11 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetManifestChanges(dto);
         }
+
+        [HttpPost("SendVesselDischarge")]
+        public async Task<Response<Guid>> SendVesselDischarge([FromBody] VesselDischargeDto dto)
+        {
+            return await _pmoSyncService.SendVesselDischarge(dto);
+        }
     }
 }

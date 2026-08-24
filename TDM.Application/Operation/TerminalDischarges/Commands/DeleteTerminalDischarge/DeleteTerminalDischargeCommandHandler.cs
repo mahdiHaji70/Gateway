@@ -10,24 +10,24 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.DeleteTerminalDi
    
     public class DeleteTerminalDischargeCommandHandler : IRequestHandler<DeleteTerminalDischargeCommand, bool>
     {
-        private readonly IRepository<TerminalDischarge> _TerminalDischargeRepository;
+        private readonly IRepository<TerminalDischarge> _terminalDischargeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public DeleteTerminalDischargeCommandHandler(IUnitOfWork unitOfWork
-            , IRepository<TerminalDischarge> TerminalDischargeRepository)
+            , IRepository<TerminalDischarge> terminalDischargeRepository)
         {
             _unitOfWork = unitOfWork;
-            _TerminalDischargeRepository = TerminalDischargeRepository;
+            _terminalDischargeRepository = terminalDischargeRepository;
         }
 
         public async Task<bool> Handle(DeleteTerminalDischargeCommand request, CancellationToken cancellationToken)
         {
-            var TerminalDischarge = await _TerminalDischargeRepository.GetAsync(request.Id);
+            var terminalDischarge = await _terminalDischargeRepository.GetAsync(request.Id);
 
-            if (TerminalDischarge == null)
+            if (terminalDischarge == null)
                 throw new Exception("TerminalDischarge not found");
 
-            _TerminalDischargeRepository.Delete(TerminalDischarge);
+            _terminalDischargeRepository.Delete(terminalDischarge);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

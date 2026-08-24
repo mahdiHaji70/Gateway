@@ -386,10 +386,85 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
           .WithService(_serviceNames.ManifestChangeDetail)
           .WithParameters(new List<Parameter>
           {
-                new Parameter{ ParameterName = nameof(id), ParameterValue = id}           
+                new Parameter{ ParameterName = nameof(id), ParameterValue = id}
           }).Build();
 
             var response = await _requestExecutor.PostAsync<ManifestResponseDto>(request, terminalCode);
+
+            return response;
+        }
+
+        public async Task<Response<Guid>> SendVesselDischarge(VesselDischargeRequestDto model)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.TruckTerminalDis)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ParameterName = nameof(model.Date), ParameterValue = model.Date.ToString("yyyy-MM-ddTHH:mm:ss") },
+                new Parameter{ParameterName = nameof(model.VoyageNoticeNo), ParameterValue = model.VoyageNoticeNo  },
+                new Parameter{ParameterName = nameof(model.TerminalCode ), ParameterValue = model.TerminalCode  },
+                new Parameter{ParameterName = nameof(model.BillOfLadingId), ParameterValue = model.BillOfLadingId },
+                new Parameter{ParameterName = nameof(model.TallyMan), ParameterValue = model.TallyMan },
+                new Parameter{ParameterName = nameof(model.CarrierIdNumber), ParameterValue = model.CarrierIdNumber },
+                new Parameter{ParameterName = nameof(model.CarrierType), ParameterValue = model.CarrierType },
+                new Parameter{ParameterName = nameof(model.CarrierEmptyWeight), ParameterValue = model.CarrierEmptyWeight },
+                new Parameter{ParameterName = nameof(model.CarrierFullWeight), ParameterValue = model.CarrierFullWeight },
+                new Parameter{ParameterName =nameof(model.GateInDateTime),ParameterValue = model.GateInDateTime.ToString("yyyy-MM-ddTHH:mm:ss") },
+                new Parameter{ParameterName =nameof(model.GateOutDateTime),ParameterValue = model.GateOutDateTime.ToString("yyyy-MM-ddTHH:mm:ss") },
+                new Parameter{ParameterName = nameof(model.IsFullyDischargedNoticed), ParameterValue = model.IsFullyDischargedNoticed },
+                new Parameter{ParameterName = nameof(model.Remark), ParameterValue = model.Remark! },
+                new Parameter{ParameterName =nameof(model.GeneralCargoList),
+                    ParameterValue = JsonConvert.SerializeObject(model.GeneralCargoList.Select( s=>
+                                new {
+                s.HsCode,
+                s.Description,
+                s.BrandName,
+                s.PackageTypeCode ,
+                s.PackageType,
+                s.PackageQuantity ,
+                s.GrossWeight  ,
+                s.NetWeight,
+                s.IsNonPalletized ,
+                s.IsDamaged,
+                s.IsDangerous,
+                s.Width,
+                s.Height,
+                s.Length,
+                s.IsVoluminous,
+                s.Remark,
+                s.DangerousSpecification
+                                }
+                                ))},
+                new Parameter { ParameterName =nameof(model.BulkList),
+                    ParameterValue = JsonConvert.SerializeObject( model.BulkList.Select( s=>
+                                new {
+                s.HsCode,
+                s.Description,
+                s.Weight,
+                s.Volume,
+                s.IsDangerous,
+                s.DangerousNotNoticed,
+                s.DangerousSpecification,
+                s.Remark,
+                                }
+                                ))},
+                new Parameter { ParameterName =nameof(model.ContainerList),
+                    ParameterValue = JsonConvert.SerializeObject(model.ContainerList.Select( s=>
+                               new {
+                s.ContainerNo,
+                s.ContainerTypeAndSizeCode,
+                s.SealNumber,
+                s.Remark,
+                s.IsDangerous,
+                s.DangerousNotNoticed,
+                s.DangerousSpecification,
+                s.DischargeSpecification
+                                }
+                                ))}
+                }).Build();
+
+            var response = await _requestExecutor.PostAsync<Guid>(request, model.TerminalCode);
 
             return response;
         }

@@ -474,6 +474,9 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CargoTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CommodityId")
                         .HasColumnType("uniqueidentifier");
 
@@ -505,6 +508,8 @@ namespace TDM.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CargoTypeId");
 
                     b.HasIndex("CommodityId");
 
@@ -800,6 +805,9 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CargoTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ConsigneeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -811,6 +819,9 @@ namespace TDM.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IpasItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ManifestId")
@@ -843,6 +854,8 @@ namespace TDM.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CargoTypeId");
 
                     b.HasIndex("ConsigneeId");
 
@@ -1346,7 +1359,7 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CargoTypeId")
+                    b.Property<Guid?>("CargoTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Classification")
@@ -1394,6 +1407,9 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<bool>("IsVoluminous")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("IssueRequestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("PackNB")
                         .HasColumnType("bigint");
 
@@ -1404,6 +1420,9 @@ namespace TDM.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(4)
                         .HasColumnType("nvarchar(4)");
+
+                    b.Property<decimal>("UnitWeight")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -1503,6 +1522,115 @@ namespace TDM.Infrastructure.Migrations
                     b.HasIndex("TerminalId");
 
                     b.ToTable("UserTerminals", "basicInfo");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.VesselDischarge", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Classification")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DangerousCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("DischargeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("IgnitionTemperature")
+                        .HasPrecision(18, 3)
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<string>("IgnitionTemperatureUnit")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<Guid?>("IpasVesselDischargeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("IpasVesselDischargeReceivedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDamaged")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsDangerous")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsNonPalletized")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsVoluminous")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<Guid?>("ManifestContainerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ManifestItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("PackNB")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TerminalCode")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<decimal>("UnitWeight")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 3)
+                        .HasColumnType("decimal(18,3)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Volume")
+                        .HasPrecision(18, 3)
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<decimal>("Weight")
+                        .HasPrecision(18, 3)
+                        .HasColumnType("decimal(18,3)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IpasVesselDischargeId")
+                        .IsUnique()
+                        .HasFilter("[IpasVesselDischargeId] IS NOT NULL");
+
+                    b.HasIndex("ManifestContainerId");
+
+                    b.HasIndex("ManifestItemId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("VesselDischarges", "operation");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.WeightBridge", b =>
@@ -1653,6 +1781,12 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.DeclarationItem", b =>
                 {
+                    b.HasOne("TDM.Domain.Entities.CargoType", "CargoType")
+                        .WithMany("CargoTypeDeclarationItems")
+                        .HasForeignKey("CargoTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TDM.Domain.Entities.Commodity", "Commodity")
                         .WithMany("CommodityDeclarationItems")
                         .HasForeignKey("CommodityId")
@@ -1670,6 +1804,8 @@ namespace TDM.Infrastructure.Migrations
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("CargoType");
 
                     b.Navigation("Commodity");
 
@@ -1768,6 +1904,12 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.ManifestItem", b =>
                 {
+                    b.HasOne("TDM.Domain.Entities.CargoType", "CargoType")
+                        .WithMany("CargoTypeManifestItems")
+                        .HasForeignKey("CargoTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TDM.Domain.Entities.Company", "Consignee")
                         .WithMany("ConsigneeManifestItems")
                         .HasForeignKey("ConsigneeId")
@@ -1791,6 +1933,8 @@ namespace TDM.Infrastructure.Migrations
                         .HasForeignKey("TrafficId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("CargoType");
 
                     b.Navigation("Consignee");
 
@@ -1952,11 +2096,9 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.TerminalDischarge", b =>
                 {
-                    b.HasOne("TDM.Domain.Entities.CargoType", "CargoType")
+                    b.HasOne("TDM.Domain.Entities.CargoType", null)
                         .WithMany("CargoTypeTerminalDischarges")
-                        .HasForeignKey("CargoTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CargoTypeId");
 
                     b.HasOne("TDM.Domain.Entities.DeclarationItem", "DeclarationItem")
                         .WithMany("TerminalDischarges")
@@ -1969,8 +2111,6 @@ namespace TDM.Infrastructure.Migrations
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("CargoType");
 
                     b.Navigation("DeclarationItem");
 
@@ -1986,6 +2126,32 @@ namespace TDM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Terminal");
+                });
+
+            modelBuilder.Entity("TDM.Domain.Entities.VesselDischarge", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.ManifestContainer", "ManifestContainer")
+                        .WithMany("ManifestContainerVesselDischarges")
+                        .HasForeignKey("ManifestContainerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("TDM.Domain.Entities.ManifestItem", "ManifestItem")
+                        .WithMany("ManifestItemVesselDischarges")
+                        .HasForeignKey("ManifestItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Store", "Store")
+                        .WithMany("StoreVesselDischarges")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ManifestContainer");
+
+                    b.Navigation("ManifestItem");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.WeightBridge", b =>
@@ -2006,6 +2172,10 @@ namespace TDM.Infrastructure.Migrations
 
             modelBuilder.Entity("TDM.Domain.Entities.CargoType", b =>
                 {
+                    b.Navigation("CargoTypeDeclarationItems");
+
+                    b.Navigation("CargoTypeManifestItems");
+
                     b.Navigation("CargoTypeStoreReceiptHeads");
 
                     b.Navigation("CargoTypeTerminalDischarges");
@@ -2085,6 +2255,8 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.ManifestContainer", b =>
                 {
                     b.Navigation("ManifestContainerGoods");
+
+                    b.Navigation("ManifestContainerVesselDischarges");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.ManifestItem", b =>
@@ -2092,6 +2264,8 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("ManifestContainers");
 
                     b.Navigation("ManifestGoods");
+
+                    b.Navigation("ManifestItemVesselDischarges");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
@@ -2112,6 +2286,8 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
                 {
                     b.Navigation("StoreTerminalDischarges");
+
+                    b.Navigation("StoreVesselDischarges");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptContainer", b =>

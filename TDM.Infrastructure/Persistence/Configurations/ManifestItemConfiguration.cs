@@ -40,6 +40,12 @@ namespace TDM.Infrastructure.Persistence.Configurations
             builder.Property(x => x.ShipAgentId)
                 .IsRequired();
 
+            builder.Property(x => x.CargoTypeId)
+                .IsRequired();
+
+            builder.Property(x => x.IpasItemId)
+                .IsRequired();
+
             builder.HasOne(x => x.Manifest)
                 .WithMany(x => x.ManifestItems)
                 .HasForeignKey(x => x.ManifestId)
@@ -58,6 +64,11 @@ namespace TDM.Infrastructure.Persistence.Configurations
             builder.HasOne(x => x.ShipAgent)
                 .WithMany(x => x.ShipAgentManifestItems)
                 .HasForeignKey(x => x.ShipAgentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.CargoType)
+                .WithMany(x => x.CargoTypeManifestItems)
+                .HasForeignKey(x => x.CargoTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

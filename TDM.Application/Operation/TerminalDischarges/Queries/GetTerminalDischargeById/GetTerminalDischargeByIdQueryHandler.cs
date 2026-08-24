@@ -12,24 +12,24 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischa
 {
     public class GetTerminalDischargeByIdQueryHandler : IRequestHandler<GetTerminalDischargeByIdQuery, TerminalDischargeDto>
     {
-        private readonly ITerminalDischargeRepository _TerminalDischargeRepository;
+        private readonly ITerminalDischargeRepository _terminalDischargeRepository;
         private readonly IMapper _mapper;
 
         public GetTerminalDischargeByIdQueryHandler(IMapper mapper,
-            ITerminalDischargeRepository TerminalDischargeRepository)
+            ITerminalDischargeRepository terminalDischargeRepository)
         {
-            _TerminalDischargeRepository = TerminalDischargeRepository;
+            _terminalDischargeRepository = terminalDischargeRepository;
             _mapper = mapper;
         }
 
         public async Task<TerminalDischargeDto> Handle(GetTerminalDischargeByIdQuery request, CancellationToken cancellationToken)
         {
-            var TerminalDischarge = await _TerminalDischargeRepository.GetAsync(request.Id);
+            var terminalDischarge = await _terminalDischargeRepository.GetAsync(request.Id);
 
-            if (TerminalDischarge == null)
-                throw new NotFoundException("terminaldischarge");
+            if (terminalDischarge == null)
+                throw new NotFoundException("Terminal discharge");
 
-            return _mapper.Map<TerminalDischargeDto>(TerminalDischarge);
+            return _mapper.Map<TerminalDischargeDto>(terminalDischarge);
 
         }
 

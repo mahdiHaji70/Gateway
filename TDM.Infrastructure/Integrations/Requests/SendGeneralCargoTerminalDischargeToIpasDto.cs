@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TDM.Infrastructure.Integrations.Requests
 {
-    public class SendIpasTerminalDischargeGeneralCargo
+    public class SendGeneralCargoTerminalDischargeToIpasDto
     {
         public string HSCode { get; set; }
         public string Description { get; set; }
@@ -22,7 +22,7 @@ namespace TDM.Infrastructure.Integrations.Requests
         public float? Height { get; set; }
         public float? Length { get; set; }
         public bool IsVoluminous { get; set; }
-        public SendIpasTerminalDischargeDangerousSpecification DangerousSpecification { get; set; }
+        public SendDangerousSpecificationTerminalDischargeToIpasDto DangerousSpecification { get; set; }
         public string Remark { get; set; }
     }
 }

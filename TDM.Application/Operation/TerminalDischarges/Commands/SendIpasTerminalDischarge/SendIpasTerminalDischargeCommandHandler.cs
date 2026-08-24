@@ -40,7 +40,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
            r => r.TerminalDischargeId,
            (td, r) => new { TerminalDischarge = td, Response = r })
             .ToList()
-            .ForEach(pair => pair.TerminalDischarge.IpasTerminalDischargeId = pair.Response.IpasTerminalDischargeId);
+            .ForEach(pair => pair.TerminalDischarge.SetIpasReceived(pair.Response.IpasTerminalDischargeId, DateTime.Now));
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

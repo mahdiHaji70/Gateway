@@ -34,6 +34,12 @@ namespace TDM.Domain.Entities
         public DateTime? IpasTerminalDischargeReceivedAt { get; set; }
         public Guid? IssueRequestId { get; set; }
         public decimal UnitWeight { get; set; } = 0;
+
+        public TerminalDischarge()
+        {
+            
+        }
+
         public TerminalDischarge(
      string terminalCode,
      Guid cargoTypeId,
@@ -134,6 +140,18 @@ namespace TDM.Domain.Entities
             IgnitionTemperatureUnit = ignitionTemperatureUnit;
             IssueRequestId = issueRequestId;
             UnitWeight = unitWeight;
+        }
+
+        public void SetIpasReceived(Guid ipasTerminalDischargeId, DateTime receivedAt)
+        {
+            if (ipasTerminalDischargeId == Guid.Empty)
+                throw new DomainValidationException("IpasTerminalDischargeId is required.");
+
+            if (receivedAt == default)
+                throw new DomainValidationException("IpasTerminalDischargeReceivedAt is required.");
+
+            IpasTerminalDischargeId = ipasTerminalDischargeId;
+            IpasTerminalDischargeReceivedAt = receivedAt;
         }
 
         private void Validate(

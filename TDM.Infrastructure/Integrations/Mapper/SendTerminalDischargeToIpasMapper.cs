@@ -7,11 +7,11 @@ using TDM.Infrastructure.Integrations.Requests;
 
 namespace TDM.Infrastructure.Integrations.Mapper
 {
-    public class SendIpasTerminalDischargeMapper
+    public class SendTerminalDischargeToIpasMapper
     {
-        public static SendIpasTerminalDischarge Map(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
+        public static SendTerminalDischargeToIpasDto Map(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
         {
-            return new SendIpasTerminalDischarge
+            return new SendTerminalDischargeToIpasDto
             {
                 TerminalDischargeId= sendIpasTerminalDischargeRequest.TerminalDischargeId,
                 TerminalCode = sendIpasTerminalDischargeRequest.TerminalCode,
@@ -26,22 +26,22 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 GateInDateTime = sendIpasTerminalDischargeRequest.DischargeDate,
                 GateOutDateTime = sendIpasTerminalDischargeRequest.DischargeDate,
                 GeneralCargoList = sendIpasTerminalDischargeRequest.CargoTypeId == Domain.Enums.CargoTypes.GeneralCargo
-            ? new List<SendIpasTerminalDischargeGeneralCargo> { MapToGeneralCargo(sendIpasTerminalDischargeRequest) }
-            : new List<SendIpasTerminalDischargeGeneralCargo>(),
+            ? new List<SendGeneralCargoTerminalDischargeToIpasDto> { MapToGeneralCargo(sendIpasTerminalDischargeRequest) }
+            : new List<SendGeneralCargoTerminalDischargeToIpasDto>(),
 
                 BulkList = sendIpasTerminalDischargeRequest.CargoTypeId == Domain.Enums.CargoTypes.Bulk
-            ? new List<SendIpasTerminalDischargeBulk> { MapToBulk(sendIpasTerminalDischargeRequest) }
-            : new List<SendIpasTerminalDischargeBulk>(),
+            ? new List<SendBulkTerminalDischargeToIpasDto> { MapToBulk(sendIpasTerminalDischargeRequest) }
+            : new List<SendBulkTerminalDischargeToIpasDto>(),
 
                 ContainerList = sendIpasTerminalDischargeRequest.CargoTypeId == Domain.Enums.CargoTypes.Container
-            ? new List<SendIpasTerminalDischargeContainer> { MapToContainer(sendIpasTerminalDischargeRequest) }
-            : new List<SendIpasTerminalDischargeContainer>()
+            ? new List<SendContainerTerminalDischargeToIpasDto> { MapToContainer(sendIpasTerminalDischargeRequest) }
+            : new List<SendContainerTerminalDischargeToIpasDto>()
             };
 
         }
-        private static SendIpasTerminalDischargeGeneralCargo MapToGeneralCargo(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
+        private static SendGeneralCargoTerminalDischargeToIpasDto MapToGeneralCargo(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
         {
-            return new SendIpasTerminalDischargeGeneralCargo
+            return new SendGeneralCargoTerminalDischargeToIpasDto
             {
                 HSCode = sendIpasTerminalDischargeRequest.HSCode,
                 Description = sendIpasTerminalDischargeRequest.CommodityName,
@@ -58,7 +58,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 Height = 1,
                 Length = 1,
                 IsVoluminous = sendIpasTerminalDischargeRequest.IsVoluminous,
-                DangerousSpecification = new SendIpasTerminalDischargeDangerousSpecification
+                DangerousSpecification = new SendDangerousSpecificationTerminalDischargeToIpasDto
                 {
                     Classification = sendIpasTerminalDischargeRequest.Classification,
                     DangerousCode = sendIpasTerminalDischargeRequest.DangerousCode,
@@ -69,9 +69,9 @@ namespace TDM.Infrastructure.Integrations.Mapper
             };
         }
 
-        private static SendIpasTerminalDischargeBulk MapToBulk(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
+        private static SendBulkTerminalDischargeToIpasDto MapToBulk(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
         {
-            return new SendIpasTerminalDischargeBulk
+            return new SendBulkTerminalDischargeToIpasDto
             {
                 HSCode = sendIpasTerminalDischargeRequest.HSCode,
                 Description = sendIpasTerminalDischargeRequest.CommodityName,
@@ -79,7 +79,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 Volume = (float)sendIpasTerminalDischargeRequest.Volume,
                 IsDangerous = sendIpasTerminalDischargeRequest.IsDangerous,
                 DangerousNotNoticed = false,
-                DangerousSpecification = new SendIpasTerminalDischargeDangerousSpecification
+                DangerousSpecification = new SendDangerousSpecificationTerminalDischargeToIpasDto
                 {
                     Classification = sendIpasTerminalDischargeRequest.Classification,
                     DangerousCode = sendIpasTerminalDischargeRequest.DangerousCode,
@@ -90,15 +90,15 @@ namespace TDM.Infrastructure.Integrations.Mapper
             };
         }
 
-        private static SendIpasTerminalDischargeContainer MapToContainer(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
+        private static SendContainerTerminalDischargeToIpasDto MapToContainer(SendIpasTerminalDischargeRequest sendIpasTerminalDischargeRequest)
         {
-            return new SendIpasTerminalDischargeContainer
+            return new SendContainerTerminalDischargeToIpasDto
             {
                 ContainerNo = sendIpasTerminalDischargeRequest.ContainerNo
             };
         }
 
-        public static List<SendIpasTerminalDischarge> Map(List<SendIpasTerminalDischargeRequest> sendIpasTerminalDischargeRequest)
+        public static List<SendTerminalDischargeToIpasDto> Map(List<SendIpasTerminalDischargeRequest> sendIpasTerminalDischargeRequest)
         {
             return sendIpasTerminalDischargeRequest.Select(Map).ToList();
         }

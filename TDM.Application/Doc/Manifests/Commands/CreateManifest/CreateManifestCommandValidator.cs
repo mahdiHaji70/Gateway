@@ -84,6 +84,9 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
                 .NotEmpty().WithMessage("Ship agent national ID is required.")
                 .MaximumLength(20);
 
+            RuleFor(x => x.CargoTypeId)
+               .NotEmpty().WithMessage("Cargo Type Id is required.");
+
             RuleForEach(x => x.ManifestGoods)
                 .SetValidator(new CreateManifestGoodCommandValidator())
                 .When(x => x.ManifestGoods != null);

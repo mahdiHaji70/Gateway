@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TDM.Infrastructure.Integrations.Requests
 {
-    public class SendIpasTerminalDischargeDangerousSpecification
+    public class SendDangerousSpecificationTerminalDischargeToIpasDto
     {
         public string DangerousCode { get; set; }
         public string Classification { get; set; }

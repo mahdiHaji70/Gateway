@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TDM.Infrastructure.Integrations.Requests
 {
-    public class SendIpasTerminalDischarge
+    public class SendTerminalDischargeToIpasDto
     {
         public Guid TerminalDischargeId { get; set; }
         public string TerminalCode { get; set; }
@@ -19,8 +19,8 @@ namespace TDM.Infrastructure.Integrations.Requests
         public string Tallyman { get; set; }
         public DateTime GateInDateTime { get; set; }
         public DateTime GateOutDateTime { get; set; }
-        public List<SendIpasTerminalDischargeGeneralCargo> GeneralCargoList { get; set; }
-        public List<SendIpasTerminalDischargeBulk> BulkList { get; set; }
-        public List<SendIpasTerminalDischargeContainer> ContainerList { get; set; }
+        public List<SendGeneralCargoTerminalDischargeToIpasDto> GeneralCargoList { get; set; }
+        public List<SendBulkTerminalDischargeToIpasDto> BulkList { get; set; }
+        public List<SendContainerTerminalDischargeToIpasDto> ContainerList { get; set; }
     }
 }

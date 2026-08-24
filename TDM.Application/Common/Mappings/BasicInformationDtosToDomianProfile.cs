@@ -17,6 +17,7 @@ using TDM.Application.Doc.DeclarationItems.DTOs;
 using TDM.Application.Doc.Declarations.DTOs;
 using TDM.Application.Operation.TerminalDischarges.DTOs;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
+using TDM.Application.Operation.VesselDischarges.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Mappings
@@ -75,6 +76,15 @@ namespace TDM.Application.Common.Mappings
                 .ForMember(dest => dest.ContainerTypeAndSize, opt => opt.MapFrom(src => src.ContainerTypeAndSize.TypeAndSize))
                 .ForMember(dest => dest.ContainerTypeAndSizeCode, opt => opt.MapFrom(src => src.ContainerTypeAndSize.TypeAndSizeCode));
             CreateMap<IpasGoodwayBillsResponse, IpasGoodwayBillsRequest>();
+
+            CreateMap<VesselDischarge, VesselDischargeDto>()
+                .ForMember(dest => dest.StoreName, opt => opt.MapFrom(src => src.Store.Name))
+                .ForMember(dest => dest.ManifestItemNo, opt => opt.MapFrom(src => src.ManifestItem.ManifestItemNo))
+                .ForMember(dest => dest.ManifestNo, opt => opt.MapFrom(src => src.ManifestItem.ManifestNo))
+                .ForMember(dest => dest.IpasVesselDischargeId, opt => opt.MapFrom(src => src.IpasVesselDischargeId))
+                .ForMember(dest => dest.IsSend, opt => opt.MapFrom(src => src.IpasVesselDischargeId.HasValue));
+
+
         }
     }
 }
