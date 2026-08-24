@@ -343,10 +343,18 @@ namespace ExternalIntegration.Service.Sync.PMO
             if(manifest == null)
                 return Response<ManifestDto>.Error($"Manifest with ID '{id}' was not found.");
 
-            _manifestRepository.Delete(id);
+            _manifestRepository.Delete(manifest);
             await _manifestRepository.InsertAsync(manifest);
             await _unitOfWork.SaveChangesAsync();
 
+            return syncMappingDto;
+        }
+
+        public async Task<Response<Guid>> SendVesselDischarge(VesselDischargeDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<VesselDischargeRequestDto>(dto);
+            var clientResult = await _client.SendVesselDischarge(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<Guid>>(clientResult);
             return syncMappingDto;
         }
     }

@@ -22,6 +22,7 @@ namespace TDM.Domain.Entities
         public string? IgnitionTemperatureUnit { get; set; }
 
         public ICollection<ManifestContainerGood> ManifestContainerGoods { get; private set; } = new List<ManifestContainerGood>();
+        public ICollection<VesselDischarge> ManifestContainerVesselDischarges { get; private set; } = new List<VesselDischarge>();
 
         public ManifestContainer()
         {

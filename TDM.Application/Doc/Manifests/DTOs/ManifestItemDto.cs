@@ -21,9 +21,14 @@ namespace TDM.Application.Doc.Manifests.DTOs
         public string ConsigneeName { get; set; }
         public string ConsigneeNationalId { get; set; }
 
+        public Guid CargoTypeId { get; set; }
+        public string CargoTypeName { get; set; }
+
         public Guid ShipAgentId { get; set; }
         public string ShipAgentName { get; set; }
         public string ShipAgentNationalId { get; set; }
+
+        public Guid IpasItemId { get; set; }
 
         public List<ManifestGoodDto> ManifestGoods { get; set; } 
         public List<ManifestContainerDto> ManifestContainers { get; set; }

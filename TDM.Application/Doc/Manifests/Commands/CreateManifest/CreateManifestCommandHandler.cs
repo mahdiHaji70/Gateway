@@ -138,7 +138,9 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
                     itemCommand.ShipLine,
                     trafficId,
                     consigneeId,
-                    shipAgentId);
+                    shipAgentId,    
+                    itemCommand.CargoTypeId,
+                    itemCommand.IpasItemId);
 
                 foreach (var goodCommand in itemCommand.ManifestGoods ?? Enumerable.Empty<CreateManifestGoodCommand>())
                 {

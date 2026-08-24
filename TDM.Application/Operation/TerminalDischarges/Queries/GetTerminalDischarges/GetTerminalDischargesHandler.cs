@@ -27,9 +27,9 @@ namespace TDM.Application.Operation.TerminalDischarges.Queries.GetGetTerminalDis
         GetTerminalDischargesQuery request,
         CancellationToken cancellationToken)
         {
-            var TerminalDischarges = await _terminalDischargeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var terminalDischarges = await _terminalDischargeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
 
-            return _mapper.Map<PagedResult<TerminalDischargeDto>>(TerminalDischarges);
+            return _mapper.Map<PagedResult<TerminalDischargeDto>>(terminalDischarges);
         }
     }
 }

@@ -22,5 +22,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto);
         Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges(DateRangeWithPagingDto dto);
         Task<Response<ManifestDto>> GetManifestById(Guid id, string terminalCode);
+        Task<Response<Guid>> SendVesselDischarge(VesselDischargeDto dto);
+
     }
 }

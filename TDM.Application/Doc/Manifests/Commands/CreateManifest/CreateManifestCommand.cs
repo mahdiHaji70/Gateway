@@ -31,6 +31,8 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
         public string TrafficCode { get; set; }
         public string ConsigneeNationalId { get; set; }
         public string ShipAgentNationalId { get; set; }
+        public Guid CargoTypeId { get; set; }
+        public Guid IpasItemId { get; set; }
 
         public List<CreateManifestGoodCommand> ManifestGoods { get; set; }
         public List<CreateManifestContainerCommand> ManifestContainers { get; set; }

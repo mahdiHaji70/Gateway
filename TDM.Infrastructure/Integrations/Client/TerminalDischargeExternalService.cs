@@ -24,7 +24,7 @@ namespace TDM.Infrastructure.Integrations.Client
         }
         public async Task<List<SendIpasTerminalDischargeResponse>> SendIpasTerminalDischarge(List<SendIpasTerminalDischargeRequest> sendIpasTerminalDischargeRequest, CancellationToken cancellationToken = default)
         {
-            var terminalDischargeDto = SendIpasTerminalDischargeMapper.Map(sendIpasTerminalDischargeRequest);
+            var terminalDischargeDto = SendTerminalDischargeToIpasMapper.Map(sendIpasTerminalDischargeRequest);
           
             var sendIpasTerminalDischargeResponse = new List<SendIpasTerminalDischargeResponse>();
 
