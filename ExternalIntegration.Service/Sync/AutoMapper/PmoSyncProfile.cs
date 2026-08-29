@@ -138,6 +138,13 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<VesselLoadingPermitContainerResponseDto, VesselLoadingPermitContainerDto>();
             CreateMap<VesselLoadingPermitDangerousSpecificationResponseDto, VesselLoadingPermitDangerousSpecificationDto>();
             CreateMap<VesselLoadingPermitContainerGoodResponseDto, VesselLoadingPermitContainerGoodDto>();
+
+            CreateMap<LoadingPermitResponseDto, LoadingPermitDto>();
+            CreateMap<LoadingPermitGeneralCargoResponseDto, LoadingPermitGeneralCargoDto>();
+            CreateMap<LoadingPermitBulkResponseDto, LoadingPermitBulkDto>();
+            CreateMap<LoadingPermitContainerResponseDto, LoadingPermitContainerDto>();
+            CreateMap<LoadingPermitDangerousSpecificationResponseDto, LoadingPermitDangerousSpecificationDto>();
+            CreateMap<LoadingPermitContainerGoodResponseDto, LoadingPermitContainerGoodDto>();
         }
     }
 }

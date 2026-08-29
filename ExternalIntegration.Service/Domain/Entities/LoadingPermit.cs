@@ -1,6 +1,8 @@
-﻿namespace ExternalIntegration.Service.Domain.Entities
+﻿using ExternalIntegration.Service.Sync.DTOs;
+
+namespace ExternalIntegration.Service.Domain.Entities
 {
-    public class VesselLoadingPermit
+    public class LoadingPermit
     {
         public Guid Id { get; set; }
         public Guid PortId { get; set; }
@@ -10,7 +12,7 @@
         public string TerminalCode { get; set; }
         public DateTime Date { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public int SerialNo { get; set; }
+        public string SerialNo { get; set; }
         public Guid CreatedById { get; set; }
         public string CreatedBy { get; set; }
         public string Remark { get; set; }

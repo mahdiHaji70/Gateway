@@ -1,6 +1,6 @@
-﻿namespace ExternalIntegration.Service.Domain.Entities
+﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses
 {
-    public class VesselLoadingPermit
+    public class LoadingPermitResponseDto
     {
         public Guid Id { get; set; }
         public Guid PortId { get; set; }
@@ -10,7 +10,7 @@
         public string TerminalCode { get; set; }
         public DateTime Date { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public int SerialNo { get; set; }
+        public string SerialNo { get; set; }
         public Guid CreatedById { get; set; }
         public string CreatedBy { get; set; }
         public string Remark { get; set; }
@@ -40,8 +40,8 @@
         public string TaskRemark { get; set; }
         public string Workflow { get; set; }
         public DateTime TaskRegisterDate { get; set; }
-        public string BulkList { get; set; }
-        public string GeneralCargoList { get; set; }
-        public string ContainerList { get; set; }
+        public List<LoadingPermitBulkResponseDto> BulkList { get; set; } 
+        public List<LoadingPermitGeneralCargoResponseDto> GeneralCargoList { get; set; } 
+        public List<LoadingPermitContainerResponseDto> ContainerList { get; set; } 
     }
 }
