@@ -23,6 +23,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<IEnumerable<ManifestChangeResponseDto>>> GetManifestChanges(PmoDateRangeWithPagingDto dto);
         Task<Response<ManifestResponseDto>> GetManifestById(Guid id, string terminalCode);
         Task<Response<Guid>> SendVesselDischarge(VesselDischargeRequestDto dto);
+        Task<Response<IEnumerable<VesselLoadingPermitResponseDto>>> GetVesselLoadingPermits(PmoDateRangeWithInboxDto dto);
 
     }
 }

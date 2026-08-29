@@ -23,6 +23,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IManifestRepository _manifestRepository;
         private readonly IManifestChangeRepository _manifestChangeRepository;
+        private readonly IVesselLoadingPermitRepository _vesselLoadingPermitRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
@@ -34,7 +35,8 @@ namespace ExternalIntegration.Service.Sync.PMO
             , IVoyageRepository voyageRepository
             , IStoreReceiptRepository storeReceiptRepository
             , IManifestRepository manifestRepository
-            , IManifestChangeRepository manifestChangeRepository)
+            , IManifestChangeRepository manifestChangeRepository
+            , IVesselLoadingPermitRepository vesselLoadingPermitRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _client = client;
@@ -47,6 +49,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             _storeReceiptRepository = storeReceiptRepository;
             _manifestRepository = manifestRepository;
             _manifestChangeRepository = manifestChangeRepository;
+            _vesselLoadingPermitRepository = vesselLoadingPermitRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
         {
@@ -340,7 +343,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             var syncMappingDto = _mapper.Map<Response<ManifestDto>>(clientResult);
 
             var manifest = await _manifestRepository.GetAsync(id);
-            if(manifest == null)
+            if (manifest == null)
                 return Response<ManifestDto>.Error($"Manifest with ID '{id}' was not found.");
 
             _manifestRepository.Delete(manifest);
@@ -357,5 +360,42 @@ namespace ExternalIntegration.Service.Sync.PMO
             var syncMappingDto = _mapper.Map<Response<Guid>>(clientResult);
             return syncMappingDto;
         }
+
+        public async Task<Response<IEnumerable<VesselLoadingPermitDto>>> GetVesselLoadingPermits(DateRangeWithInboxDto dto)
+        {
+            DateTime localFromDate = DateTime.Now;
+            DateTime localToDate = DateTime.Now;
+            if (dto.FromDate == null)
+                localFromDate = await _vesselLoadingPermitRepository.GetLastDateAsync(dto.TerminalCode);
+            if (dto.ToDate == null)
+                localToDate = DateTime.Now.AddDays(1);
+
+            var pmoDateDto = new PmoDateRangeWithInboxDto(
+                dto.TerminalCode,
+                dto.FromDate ?? localFromDate,
+                dto.ToDate ?? localToDate,
+                dto.PortCode,
+                dto.InMyInbox);
+
+            var clientResult = await _client.GetVesselLoadingPermits(pmoDateDto);
+
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<VesselLoadingPermitDto>>>(clientResult);
+
+            if (syncMappingDto?.Data != null)
+                foreach (var item in syncMappingDto.Data)
+                    item.TerminalCode = pmoDateDto.TerminalCode;
+
+            var newData = await _vesselLoadingPermitRepository.FilterUnpersistedAsync(
+                entities: _mapper.Map<IEnumerable<VesselLoadingPermit>>(syncMappingDto!.Data),
+                idSelector: t => t.Id,
+                dbIdSelector: t => t.Id
+            );
+
+            await _vesselLoadingPermitRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
+        }
+
     }
 }

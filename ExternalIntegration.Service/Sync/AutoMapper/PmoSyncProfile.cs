@@ -132,6 +132,12 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<DangerousSpecificationVesselDischargeDto, DangerousSpecificationVesselDischargeRequestDto>().ReverseMap();
             CreateMap<VesselDischargeSpecificationDto, VesselDischargeSpecificationRequestDto>().ReverseMap();
 
+            CreateMap<VesselLoadingPermitResponseDto, VesselLoadingPermitDto>();
+            CreateMap<VesselLoadingPermitGeneralCargoResponseDto, VesselLoadingPermitGeneralCargoDto>();
+            CreateMap<VesselLoadingPermitBulkResponseDto, VesselLoadingPermitBulkDto>();
+            CreateMap<VesselLoadingPermitContainerResponseDto, VesselLoadingPermitContainerDto>();
+            CreateMap<VesselLoadingPermitDangerousSpecificationResponseDto, VesselLoadingPermitDangerousSpecificationDto>();
+            CreateMap<VesselLoadingPermitContainerGoodResponseDto, VesselLoadingPermitContainerGoodDto>();
         }
     }
 }
