@@ -1,4 +1,5 @@
 ﻿using TDM.Application.Common.Interfaces;
+using TDM.Application.Doc.StoreReceipts.DTOs;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 using TDM.Infrastructure.Integrations.Helpers;
 using TDM.Infrastructure.Integrations.Mapper;
@@ -13,7 +14,7 @@ namespace TDM.Infrastructure.Integrations.Client
         {
             _requestExecutor = requestExecutor;
         }
-        public async Task<List<IpasStoreReceiptResponse>> GetStoreReceipts(string ipasDeclarationNo, CancellationToken cancellationToken)
+        public async Task<List<StoreReceiptHeadDto>> GetStoreReceipts(string ipasDeclarationNo, CancellationToken cancellationToken)
         {
             var response = await _requestExecutor.GetAsync<List<IpasStoreReceiptResponseDto>>("TDM", "GetStoreReceiptByStorageAgreementNo",
             new
@@ -22,7 +23,7 @@ namespace TDM.Infrastructure.Integrations.Client
             });
 
             ExternalResponseHelper.EnsureSuccess(response, "GetStoreReceiptByStorageAgreementNo");
-            var IpasStoreReceipts = IpasStoreReceiptMapper.Map(response.Data!);
+            var IpasStoreReceipts = StoreReceiptMapper.Map(response.Data!);
             return IpasStoreReceipts;
         }
 

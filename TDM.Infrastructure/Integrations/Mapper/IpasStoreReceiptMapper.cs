@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestByStorageAgreementNo;
+using TDM.Application.Doc.StoreReceipts.DTOs;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 using TDM.Infrastructure.Integrations.Responses;
 
 namespace TDM.Infrastructure.Integrations.Mapper
 {
-    public class IpasStoreReceiptMapper
+    public class StoreReceiptMapper
     {
-        public static IpasStoreReceiptResponse Map(IpasStoreReceiptResponseDto dto)
+        public static StoreReceiptHeadDto Map(IpasStoreReceiptResponseDto dto)
         {
-            return new IpasStoreReceiptResponse
+            return new StoreReceiptHeadDto
             {
-                No = dto.No              
+               // No = dto.No              
 
             };
 
         }
-        public static List<IpasStoreReceiptResponse> Map(List<IpasStoreReceiptResponseDto> dto)
+        public static List<StoreReceiptHeadDto> Map(List<IpasStoreReceiptResponseDto> dto)
         {
             return dto.Select(Map).ToList();
         }

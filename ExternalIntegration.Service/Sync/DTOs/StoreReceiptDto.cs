@@ -38,7 +38,6 @@
         public DateTime FirstDischargeDate { get; set; }
         public Guid CreatorId { get; set; }
         public string Creator { get; set; }
-
         public int CustomsProcedureId { get; set; }
         public string CustomsProcedure { get; set; }
         public int State { get; set; }
