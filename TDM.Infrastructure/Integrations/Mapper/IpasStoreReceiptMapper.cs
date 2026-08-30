@@ -14,8 +14,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
         {
             return new StoreReceiptHeadDto
             {
-               // No = dto.No              
-
+                RequestId = dto.RequestId
             };
 
         }
