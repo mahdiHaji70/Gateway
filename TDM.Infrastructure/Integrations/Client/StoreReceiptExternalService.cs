@@ -1,5 +1,5 @@
 ﻿using TDM.Application.Common.Interfaces;
-using TDM.Application.Doc.StoreReceipt.Queries.GetStoreReceiptByStorageAgreementNo;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 using TDM.Infrastructure.Integrations.Helpers;
 using TDM.Infrastructure.Integrations.Mapper;
 using TDM.Infrastructure.Integrations.Responses;

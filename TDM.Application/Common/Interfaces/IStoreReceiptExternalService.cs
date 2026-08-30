@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.Doc.StoreReceipt.Queries.GetStoreReceiptByStorageAgreementNo;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 
 
 namespace TDM.Application.Common.Interfaces

@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Doc\IssueRequestStoreReceipts\Commands\DTOs\" />
+    <Folder Include="Doc\StoreReceiptHeads\Queries\" />
   </ItemGroup>
 
 </Project>

@@ -4,11 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Interfaces;
-using TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestByStorageAgreementNo;
 
-namespace TDM.Application.Doc.StoreReceipt.Queries.GetStoreReceiptByStorageAgreementNo
+namespace TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo
 {
-   
     public class GetStoreReceiptByStorageAgreementNoQueryHandlet : IRequestHandler<GetStoreReceiptByStorageAgreementNoQuery, IEnumerable<IpasStoreReceiptResponse>>
     {
         private readonly IMapper _mapper;

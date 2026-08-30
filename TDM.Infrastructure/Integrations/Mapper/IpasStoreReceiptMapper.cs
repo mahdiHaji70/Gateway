@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Queries.GetIssueRequestByStorageAgreementNo;
-using TDM.Application.Doc.StoreReceipt.Queries.GetStoreReceiptByStorageAgreementNo;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 using TDM.Infrastructure.Integrations.Responses;
 
 namespace TDM.Infrastructure.Integrations.Mapper
