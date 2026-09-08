@@ -231,7 +231,10 @@ namespace ExternalIntegration.Service.Sync.PMO
             var syncMappingRequestDto = _mapper.Map<IssueRequestConfirmationRequestDto>(dto);
             var clientResult = await _client.IssueRequestConfirmation(syncMappingRequestDto);
             if (clientResult.Status != ResponseStatuses.Error)
+            {
                 _issueRequestRepository.UpdateIssueRequestApprovalAsync(dto.RequestId, dto.IsApproved);
+                await _unitOfWork.SaveChangesAsync();
+            }
 
             var syncMappingDto = _mapper.Map<Response<string>>(clientResult);
             return syncMappingDto;
@@ -437,5 +440,30 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
+        public async Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<LoadingPermitConfirmationRequestDto>(dto);
+            var clientResult = await _client.ConfirmLoadingPermit(syncMappingRequestDto);
+            if (clientResult.Status != ResponseStatuses.Error)
+            {
+                _loadingPermitRepository.UpdateLoadingPermitApprovedAsync(dto.PermitId, dto.IsApproved);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            var syncMappingDto = _mapper.Map<Response<bool>>(clientResult);
+            return syncMappingDto;
+        }
+
+        public async Task<Response<bool>> ConfirmVesselLoadingPermit(VesselLoadingPermitConfirmationDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<LoadingPermitConfirmationRequestDto>(dto);
+            var clientResult = await _client.ConfirmLoadingPermit(syncMappingRequestDto);
+            if (clientResult.Status != ResponseStatuses.Error)
+            {
+                _vesselLoadingPermitRepository.UpdateVesselLoadingPermitApprovedAsync(dto.Id, dto.IsApproved);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            var syncMappingDto = _mapper.Map<Response<bool>>(clientResult);
+            return syncMappingDto;
+        }
     }
 }

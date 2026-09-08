@@ -519,5 +519,37 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return finalResult;
 
         }
+
+        public async Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.LoadingPermitConfirmation)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter {ParameterName = nameof(dto.TerminalCode),ParameterValue = dto.TerminalCode },
+                new Parameter {ParameterName = nameof(dto.PermitId),ParameterValue= dto.PermitId },
+                new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved },
+                new Parameter {ParameterName = nameof(dto.Description),ParameterValue= dto.Description }
+              }).Build();
+            var response = await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+            return response;
+        }
+
+        public async Task<Response<bool>> ConfirmVesselLoadingPermit(VesselLoadingPermitConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.VesselLoadingPermitConfirmation)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter {ParameterName = nameof(dto.TerminalCode),ParameterValue = dto.TerminalCode },
+                new Parameter {ParameterName = nameof(dto.Id),ParameterValue= dto.Id },
+                new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved },
+                new Parameter {ParameterName = nameof(dto.Remark),ParameterValue= dto.Remark}
+              }).Build();
+            var response = await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+            return response;
+        }
     }
 }

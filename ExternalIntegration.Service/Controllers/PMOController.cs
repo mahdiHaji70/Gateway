@@ -115,5 +115,17 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _pmoSyncService.GetLoadingPermits(dto);
         }
+
+        [HttpPost("ConfirmLoadingPermit")]
+        public async Task<Response<bool>> ConfirmLoadingPermit([FromBody] LoadingPermitConfirmationDto dto)
+        {
+            return await _pmoSyncService.ConfirmLoadingPermit(dto);
+        }
+
+        [HttpPost("ConfirmVesselLoadingPermit")]
+        public async Task<Response<bool>> ConfirmVesselLoadingPermit([FromBody] LoadingPermitConfirmationDto dto)
+        {
+            return await _pmoSyncService.ConfirmLoadingPermit(dto);
+        }
     }
 }

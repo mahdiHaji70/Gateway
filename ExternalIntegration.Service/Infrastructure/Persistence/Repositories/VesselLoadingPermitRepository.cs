@@ -21,5 +21,12 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .Where(x => x.TerminalCode == terminalCode)
                 .OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
         }
+
+        public async void UpdateVesselLoadingPermitApprovedAsync(Guid id, bool isApproved)
+        {
+            var record = _vesselLoadingPermitDbSet.FirstOrDefault(t => t.Id == id);
+            record!.IsApproved = isApproved;
+            _vesselLoadingPermitDbSet.Update(record);
+        }
     }
 }

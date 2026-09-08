@@ -29,12 +29,11 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .Where(t => t.StorageAgreementNo == storageAgreementNo &&
                               t.IsApproved == false).ToListAsync();
         }
-        public async void UpdateIssueRequestApprovalAsync(Guid requestId, bool IsApproved)
+        public async void UpdateIssueRequestApprovalAsync(Guid requestId, bool isApproved)
         {
             var record = _IssueRequestDbSet.FirstOrDefault(t => t.RequestId == requestId);
-            record.IsApproved = IsApproved;
-            var result = await _context.SaveChangesAsync();
-      
+            record.IsApproved = isApproved;
+            _IssueRequestDbSet.Update(record);
         }
 
         public  async Task<List<IssueRequest>> GetByIdNoAsync(Guid id)

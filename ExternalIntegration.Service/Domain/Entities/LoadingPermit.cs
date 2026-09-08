@@ -45,5 +45,6 @@ namespace ExternalIntegration.Service.Domain.Entities
         public string BulkList { get; set; }
         public string GeneralCargoList { get; set; }
         public string ContainerList { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

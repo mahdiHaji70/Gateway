@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ExternalIntegration.Service.Infrastructure.Persistence.Configurations
 {
-    public class VesselLoadingPermitConfiguration : IEntityTypeConfiguration<VesselLoadingPermit>
+    public class LoadingPermitConfiguration : IEntityTypeConfiguration<LoadingPermit>
     {
-        public void Configure(EntityTypeBuilder<VesselLoadingPermit> builder)
+        public void Configure(EntityTypeBuilder<LoadingPermit> builder)
         {
-            builder.ToTable("VesselLoadingPermits");
+            builder.ToTable("LoadingPermits");
 
             builder.HasKey(t => t.Id);
 

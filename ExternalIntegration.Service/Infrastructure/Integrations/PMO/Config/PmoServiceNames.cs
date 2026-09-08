@@ -45,6 +45,7 @@
         public string ShippingLinesandAgents { get; init; } = default!;
         public string ManifestChange { get; set; } = default!;
         public string ManifestChangeDetail { get; set; } = default!;
-
+        public string LoadingPermitConfirmation { get; set; }
+        public string VesselLoadingPermitConfirmation { get; set; }
     }
 }
