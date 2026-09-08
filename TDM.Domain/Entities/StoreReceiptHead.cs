@@ -8,31 +8,37 @@ namespace TDM.Domain.Entities
 {
     public class StoreReceiptHead : BaseEntity
     {
-        public string TerminalCode { get; set; }
-        public string IPASStoreReceiptNo { get; set; }
-        public DateTime IssueDate { get; set; }
-        public Guid ConsigneeId { get; set; }
-        public Company Consignee { get; set; }
-        public Guid ConsigneeRepId { get; set; }
-        public Company ConsigneeRep { get; set; }
-        public Guid CargoTypeId { get; set; }
-        public CargoType CargoType { get; set; }
-        public DateTime? FirstDischargeDate { get; set; }
-        public Guid CreatorId { get; set; }
-        public Company Creator { get; set; }
-        public Guid TrafficId { get; set; }
-        public Traffic Traffic { get; set; }
-        public Guid StoreReceiptStateId { get; set; }
-        public StoreReceiptState StoreReceiptState { get; set; }
-        public Guid? RequestId { get; set; }
-        public string VoyageNoticeNo { get; set; }
-        public Guid ArrivalTypeId { get; set; }
-        public ArrivalType ArrivalType { get; set; }
-        public Guid? DeclarationId { get; set; }
-        public Declaration? Declaration { get; set; } 
-        public Guid? BillOfLadingId { get; set; }
-        public ICollection<StoreReceiptGood> StoreReceiptGoods { get; private set; } = new List<StoreReceiptGood>();
-        public ICollection<StoreReceiptContainer> StoreReceiptContainers { get; private set; } = new List<StoreReceiptContainer>();
+        private readonly List<StoreReceiptGood> _storeReceiptGoods = [];
+        private readonly List<StoreReceiptContainer> _storeReceiptContainers = [];
+
+        public string TerminalCode { get; private set; }
+        public string IPASStoreReceiptNo { get; private set; }
+        public DateTime IssueDate { get; private set; }
+        public Guid ConsigneeId { get; private set; }
+        public Company Consignee { get; private set; }
+        public Guid ConsigneeRepId { get; private set; }
+        public Company ConsigneeRep { get; private set; }
+        public Guid CargoTypeId { get; private set; }
+        public CargoType CargoType { get; private set; }
+        public DateTime? FirstDischargeDate { get; private set; }
+        public Guid CreatorId { get; private set; }
+        public Company Creator { get; private set; }
+        public Guid TrafficId { get; private set; }
+        public Traffic Traffic { get; private set; }
+        public Guid StoreReceiptStateId { get; private set; }
+        public StoreReceiptState StoreReceiptState { get; private set; }
+        public Guid? RequestId { get; private set; }
+        public string VoyageNoticeNo { get; private set; }
+        public Guid ArrivalTypeId { get; private set; }
+        public ArrivalType ArrivalType { get; private set; }
+        public Guid? DeclarationId { get; private set; }
+        public Declaration? Declaration { get; private set; }
+        public Guid? BillOfLadingId { get; private  set; }
+        public IReadOnlyCollection<StoreReceiptGood> StoreReceiptGoods
+         => _storeReceiptGoods.AsReadOnly();
+
+        public IReadOnlyCollection<StoreReceiptContainer> StoreReceiptContainers
+            => _storeReceiptContainers.AsReadOnly();
 
         protected StoreReceiptHead()
         {
@@ -208,7 +214,78 @@ namespace TDM.Domain.Entities
             if (!declarationId.HasValue && !billOfLadingId.HasValue)
                 throw new DomainValidationException("Either DeclarationId or BillOfLadingId must be provided.");
         }
-    
+        public StoreReceiptGood AddGood(
+                    Guid commodityId,
+                    Guid packageId,
+                    string brandName,
+                    bool noBrandName,
+                    decimal packNB,
+                    decimal grossWeight,
+                    decimal netWeight,
+                    decimal volume,
+                    string remark,
+                    bool isHeavy,
+                    bool isNonPalletized,
+                    bool isDamaged,
+                    bool isVoluminous,
+                    bool isDangerous,
+                    bool dangerousNotNoticed,
+                    string dangerousCode,
+                    string classification,
+                    decimal ignitionTemperature,
+                    string ignitionTemperatureUnit)
+        {
+            var good = new StoreReceiptGood(
+                Id,
+                commodityId,
+                packageId,
+                brandName,
+                noBrandName,
+                packNB,
+                grossWeight,
+                netWeight,
+                volume,
+                remark,
+                isHeavy,
+                isNonPalletized,
+                isDamaged,
+                isVoluminous,
+                isDangerous,
+                dangerousNotNoticed,
+                dangerousCode,
+                classification,
+                ignitionTemperature,
+                ignitionTemperatureUnit);
 
-}
+            _storeReceiptGoods.Add(good);
+
+            return good;
+        }
+
+        public StoreReceiptContainer AddContainer(
+                                    Guid containerId,
+                                    string sealNumber,
+                                    string remark,
+                                    string dangerousCode,
+                                    string classification,
+                                    decimal ignitionTemperature,
+                                    string ignitionTemperatureUnit)
+        {
+            var container = new StoreReceiptContainer(
+                Id,
+                containerId,
+                sealNumber,
+                remark,
+                dangerousCode,
+                classification,
+                ignitionTemperature,
+                ignitionTemperatureUnit);
+
+            _storeReceiptContainers.Add(container);
+
+            return container;
+        }
+
+
+    }
 }

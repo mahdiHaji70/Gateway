@@ -114,6 +114,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
 
             return dto.ContainerList?.FirstOrDefault()?.ContainerNo ?? string.Empty;
         }
+
+
         public static List<IpasIssueRequestStoreReceiptResponse> Map(List<IssueRequestResponseDto> dto)
         {
             return dto.Select(Map).ToList();
