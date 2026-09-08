@@ -468,5 +468,88 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
             return response;
         }
+
+        public async Task<Response<IEnumerable<VesselLoadingPermitResponseDto>>> GetVesselLoadingPermits(PmoDateRangeWithInboxDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.Permits)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                new Parameter{ ParameterName = nameof(dto.InMyInbox), ParameterValue = dto.InMyInbox },
+
+                }).Build();
+
+
+            var response = await _requestExecutor.PostAsync<IEnumerable<VesselLoadingPermitResponseDto>>(request, dto.TerminalCode);
+
+            return response;
+
+        }
+
+        public async Task<Response<IEnumerable<LoadingPermitResponseDto>>> GetLoadingPermits(PmoDateRangeWithPagingDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.Permits)
+                .WithParameters(new List<Parameter>
+                {
+                new Parameter{ ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode},
+                new Parameter{ ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                new Parameter{ ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                new Parameter{ ParameterName = nameof(dto.PageIndex), ParameterValue = dto.PageIndex },
+                new Parameter{ ParameterName = nameof(dto.PageSize), ParameterValue = dto.PageSize },
+
+                }).Build();
+
+
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<LoadingPermitResponseDto>>(request, dto.TerminalCode);
+
+            var finalResult = new Response<IEnumerable<LoadingPermitResponseDto>>
+            {
+                Status = response.Status,
+                Message = response.Message,
+                Errors = response.Errors,
+                Data = response.Data.Items
+            };
+
+            return finalResult;
+
+        }
+
+        public async Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.LoadingPermitConfirmation)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter {ParameterName = nameof(dto.TerminalCode),ParameterValue = dto.TerminalCode },
+                new Parameter {ParameterName = nameof(dto.PermitId),ParameterValue= dto.PermitId },
+                new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved },
+                new Parameter {ParameterName = nameof(dto.Description),ParameterValue= dto.Description }
+              }).Build();
+            var response = await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+            return response;
+        }
+
+        public async Task<Response<bool>> ConfirmVesselLoadingPermit(VesselLoadingPermitConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+          .WithCredential(_userName, _password)
+          .WithService(_serviceNames.VesselLoadingPermitConfirmation)
+          .WithParameters(new List<Parameter>
+          {
+                new Parameter {ParameterName = nameof(dto.TerminalCode),ParameterValue = dto.TerminalCode },
+                new Parameter {ParameterName = nameof(dto.Id),ParameterValue= dto.Id },
+                new Parameter {ParameterName = nameof(dto.IsApproved),ParameterValue= dto.IsApproved },
+                new Parameter {ParameterName = nameof(dto.Remark),ParameterValue= dto.Remark}
+              }).Build();
+            var response = await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+            return response;
+        }
     }
 }
