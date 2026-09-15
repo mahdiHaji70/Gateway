@@ -10,5 +10,6 @@ namespace TDM.Application.Common.Interfaces
     {
         Task<List<ManifestVoyageNumberDto>> GetManifestVoyageNumbers(string terminalCode, CancellationToken cancellationToken = default);
         Task<ManifestDto> GetManifestById(Guid id, CancellationToken cancellationToken = default);
+        Task<bool> SetManifestApproved(Guid id);
     }
 }

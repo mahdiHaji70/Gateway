@@ -26,6 +26,7 @@ export const MenuItems = [
         label: 'Document',
         icon: 'pi pi-file',
         items: [
+            { label: 'Manifest', path: 'document/manifest-list' },
             { label: 'Declaration', path: 'document/declaration-list' },
             { label: 'Issue Request', path: 'document/store-receipt-issue-request' },
         ]

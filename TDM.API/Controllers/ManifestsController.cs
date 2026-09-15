@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Doc.Manifests.Commands.CreateManifest;
 using TDM.Application.Doc.Manifests.Queries.GetExternalManifestById;
+using TDM.Application.Doc.Manifests.Queries.GetManifests;
 using TDM.Application.Doc.Manifests.Queries.GetVoyageNumbers;
 
 namespace TDM.API.Controllers
@@ -19,6 +19,14 @@ namespace TDM.API.Controllers
         public ManifestsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = await _mediator.Send(new GetManifestsQuery(pageNumber, pageSize));
+
+            return Ok(ApiResponse.Success(result));
         }
 
         [HttpGet("request-manifest-voyage-numbers/{terminalCode}")]

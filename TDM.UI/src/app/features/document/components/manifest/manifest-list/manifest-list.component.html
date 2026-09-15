@@ -1,0 +1,60 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <p-button 
+            severity="success" 
+            label="Fetch Manifests" 
+            icon="pi pi-cloud-download" 
+            class="mr-2" 
+            (onClick)="onFetchingManifests()" />
+            <p-button 
+            severity="info" 
+            label="Refresh" 
+            icon="pi pi-refresh" 
+            class="mr-2" 
+            (onClick)="loadManifests()" />
+    </ng-template>
+
+</p-toolbar>
+<p-table [value]="manifests" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '80rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Registration No</th>
+            <th>Voyage No</th>
+            <th>Notice No</th>
+            <th>Ship Agent</th>
+            <th>Vessel Name</th>
+            <th>IMO</th>
+            <th>Manifest No</th>
+            <th>Traffic Name</th>
+            <th>Consignee Name</th>
+            <th>Cargo Type</th>
+            <th>HS Code</th>
+            <th>Commodity</th>
+            <th>Package</th>
+            <th>Pack Nb</th>
+            <th>Gross Weight</th>
+            <th>Container</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-manifest>
+        <tr>
+            <td>{{ manifest.manifestRegistrationNumber }}</td>
+            <td>{{ manifest.voyageNo }}</td>
+            <td>{{ manifest.noticeNo }}</td>
+            <td>{{ manifest.shipAgent }}</td>
+            <td>{{ manifest.vesselName }}</td>
+            <td>{{ manifest.imo }}</td>
+            <td>{{ manifest.manifestNo }}</td>
+            <td>{{ manifest.trafficName }}</td>
+            <td>{{ manifest.consigneeName }}</td>
+            <td>{{ manifest.cargoTypeName }}</td>
+            <td>{{ manifest.hsCode }}</td>
+            <td>{{ manifest.commodityName }}</td>
+            <td>{{ manifest.packageName }}</td>
+            <td>{{ manifest.packNb }}</td>
+            <td>{{ manifest.grossWeight }}</td>
+            <td>{{ manifest.container }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast />

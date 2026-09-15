@@ -50,5 +50,18 @@ namespace TDM.Infrastructure.Integrations.Client
 
             return ManifestMapper.Map(response.Data!);            
         }
+
+        public async Task<bool> SetManifestApproved(Guid id)
+        {
+            var response = await _requestExecutor.GetAsync<bool>("TDM", "ApproveManifestAsync",
+             new
+             {
+                 Id = id
+             });
+
+            ExternalResponseHelper.EnsureSuccess(response, "ApproveManifestAsync");
+
+            return response.Data;
+        }
     }
 }
