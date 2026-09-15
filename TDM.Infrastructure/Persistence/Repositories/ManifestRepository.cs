@@ -143,7 +143,24 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 TotalCount = totalCount,
                 PageNumber = pageNumber,
                 PageSize = pageSize
-            };
+            };            
+        }
+
+        public async Task<List<ManifestItemLookupDto>> GetManifestItemsLookup(string terminalCode, CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Where(x => x.TerminalCode == terminalCode)
+                .SelectMany(x => x.ManifestItems.Select(item => new ManifestItemLookupDto
+                {
+                    Id = item.Id,
+                    ManifestItemId = item.Id,
+                    VoyageNo = x.VoyageNo,
+                    ManifestNo = item.ManifestNo
+                }))
+                .OrderBy(x => x.VoyageNo)
+                .ThenBy(x => x.ManifestNo)
+                .ToListAsync(cancellationToken);
         }
     }
 }

@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
-using TDM.Application.BasicInformation.Declarations.Commands.CreateDeclaration;
-using TDM.Application.BasicInformation.Declarations.Commands.RemoveDeclaration;
-using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId;
-using TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclaration;
-using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarationById;
-using TDM.Application.BasicInformation.Declarations.Queries.GetDeclarations;
+using TDM.Application.Doc.Declarations.Commands.CreateDeclaration;
+using TDM.Application.Doc.Declarations.Commands.RemoveDeclaration;
+using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
+using TDM.Application.Doc.Declarations.Commands.UpdateDeclaration;
+using TDM.Application.Doc.Declarations.Queries.GetDeclarationById;
+using TDM.Application.Doc.Declarations.Queries.GetDeclarations;
 
 
 namespace TDM.API.Controllers

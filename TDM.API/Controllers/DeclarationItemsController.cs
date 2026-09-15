@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.CreateDeclarationItem;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.RemoveDeclarationItem;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDeclarationItem;
-using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItemById;
-using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItems;
-using TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItemsByDeclarationId;
-using TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId;
+using TDM.Application.Doc.DeclarationItems.Commands.CreateDeclarationItem;
+using TDM.Application.Doc.DeclarationItems.Commands.RemoveDeclarationItem;
+using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
+using TDM.Application.Doc.DeclarationItems.Commands.UpdateDeclarationItem;
+using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItemById;
+using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItems;
+using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItemsByDeclarationId;
+using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
 
 
 namespace TDM.API.Controllers

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.Doc.Manifests.Commands.CreateManifest;
 using TDM.Application.Doc.Manifests.Queries.GetExternalManifestById;
+using TDM.Application.Doc.Manifests.Queries.GetManifestItemsLookup;
 using TDM.Application.Doc.Manifests.Queries.GetManifests;
 using TDM.Application.Doc.Manifests.Queries.GetVoyageNumbers;
 
@@ -25,6 +26,14 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var result = await _mediator.Send(new GetManifestsQuery(pageNumber, pageSize));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("items-lookup")]
+        public async Task<IActionResult> GetManifestItemsLookup()
+        {
+            var result = await _mediator.Send(new GetManifestItemsLookupQuery());
 
             return Ok(ApiResponse.Success(result));
         }
