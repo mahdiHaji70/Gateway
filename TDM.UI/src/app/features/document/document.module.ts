@@ -25,6 +25,14 @@ import { StoreReceiptService } from './services/store-receipt.service';
 import { StoreReceiptIssueRequestComponent } from './components/store-receipt-issue-request/store-receipt-issue-request.component';
 import { StoreReceiptIssueRequestService } from './services/store-receipt-issue-request.service';
 import { RequestConfirmationService } from './services/request-confirmation.service';
+import { ManifestComponent } from './components/manifest/manifest.component';
+import { ManifestListComponent } from './components/manifest/manifest-list/manifest-list.component';
+import { ManifestService } from './services/manifest.service';
+import { PanelModule } from 'primeng/panel';
+import { TagModule } from 'primeng/tag';
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 
@@ -37,6 +45,8 @@ import { RequestConfirmationService } from './services/request-confirmation.serv
     DeclarationContainerInfoComponent,
     StoreReceiptIssueComponent,
     StoreReceiptIssueRequestComponent,
+    ManifestComponent,
+    ManifestListComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +62,11 @@ import { RequestConfirmationService } from './services/request-confirmation.serv
     InputNumberModule,
     ConfirmDialogModule,
     AutoCompleteModule,
+    PanelModule,
+    TagModule,
+    CardModule,
+    BadgeModule,
+    TooltipModule
   ],
   providers: [DeclarationService,
     DeclarationItemService,
@@ -59,7 +74,8 @@ import { RequestConfirmationService } from './services/request-confirmation.serv
     DeclarationContainerInfoService,
     StoreReceiptService,
     StoreReceiptIssueRequestService,
-    RequestConfirmationService
+    RequestConfirmationService,
+    ManifestService
   ]
 })
 export class DocumentModule { }

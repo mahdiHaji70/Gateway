@@ -15,6 +15,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
 
             return new ManifestDto
             {
+                ExternalManifestId = src.Id,
                 SerialNo = src.SerialNo,
                 ManifestRegistrationNumber = src.ManifestRegistrationNumber,
                 VoyageNo = src.Voyage?.VoyageNo ?? string.Empty,
@@ -56,8 +57,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 itemDto.ManifestGoods.AddRange(src.GeneralCargoList.Select(g => new ManifestGoodDto
                 {
                     PackNb = (long)g.PackageQuantity,
-                    GrossWeight = g.GrossWeight,
-                    NetWeight = g.NetWeight,
+                    GrossWeight = g.PackageQuantity * g.GrossWeight,
+                    NetWeight = g.PackageQuantity * g.NetWeight,
                     Volume = (g.ItemWidth ?? 0) * (g.ItemHeight ?? 0) * (g.ItemLength ?? 0),
                     BrandName = g.BrandName,
                     Description = g.Description,
@@ -107,8 +108,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 ManifestContainerGoods = src.Goods?.Select(g => new ManifestContainerGoodDto
                 {
                     PackNb = (long)g.PackageCount,
-                    GrossWeight = g.GrossWeight,
-                    NetWeight = g.NetWeight,
+                    GrossWeight = g.PackageCount * g.GrossWeight,
+                    NetWeight = g.PackageCount * g.NetWeight,
                     HSCode = g.HSCode,
                     CommodityName = g.GoodsDescription,
                     PackageCode = g.PackageTypeCode

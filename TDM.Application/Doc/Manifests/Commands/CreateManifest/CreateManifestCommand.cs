@@ -7,6 +7,7 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
 {
     public class CreateManifestCommand : IRequest<Guid>
     {
+        public Guid ExternalManifestId { get; set; }
         public string SerialNo { get; set; }
         public string ManifestRegistrationNumber { get; set; }
         public string VoyageNo { get; set; }
@@ -55,7 +56,7 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
     {
         public string ContainerNo { get; set; }
         public Guid? BillOfLadingId { get; set; }
-        public string TypeCode { get; set; }
+        public string ContainerTypeAndSizeCode { get; set; }
         public string SealNumber { get; set; }
         public string? DangerousCode { get; set; }
         public string? Classification { get; set; }

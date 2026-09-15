@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using TDM.Application.Common.Models;
+using TDM.Application.Doc.Manifests.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Interfaces
@@ -8,5 +8,6 @@ namespace TDM.Application.Common.Interfaces
     public interface IManifestRepository : IRepository<Manifest>
     {
         Task<bool> ExistsByNoticeNo(string noticeNo);
+        Task<PagedResult<ManifestListDto>> GetPagedManifests(int pageNumber, int pageSize, string terminalCode);
     }
 }

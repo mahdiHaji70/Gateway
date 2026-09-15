@@ -4,12 +4,15 @@ import { DeclarationListComponent } from './components/declaration/declaration-l
 import { DeclarationComponent } from './components/declaration/declaration.component';
 import { StoreReceiptIssueComponent } from './components/store-receipt-issue/store-receipt-issue.component';
 import { StoreReceiptIssueRequestComponent } from './components/store-receipt-issue-request/store-receipt-issue-request.component';
+import { ManifestComponent } from './components/manifest/manifest.component';
+import { ManifestListComponent } from './components/manifest/manifest-list/manifest-list.component';
 
 const routes: Routes = [
     { path: 'declaration-list', component: DeclarationListComponent},
     { path: 'declaration', component: DeclarationComponent},
     { path: 'declaration/:id', component: DeclarationComponent},
-
+    { path: 'manifest-list', component: ManifestListComponent},
+    { path: 'manifest', component: ManifestComponent},
     { path: 'store-receipt-issue-request', component: StoreReceiptIssueRequestComponent},
 
 ];

@@ -21,6 +21,7 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
         private readonly IContainerRepository _containerRepository;
         private readonly ITrafficRepository _trafficRepository;
         private readonly ICompanyRepository _companyRepository;
+        private readonly IManifestExternalService _manifestExternalService;
 
         public CreateManifestCommandHandler(
             IUnitOfWork unitOfWork,
@@ -29,7 +30,8 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
             IPackageRepository packageRepository,
             IContainerRepository containerRepository,
             ITrafficRepository trafficRepository,
-            ICompanyRepository companyRepository)
+            ICompanyRepository companyRepository,
+            IManifestExternalService manifestExternalService)
         {
             _unitOfWork = unitOfWork;
             _manifestRepository = manifestRepository;
@@ -38,6 +40,7 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
             _containerRepository = containerRepository;
             _trafficRepository = trafficRepository;
             _companyRepository = companyRepository;
+            _manifestExternalService = manifestExternalService;
         }
 
         public async Task<Guid> Handle(
@@ -74,8 +77,8 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
 
             var containerKeys = manifestItems
                 .SelectMany(x => x.ManifestContainers ?? Enumerable.Empty<CreateManifestContainerCommand>())
-                .Where(x => !string.IsNullOrWhiteSpace(x.ContainerNo) && !string.IsNullOrWhiteSpace(x.TypeCode))
-                .Select(x => (x.ContainerNo, x.TypeCode))
+                .Where(x => !string.IsNullOrWhiteSpace(x.ContainerNo) && !string.IsNullOrWhiteSpace(x.ContainerTypeAndSizeCode))
+                .Select(x => (x.ContainerNo, x.ContainerTypeAndSizeCode))
                 .Distinct()
                 .ToList();
 
@@ -164,9 +167,9 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
 
                 foreach (var containerCommand in itemCommand.ManifestContainers ?? Enumerable.Empty<CreateManifestContainerCommand>())
                 {
-                    var containerKey = (containerCommand.ContainerNo, containerCommand.TypeCode);
+                    var containerKey = (containerCommand.ContainerNo, containerCommand.ContainerTypeAndSizeCode);
                     if (!containerDict.TryGetValue(containerKey, out var containerId))
-                        throw new NotFoundException($"Container '{containerCommand.ContainerNo}' with type '{containerCommand.TypeCode}' not found.");
+                        throw new NotFoundException($"Container '{containerCommand.ContainerNo}' with type '{containerCommand.ContainerTypeAndSizeCode}' not found.");
 
                     var manifestContainer = new ManifestContainer(
                         containerId,
@@ -202,6 +205,8 @@ namespace TDM.Application.Doc.Manifests.Commands.CreateManifest
 
             await _manifestRepository.InsertAsync(manifest);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            //this is not good to call. if it fails the manifest still available. TODO
+            await _manifestExternalService.SetManifestApproved(request.ExternalManifestId);
 
             return manifest.Id;
         }

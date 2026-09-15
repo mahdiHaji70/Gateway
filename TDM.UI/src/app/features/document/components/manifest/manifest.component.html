@@ -1,0 +1,372 @@
+<div class="p-fluid p-formgrid grid">
+    <div class="col-12 group-box">
+        <!-- Filter Form -->
+        <div class="p-fluid p-formgrid grid">
+            <div class="col-12 md:col-6 lg:col-4">
+                <form [formGroup]="form" ngNativeValidate>
+                    <app-drop-down [options]="voyages" [formGroup]="form" [controlName]="'voyage'" [required]="true"
+                        (change)="loadManifest($event)">
+                    </app-drop-down>
+                </form>
+            </div>
+            <div class="col-offset-1 col-2 mt-4">
+                <p-button severity="info" label="Save Manifest" icon="pi pi-cloud-download" class="mr-2"
+                    [disabled]="!form.controls.voyage.value" (onClick)="SaveManifest()" />
+
+
+            </div>
+        </div>
+
+        <!-- Manifest & Vessel Header -->
+        <div class="col-12" *ngIf="manifest">
+            <p-panel header="Manifest & Vessel Information" [toggleable]="true">
+                <div class="grid p-fluid">
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Manifest Reg. No</label>
+                            <span class="text-color font-medium text-base">{{ manifest.manifestRegistrationNumber || '-'
+                                }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Serial No</label>
+                            <span class="text-color font-medium text-base">{{ manifest.serialNo || '-' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Voyage No</label>
+                            <span class="text-color font-medium text-base">{{ manifest.voyageNo || '-' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Notice No</label>
+                            <span class="text-color font-medium text-base">{{ manifest.noticeNo || '-' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Vessel Name</label>
+                            <span class="text-color font-medium text-base">
+                                <i class="pi pi-compass mr-1 text-primary"></i>{{ manifest.vesselName || '-' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">IMO Number</label>
+                            <span class="text-color font-medium text-base">{{ manifest.imo || '-' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">ETA</label>
+                            <span class="text-color font-medium text-base">
+                                <i class="pi pi-calendar mr-1 text-primary"></i>
+                                {{ manifest.eta ? (manifest.eta | date:'yyyy/MM/dd HH:mm') : '-' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">ETD</label>
+                            <span class="text-color font-medium text-base">
+                                <i class="pi pi-calendar mr-1 text-primary"></i>
+                                {{ manifest.etd ? (manifest.etd | date:'yyyy/MM/dd HH:mm') : '-' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Shipping Line</label>
+                            <span class="text-color font-medium text-base">{{ manifest.shipLine || '-' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Shipping Agent</label>
+                            <span class="text-color font-medium text-base">{{ manifest.shipAgent || '-' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Agent National ID</label>
+                            <span class="text-color font-medium text-base">{{ manifest.shipAgentNationalId || '-'
+                                }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="field-item">
+                            <label class="text-secondary block font-semibold text-xs mb-1">Terminal Code</label>
+                            <span class="text-color font-medium text-base">
+                                <p-tag [value]="manifest.terminalCode || 'N/A'" severity="info"></p-tag>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+        <!-- Manifest Items Table -->
+        <div class="col-12 mt-3" *ngIf="manifest?.manifestItems?.length">
+            <p-card header="Manifest Items">
+                <p-table #dt [value]="manifest.manifestItems" dataKey="manifestItemNo"
+                    [expandedRowKeys]="expandedRowKeys"
+                    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
+                    [tableStyle]="{ 'min-width': '60rem' }" [paginator]="true" [rows]="10"
+                    [rowsPerPageOptions]="[10, 20, 50]">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3.5rem;">#</th>
+                            <th>Manifest No</th>
+                            <th>Manifest Item No</th>
+                            <th>Consignee</th>
+                            <th>Consignor</th>
+                            <th>Traffic</th>
+                            <th>Cargo Type</th>
+                            <th class="text-center" style="width: 8rem;">Goods</th>
+                            <th class="text-center" style="width: 8rem;">Containers</th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex" let-expanded="expanded">
+                        <tr>
+                            <td>{{ rowIndex + 1 }}</td>
+
+                            <td>
+                                <span class="font-bold text-primary">{{ item.manifestNo || '-' }}</span>
+                            </td>
+
+                            <td>{{ item.manifestItemNo || '-' }}</td>
+
+                            <td>
+                                <div class="font-semibold">{{ item.consigneeName || '-' }}</div>
+                                <small class="text-secondary" *ngIf="item.consigneeNationalId">
+                                    ID: {{ item.consigneeNationalId }}
+                                </small>
+                            </td>
+
+                            <td>{{ item.consignor || '-' }}</td>
+
+                            <td>
+                                <p-tag [value]="item.trafficName || item.trafficCode || '-'" severity="info"></p-tag>
+                            </td>
+
+                            <td>{{ item.cargoTypeName || '-' }}</td>
+
+                            <!-- Goods Badge Clickable -->
+                            <td class="text-center">
+                                <span class="cursor-pointer select-none" (click)="toggleRowExpansion(item, 'goods')"
+                                    [pTooltip]="item.manifestGoods?.length ? 'Click to view Goods' : 'No Goods'"
+                                    tooltipPosition="top">
+                                    <p-badge [value]="item.manifestGoods?.length || 0"
+                                        [severity]="activeSubSection[item.manifestItemNo] === 'goods' && expandedRowKeys[item.manifestItemNo] ? 'primary' : (item.manifestGoods?.length ? 'success' : 'secondary')">
+                                    </p-badge>
+                                </span>
+                            </td>
+
+                            <!-- Containers Badge Clickable -->
+                            <td class="text-center">
+                                <span class="cursor-pointer select-none"
+                                    (click)="toggleRowExpansion(item, 'containers')"
+                                    [pTooltip]="item.manifestContainers?.length ? 'Click to view Containers' : 'No Containers'"
+                                    tooltipPosition="top">
+                                    <p-badge [value]="item.manifestContainers?.length || 0"
+                                        [severity]="activeSubSection[item.manifestItemNo] === 'containers' && expandedRowKeys[item.manifestItemNo] ? 'primary' : (item.manifestContainers?.length ? 'warning' : 'secondary')">
+                                    </p-badge>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Row Expansion: Goods or Containers View -->
+                    <ng-template pTemplate="rowexpansion" let-item>
+                        <tr>
+                            <td colspan="9">
+                                <div class="p-3 surface-50 border-round shadow-1">
+
+                                    <!-- EXPANSION 1: GOODS TABLE -->
+                                    <div *ngIf="activeSubSection[item.manifestItemNo] === 'goods'">
+                                        <div class="flex justify-content-between align-items-center mb-2">
+                                            <h6 class="m-0 font-bold text-900">
+                                                <i class="pi pi-box mr-2 text-success"></i>
+                                                Manifest Goods (Item #{{ item.manifestItemNo }})
+                                            </h6>
+                                            <button pButton icon="pi pi-times"
+                                                class="p-button-text p-button-sm p-button-rounded"
+                                                (click)="closeExpansion(item.manifestItemNo)"></button>
+                                        </div>
+
+                                        <p-table [value]="item.manifestGoods || []"
+                                            styleClass="p-datatable-sm p-datatable-gridlines"
+                                            [tableStyle]="{ 'min-width': '45rem' }">
+                                            <ng-template pTemplate="header">
+                        <tr>
+                            <th>HS Code</th>
+                            <th>Commodity</th>
+                            <th>Package</th>
+                            <th>Brand</th>
+                            <th class="text-right">Pack Qty</th>
+                            <th class="text-right">Gross Wt (kg)</th>
+                            <th class="text-right">Net Wt (kg)</th>
+                            <th class="text-right">Volume (m³)</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-good>
+                        <tr>
+                            <td><span class="font-bold text-primary">{{ good.hsCode || '-' }}</span></td>
+                            <td>{{ good.commodityName || good.description || '-' }}</td>
+                            <td>{{ good.packageName || good.packageCode || '-' }}</td>
+                            <td>{{ good.brandName || '-' }}</td>
+                            <td class="text-right font-medium">{{ good.packNb | number }}</td>
+                            <td class="text-right">{{ good.grossWeight | number:'1.2-2' }}</td>
+                            <td class="text-right">{{ good.netWeight | number:'1.2-2' }}</td>
+                            <td class="text-right">{{ good.volume | number:'1.2-2' }}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="9" class="text-center p-3 text-secondary">
+                                No goods registered for this manifest item.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+        </div>
+
+        <!-- EXPANSION 2: CONTAINERS WITH NESTED GOODS TABLE -->
+        <div *ngIf="activeSubSection[item.manifestItemNo] === 'containers'">
+            <div class="flex justify-content-between align-items-center mb-2">
+                <h6 class="m-0 font-bold text-900">
+                    <i class="pi pi-server mr-2 text-warning"></i>
+                    Manifest Containers (Item #{{ item.manifestItemNo }})
+                </h6>
+                <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-rounded"
+                    (click)="closeExpansion(item.manifestItemNo)"></button>
+            </div>
+
+            <p-table [value]="item.manifestContainers || []" dataKey="containerId"
+                styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3.5rem;"></th>
+                        <th>Container No</th>
+                        <th>Type & Size</th>
+                        <th>Seal No</th>
+                        <th>Dangerous Code</th>
+                        <th>Classification</th>
+                        <th>Ignition Temp</th>
+                        <th class="text-center">Goods Count</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-container let-cExpanded="expanded">
+                    <tr>
+                        <td>
+                            <p-button *ngIf="container.manifestContainerGoods?.length" type="button"
+                                [pRowToggler]="container" [text]="true" [rounded]="true"
+                                [icon]="cExpanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                        </td>
+                        <td><span class="font-bold text-primary">{{ container.containerNo }}</span></td>
+                        <td>{{ container.containerTypeAndSizeCode || '-' }}</td>
+                        <td>{{ container.sealNumber || '-' }}</td>
+                        <td>
+                            <p-tag *ngIf="container.dangerousCode" [value]="container.dangerousCode"
+                                severity="danger"></p-tag>
+                            <span *ngIf="!container.dangerousCode">-</span>
+                        </td>
+                        <td>{{ container.classification || '-' }}</td>
+                        <td>
+                            {{ container.ignitionTemperature ? (container.ignitionTemperature + ' ' +
+                            (container.ignitionTemperatureUnit || '°C')) : '-' }}
+                        </td>
+                        <td class="text-center">
+                            <p-badge [value]="container.manifestContainerGoods?.length || 0" severity="info"></p-badge>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <!-- Sub-Level: Goods inside Container -->
+                <ng-template pTemplate="rowexpansion" let-container>
+                    <tr>
+                        <td colspan="8">
+                            <div class="p-3 surface-100 border-round">
+                                <div class="font-bold mb-2 text-sm text-700">
+                                    <i class="pi pi-box mr-1"></i> Goods Inside Container: {{ container.containerNo }}
+                                </div>
+                                <p-table [value]="container.manifestContainerGoods || []"
+                                    styleClass="p-datatable-sm p-datatable-gridlines">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>HS Code</th>
+                        <th>Commodity</th>
+                        <th>Package</th>
+                        <th class="text-right">Pack Qty</th>
+                        <th class="text-right">Gross Wt (kg)</th>
+                        <th class="text-right">Net Wt (kg)</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-cg>
+                    <tr>
+                        <td><span class="font-semibold text-primary">{{ cg.hsCode || '-' }}</span></td>
+                        <td>{{ cg.commodityName || '-' }}</td>
+                        <td>{{ cg.packageName || cg.packageCode || '-' }}</td>
+                        <td class="text-right font-medium">{{ cg.packNb | number }}</td>
+                        <td class="text-right">{{ cg.grossWeight | number:'1.2-2' }}</td>
+                        <td class="text-right">{{ cg.netWeight ? (cg.netWeight | number:'1.2-2') : '-' }}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6" class="text-center p-2 text-secondary">
+                            No goods associated with this container.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8" class="text-center p-3 text-secondary">
+                    No containers registered for this manifest item.
+                </td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </div>
+
+</div>
+</td>
+</tr>
+</ng-template>
+
+<ng-template pTemplate="emptymessage">
+    <tr>
+        <td colspan="9" class="text-center p-4 text-secondary">
+            No manifest items found.
+        </td>
+    </tr>
+</ng-template>
+</p-table>
+</p-card>
+</div>
+</div>
+</div>
+<p-toast />

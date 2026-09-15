@@ -6,6 +6,7 @@ namespace TDM.Application.Doc.Manifests.DTOs
 {
     public class ManifestDto
     {
+        public Guid ExternalManifestId { get; set; }
         public string SerialNo { get; set; }
         public string ManifestRegistrationNumber { get; set; }
         public string VoyageNo { get; set; }
