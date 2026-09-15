@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Commands.UpdateDeclarationItem
+namespace TDM.Application.Doc.DeclarationItems.Commands.UpdateDeclarationItem
 {
     public record UpdateDeclarationItemCommand : IRequest<Guid>
     {

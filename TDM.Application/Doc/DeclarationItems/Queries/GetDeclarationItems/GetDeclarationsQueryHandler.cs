@@ -5,7 +5,7 @@ using TDM.Application.Common.Models;
 using TDM.Application.Doc.DeclarationItems.DTOs;
 using TDM.Domain.Entities;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Queries.GetDeclarationItems
+namespace TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItems
 {
     public class GetDeclarationItemsQueryHandler : IRequestHandler<GetDeclarationItemsQuery, PagedResult<DeclarationItemDto>>
     {

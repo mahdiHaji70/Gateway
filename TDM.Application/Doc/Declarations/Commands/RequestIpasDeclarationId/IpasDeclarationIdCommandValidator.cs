@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace TDM.Application.BasicInformation.Declarations.Commands.RequestIpasDeclarationId
+namespace TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId
 {
     public class IpasDeclarationIdCommandValidator : AbstractValidator<IpasDeclarationIdCommand>
     {

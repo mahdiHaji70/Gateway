@@ -5,7 +5,7 @@ using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.Declarations.DTOs;
 
 
-namespace TDM.Application.BasicInformation.Declarations.Queries.GetDeclarationById
+namespace TDM.Application.Doc.Declarations.Queries.GetDeclarationById
 {
     public class GetDeclarationByIdQueryHandler : IRequestHandler<GetDeclarationByIdQuery, DeclarationDto>
     {

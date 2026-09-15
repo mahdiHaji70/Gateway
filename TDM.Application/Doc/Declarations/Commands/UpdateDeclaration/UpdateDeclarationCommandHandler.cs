@@ -2,7 +2,7 @@
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 
-namespace TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclaration
+namespace TDM.Application.Doc.Declarations.Commands.UpdateDeclaration
 {
     public class UpdateDeclarationCommandHandler : IRequestHandler<UpdateDeclarationCommand, Guid>
     {
