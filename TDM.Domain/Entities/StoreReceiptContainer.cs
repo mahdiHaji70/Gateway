@@ -8,18 +8,31 @@ namespace TDM.Domain.Entities
 {
     public class StoreReceiptContainer : BaseEntity
     {
-        public Guid StoreReceiptHeadId { get; set; }
-        public StoreReceiptHead StoreReceiptHead { get; set; }
-        public Guid ContainerId { get; set; }
-        public Container Container { get; set; }
-        public string SealNumber { get; set; }
-        public string  Remark { get; set; }
-        public string DangerousCode { get; set; }
-        public string Classification { get; set; }
-        public decimal IgnitionTemperature { get; set; }
-        public string IgnitionTemperatureUnit { get; set; }
-      
-        public ICollection<StoreReceiptContainerGood> StoreReceiptContainerGoods { get; private set; } = new List<StoreReceiptContainerGood>();
+        private readonly List<StoreReceiptContainerGood> _storeReceiptContainerGoods = [];
+
+        public Guid StoreReceiptHeadId { get; private set; }
+
+        public StoreReceiptHead StoreReceiptHead { get; private set; }
+
+        public Guid ContainerId { get; private set; }
+
+        public Container Container { get; private set; }
+
+        public string SealNumber { get; private set; }
+
+        public string Remark { get; private set; }
+
+        public string DangerousCode { get; private set; }
+
+        public string Classification { get; private set; }
+
+        public decimal IgnitionTemperature { get; private set; }
+
+        public string IgnitionTemperatureUnit { get; private set; }
+
+        public IReadOnlyCollection<StoreReceiptContainerGood>
+            StoreReceiptContainerGoods
+            => _storeReceiptContainerGoods.AsReadOnly();
         protected StoreReceiptContainer()
         {
         }
@@ -116,6 +129,55 @@ namespace TDM.Domain.Entities
                 ignitionTemperature == 0)
                 throw new DomainValidationException(
                     "Ignition temperature must be greater than zero when a unit is specified.");
+        }
+        public StoreReceiptContainerGood AddGood(
+       Guid commodityId,
+       Guid packageId,
+       string brandName,
+       bool noBrandName,
+       decimal packNB,
+       decimal grossWeight,
+       decimal netWeight,
+       decimal volume,
+       bool isHeavy,
+       bool isNonPalletized,
+       bool isDamaged,
+       bool isVoluminous,
+       bool isDangerous,
+       bool dangerousNotNoticed)
+        {
+            var good = new StoreReceiptContainerGood(
+                Id,
+                commodityId,
+                packageId,
+                brandName,
+                noBrandName,
+                packNB,
+                grossWeight,
+                netWeight,
+                volume,
+                isHeavy,
+                isNonPalletized,
+                isDamaged,
+                isVoluminous,
+                isDangerous,
+                dangerousNotNoticed);
+
+            _storeReceiptContainerGoods.Add(good);
+
+            return good;
+        }
+
+        public void RemoveGood(Guid goodId)
+        {
+            var good = _storeReceiptContainerGoods
+                .FirstOrDefault(x => x.Id == goodId);
+
+            if (good is null)
+                throw new DomainValidationException(
+                    "Store receipt container good not found.");
+
+            _storeReceiptContainerGoods.Remove(good);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
-using TDM.Application.Doc.StoreReceipt.Queries.GetStoreReceiptByStorageAgreementNo;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 
 namespace TDM.API.Controllers
 {

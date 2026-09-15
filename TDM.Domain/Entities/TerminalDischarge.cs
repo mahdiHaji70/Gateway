@@ -10,30 +10,30 @@ namespace TDM.Domain.Entities
 {
     public class TerminalDischarge : BaseEntity
     {
-        public string TerminalCode { get; set; }
-        public Guid StoreId { get; set; }
-        public Store Store { get; set; } = null!;
-        public Guid DeclarationItemId { get; set; }
-        public DeclarationItem DeclarationItem { get; set; } = null!;
-        public string WayBillNo { get; set; }
-        public Guid WayBillId { get; set; }
-        public DateTime DischargeDate { get; set; }
-        public string VehicleNumber { get; set; }
-        public long PackNB { get; set; }
-        public decimal Weight { get; set; }
-        public decimal Volume { get; set; }
-        public bool IsNonPalletized { get; set; } = false;
-        public bool IsDamaged { get; set; } = false;
-        public bool IsVoluminous { get; set; } = false;
-        public bool IsDangerous { get; set; } = false;
-        public string DangerousCode { get; set; }
-        public string Classification { get; set; }
-        public decimal IgnitionTemperature { get; set; }
-        public string IgnitionTemperatureUnit { get; set; }
-        public Guid? IpasTerminalDischargeId { get; set; }
-        public DateTime? IpasTerminalDischargeReceivedAt { get; set; }
-        public Guid? IssueRequestId { get; set; }
-        public decimal UnitWeight { get; set; } = 0;
+        public string TerminalCode { get; private set; }
+        public Guid StoreId { get; private set; }
+        public Store Store { get; private set; } = null!;
+        public Guid DeclarationItemId { get; private set; }
+        public DeclarationItem DeclarationItem { get; private set; } = null!;
+        public string WayBillNo { get; private set; }
+        public Guid WayBillId { get; private set; }
+        public DateTime DischargeDate { get; private set; }
+        public string VehicleNumber { get; private set; }
+        public long PackNB { get; private set; }
+        public decimal Weight { get; private set; }
+        public decimal Volume { get; private set; }
+        public bool IsNonPalletized { get; private set; } = false;
+        public bool IsDamaged { get; private set; } = false;
+        public bool IsVoluminous { get; private set; } = false;
+        public bool IsDangerous { get; private set; } = false;
+        public string DangerousCode { get; private set; }
+        public string Classification { get; private set; }
+        public decimal IgnitionTemperature { get; private set; }
+        public string IgnitionTemperatureUnit { get; private set; }
+        public Guid? IpasTerminalDischargeId { get; private set; }
+        public DateTime? IpasTerminalDischargeReceivedAt { get; private set; }
+        public Guid? IssueRequestId { get;  set; }
+        public decimal UnitWeight { get; private set; } = 0;
 
         public TerminalDischarge()
         {

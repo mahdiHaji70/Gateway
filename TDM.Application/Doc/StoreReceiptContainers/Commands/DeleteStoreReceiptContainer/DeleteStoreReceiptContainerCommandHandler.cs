@@ -10,24 +10,24 @@ namespace TDM.Application.Doc.StoreReceiptContainers.Commands.DeleteStoreReceipt
    
     public class DeleteStoreReceiptContainerCommandHandler : IRequestHandler<DeleteStoreReceiptContainerCommand, bool>
     {
-        private readonly IRepository<StoreReceiptContainer> _StoreReceiptContainerRepository;
+        private readonly IRepository<StoreReceiptContainer> _storeReceiptContainerRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public DeleteStoreReceiptContainerCommandHandler(IUnitOfWork unitOfWork
             , IRepository<StoreReceiptContainer> StoreReceiptContainerRepository)
         {
             _unitOfWork = unitOfWork;
-            _StoreReceiptContainerRepository = StoreReceiptContainerRepository;
+            _storeReceiptContainerRepository = StoreReceiptContainerRepository;
         }
 
         public async Task<bool> Handle(DeleteStoreReceiptContainerCommand request, CancellationToken cancellationToken)
         {
-            var StoreReceiptContainer = await _StoreReceiptContainerRepository.GetAsync(request.Id);
+            var StoreReceiptContainer = await _storeReceiptContainerRepository.GetAsync(request.Id);
 
             if (StoreReceiptContainer == null)
                 throw new Exception("StoreReceiptContainer not found");
 
-            _StoreReceiptContainerRepository.Delete(StoreReceiptContainer);
+            _storeReceiptContainerRepository.Delete(StoreReceiptContainer);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

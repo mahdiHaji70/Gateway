@@ -8,29 +8,29 @@ namespace TDM.Domain.Entities
 {
     public class StoreReceiptGood : BaseEntity
     {
-        public Guid StoreReceiptHeadId { get; set; }
-        public StoreReceiptHead StoreReceiptHead { get; set; }
-        public Guid CommodityId { get; set; }
-        public Commodity Commodity { get; set; }
-        public Guid PackageId { get; set; }
-        public Package Package { get; set; }
-        public string BrandName { get; set; }
-        public bool NoBrandName { get; set; }
-        public decimal PackNB { get; set; }
-        public decimal GrossWeight { get; set; }
-        public decimal NetWeight { get; set; }
-        public decimal Volume { get; set; }
-        public string Remark { get; set; }
-        public bool IsHeavy { get; set; } = false;
-        public bool IsNonPalletized { get; set; } = false;
-        public bool IsDamaged { get; set; } = false;
-        public bool IsVoluminous { get; set; } = false;
-        public bool IsDangerous { get; set; } = false;
-        public bool DangerousNotNoticed { get; set; } = false;
-        public string DangerousCode { get; set; }
-        public string Classification { get; set; }
-        public decimal IgnitionTemperature { get; set; }
-        public string IgnitionTemperatureUnit { get; set; }
+        public Guid StoreReceiptHeadId { get; private set; }
+        public StoreReceiptHead StoreReceiptHead { get; private set; }
+        public Guid CommodityId { get; private set; }
+        public Commodity Commodity { get; private set; }
+        public Guid PackageId { get; private set; }
+        public Package Package { get; private set; }
+        public string BrandName { get; private set; }
+        public bool NoBrandName { get; private set; }
+        public decimal PackNB { get; private set; }
+        public decimal GrossWeight { get; private set; }
+        public decimal NetWeight { get; private set; }
+        public decimal Volume { get; private set; }
+        public string Remark { get; private set; }
+        public bool IsHeavy { get; private set; } = false;
+        public bool IsNonPalletized { get; private set; } = false;
+        public bool IsDamaged { get; private set; } = false;
+        public bool IsVoluminous { get; private set; } = false;
+        public bool IsDangerous { get; private set; } = false;
+        public bool DangerousNotNoticed { get; private set; } = false;
+        public string DangerousCode { get; private set; }
+        public string Classification { get; private set; }
+        public decimal IgnitionTemperature { get; private set; }
+        public string IgnitionTemperatureUnit { get; private set; }
 
        public StoreReceiptGood(
            Guid storeReceiptHeadId,
