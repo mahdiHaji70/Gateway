@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RemoveDeclarationItem
+namespace TDM.Application.Doc.DeclarationItems.Commands.RemoveDeclarationItem
 {
     public class DeleteDeclarationItemCommand : IRequest<bool>
     {

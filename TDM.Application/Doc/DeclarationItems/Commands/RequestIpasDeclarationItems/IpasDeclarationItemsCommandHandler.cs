@@ -6,7 +6,7 @@ using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 using TDM.Domain.Enums;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems
+namespace TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems
 {
     public class IpasDeclarationItemsCommandHandler : IRequestHandler<IpasDeclarationItemsCommand, Guid>
     {

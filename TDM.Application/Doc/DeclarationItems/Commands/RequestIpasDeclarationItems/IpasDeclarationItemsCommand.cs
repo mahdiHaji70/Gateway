@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems
+namespace TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems
 {
     public record IpasDeclarationItemsCommand : IRequest<Guid>
     {

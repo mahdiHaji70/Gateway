@@ -2,7 +2,7 @@
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Commands.CreateDeclarationItem
+namespace TDM.Application.Doc.DeclarationItems.Commands.CreateDeclarationItem
 {
     public class CreateDeclarationItemCommandHandler : IRequestHandler<CreateDeclarationItemCommand, Guid>
     {

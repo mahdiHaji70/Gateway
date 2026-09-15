@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace TDM.Application.BasicInformation.Declarations.Commands.CreateDeclaration
+namespace TDM.Application.Doc.Declarations.Commands.CreateDeclaration
 {
     public class CreateDeclarationCommandValidator : AbstractValidator<CreateDeclarationCommand>
     {

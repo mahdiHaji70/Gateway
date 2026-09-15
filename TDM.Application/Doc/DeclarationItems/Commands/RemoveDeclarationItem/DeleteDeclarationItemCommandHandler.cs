@@ -2,7 +2,7 @@
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 
-namespace TDM.Application.BasicInformation.DeclarationItems.Commands.RemoveDeclarationItem
+namespace TDM.Application.Doc.DeclarationItems.Commands.RemoveDeclarationItem
 {
     public class DeleteDeclarationItemCommandHandler : IRequestHandler<DeleteDeclarationItemCommand, bool>
     {
