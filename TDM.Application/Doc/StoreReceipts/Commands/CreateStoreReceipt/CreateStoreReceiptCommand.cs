@@ -12,15 +12,21 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         public string IPASStoreReceiptNo { get; set; }
         public DateTime IssueDate { get; set; }
         public Guid ConsigneeId { get; set; }
+        public string ConsigneeNationalId { get; set; }
         public Guid ConsigneeRepId { get; set; }
+        public string ConsigneeRepNationalId { get; set; }
         public Guid CargoTypeId { get; set; }
         public DateTime? FirstDischargeDate { get; set; }
         public Guid CreatorId { get; set; }
         public Guid TrafficId { get; set; }
+        public string TrafficCode { get; set; }
         public Guid StoreReceiptStateId { get; set; }
+        public int? StoreReceiptStateCode { get; set; }
+        public string StoreReceiptStateName { get; set; }
         public Guid? RequestId { get; set; }
         public string VoyageNoticeNo { get; set; }
         public Guid ArrivalTypeId { get; set; }
+        public string ArrivalTypeName { get; set; }
         public Guid? DeclarationId { get; set; }
         public Guid? BillOfLadingId { get; set; }
         public List<CreateStoreReceiptGoodCommand> StoreReceiptGoods { get;  set; } 
@@ -32,6 +38,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     {
         public Guid StoreReceiptHeadId { get; set; }
         public Guid ContainerId { get; set; }
+        public string ContainerNo { get; set; }
+        public string ContainerTypeAndSizeCode { get; set; }
         public string SealNumber { get; set; }
         public string Remark { get; set; }
         public string DangerousCode { get; set; }
@@ -46,7 +54,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     {
         public Guid StoreReceiptContainerId { get; set; }
         public Guid CommodityId { get; set; }
+        public string HsCode { get; set; }
         public Guid PackageId { get; set; }
+        public string PackageTypeCode { get; set; }
         public string BrandName { get; set; }
         public bool NoBrandName { get; set; }
         public decimal PackNB { get; set; }
@@ -65,7 +75,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     {
         public Guid StoreReceiptHeadId { get; set; }
         public Guid CommodityId { get; set; }
+        public string HsCode { get; set; }
         public Guid PackageId { get; set; }
+        public string PackageTypeCode { get; set; }
         public string BrandName { get; set; }
         public bool NoBrandName { get; set; }
         public decimal PackNB { get; set; }

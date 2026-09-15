@@ -95,6 +95,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
             return dto.ContainerList?.Select(container => new StoreReceiptContainerDto
             {
                 ContainerNo = container.ContainerNo,
+                ContainerTypeAndSizeCode = container.ContainerTypeAndSizeCode,
                 SealNumber = container.SealNumber,
                 Remark = container.Remark,
                 DangerousCode = container.DangerousSpecification?.DangerousCode,

@@ -26,13 +26,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .NotEmpty()
                 .WithMessage("Issue date is required.");
 
-            RuleFor(x => x.ConsigneeId)
-                .NotEmpty()
-                .WithMessage("Consignee Id is required.");
+            RuleFor(x => x)
+                .Must(x => x.ConsigneeId != Guid.Empty || !string.IsNullOrWhiteSpace(x.ConsigneeNationalId))
+                .WithMessage("Consignee id or national id is required.");
 
-            RuleFor(x => x.ConsigneeRepId)
-                .NotEmpty()
-                .WithMessage("Consignee representative Id is required.");
+            RuleFor(x => x)
+                .Must(x => x.ConsigneeRepId != Guid.Empty || !string.IsNullOrWhiteSpace(x.ConsigneeRepNationalId))
+                .WithMessage("Consignee representative id or national id is required.");
 
             RuleFor(x => x.CargoTypeId)
                 .NotEmpty()
@@ -42,17 +42,21 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .NotEmpty()
                 .WithMessage("Creator Id is required.");
 
-            RuleFor(x => x.TrafficId)
-                .NotEmpty()
-                .WithMessage("Traffic Id is required.");
+            RuleFor(x => x)
+                .Must(x => x.TrafficId != Guid.Empty || !string.IsNullOrWhiteSpace(x.TrafficCode))
+                .WithMessage("Traffic id or traffic code is required.");
 
-            RuleFor(x => x.StoreReceiptStateId)
-                .NotEmpty()
-                .WithMessage("Store receipt state Id is required.");
+            RuleFor(x => x)
+                .Must(x => x.StoreReceiptStateId != Guid.Empty || !string.IsNullOrWhiteSpace(x.StoreReceiptStateName))
+                .WithMessage("Store receipt state id or state name is required.");
 
-            RuleFor(x => x.ArrivalTypeId)
+            RuleFor(x => x)
+                .Must(x => x.ArrivalTypeId != Guid.Empty || !string.IsNullOrWhiteSpace(x.ArrivalTypeName))
+                .WithMessage("Arrival type id or arrival type name is required.");
+
+            RuleFor(x => x.VoyageNoticeNo)
                 .NotEmpty()
-                .WithMessage("Arrival type Id is required.");
+                .WithMessage("Voyage notice number is required.");
 
             RuleFor(x => x.FirstDischargeDate)
                 .NotNull()
@@ -79,13 +83,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     {
         public CreateStoreReceiptGoodCommandValidator()
         {
-            RuleFor(x => x.CommodityId)
-                .NotEmpty()
-                .WithMessage("Commodity is required.");
+            RuleFor(x => x)
+                .Must(x => x.CommodityId != Guid.Empty || !string.IsNullOrWhiteSpace(x.HsCode))
+                .WithMessage("Commodity id or HS code is required.");
 
-            RuleFor(x => x.PackageId)
-                .NotEmpty()
-                .WithMessage("Package is required.");
+            RuleFor(x => x)
+                .Must(x => x.PackageId != Guid.Empty || !string.IsNullOrWhiteSpace(x.PackageTypeCode))
+                .WithMessage("Package id or package type code is required.");
 
             RuleFor(x => x.PackNB)
                 .GreaterThan(0)
@@ -109,13 +113,10 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     {
         public CreateStoreReceiptContainerCommandValidator()
         {
-            RuleFor(x => x.StoreReceiptHeadId)
-            .NotEmpty()
-            .WithMessage("Store receipt head is required.");
-
-            RuleFor(x => x.ContainerId)
-                .NotEmpty()
-                .WithMessage("Container is required.");
+            RuleFor(x => x)
+                .Must(x => x.ContainerId != Guid.Empty ||
+                    (!string.IsNullOrWhiteSpace(x.ContainerNo) && !string.IsNullOrWhiteSpace(x.ContainerTypeAndSizeCode)))
+                .WithMessage("Container id or container number and type code are required.");
 
             RuleFor(x => x.SealNumber)
                 .NotEmpty()
@@ -139,13 +140,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     {
         public CreateStoreReceiptContainerGoodCommandValidator()
         {
-            RuleFor(x => x.CommodityId)
-                .NotEmpty()
-                .WithMessage("Commodity is required.");
+            RuleFor(x => x)
+                .Must(x => x.CommodityId != Guid.Empty || !string.IsNullOrWhiteSpace(x.HsCode))
+                .WithMessage("Commodity id or HS code is required.");
 
-            RuleFor(x => x.PackageId)
-                .NotEmpty()
-                .WithMessage("Package is required.");
+            RuleFor(x => x)
+                .Must(x => x.PackageId != Guid.Empty || !string.IsNullOrWhiteSpace(x.PackageTypeCode))
+                .WithMessage("Package id or package type code is required.");
 
             RuleFor(x => x.PackNB)
                 .GreaterThan(0)

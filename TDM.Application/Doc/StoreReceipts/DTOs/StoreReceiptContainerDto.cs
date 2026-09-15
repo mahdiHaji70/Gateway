@@ -10,6 +10,7 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
         public Guid StoreReceiptHeadId { get; set; }
         public Guid ContainerId { get; set; }
         public string ContainerNo { get; set; }
+        public string ContainerTypeAndSizeCode { get; set; }
         public string SealNumber { get; set; }
         public string Remark { get; set; }
         public string DangerousCode { get; set; }
