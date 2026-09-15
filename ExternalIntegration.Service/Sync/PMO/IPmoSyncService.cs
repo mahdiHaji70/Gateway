@@ -19,6 +19,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<string>> IssueRequestConfirmation(IssueRequestConfirmationDto dto);
         Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceipts(DateRangeWithPagingDto dto);
         Task<Response<bool>> SendStoreReceiptAllocation( SendStoreReceiptAllocationDto dto);
+        Task<Response<bool>> SendWarehouseReceiptAllocation(WarehouseReceiptAllocationDto dto);
         Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto);
         Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges(DateRangeWithPagingDto dto);
         Task<Response<ManifestDto>> GetManifestById(Guid id, string terminalCode);

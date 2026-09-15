@@ -112,6 +112,13 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
             CreateMap<SendStoreReceiptAllocationDto, SendStoreReceiptAllocationRequestDto>();
 
+            CreateMap<WarehouseReceiptAllocationDto, WarehouseReceiptAllocationRequestDto>();
+            CreateMap<WarehouseReceiptAllocationGeneralCargoDto, WarehouseReceiptAllocationGeneralCargoRequestDto>();
+            CreateMap<WarehouseReceiptAllocationCargoDetailsDto, WarehouseReceiptAllocationCargoDetailsRequestDto>();
+            CreateMap<WarehouseReceiptAllocationBulkDto, WarehouseReceiptAllocationBulkRequestDto>();
+            CreateMap<WarehouseReceiptAllocationBulkDetailsDto, WarehouseReceiptAllocationBulkDetailsRequestDto>();
+            CreateMap<WarehouseReceiptAllocationContainerDto, WarehouseReceiptAllocationContainerRequestDto>();
+
             CreateMap<ManifestResponseDto, ManifestDto>();
             CreateMap<ManifestVoyageResponseDto, ManifestVoyageDto>();
             CreateMap<ManifestVoyageVesselDataResponseDto, ManifestVoyageVesselDataDto>();

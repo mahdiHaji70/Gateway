@@ -323,6 +323,24 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
+        public async Task<Response<bool>> SendWarehouseReceiptAllocation(WarehouseReceiptAllocationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.WReceiptsAllocation)
+                .WithParameters(new List<Parameter>
+                {
+                    new() { ParameterName = nameof(dto.WarehouseReceiptId), ParameterValue = dto.WarehouseReceiptId },
+                    new() { ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
+                    new() { ParameterName = nameof(dto.GeneralCargoList), ParameterValue = JsonConvert.SerializeObject(dto.GeneralCargoList) },
+                    new() { ParameterName = nameof(dto.BulkList), ParameterValue = JsonConvert.SerializeObject(dto.BulkList) },
+                    new() { ParameterName = nameof(dto.ContainerList), ParameterValue = JsonConvert.SerializeObject(dto.ContainerList) }
+                })
+                .Build();
+
+            return await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+        }
+
 
         public async Task<Response<IEnumerable<ManifestResponseDto>>> GetManifests(PmoDateRangeWithPagingDto dto)
         {

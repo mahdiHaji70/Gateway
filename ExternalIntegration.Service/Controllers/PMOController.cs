@@ -86,6 +86,12 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.SendStoreReceiptAllocation(dto);
         }
 
+        [HttpPost("WReceiptsAllocation")]
+        public async Task<Response<bool>> SendWarehouseReceiptAllocation([FromBody] WarehouseReceiptAllocationDto dto)
+        {
+            return await _pmoSyncService.SendWarehouseReceiptAllocation(dto);
+        }
+
         [HttpGet("GetManifests")]
         public async Task<Response<IEnumerable<ManifestDto>>> GetManifests([FromQuery] DateRangeWithPagingDto dto)
         {
