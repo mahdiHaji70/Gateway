@@ -26,8 +26,10 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
         public Guid CreatorId { get; set; }
         public string CreatorName { get; set; }
         public Guid TrafficId { get; set; }
+        public string TrafficCode { get; set; }
         public string TrafficName { get; set; }
         public Guid StoreReceiptStateId { get; set; }
+        public int StoreReceiptStateCode { get; set; }
         public string StoreReceiptStateName { get; set; }
         public Guid? RequestId { get; set; }
         public string VoyageNoticeNo { get; set; }
