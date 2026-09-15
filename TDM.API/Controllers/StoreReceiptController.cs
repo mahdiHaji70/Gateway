@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
+using TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 
 namespace TDM.API.Controllers
@@ -24,11 +25,13 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(result));
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> StoreReceiptConfirmation([FromBody] StoreReceiptConfirmationCommand command, CancellationToken cancellationToken)
-        //{
-        //    var id = await _mediator.Send(command, cancellationToken);
-        //    return Ok(ApiResponse.Success(id));
-        //}
+        [HttpPost("create-storeReceipt")]
+        public async Task<IActionResult> CreateStoreReceipt(CreateStoreReceiptCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(ApiResponse.Success(result));
+        }
+
+
     }
 }

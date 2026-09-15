@@ -12,6 +12,8 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
         public string CommodityName { get; set; }
         public Guid PackageId { get; set; }
         public string PackageName { get; set; }
+        public string HsCode { get; set; }
+        public string PackageTypeCode { get; set; }
         public string BrandName { get; set; }
         public bool NoBrandName { get; set; }
         public decimal PackNB { get; set; }

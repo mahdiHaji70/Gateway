@@ -49,6 +49,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
         {
             return dto.GeneralCargoList?.Select(cargo => new StoreReceiptGoodDto
             {
+                HsCode = cargo.HsCode,
+                PackageTypeCode = cargo.PackageTypeCode,
                 CommodityName = cargo.Description,
                 PackageName = cargo.PackageType,
                 BrandName = cargo.BrandName,
@@ -71,6 +73,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
             }).Concat(
                 dto.BulkList?.Select(bulk => new StoreReceiptGoodDto
                 {
+                    HsCode = bulk.HsCode,
                     CommodityName = bulk.Description,
                     PackNB = 0,
                     GrossWeight = bulk.Weight,
@@ -100,6 +103,8 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 IgnitionTemperatureUnit = container.DangerousSpecification?.IgnitionTemperatureUnit,
                 StoreReceiptContainerGoods = container.Goods?.Select(good => new StoreReceiptContainerGoodDto
                 {
+                    HsCode = good.HSCode,
+                    PackageTypeCode = good.PackageTypeCode,
                     CommodityName = good.Description,
                     PackageName = good.PackageTypeCode,
                     PackNB = good.PackageQuantity,
