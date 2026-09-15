@@ -19,6 +19,8 @@ import { StuffComponent } from './components/stuff/stuff.component';
 import { ExitFromStoreListComponent } from './components/exit-from-store-list/exit-from-store-list.component';
 import { ExitFromStoreComponent } from './components/exit-from-store-list/exit-from-store/exit-from-store.component';
 import { SendDischargeComponent } from './components/discharge/send-discharge/send-discharge.component';
+import { VesselDischargeComponent } from './components/vessel-discharge/vessel-discharge.component';
+import { VesselDischargeListComponent } from './components/vessel-discharge/vessel-discharge-list/vessel-discharge-list.component';
 
 const routes: Routes = [  
   { path: 'gate-in-list', component: GateInListComponent},
@@ -36,6 +38,10 @@ const routes: Routes = [
   { path: 'discharge-list', component: DischargeListComponent},
   { path: 'discharge', component: DischargeComponent},
   { path: 'discharge/:id', component: DischargeComponent},
+
+  { path: 'vessel-discharge-list', component: VesselDischargeListComponent},
+  { path: 'vessel-discharge', component: VesselDischargeComponent},
+  { path: 'vessel-discharge/:id', component: VesselDischargeComponent},
 
   { path: 'operation-planning-list', component: OperationPlanningListComponent},
   { path: 'operation-planning', component: OperationPlanningComponent},

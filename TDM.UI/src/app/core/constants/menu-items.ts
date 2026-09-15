@@ -13,6 +13,7 @@ export const MenuItems = [
             // { label: 'Gate Out', path: 'operation/gate-out-list' },
             // { label: 'Weigh Bridge', path: 'operation/weigh-bridge-list' },
              { label: 'Discharge', path: 'operation/discharge-list' },
+             { label: 'Vessel Discharge', path: 'operation/vessel-discharge-list' },
             // { label: 'Operation Planning', path: 'operation/operation-planning-list' },
             // { label: 'Operation Aggregation', path: 'operation/operation-aggregation-list' },
             // { label: 'Change Package', path: 'operation/change-package' },

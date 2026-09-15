@@ -41,6 +41,8 @@ import { ExitFromStoreListComponent } from './components/exit-from-store-list/ex
 import { ExitFromStoreComponent } from './components/exit-from-store-list/exit-from-store/exit-from-store.component';
 import { DeclarationItemService } from './services/declaration-item.service';
 import { SendDischargeComponent } from './components/discharge/send-discharge/send-discharge.component';
+import { VesselDischargeComponent } from './components/vessel-discharge/vessel-discharge.component';
+import { VesselDischargeListComponent } from './components/vessel-discharge/vessel-discharge-list/vessel-discharge-list.component';
 
 @NgModule({
   declarations: [    
@@ -62,7 +64,9 @@ import { SendDischargeComponent } from './components/discharge/send-discharge/se
     StuffComponent,
     ExitFromStoreListComponent,
     ExitFromStoreComponent,
-    SendDischargeComponent    
+    SendDischargeComponent,
+    VesselDischargeComponent,
+    VesselDischargeListComponent    
   ],
   imports: [
     CommonModule,
