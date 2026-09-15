@@ -279,6 +279,12 @@ namespace ExternalIntegration.Service.Sync.PMO
             return clientResult;
         }
 
+        public async Task<Response<bool>> SendWarehouseReceiptAllocation(WarehouseReceiptAllocationDto dto)
+        {
+            var request = _mapper.Map<WarehouseReceiptAllocationRequestDto>(dto);
+            return await _client.SendWarehouseReceiptAllocation(request);
+        }
+
         public async Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto)
         {
             DateTime localFromDate = DateTime.Now;
