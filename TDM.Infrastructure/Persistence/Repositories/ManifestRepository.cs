@@ -162,5 +162,37 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 .ThenBy(x => x.ManifestNo)
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<ManifestItem?> GetManifestItemById(Guid itemId, CancellationToken cancellationToken = default)
+        {
+            var item = await _dbSet
+                .AsNoTracking()
+                .SelectMany(x => x.ManifestItems)
+                .Where(x => x.Id == itemId)
+                .Include(x => x.Manifest)
+                .Include(x => x.Traffic)
+                .Include(x => x.Consignee)
+                .Include(x => x.ShipAgent)
+                .Include(x => x.CargoType)
+                .Include(x => x.ManifestGoods)
+                    .ThenInclude(x => x.Commodity)
+                .Include(x => x.ManifestGoods)
+                    .ThenInclude(x => x.Package)
+                .Include(x => x.ManifestContainers)
+                    .ThenInclude(x => x.Container)
+                        .ThenInclude(x => x.ContainerTypeAndSize)
+                .Include(x => x.ManifestContainers)
+                    .ThenInclude(x => x.ManifestContainerGoods)
+                        .ThenInclude(x => x.Commodity)
+                .Include(x => x.ManifestContainers)
+                    .ThenInclude(x => x.ManifestContainerGoods)
+                        .ThenInclude(x => x.Package)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (item == null)
+                return null;
+
+            return item;
+        }
     }
 }

@@ -5,6 +5,7 @@ using TDM.API.Common.Models;
 using TDM.Application.Doc.Manifests.Commands.CreateManifest;
 using TDM.Application.Doc.Manifests.Queries.GetExternalManifestById;
 using TDM.Application.Doc.Manifests.Queries.GetManifestItemsLookup;
+using TDM.Application.Doc.Manifests.Queries.GetManifestItemById;
 using TDM.Application.Doc.Manifests.Queries.GetManifests;
 using TDM.Application.Doc.Manifests.Queries.GetVoyageNumbers;
 
@@ -34,6 +35,14 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> GetManifestItemsLookup()
         {
             var result = await _mediator.Send(new GetManifestItemsLookupQuery());
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("items/{id:guid}")]
+        public async Task<IActionResult> GetManifestItemById(Guid id)
+        {
+            var result = await _mediator.Send(new GetManifestItemByIdQuery(id));
 
             return Ok(ApiResponse.Success(result));
         }
