@@ -7,6 +7,7 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
 {
     public class StoreReceiptHeadDto
     {
+        public Guid IpasStoreReceiptId { get; set; }
         public string TerminalCode { get; set; }
         public string IPASStoreReceiptNo { get; set; }
         public DateTime IssueDate { get; set; }
