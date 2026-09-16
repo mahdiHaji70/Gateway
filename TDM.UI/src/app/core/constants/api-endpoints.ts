@@ -27,6 +27,9 @@ export class ApiEndpoints {
 
   public static readonly Weight_Bridge = `${this.BASE_URL}/WeightBridge`;  
   public static readonly Terminal_Discharges = `${this.BASE_URL}/TerminalDischarges`;  
+  public static readonly Vessel_Discharges = `${this.BASE_URL}/VesselDischarges`;
+  public static readonly Manifest_Items_Lookup = `${this.BASE_URL}/Manifests/items-lookup`;
+  public static readonly Manifest_Item_By_Id = `${this.BASE_URL}/Manifests/items`;
   public static readonly Operation_Planning = `${this.BASE_URL}/OperationPlanning`;  
   public static readonly Cargo_Arrival_Declaration = `${this.BASE_URL}/CargoArrivalDeclaration`;    
   public static readonly Operation_Aggregation = `${this.BASE_URL}/OperationAggregation`;    

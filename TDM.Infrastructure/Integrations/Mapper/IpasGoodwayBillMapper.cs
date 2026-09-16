@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
 using TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminalDischarge;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;

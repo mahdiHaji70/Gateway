@@ -46,7 +46,7 @@ namespace TDM.Domain.Entities
             string terminalCode,
             Guid storeId,
             Guid manifestItemId,
-            Guid manifestContainerId,
+            Guid? manifestContainerId,
             DateTime dischargeDate,
             long packNB,
             decimal weight,
@@ -89,7 +89,7 @@ namespace TDM.Domain.Entities
             string terminalCode,
             Guid storeId,
             Guid manifestItemId,
-            Guid manifestContainerId,
+            Guid? manifestContainerId,
             DateTime dischargeDate,
             long packNB,
             decimal weight,
@@ -144,7 +144,7 @@ namespace TDM.Domain.Entities
             string terminalCode,
             Guid storeId,
             Guid manifestItemId,
-            Guid manifestContainerId,
+            Guid? manifestContainerId,
             DateTime dischargeDate,
             long packNB,
             decimal weight,
@@ -231,8 +231,8 @@ namespace TDM.Domain.Entities
             if (dischargeDate > DateTime.UtcNow)
                 throw new DomainValidationException("DischargeDate cannot be in the future.");
 
-            if (packNB <= 0)
-                throw new DomainValidationException("PackNB must be greater than zero.");
+            if (packNB < 0)
+                throw new DomainValidationException("PackNB cannot be negative.");
 
             if (weight <= 0)
                 throw new DomainValidationException("Weight must be greater than zero.");

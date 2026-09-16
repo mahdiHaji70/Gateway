@@ -9,5 +9,6 @@ namespace TDM.Application.Common.Interfaces
     public interface IVesselDischargeRepository : IRepository<VesselDischarge>
     {
         public Task<List<VesselDischarge>> GetUnsentVesselDischargesToIpasAsync(Guid manifestItemId);
+        public Task<bool> ExistsByManifestContainerIdAsync(Guid manifestContainerId, CancellationToken cancellationToken = default);
     }
 }

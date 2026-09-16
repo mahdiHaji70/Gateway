@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.Doc.Declarations.Commands.CreateDeclaration;
 
 namespace TDM.Application.Doc.StoreReceiptContainers.Commands.CreateStoreReceiptContainer
 {

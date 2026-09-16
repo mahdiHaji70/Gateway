@@ -7,6 +7,7 @@ namespace TDM.Application.Doc.Manifests.DTOs
 {
     public class ManifestItemDto
     {
+        public Guid Id { get; set; }
         public string ManifestItemNo { get; set; }
         public string ManifestNo { get; set; }
         public string Consignor { get; set; }

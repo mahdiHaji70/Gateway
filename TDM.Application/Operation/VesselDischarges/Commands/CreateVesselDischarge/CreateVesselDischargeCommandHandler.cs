@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
+using TDM.Domain.Exceptions;
 
 namespace TDM.Application.Operation.VesselDischarges.Commands.CreateVesselDischarge
 {
@@ -19,6 +20,15 @@ namespace TDM.Application.Operation.VesselDischarges.Commands.CreateVesselDischa
 
         public async Task<Guid> Handle(CreateVesselDischargeCommand request, CancellationToken cancellationToken)
         {
+            if (request.ManifestContainerId.HasValue &&
+                request.ManifestContainerId.Value != Guid.Empty &&
+                await _vesselDischargeRepository.ExistsByManifestContainerIdAsync(
+                    request.ManifestContainerId.Value,
+                    cancellationToken))
+            {
+                throw new DomainValidationException("The manifest container has already been discharged.");
+            }
+
             var vesselDischarge = new VesselDischarge(
                terminalCode: request.TerminalCode,
                storeId: request.StoreId,

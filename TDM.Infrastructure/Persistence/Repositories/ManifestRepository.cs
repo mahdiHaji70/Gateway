@@ -143,7 +143,56 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 TotalCount = totalCount,
                 PageNumber = pageNumber,
                 PageSize = pageSize
-            };
+            };            
+        }
+
+        public async Task<List<ManifestItemLookupDto>> GetManifestItemsLookup(string terminalCode, CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Where(x => x.TerminalCode == terminalCode)
+                .SelectMany(x => x.ManifestItems.Select(item => new ManifestItemLookupDto
+                {
+                    Id = item.Id,
+                    ManifestItemId = item.Id,
+                    VoyageNo = x.VoyageNo,
+                    ManifestNo = item.ManifestNo
+                }))
+                .OrderBy(x => x.VoyageNo)
+                .ThenBy(x => x.ManifestNo)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<ManifestItem?> GetManifestItemById(Guid itemId, CancellationToken cancellationToken = default)
+        {
+            var item = await _dbSet
+                .AsNoTracking()
+                .SelectMany(x => x.ManifestItems)
+                .Where(x => x.Id == itemId)
+                .Include(x => x.Manifest)
+                .Include(x => x.Traffic)
+                .Include(x => x.Consignee)
+                .Include(x => x.ShipAgent)
+                .Include(x => x.CargoType)
+                .Include(x => x.ManifestGoods)
+                    .ThenInclude(x => x.Commodity)
+                .Include(x => x.ManifestGoods)
+                    .ThenInclude(x => x.Package)
+                .Include(x => x.ManifestContainers)
+                    .ThenInclude(x => x.Container)
+                        .ThenInclude(x => x.ContainerTypeAndSize)
+                .Include(x => x.ManifestContainers)
+                    .ThenInclude(x => x.ManifestContainerGoods)
+                        .ThenInclude(x => x.Commodity)
+                .Include(x => x.ManifestContainers)
+                    .ThenInclude(x => x.ManifestContainerGoods)
+                        .ThenInclude(x => x.Package)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (item == null)
+                return null;
+
+            return item;
         }
     }
 }

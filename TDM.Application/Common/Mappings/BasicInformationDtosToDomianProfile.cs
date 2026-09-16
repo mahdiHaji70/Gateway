@@ -15,6 +15,7 @@ using TDM.Application.BasicInformation.UsersTerminal.DTOs;
 using TDM.Application.Common.Models;
 using TDM.Application.Doc.DeclarationItems.DTOs;
 using TDM.Application.Doc.Declarations.DTOs;
+using TDM.Application.Doc.Manifests.DTOs;
 using TDM.Application.Operation.TerminalDischarges.DTOs;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
 using TDM.Application.Operation.VesselDischarges.DTOs;
@@ -49,6 +50,31 @@ namespace TDM.Application.Common.Mappings
             CreateMap<DeclarationItem, DeclarationItemDto>()
                 .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));
 
+            CreateMap<ManifestItem, ManifestItemDto>()
+                .ForMember(dest => dest.TrafficCode, opt => opt.MapFrom(src => src.Traffic.Code))
+                .ForMember(dest => dest.TrafficName, opt => opt.MapFrom(src => src.Traffic.Name))
+                .ForMember(dest => dest.ConsigneeName, opt => opt.MapFrom(src => src.Consignee.Name))
+                .ForMember(dest => dest.ConsigneeNationalId, opt => opt.MapFrom(src => src.Consignee.NationalId))
+                .ForMember(dest => dest.CargoTypeName, opt => opt.MapFrom(src => src.CargoType.Name))
+                .ForMember(dest => dest.ShipAgentName, opt => opt.MapFrom(src => src.ShipAgent.Name))
+                .ForMember(dest => dest.ShipAgentNationalId, opt => opt.MapFrom(src => src.ShipAgent.NationalId));
+
+            CreateMap<ManifestGood, ManifestGoodDto>()
+                .ForMember(dest => dest.HSCode, opt => opt.MapFrom(src => src.Commodity.HsCode))
+                .ForMember(dest => dest.CommodityName, opt => opt.MapFrom(src => src.Commodity.Name))
+                .ForMember(dest => dest.PackageCode, opt => opt.MapFrom(src => src.Package.Code))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(src => src.Package.Name));
+
+            CreateMap<ManifestContainer, ManifestContainerDto>()
+                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.Container.No))
+                .ForMember(dest => dest.ContainerTypeAndSizeCode, opt => opt.MapFrom(src => src.Container.ContainerTypeAndSize.TypeAndSizeCode));
+
+            CreateMap<ManifestContainerGood, ManifestContainerGoodDto>()
+                .ForMember(dest => dest.HSCode, opt => opt.MapFrom(src => src.Commodity.HsCode))
+                .ForMember(dest => dest.CommodityName, opt => opt.MapFrom(src => src.Commodity.Name))
+                .ForMember(dest => dest.PackageCode, opt => opt.MapFrom(src => src.Package.Code))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(src => src.Package.Name));
+
 
             CreateMap<ContainerTypeAndSize, ContainerTypeAndSizeDto>();
             CreateMap<CargoType, CargoTypeDto>();
@@ -82,6 +108,7 @@ namespace TDM.Application.Common.Mappings
                 .ForMember(dest => dest.ManifestItemNo, opt => opt.MapFrom(src => src.ManifestItem.ManifestItemNo))
                 .ForMember(dest => dest.ManifestNo, opt => opt.MapFrom(src => src.ManifestItem.ManifestNo))
                 .ForMember(dest => dest.IpasVesselDischargeId, opt => opt.MapFrom(src => src.IpasVesselDischargeId))
+                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.ManifestContainer!.Container.No))
                 .ForMember(dest => dest.IsSend, opt => opt.MapFrom(src => src.IpasVesselDischargeId.HasValue));
 
 
