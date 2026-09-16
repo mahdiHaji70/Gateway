@@ -22,6 +22,13 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefaultAsync();
         }
 
+        public async Task<VesselLoadingPermit?> GetByWarehouseReceiptIdAsync(Guid warehouseReceiptId)
+        {
+            return await _vesselLoadingPermitDbSet
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.WarehouseReceiptId == warehouseReceiptId);
+        }
+
         public async void UpdateVesselLoadingPermitApprovedAsync(Guid id, bool isApproved)
         {
             var record = _vesselLoadingPermitDbSet.FirstOrDefault(t => t.Id == id);

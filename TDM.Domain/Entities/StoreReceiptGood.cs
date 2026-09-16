@@ -192,8 +192,8 @@ namespace TDM.Domain.Entities
             decimal ignitionTemperature,
             string ignitionTemperatureUnit)
         {
-            if (storeReceiptHeadId == Guid.Empty)
-                throw new DomainValidationException("Store receipt head is required.");
+            //if (storeReceiptHeadId == Guid.Empty)
+            //    throw new DomainValidationException("Store receipt head is required.");
 
             if (commodityId == Guid.Empty)
                 throw new DomainValidationException("Commodity is required.");

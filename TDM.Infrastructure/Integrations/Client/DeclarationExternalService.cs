@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Common.Interfaces;
+using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
 using TDM.Infrastructure.Integrations.Helpers;
 using TDM.Infrastructure.Integrations.Mapper;

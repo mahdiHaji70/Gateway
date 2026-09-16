@@ -7,5 +7,6 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface IStoreReceiptHeadRepository:IRepository<StoreReceiptHead>
     {
+        Task<StoreReceiptHead?> GetForAllocationAsync(Guid id);
     }
 }

@@ -57,6 +57,19 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .Include(x => x.DeclarationItem)
                         .Where(x => x.DeclarationItem.DeclarationId == id).ToListAsync();
         }
+
+        public async Task<List<TerminalDischarge>> GetByIssueRequestIdAsync(Guid issueRequestId)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Include(x => x.Store)
+                .Include(x => x.DeclarationItem)
+                    .ThenInclude(x => x.Commodity)
+                .Include(x => x.DeclarationItem)
+                    .ThenInclude(x => x.Package)
+                .Where(x => x.IssueRequestId == issueRequestId)
+                .ToListAsync();
+        }
         public async Task<List<TerminalDischarge>> GetPendingIpasSubmissionByDeclarationIdAsync(Guid declarationId)
         {
             return await _dbSet

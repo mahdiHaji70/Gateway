@@ -30,7 +30,7 @@ namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
                                         request.ConsigneeRepId,
                                         request.CargoTypeId,
                                         request.FirstDischargeDate,
-                                        request.CreatorId,
+                                        request.CreatorName,
                                         request.TrafficId,
                                         request.StoreReceiptStateId,
                                         request.RequestId,

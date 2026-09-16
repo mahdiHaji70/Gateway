@@ -34,7 +34,7 @@ namespace TDM.Application.Doc.StoreReceipt.Command.UpdateStoreReceipt
                                        request.ConsigneeRepId,
                                        request.CargoTypeId,
                                        request.FirstDischargeDate,
-                                       request.CreatorId,
+                                       request.CreatorName,
                                        request.TrafficId,
                                        request.StoreReceiptStateId,
                                        request.RequestId,

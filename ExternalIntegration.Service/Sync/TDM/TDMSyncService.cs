@@ -16,6 +16,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         private readonly IStoreReceiptRepository _storeReceiptRepository;
         private readonly IManifestRepository _manifestRepository;
         private readonly IManifestChangeRepository _manifestChangeRepository;
+        private readonly IVesselLoadingPermitRepository _vesselLoadingPermitRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public TDMSyncService(IMapper mapper, IUnitOfWork unitOfWork,
@@ -25,7 +26,8 @@ namespace ExternalIntegration.Service.Sync.TDM
             IVoyageRepository voyageRepository
            , IStoreReceiptRepository storerReceiptRepository
             , IManifestRepository manifestRepository
-            , IManifestChangeRepository manifestChangeRepository)
+            , IManifestChangeRepository manifestChangeRepository
+            , IVesselLoadingPermitRepository vesselLoadingPermitRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -36,6 +38,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             _storeReceiptRepository = storerReceiptRepository;
             _manifestRepository = manifestRepository;
             _manifestChangeRepository = manifestChangeRepository;
+            _vesselLoadingPermitRepository = vesselLoadingPermitRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
@@ -74,6 +77,17 @@ namespace ExternalIntegration.Service.Sync.TDM
 
             return Response<StoreReceiptDto>.Success(_mapper.Map<StoreReceiptDto>(result));
 
+        }
+
+        public async Task<Response<VesselLoadingPermitResultDto>> GetVesselLoadingPermitRequest(Guid warehouseReceiptId)
+        {
+            var result = await _vesselLoadingPermitRepository.GetByWarehouseReceiptIdAsync(warehouseReceiptId);
+
+            if (result == null)
+                return Response<VesselLoadingPermitResultDto>.Error("Not Found");
+
+            return Response<VesselLoadingPermitResultDto>.Success(
+                _mapper.Map<VesselLoadingPermitResultDto>(result));
         }
 
         public async Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode)

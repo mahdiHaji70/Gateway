@@ -16,6 +16,10 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.CreatorName)
+                .IsRequired()
+                .HasMaxLength(200);
+
             builder.HasOne(c => c.Traffic)
            .WithMany(cn => cn.TrafficStoreReceiptHeads)
            .HasForeignKey(c => c.TrafficId)

@@ -21,8 +21,7 @@ namespace TDM.Domain.Entities
         public Guid CargoTypeId { get; private set; }
         public CargoType CargoType { get; private set; }
         public DateTime? FirstDischargeDate { get; private set; }
-        public Guid CreatorId { get; private set; }
-        public Company Creator { get; private set; }
+        public string CreatorName { get; private set; }
         public Guid TrafficId { get; private set; }
         public Traffic Traffic { get; private set; }
         public Guid StoreReceiptStateId { get; private set; }
@@ -52,7 +51,7 @@ namespace TDM.Domain.Entities
             Guid consigneeRepId,
             Guid cargoTypeId,
             DateTime? firstDischargeDate,
-            Guid creatorId,
+            string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,
             Guid? requestId,
@@ -69,7 +68,7 @@ namespace TDM.Domain.Entities
                 consigneeRepId,
                 cargoTypeId,
                 firstDischargeDate,
-                creatorId,
+                creatorName,
                 trafficId,
                 storeReceiptStateId,
                 requestId,
@@ -87,7 +86,7 @@ namespace TDM.Domain.Entities
             Guid consigneeRepId,
             Guid cargoTypeId,
             DateTime? firstDischargeDate,
-            Guid creatorId,
+            string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,
             Guid? requestId,
@@ -104,7 +103,7 @@ namespace TDM.Domain.Entities
                 consigneeRepId,
                 cargoTypeId,
                 firstDischargeDate,
-                creatorId,
+                creatorName,
                 trafficId,
                 storeReceiptStateId,
                 requestId,
@@ -122,7 +121,7 @@ namespace TDM.Domain.Entities
             Guid consigneeRepId,
             Guid cargoTypeId,
             DateTime? firstDischargeDate,
-            Guid creatorId,
+            string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,
             Guid? requestId,
@@ -138,7 +137,7 @@ namespace TDM.Domain.Entities
                 consigneeId,
                 consigneeRepId,
                 cargoTypeId,
-                creatorId,
+                creatorName,
                 trafficId,
                 storeReceiptStateId,
                 voyageNoticeNo,
@@ -153,7 +152,7 @@ namespace TDM.Domain.Entities
             ConsigneeRepId = consigneeRepId;
             CargoTypeId = cargoTypeId;
             FirstDischargeDate = firstDischargeDate;
-            CreatorId = creatorId;
+            CreatorName = creatorName;
             TrafficId = trafficId;
             StoreReceiptStateId = storeReceiptStateId;
             RequestId = requestId;
@@ -170,7 +169,7 @@ namespace TDM.Domain.Entities
             Guid consigneeId,
             Guid consigneeRepId,
             Guid cargoTypeId,
-            Guid creatorId,
+            string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,
             string voyageNoticeNo,
@@ -196,9 +195,6 @@ namespace TDM.Domain.Entities
             if (cargoTypeId == Guid.Empty)
                 throw new DomainValidationException("Cargo type is required.");
 
-            if (creatorId == Guid.Empty)
-                throw new DomainValidationException("Creator is required.");
-
             if (trafficId == Guid.Empty)
                 throw new DomainValidationException("Traffic is required.");
 
@@ -208,8 +204,8 @@ namespace TDM.Domain.Entities
             if (string.IsNullOrWhiteSpace(voyageNoticeNo))
                 throw new DomainValidationException("Voyage notice number is required.");
 
-            if (arrivalTypeId == Guid.Empty)
-                throw new DomainValidationException("Arrival type is required.");
+           // if (arrivalTypeId == Guid.Empty)
+             //   throw new DomainValidationException("Arrival type is required.");
 
             if (!declarationId.HasValue && !billOfLadingId.HasValue)
                 throw new DomainValidationException("Either DeclarationId or BillOfLadingId must be provided.");

@@ -39,6 +39,13 @@ namespace ExternalIntegration.Service.Controllers
             return await _tdmSyncService.GetStoreReceiptByNo(no);
         }
 
+        [HttpGet("GetVesselLoadingPermitRequest")]
+        public async Task<Response<VesselLoadingPermitResultDto>> GetVesselLoadingPermitRequest(
+            [FromQuery] Guid warehouseReceiptId)
+        {
+            return await _tdmSyncService.GetVesselLoadingPermitRequest(warehouseReceiptId);
+        }
+
         [HttpGet("GetDischargePermitsLastDate")]
         public async Task<Response<DateTime>> GetDischargePermitsLastDate([FromQuery] string terminalCode)
         {
