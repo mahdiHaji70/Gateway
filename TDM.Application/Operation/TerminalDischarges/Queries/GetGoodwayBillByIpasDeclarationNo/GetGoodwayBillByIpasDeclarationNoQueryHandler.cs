@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
+using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Common.Exceptions;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;

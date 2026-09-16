@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.Declarations.Commands.UpdateDeclaration;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 

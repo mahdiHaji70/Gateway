@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.Declarations.Commands.CreateDeclaration;
+using TDM.Application.Doc.Declarations.Commands.CreateDeclaration;
 
 namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
 {

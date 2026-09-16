@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
+using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConfirmation;

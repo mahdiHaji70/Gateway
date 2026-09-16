@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.Declarations.Commands.RemoveDeclaration;
+using TDM.Application.Doc.Declarations.Commands.RemoveDeclaration;
 
 namespace TDM.Application.Doc.StoreReceiptContainers.Commands.DeleteStoreReceiptContainer
 {

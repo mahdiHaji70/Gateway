@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.DeclarationItems.Commands.RequestIpasDeclarationItems;
+using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Domain.Enums;
 using TDM.Infrastructure.Integrations.Requests;
 using TDM.Infrastructure.Integrations.Responses;

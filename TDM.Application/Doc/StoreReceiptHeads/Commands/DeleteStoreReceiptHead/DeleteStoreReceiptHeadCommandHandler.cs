@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TDM.Application.BasicInformation.Declarations.Commands.RemoveDeclaration;
+using TDM.Application.Doc.Declarations.Commands.RemoveDeclaration;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 
