@@ -43,6 +43,8 @@ import { DeclarationItemService } from './services/declaration-item.service';
 import { SendDischargeComponent } from './components/discharge/send-discharge/send-discharge.component';
 import { VesselDischargeComponent } from './components/vessel-discharge/vessel-discharge.component';
 import { VesselDischargeListComponent } from './components/vessel-discharge/vessel-discharge-list/vessel-discharge-list.component';
+import { VesselDischargeService } from './services/vessel-discharge.service';
+import { ManifestService } from './services/manifest.service';
 
 @NgModule({
   declarations: [    
@@ -95,7 +97,9 @@ import { VesselDischargeListComponent } from './components/vessel-discharge/vess
     CargoArrivalService,
     OperationAggregationService,
     StoreReceiptRequestService,
-    StuffService
+    StuffService,
+    VesselDischargeService,
+    ManifestService
   ]
 })
 export class OperationModule { }

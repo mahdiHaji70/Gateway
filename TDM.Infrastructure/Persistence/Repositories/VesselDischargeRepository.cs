@@ -19,7 +19,9 @@ namespace TDM.Infrastructure.Persistence.Repositories
             var query = _dbSet
            .AsNoTracking()
            .Include(x => x.Store)
-           .Include(x => x.ManifestItem);
+           .Include(x => x.ManifestItem)
+           .Include(x => x.ManifestContainer)
+            .ThenInclude(x => x!.Container);
 
             var totalCount = await query.CountAsync();
 
@@ -45,6 +47,8 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .AsNoTracking()
                         .Include(x => x.Store)
                         .Include(x => x.ManifestItem)
+                        .Include(x => x.ManifestContainer)
+                            .ThenInclude(x => x!.Container)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -61,6 +65,13 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 .ThenInclude(x => x.ManifestContainerGoods)
                 .Where(x => x.ManifestItemId == manifestItemId && x.IpasVesselDischargeId == null)
                 .ToListAsync();
+        }
+
+        public async Task<bool> ExistsByManifestContainerIdAsync(Guid manifestContainerId, CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .AnyAsync(x => x.ManifestContainerId == manifestContainerId, cancellationToken);
         }
     }
 }

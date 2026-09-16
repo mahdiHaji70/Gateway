@@ -6,6 +6,7 @@ namespace TDM.Application.Doc.Manifests.DTOs
 {
     public class ManifestContainerDto
     {
+        public Guid Id { get; set; }
         public Guid ContainerId { get; set; }
         public string ContainerNo { get; set; }
         public string ContainerTypeAndSizeCode { get; set; }

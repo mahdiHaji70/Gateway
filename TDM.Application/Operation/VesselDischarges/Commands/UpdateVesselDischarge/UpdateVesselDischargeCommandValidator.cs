@@ -33,8 +33,8 @@ namespace TDM.Application.Operation.VesselDischarges.Commands.UpdateVesselDischa
                 .WithMessage("DischargeDate cannot be in the future.");
 
             RuleFor(x => x.PackNB)
-                .GreaterThan(0)
-                .WithMessage("PackNB must be greater than zero.");
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("PackNB cannot be negative.");
 
             RuleFor(x => x.Weight)
                 .GreaterThan(0)

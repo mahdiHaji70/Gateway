@@ -11,7 +11,7 @@ namespace TDM.Application.Operation.VesselDischarges.Commands.CreateVesselDischa
 
         public Guid StoreId { get; set; }
         public Guid ManifestItemId { get; set; }
-        public Guid ManifestContainerId { get; set; }
+        public Guid? ManifestContainerId { get; set; }
 
         public DateTime DischargeDate { get; set; }
 
