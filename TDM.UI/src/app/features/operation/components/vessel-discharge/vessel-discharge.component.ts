@@ -17,6 +17,7 @@ import { VesselDischargeService } from '../../services/vessel-discharge.service'
 })
 export class VesselDischargeComponent {
   id?: string;
+  private pendingEditId?: string;
   manifestItems: DropdownOption[] = [];
   containers: DropdownOption[] = [];
   stores: DropdownOption[] = [];
@@ -59,10 +60,8 @@ export class VesselDischargeComponent {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.vesselDischargeService.getById(this.id!).subscribe({
-          next: (res: any) => this.loadForEdit(res.data),
-          error: (error: any) => this.showApiError(error)
-        });
+        this.pendingEditId = params.id;
+        this.loadEditById();
       }
     });
   }
@@ -72,7 +71,20 @@ export class VesselDischargeComponent {
       next: (res: any) => {
         this.manifestItems = (res.data || []).map((item: any) =>
           new DropdownOption(item.id, `${item.voyageNo} / ${item.manifestNo}`));
+        this.loadEditById();
       },
+      error: (error: any) => this.showApiError(error)
+    });
+  }
+
+  private loadEditById() {
+    if (!this.pendingEditId || this.manifestItems.length === 0) return;
+
+    const editId = this.pendingEditId;
+    this.pendingEditId = undefined;
+
+    this.vesselDischargeService.getById(editId).subscribe({
+      next: (res: any) => this.loadForEdit(res.data),
       error: (error: any) => this.showApiError(error)
     });
   }
