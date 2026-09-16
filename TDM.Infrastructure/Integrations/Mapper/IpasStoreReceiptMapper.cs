@@ -31,13 +31,13 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 CargoTypeId = GetCargoTypeId(dto),
                 CargoTypeName = GetCargoTypeName(dto),
                 FirstDischargeDate = dto.FirstDischargeDate,
-                CreatorId = dto.CreatorId,
                 CreatorName = dto.Creator,
                 TrafficCode = dto.customsProcedureCode,
                 TrafficName = dto.CustomsProcedure,
-                StoreReceiptStateCode = dto.State,
+                StoreReceiptStateCode = dto.State.ToString(),
                 StoreReceiptStateName = dto.StateName,
                 RequestId = dto.RequestId,
+                
                 BillOfLadingId = GetBillOfLadingId(dto),
                 StoreReceiptGoods = MapGoods(dto),
                 StoreReceiptContainers = MapContainers(dto)
@@ -95,6 +95,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
             return dto.ContainerList?.Select(container => new StoreReceiptContainerDto
             {
                 ContainerNo = container.ContainerNo,
+                ContainerTypeAndSizeCode = container.ContainerTypeAndSizeCode,
                 SealNumber = container.SealNumber,
                 Remark = container.Remark,
                 DangerousCode = container.DangerousSpecification?.DangerousCode,

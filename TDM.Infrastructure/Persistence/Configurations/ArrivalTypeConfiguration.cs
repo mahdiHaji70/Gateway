@@ -19,6 +19,10 @@ namespace TDM.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(200);
+
+            builder.Property(x => x.Code)
+                .IsRequired()
+                .HasMaxLength(50);
         }
     }
 }

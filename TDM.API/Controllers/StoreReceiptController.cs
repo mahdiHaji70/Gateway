@@ -31,7 +31,5 @@ namespace TDM.API.Controllers
             var result = await _mediator.Send(command);
             return Ok(ApiResponse.Success(result));
         }
-
-
     }
 }
