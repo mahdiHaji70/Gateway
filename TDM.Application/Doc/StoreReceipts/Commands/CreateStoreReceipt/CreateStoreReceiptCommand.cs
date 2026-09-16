@@ -21,7 +21,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         public Guid TrafficId { get; set; }
         public string TrafficCode { get; set; }
         public Guid StoreReceiptStateId { get; set; }
-        public int? StoreReceiptStateCode { get; set; }
+        public string StoreReceiptStateCode { get; set; }
         public string StoreReceiptStateName { get; set; }
         public Guid? RequestId { get; set; }
         public string VoyageNoticeNo { get; set; }

@@ -55,7 +55,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             var consigneeId = await ResolveCompanyIdAsync(request.ConsigneeId, request.ConsigneeNationalId, "consignee", cancellationToken);
             var consigneeRepId = await ResolveCompanyIdAsync(request.ConsigneeRepId, request.ConsigneeRepNationalId, "consignee representative", cancellationToken);
             var trafficId = await ResolveTrafficIdAsync(request.TrafficId, request.TrafficCode, cancellationToken);
-            var stateId = await ResolveStateIdAsync(request.StoreReceiptStateId, request.StoreReceiptStateName, cancellationToken);
+            var stateId = await ResolveStateIdAsync(request.StoreReceiptStateId, request.StoreReceiptStateCode, request.StoreReceiptStateName, cancellationToken);
             var arrivalTypeId = new Guid("1E3838B5-F2F9-41C1-BC1C-78285E281A14");//  await ResolveArrivalTypeIdAsync(request.ArrivalTypeId, request.ArrivalTypeName, cancellationToken);
 
             var goods = request.StoreReceiptGoods ?? new List<CreateStoreReceiptGoodCommand>();
@@ -186,8 +186,15 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             return traffic?.Id ?? throw new InvalidOperationException($"Traffic was not found for code '{code}'.");
         }
 
-        private async Task<Guid> ResolveStateIdAsync(Guid id, string name, CancellationToken cancellationToken)
+        private async Task<Guid> ResolveStateIdAsync(Guid id, string code, string name, CancellationToken cancellationToken)
         {
+            if (!string.IsNullOrWhiteSpace(code))
+            {
+                var statesByCode = await _storeReceiptStateRepository.GetAllAsync();
+                var stateByCode = statesByCode?.FirstOrDefault(x => string.Equals(x.Code, code, StringComparison.OrdinalIgnoreCase));
+                return stateByCode?.Id ?? throw new InvalidOperationException($"Store receipt state was not found for code '{code}'.");
+            }
+
             if (id != Guid.Empty)
                 return id;
             if (string.IsNullOrWhiteSpace(name))

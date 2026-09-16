@@ -44,8 +44,10 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .WithMessage("Traffic id or traffic code is required.");
 
             RuleFor(x => x)
-                .Must(x => x.StoreReceiptStateId != Guid.Empty || !string.IsNullOrWhiteSpace(x.StoreReceiptStateName))
-                .WithMessage("Store receipt state id or state name is required.");
+                .Must(x => x.StoreReceiptStateId != Guid.Empty
+                    || !string.IsNullOrWhiteSpace(x.StoreReceiptStateCode)
+                    || !string.IsNullOrWhiteSpace(x.StoreReceiptStateName))
+                .WithMessage("Store receipt state id, code or name is required.");
 
             RuleFor(x => x)
                 .Must(x => x.ArrivalTypeId != Guid.Empty || !string.IsNullOrWhiteSpace(x.ArrivalTypeName))
