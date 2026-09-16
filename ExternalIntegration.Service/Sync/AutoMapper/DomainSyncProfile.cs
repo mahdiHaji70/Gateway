@@ -77,6 +77,11 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.GeneralCargoList)))
             .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
 
+            CreateMap<VesselLoadingPermit, VesselLoadingPermitResultDto>()
+                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitBulkDto>>(src.BulkList)))
+                .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitGeneralCargoDto>>(src.GeneralCargoList)))
+                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitContainerDto>>(src.ContainerList)));
+
             CreateMap<LoadingPermit, LoadingPermitDto>()
             .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<LoadingPermitBulkDto>>(src.BulkList)))
             .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<LoadingPermitGeneralCargoDto>>(src.GeneralCargoList)))

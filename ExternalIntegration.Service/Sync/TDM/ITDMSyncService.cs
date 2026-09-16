@@ -21,5 +21,6 @@ namespace ExternalIntegration.Service.Sync.TDM
         Task<Response<ManifestDto>> GetManifestById(Guid id);
         Task<Response<bool>> ApproveManifestAsync(Guid id);
         Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChangesByTerminalCode(string terminalCode);
+        Task<Response<VesselLoadingPermitResultDto>> GetVesselLoadingPermitRequest(Guid warehouseReceiptId);
     }
 }
