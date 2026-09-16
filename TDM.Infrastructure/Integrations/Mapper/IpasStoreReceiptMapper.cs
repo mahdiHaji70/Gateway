@@ -31,7 +31,6 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 CargoTypeId = GetCargoTypeId(dto),
                 CargoTypeName = GetCargoTypeName(dto),
                 FirstDischargeDate = dto.FirstDischargeDate,
-                CreatorId = dto.CreatorId,
                 CreatorName = dto.Creator,
                 TrafficCode = dto.customsProcedureCode,
                 TrafficName = dto.CustomsProcedure,

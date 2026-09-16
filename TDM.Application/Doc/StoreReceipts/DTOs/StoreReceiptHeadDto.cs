@@ -23,7 +23,6 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
         public string CargoTypeName { get; set; }
         public DateTime? FirstDischargeDate { get; set; }
 
-        public Guid CreatorId { get; set; }
         public string CreatorName { get; set; }
         public Guid TrafficId { get; set; }
         public string TrafficCode { get; set; }
