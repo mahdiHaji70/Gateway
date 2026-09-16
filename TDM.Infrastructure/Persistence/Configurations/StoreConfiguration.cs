@@ -19,6 +19,10 @@ namespace TDM.Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
+            builder.Property(x => x.Code)
+                .IsRequired()
+                .HasMaxLength(50);
+
 
             builder.HasOne(c => c.StoreType)
            .WithMany(cn => cn.Stores)
