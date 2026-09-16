@@ -53,7 +53,6 @@ export class VesselDischargeComponent {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    debugger
     this.loadManifestItems();
     this.loadStores();
 
@@ -165,7 +164,6 @@ export class VesselDischargeComponent {
   applyCargoSummary(selected?: DropdownOption) {
     const item = this.manifestItem;
     if (!item) return;
-    debugger;
     const container = selected?.id
       ? item.manifestContainers.find(x => x.id === selected.id)
       : undefined;
