@@ -38,6 +38,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 StoreReceiptStateCode = dto.State,
                 StoreReceiptStateName = dto.StateName,
                 RequestId = dto.RequestId,
+                
                 BillOfLadingId = GetBillOfLadingId(dto),
                 StoreReceiptGoods = MapGoods(dto),
                 StoreReceiptContainers = MapContainers(dto)

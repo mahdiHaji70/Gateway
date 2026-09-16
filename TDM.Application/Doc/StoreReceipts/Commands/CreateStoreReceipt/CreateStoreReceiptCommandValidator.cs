@@ -37,10 +37,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             RuleFor(x => x.CargoTypeId)
                 .NotEmpty()
                 .WithMessage("Cargo type Id is required.");
-
-            RuleFor(x => x.CreatorId)
-                .NotEmpty()
-                .WithMessage("Creator Id is required.");
+                       
 
             RuleFor(x => x)
                 .Must(x => x.TrafficId != Guid.Empty || !string.IsNullOrWhiteSpace(x.TrafficCode))

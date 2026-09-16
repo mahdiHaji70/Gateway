@@ -56,7 +56,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             var consigneeRepId = await ResolveCompanyIdAsync(request.ConsigneeRepId, request.ConsigneeRepNationalId, "consignee representative", cancellationToken);
             var trafficId = await ResolveTrafficIdAsync(request.TrafficId, request.TrafficCode, cancellationToken);
             var stateId = await ResolveStateIdAsync(request.StoreReceiptStateId, request.StoreReceiptStateName, cancellationToken);
-            var arrivalTypeId = await ResolveArrivalTypeIdAsync(request.ArrivalTypeId, request.ArrivalTypeName, cancellationToken);
+            var arrivalTypeId = new Guid("1E3838B5-F2F9-41C1-BC1C-78285E281A14");//  await ResolveArrivalTypeIdAsync(request.ArrivalTypeId, request.ArrivalTypeName, cancellationToken);
 
             var goods = request.StoreReceiptGoods ?? new List<CreateStoreReceiptGoodCommand>();
             var containers = request.StoreReceiptContainers ?? new List<CreateStoreReceiptContainerCommand>();
@@ -89,7 +89,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 consigneeRepId,
                 request.CargoTypeId,
                 request.FirstDischargeDate,
-                request.CreatorId,
+                request.CreatorName,
                 trafficId,
                 stateId,
                 request.RequestId,
