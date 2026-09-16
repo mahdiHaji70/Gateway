@@ -34,7 +34,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 CreatorName = dto.Creator,
                 TrafficCode = dto.customsProcedureCode,
                 TrafficName = dto.CustomsProcedure,
-                StoreReceiptStateCode = dto.State,
+                StoreReceiptStateCode = dto.State.ToString(),
                 StoreReceiptStateName = dto.StateName,
                 RequestId = dto.RequestId,
                 
