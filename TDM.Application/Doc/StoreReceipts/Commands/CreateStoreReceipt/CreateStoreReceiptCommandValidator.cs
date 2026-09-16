@@ -50,8 +50,10 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .WithMessage("Store receipt state id, code or name is required.");
 
             RuleFor(x => x)
-                .Must(x => x.ArrivalTypeId != Guid.Empty || !string.IsNullOrWhiteSpace(x.ArrivalTypeName))
-                .WithMessage("Arrival type id or arrival type name is required.");
+                .Must(x => x.ArrivalTypeId != Guid.Empty
+                    || !string.IsNullOrWhiteSpace(x.ArrivalTypeCode)
+                    || !string.IsNullOrWhiteSpace(x.ArrivalTypeName))
+                .WithMessage("Arrival type id, code or name is required.");
 
             RuleFor(x => x.VoyageNoticeNo)
                 .NotEmpty()
