@@ -27,6 +27,79 @@ namespace TDM.Infrastructure.Integrations.Client
             return IpasStoreReceipts;
         }
 
+        public async Task<TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation.SendIpasStoreAllocationResponse> SendIpasStoreAllocation(
+            TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation.SendIpasStoreAllocationRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var dto = new
+            {
+                WarehouseReceiptId = request.StoreReceiptId,
+                TerminalCode = request.TerminalCode,
+                GeneralCargoList = request.Goods
+                    .Where(x => !string.Equals(x.CargoType, "Bulk", StringComparison.OrdinalIgnoreCase))
+                    .Select(good => new
+                    {
+                        good.OperationDate,
+                        good.StorageAreaCode,
+                        GeneralCargo = new
+                        {
+                            good.HsCode,
+                            Description = good.Description,
+                            good.BrandName,
+                            good.PackageTypeCode,
+                            PackageQuantity = good.PackageQuantity,
+                            good.GrossWeight,
+                            good.NetWeight,
+                            good.IsNonPalletized,
+                            good.IsDamaged,
+                            good.IsDangerous,
+                            Width = 0m,
+                            Height = 0m,
+                            Length = 0m,
+                            good.IsVoluminous,
+                            good.IsHeavy
+                        }
+                    }).ToList(),
+                BulkList = request.Goods
+                    .Where(x => string.Equals(x.CargoType, "Bulk", StringComparison.OrdinalIgnoreCase))
+                    .Select(good => new
+                    {
+                        good.OperationDate,
+                        good.StorageAreaCode,
+                        Bulk = new
+                        {
+                            good.HsCode,
+                            Description = good.Description,
+                            Weight = good.NetWeight,
+                            good.Volume,
+                            good.IsDangerous
+                        }
+                    }).ToList(),
+                ContainerList = request.Containers.Select(x => new
+                {
+                    x.OperationDate,
+                    x.StorageAreaCode,
+                    x.ContainerNo,
+                    x.Quantity
+                }).ToList()
+            };
+
+            var response = await _requestExecutor.PostAsync<bool>("PMO", "SendWarehouseReceiptAllocation", dto, cancellationToken);
+            if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Store Allocation", out var errorMessage))
+                return new()
+                {
+                    StoreReceiptId = request.StoreReceiptId,
+                    ErrorMessage = errorMessage,
+                    IsSent = false
+                };
+
+            return new()
+            {
+                StoreReceiptId = request.StoreReceiptId,
+                IsSent = response.Data
+            };
+        }
+
        
     }
 }

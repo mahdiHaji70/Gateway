@@ -57,5 +57,17 @@ namespace TDM.Infrastructure.Persistence.Repositories
                        .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<StoreReceiptHead?> GetForAllocationAsync(Guid id)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Include(x => x.StoreReceiptGoods).ThenInclude(x => x.Commodity)
+                .Include(x => x.StoreReceiptGoods).ThenInclude(x => x.Package)
+                .Include(x => x.StoreReceiptContainers).ThenInclude(x => x.Container)
+                .Include(x => x.StoreReceiptContainers).ThenInclude(x => x.StoreReceiptContainerGoods).ThenInclude(x => x.Commodity)
+                .Include(x => x.StoreReceiptContainers).ThenInclude(x => x.StoreReceiptContainerGoods).ThenInclude(x => x.Package)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
     }
 }

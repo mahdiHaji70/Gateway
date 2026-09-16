@@ -23,7 +23,7 @@ namespace TDM.Application.BasicInformation.Stores.Commands.CreateStore
 
         public async Task<Guid> Handle(CreateStoreCommand request, CancellationToken cancellationToken)
         {
-            var store = new Store(request.Name,request.StoreTypeId);
+            var store = new Store(request.Name, request.Code, request.StoreTypeId);
 
             await _storeRepository.InsertAsync(store);
 

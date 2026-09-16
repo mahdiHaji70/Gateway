@@ -28,7 +28,7 @@ namespace TDM.Application.BasicInformation.Stores.Commands.UpdateStore
             if (Store == null)
                 throw new Exception("Store not found");
 
-            Store.Update(request.Name,request.StoreTypeId);
+            Store.Update(request.Name, request.Code, request.StoreTypeId);
 
             _storeRepository.Update(Store);
 
