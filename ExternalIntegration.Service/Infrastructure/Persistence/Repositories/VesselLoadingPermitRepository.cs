@@ -10,7 +10,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
     {
         protected readonly DbSet<VesselLoadingPermit> _vesselLoadingPermitDbSet;
 
-        public VesselLoadingPermitRepository(GatewayDbContext context) : base(context) 
+        public VesselLoadingPermitRepository(GatewayDbContext context) : base(context)
         {
             _vesselLoadingPermitDbSet = _context.Set<VesselLoadingPermit>();
         }
@@ -26,7 +26,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         {
             return await _vesselLoadingPermitDbSet
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.WarehouseReceiptId == warehouseReceiptId);
+                .FirstOrDefaultAsync(x => x.WarehouseReceiptId == warehouseReceiptId && x.IsApproved == false);
         }
 
         public async void UpdateVesselLoadingPermitApprovedAsync(Guid id, bool isApproved)
