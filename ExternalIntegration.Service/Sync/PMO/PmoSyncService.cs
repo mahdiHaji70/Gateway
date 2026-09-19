@@ -448,8 +448,8 @@ namespace ExternalIntegration.Service.Sync.PMO
 
         public async Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationDto dto)
         {
-            var syncMappingRequestDto = _mapper.Map<LoadingPermitConfirmationRequestDto>(dto);
-            var clientResult = await _client.ConfirmLoadingPermit(syncMappingRequestDto);
+            var syncMappingRequestDto = _mapper.Map<VesselLoadingPermitConfirmationRequestDto>(dto);
+            var clientResult = await _client.ConfirmVesselLoadingPermit(syncMappingRequestDto);
             if (clientResult.Status != ResponseStatuses.Error)
             {
                 _loadingPermitRepository.UpdateLoadingPermitApprovedAsync(dto.PermitId, dto.IsApproved);
