@@ -19,6 +19,7 @@ using TDM.Application.Doc.Manifests.DTOs;
 using TDM.Application.Operation.TerminalDischarges.DTOs;
 using TDM.Application.Operation.TerminalDischarges.Queries.GetTerminalDischargeByDeclarationNo;
 using TDM.Application.Operation.VesselDischarges.DTOs;
+using TDM.Application.Doc.StoreReceipts.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Mappings
@@ -78,6 +79,22 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<ContainerTypeAndSize, ContainerTypeAndSizeDto>();
             CreateMap<CargoType, CargoTypeDto>();
+
+            CreateMap<StoreReceiptHead, StoreReceiptHeadDto>();
+            CreateMap<StoreReceiptGood, StoreReceiptGoodDto>()
+                .ForMember(x => x.CommodityName, o => o.MapFrom(x => x.Commodity.Name))
+                .ForMember(x => x.HsCode, o => o.MapFrom(x => x.Commodity.HsCode))
+                .ForMember(x => x.PackageName, o => o.MapFrom(x => x.Package.Name))
+                .ForMember(x => x.PackageTypeCode, o => o.MapFrom(x => x.Package.Code));
+            CreateMap<StoreReceiptContainer, StoreReceiptContainerDto>()
+                .ForMember(x => x.ContainerNo, o => o.MapFrom(x => x.Container.No))
+                .ForMember(x => x.ContainerTypeAndSizeCode,
+                    o => o.MapFrom(x => x.Container.ContainerTypeAndSize.TypeAndSizeCode));
+            CreateMap<StoreReceiptContainerGood, StoreReceiptContainerGoodDto>()
+                .ForMember(x => x.CommodityName, o => o.MapFrom(x => x.Commodity.Name))
+                .ForMember(x => x.HsCode, o => o.MapFrom(x => x.Commodity.HsCode))
+                .ForMember(x => x.PackageName, o => o.MapFrom(x => x.Package.Name))
+                .ForMember(x => x.PackageTypeCode, o => o.MapFrom(x => x.Package.Code));
 
             CreateMap<StoreType, StoreTypeDto>();
 

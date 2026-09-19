@@ -5,6 +5,8 @@ using TDM.API.Common.Models;
 using TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceipts;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptWarehouses;
 
 namespace TDM.API.Controllers
 {
@@ -30,6 +32,29 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> CreateStoreReceipt(CreateStoreReceiptCommand command)
         {
             var result = await _mediator.Send(command);
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("storeReceipts")]
+        public async Task<IActionResult> GetStoreReceipts(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var result = await _mediator.Send(
+                new GetStoreReceiptsQuery(pageNumber, pageSize));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("{storeReceiptId:guid}/warehouses")]
+        public async Task<IActionResult> GetStoreReceiptWarehouses(
+            Guid storeReceiptId,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(
+                new GetStoreReceiptWarehousesQuery(storeReceiptId),
+                cancellationToken);
+
             return Ok(ApiResponse.Success(result));
         }
 

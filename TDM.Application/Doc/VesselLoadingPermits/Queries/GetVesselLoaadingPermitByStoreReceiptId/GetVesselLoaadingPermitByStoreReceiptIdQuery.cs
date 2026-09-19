@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MediatR;
+using TDM.Application.Doc.VesselLoadingPermits.DTOs;
 
 namespace TDM.Application.Doc.VesselLoadingPermits.Queries.GetVesselLoaadingPermitByStoreReceiptId
 {
-    internal class GetVesselLoaadingPermitByStoreReceiptIdQuery
-    {
-    }
+    public record GetVesselLoaadingPermitByStoreReceiptIdQuery(Guid StoreReceiptId)
+        : IRequest<VesselLoadingPermitDto>;
 }
