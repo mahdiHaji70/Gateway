@@ -27,6 +27,9 @@
     <Folder Include="Doc\IssueRequestStoreReceipts\Commands\DTOs\" />
     <Folder Include="Doc\VesselLoadingPermits\Commands\" />
     <Folder Include="Doc\VesselLoadingPermits\DTOs\" />
+    <Folder Include="Doc\LoadingPermits\Commands\" />
+    <Folder Include="Doc\LoadingPermits\DTOs\" />
+    <Folder Include="Doc\LoadingPermits\Queries\" />
     <Folder Include="Doc\StoreReceiptHeads\Queries\" />
   </ItemGroup>
 
