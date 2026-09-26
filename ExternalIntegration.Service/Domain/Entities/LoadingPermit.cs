@@ -4,6 +4,7 @@ namespace ExternalIntegration.Service.Domain.Entities
 {
     public class LoadingPermit
     {
+        public Guid InternalId { get; set; }
         public Guid Id { get; set; }
         public Guid PortId { get; set; }
         public string Port { get; set; }

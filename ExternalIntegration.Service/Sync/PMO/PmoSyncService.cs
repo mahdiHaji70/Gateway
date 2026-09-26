@@ -398,10 +398,7 @@ namespace ExternalIntegration.Service.Sync.PMO
                     item.TerminalCode = pmoDateDto.TerminalCode;
 
             var newData = await _vesselLoadingPermitRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<VesselLoadingPermit>>(syncMappingDto!.Data),
-                idSelector: t => t.Id,
-                dbIdSelector: t => t.Id
-            );
+                _mapper.Map<IEnumerable<VesselLoadingPermit>>(syncMappingDto!.Data));
 
             await _vesselLoadingPermitRepository.InsertBulkAsync(newData);
             await _unitOfWork.SaveChangesAsync();
@@ -435,10 +432,7 @@ namespace ExternalIntegration.Service.Sync.PMO
                     item.TerminalCode = pmoDateDto.TerminalCode;
 
             var newData = await _loadingPermitRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<LoadingPermit>>(syncMappingDto!.Data),
-                idSelector: t => t.Id,
-                dbIdSelector: t => t.Id
-            );
+                _mapper.Map<IEnumerable<LoadingPermit>>(syncMappingDto!.Data));
 
             await _loadingPermitRepository.InsertBulkAsync(newData);
             await _unitOfWork.SaveChangesAsync();
@@ -448,8 +442,8 @@ namespace ExternalIntegration.Service.Sync.PMO
 
         public async Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationDto dto)
         {
-            var syncMappingRequestDto = _mapper.Map<VesselLoadingPermitConfirmationRequestDto>(dto);
-            var clientResult = await _client.ConfirmVesselLoadingPermit(syncMappingRequestDto);
+            var syncMappingRequestDto = _mapper.Map<LoadingPermitConfirmationRequestDto>(dto);
+            var clientResult = await _client.ConfirmLoadingPermit(syncMappingRequestDto);
             if (clientResult.Status != ResponseStatuses.Error)
             {
                 _loadingPermitRepository.UpdateLoadingPermitApprovedAsync(dto.PermitId, dto.IsApproved);
@@ -461,8 +455,8 @@ namespace ExternalIntegration.Service.Sync.PMO
 
         public async Task<Response<bool>> ConfirmVesselLoadingPermit(VesselLoadingPermitConfirmationDto dto)
         {
-            var syncMappingRequestDto = _mapper.Map<LoadingPermitConfirmationRequestDto>(dto);
-            var clientResult = await _client.ConfirmLoadingPermit(syncMappingRequestDto);
+            var syncMappingRequestDto = _mapper.Map<VesselLoadingPermitConfirmationRequestDto>(dto);
+            var clientResult = await _client.ConfirmVesselLoadingPermit(syncMappingRequestDto);
             if (clientResult.Status != ResponseStatuses.Error)
             {
                 _vesselLoadingPermitRepository.UpdateVesselLoadingPermitApprovedAsync(dto.Id, dto.IsApproved);
