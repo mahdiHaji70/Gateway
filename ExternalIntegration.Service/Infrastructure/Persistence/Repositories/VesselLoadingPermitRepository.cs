@@ -27,7 +27,9 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         {
             return await _vesselLoadingPermitDbSet
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.WarehouseReceiptId == warehouseReceiptId && x.IsApproved == false);
+                .Where(x => x.WarehouseReceiptId == warehouseReceiptId && x.IsApproved == false)
+                .OrderByDescending(x => x.ExpirationDate)
+                .FirstOrDefaultAsync();
         }
 
         public override Task<List<VesselLoadingPermit>> FilterUnpersistedAsync<TId>(
@@ -43,7 +45,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         {
             var entityList = entities
                 .GroupBy(x => x.Id)
-                .Select(x => x.First())
+                .Select(x => x.OrderByDescending(entity => entity.ExpirationDate).First())
                 .ToList();
 
             if (entityList.Count == 0)
@@ -53,22 +55,29 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .Select(x => x.Id)
                 .ToList();
 
-            var persistedIds = await _vesselLoadingPermitDbSet
+            var latestExpirationDates = await _vesselLoadingPermitDbSet
                 .AsNoTracking()
                 .Where(x => incomingIds.Contains(x.Id))
-                .Select(x => x.Id)
-                .ToListAsync();
-
-            var persistedIdSet = persistedIds.ToHashSet();
+                .GroupBy(x => x.Id)
+                .Select(group => new
+                {
+                    Id = group.Key,
+                    ExpirationDate = group.Max(x => x.ExpirationDate)
+                })
+                .ToDictionaryAsync(x => x.Id, x => x.ExpirationDate);
 
             return entityList
-                .Where(x => !persistedIdSet.Contains(x.Id))
+                .Where(x => !latestExpirationDates.TryGetValue(x.Id, out var latestExpirationDate)
+                    || x.ExpirationDate > latestExpirationDate)
                 .ToList();
         }
 
-        public async void UpdateVesselLoadingPermitApprovedAsync(Guid id, bool isApproved)
+        public void UpdateVesselLoadingPermitApprovedAsync(Guid id, bool isApproved)
         {
-            var record = _vesselLoadingPermitDbSet.FirstOrDefault(t => t.Id == id);
+            var record = _vesselLoadingPermitDbSet
+                .Where(t => t.Id == id)
+                .OrderByDescending(t => t.ExpirationDate)
+                .FirstOrDefault();
             record!.IsApproved = isApproved;
             _vesselLoadingPermitDbSet.Update(record);
         }

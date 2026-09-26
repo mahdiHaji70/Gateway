@@ -15,7 +15,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Configurations
             builder.Property(t => t.InternalId)
                 .ValueGeneratedOnAdd();
 
-            builder.HasIndex(t => t.Id)
+            builder.HasIndex(t => new { t.Id, t.ExpirationDate })
                 .IsUnique();
 
             builder.Property(t => t.LastUpdateDate);
