@@ -432,10 +432,7 @@ namespace ExternalIntegration.Service.Sync.PMO
                     item.TerminalCode = pmoDateDto.TerminalCode;
 
             var newData = await _loadingPermitRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<LoadingPermit>>(syncMappingDto!.Data),
-                idSelector: t => t.Id,
-                dbIdSelector: t => t.Id
-            );
+                _mapper.Map<IEnumerable<LoadingPermit>>(syncMappingDto!.Data));
 
             await _loadingPermitRepository.InsertBulkAsync(newData);
             await _unitOfWork.SaveChangesAsync();
