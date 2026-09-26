@@ -2,6 +2,7 @@
 {
     public class VesselLoadingPermit
     {
+        public Guid InternalId { get; set; }
         public Guid Id { get; set; }
         public Guid PortId { get; set; }
         public string Port { get; set; }

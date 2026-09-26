@@ -10,7 +10,13 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Configurations
         {
             builder.ToTable("VesselLoadingPermits");
 
-            builder.HasKey(t => t.Id);
+            builder.HasKey(t => t.InternalId);
+
+            builder.Property(t => t.InternalId)
+                .ValueGeneratedOnAdd();
+
+            builder.HasIndex(t => t.Id)
+                .IsUnique();
 
             builder.Property(t => t.LastUpdateDate);
 
