@@ -16,6 +16,7 @@ namespace ExternalIntegration.Service.Sync.DTOs
         public string Party { get; set; }
         public string PartyIdNumber { get; set; }
         public DateTime CreationDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
         public int State { get; set; }
         public string StateName { get; set; }
         public int GoodClassification { get; set; }

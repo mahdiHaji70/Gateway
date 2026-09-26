@@ -7,6 +7,7 @@
         public decimal Weight { get; set; }
         public decimal Volume { get; set; }
         public bool IsDangerous { get; set; }
+        public bool? DangerousNotNoticed { get; set; }
         public string Remark { get; set; }
         public VesselLoadingPermitDangerousSpecificationResponseDto DangerousSpecification { get; set; }
     }

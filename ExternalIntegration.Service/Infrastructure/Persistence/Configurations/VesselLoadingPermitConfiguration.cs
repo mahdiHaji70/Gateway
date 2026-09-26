@@ -12,6 +12,8 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Configurations
 
             builder.HasKey(t => t.Id);
 
+            builder.Property(t => t.LastUpdateDate);
+
             builder.Property(t => t.IsApproved)
            .HasColumnName("IsApproved")
            .IsRequired()
