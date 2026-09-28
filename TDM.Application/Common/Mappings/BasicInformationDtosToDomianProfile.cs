@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using TDM.Application.BasicInformation.CargoTypes.DTOs;
 using TDM.Application.BasicInformation.Cities.DTOs;
 using TDM.Application.BasicInformation.Commodities.DTOs;
@@ -125,7 +125,7 @@ namespace TDM.Application.Common.Mappings
                 .ForMember(dest => dest.ManifestItemNo, opt => opt.MapFrom(src => src.ManifestItem.ManifestItemNo))
                 .ForMember(dest => dest.ManifestNo, opt => opt.MapFrom(src => src.ManifestItem.ManifestNo))
                 .ForMember(dest => dest.IpasVesselDischargeId, opt => opt.MapFrom(src => src.IpasVesselDischargeId))
-                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.ManifestContainer!.Container.No))
+                .ForMember(dest => dest.ContainerNo, opt => opt.MapFrom(src => src.ManifestContainer == null ? null : src.ManifestContainer.Container.No))
                 .ForMember(dest => dest.IsSend, opt => opt.MapFrom(src => src.IpasVesselDischargeId.HasValue));
 
 

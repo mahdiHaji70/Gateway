@@ -25,8 +25,8 @@ namespace TDM.Infrastructure.Integrations.Client
 
             foreach (var item in vesselDischargesDto)
             {
-                var response = await _requestExecutor.PostAsync<Guid>("PMO", "SendVesselDischarge", item, cancellationToken);
-                if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Terminal Discharge", out var errorMessage))
+                var response = await _requestExecutor.PostAsync<Guid?>("PMO", "SendVesselDischarge", item, cancellationToken);
+                if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Vessel Discharge", out var errorMessage))
                     sendVesselDischargeToIpasResponses.Add(new SendVesselDischargeToIpasResponse
                     {
                         VesselDischargeId = item.Id,

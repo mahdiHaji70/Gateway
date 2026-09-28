@@ -221,7 +221,7 @@ export class VesselDischargeComponent {
     discharge.terminalCode = this.localStorageService.getItem('terminalCode')!;
     discharge.storeId = this.form.get('store')?.value?.id!;
     discharge.manifestItemId = this.form.get('manifestItem')?.value?.id!;
-    discharge.manifestContainerId = 'DF03DC7C-14A5-4949-9509-08DF13019A9D';//this.form.get('container')?.value?.id || undefined;
+    discharge.manifestContainerId = this.form.get('container')?.value?.id || undefined;
     discharge.dischargeDate = this.form.get('dischargeDate')?.value!;
     discharge.packNB = this.form.get('packNumber')?.value || 0;
     discharge.weight = this.form.get('weight')?.value || 0;

@@ -46,6 +46,10 @@ export class VesselDischargeListComponent {
     this.router.navigate(['/operation/vessel-discharge']);
   }
 
+  onSend() {
+    this.router.navigate(['/operation/send-vessel-discharge']);
+  }
+
   onEdit(id: string) {
     this.router.navigate(['/operation/vessel-discharge', id]);
   }

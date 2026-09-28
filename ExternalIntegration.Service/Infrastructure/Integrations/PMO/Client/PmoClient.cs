@@ -416,7 +416,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         {
             var request = new PmoRequestBuilder()
                 .WithCredential(_userName, _password)
-                .WithService(_serviceNames.TruckTerminalDis)
+                .WithService(_serviceNames.VesselDischarges)
                 .WithParameters(new List<Parameter>
                 {
                 new Parameter{ParameterName = nameof(model.Date), ParameterValue = model.Date.ToString("yyyy-MM-ddTHH:mm:ss") },

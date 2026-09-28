@@ -19,6 +19,14 @@ export class VesselDischargeService {
     return this.apiService.get(`${ApiEndpoints.Vessel_Discharges}/${id}`);
   }
 
+  getByManifestItemId(manifestItemId: string): Observable<any> {
+    return this.apiService.get(`${ApiEndpoints.Vessel_Discharges_By_Manifest_Item}/${manifestItemId}`);
+  }
+
+  sendToIpas(manifestItemId: string): Observable<any> {
+    return this.apiService.post(`${ApiEndpoints.Vessel_Discharges}/send-Vesseldischarges-to-ipas/${manifestItemId}`, {});
+  }
+
   postDischarge(discharge: VesselDischarge): Observable<any> {
     return this.apiService.post(ApiEndpoints.Vessel_Discharges, discharge);
   }

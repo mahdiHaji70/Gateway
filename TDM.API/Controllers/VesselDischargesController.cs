@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
@@ -9,6 +9,7 @@ using TDM.Application.Operation.VesselDischarges.Commands.SendVesselDischargeToI
 using TDM.Application.Operation.VesselDischarges.Commands.UpdateVesselDischarge;
 using TDM.Application.Operation.VesselDischarges.Queries.GetGetVesselDischarges;
 using TDM.Application.Operation.VesselDischarges.Queries.GetVesselDischargeById;
+using TDM.Application.Operation.VesselDischarges.Queries.GetVesselDischargesByManifestItemId;
 
 
 namespace TDM.API.Controllers
@@ -66,10 +67,17 @@ namespace TDM.API.Controllers
         }
 
 
-        [HttpPost("send-Vesseldischarges-to-ipas/{manifestItemId:guid}")]
-        public async Task<IActionResult> SendVesselDischargesToIpas(Guid manifestItemId)
+        [HttpGet("by-manifest-item/{manifestItemId:guid}")]
+        public async Task<IActionResult> GetByManifestItem(Guid manifestItemId, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new SendVesselDischargeToIpasCommand(manifestItemId));
+            var result = await _mediator.Send(new GetVesselDischargesByManifestItemIdQuery(manifestItemId), cancellationToken);
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpPost("send-Vesseldischarges-to-ipas/{manifestItemId:guid}")]
+        public async Task<IActionResult> SendVesselDischargesToIpas(Guid manifestItemId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new SendVesselDischargeToIpasCommand(manifestItemId), cancellationToken);
             return Ok(ApiResponse.Success(result));
         }
     }
