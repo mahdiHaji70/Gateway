@@ -33,7 +33,7 @@ namespace TDM.Infrastructure.Integrations.Helpers
             if (response.Errors?.Any() == true)
             {
                 var combinedErrors = string.Join($"{Environment.NewLine}• ",
-                   response.Errors.Select(x => x.ErrorMessage));
+                   response.Errors.Select(x => x.Value.FirstOrDefault()));
                 return serviceName + Environment.NewLine + $"Errors:{Environment.NewLine}• {combinedErrors}";
             }
             return serviceName + Environment.NewLine + "An unknown error occurred.";

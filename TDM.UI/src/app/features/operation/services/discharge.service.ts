@@ -30,7 +30,7 @@ export class DischargeService {
   }
 
   sendDischarges(declarationId: string): Observable<any>{
-    let _url = ApiEndpoints.Terminal_Discharges + `/request-ipas-terminaldischarge-id/${declarationId}`;
+    let _url = ApiEndpoints.Terminal_Discharges + `/send-to-ipas-terminaldischarge-by-id/${declarationId}`;
     return this.apiService.post(_url, {});
   }
 

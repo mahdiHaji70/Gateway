@@ -45,6 +45,7 @@ import { VesselDischargeComponent } from './components/vessel-discharge/vessel-d
 import { VesselDischargeListComponent } from './components/vessel-discharge/vessel-discharge-list/vessel-discharge-list.component';
 import { VesselDischargeService } from './services/vessel-discharge.service';
 import { ManifestService } from './services/manifest.service';
+import { SendVesselDischargeComponent } from './components/vessel-discharge/send-vessel-discharge/send-vessel-discharge.component';
 
 @NgModule({
   declarations: [    
@@ -68,7 +69,8 @@ import { ManifestService } from './services/manifest.service';
     ExitFromStoreComponent,
     SendDischargeComponent,
     VesselDischargeComponent,
-    VesselDischargeListComponent    
+    VesselDischargeListComponent,
+    SendVesselDischargeComponent
   ],
   imports: [
     CommonModule,

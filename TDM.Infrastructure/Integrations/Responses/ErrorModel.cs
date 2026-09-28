@@ -7,6 +7,6 @@ namespace TDM.Infrastructure.Integrations.Responses
     public class ErrorModel
     {
         public required string PropertyName { get; set; }
-        public required string ErrorMessage { get; set; }
+        public required string[] ErrorMessage { get; set; }
     }
 }

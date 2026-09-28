@@ -37,8 +37,8 @@ namespace TDM.Infrastructure.Integrations.Client
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await _httpClient.SendAsync(request, cancellationToken);
-            if (!response.IsSuccessStatusCode)
-                throw new Exception("Failed to retrieve external service token " + response.StatusCode);
+            //if (!response.IsSuccessStatusCode)
+            //    throw new Exception("Failed to retrieve external service token " + response.StatusCode);
 
             var responseString = await response.Content.ReadAsStringAsync(cancellationToken);
 

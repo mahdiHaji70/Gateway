@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TDM.Domain.Entities;
@@ -29,9 +29,9 @@ namespace TDM.Application.Operation.VesselDischarges.Commands.SendVesselDischarg
                 Volume = vesselDischarge.Volume,
                 UnitWeight = vesselDischarge.UnitWeight,
 
-                HSCode = isContainer ? manifestGood?.Commodity?.HsCode! : string.Empty,
-                CommodityName = isContainer ? manifestGood?.Commodity?.Name! : string.Empty,
-                PackageCode = isContainer ? manifestGood?.Package?.Code! : string.Empty,
+                HSCode = !isContainer ? manifestGood?.Commodity?.HsCode ?? string.Empty : string.Empty,
+                CommodityName = !isContainer ? manifestGood?.Commodity?.Name ?? string.Empty : string.Empty,
+                PackageCode = !isContainer ? manifestGood?.Package?.Code ?? string.Empty : string.Empty,
 
                 ContainerNo = vesselDischarge.ManifestContainer?.Container?.No,
                 ContainerTypeAndCode = vesselDischarge.ManifestContainer?.Container?.ContainerTypeAndSize?.TypeAndSizeCode,

@@ -13,6 +13,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
         {
             return new SendVesselDischargeToIpasDto
             {
+                Id = sendVesselDischargeToIpasRequest.Id,
                 Date = sendVesselDischargeToIpasRequest.DischargeDate,
                 VoyageNoticeNo = sendVesselDischargeToIpasRequest.ManifestNoticeNo,
                 TerminalCode = sendVesselDischargeToIpasRequest.TerminalCode,
@@ -66,10 +67,10 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 DangerousNotNoticed = false,
                 DangerousSpecification = new SendDangerousSpecificationVesselDischargeToIpasDto
                 {
-                    DangerousCode = request.DangerousCode,
-                    Classification = request.Classification,
-                    IgnitionTemperature = request.IgnitionTemperature ?? 0m,
-                    IgnitionTemperatureUnit = request.IgnitionTemperatureUnit
+                    DangerousCode = request.DangerousCode ?? string.Empty,
+                    Classification = request.Classification ?? string.Empty,
+                    IgnitionTemperature = request.IgnitionTemperature ?? 1,
+                    IgnitionTemperatureUnit = request.IgnitionTemperatureUnit ?? string.Empty
                 }
             };
         }
@@ -87,10 +88,10 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 Remark = "TO DO",
                 DangerousSpecification = new SendDangerousSpecificationVesselDischargeToIpasDto
                 {
-                    DangerousCode = request.DangerousCode,
-                    Classification = request.Classification,
-                    IgnitionTemperature = request.IgnitionTemperature ?? 0m,
-                    IgnitionTemperatureUnit = request.IgnitionTemperatureUnit
+                    DangerousCode = request.DangerousCode ?? string.Empty,
+                    Classification = request.Classification ?? string.Empty,
+                    IgnitionTemperature = request.IgnitionTemperature ?? 1,
+                    IgnitionTemperatureUnit = request.IgnitionTemperatureUnit ?? string.Empty
                 }
             };
         }
@@ -107,22 +108,22 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 DangerousNotNoticed = false,
                 DangerousSpecification = new SendDangerousSpecificationVesselDischargeToIpasDto
                 {
-                    DangerousCode = request.DangerousCode,
-                    Classification = request.Classification,
-                    IgnitionTemperature = request.IgnitionTemperature ?? 0m,
-                    IgnitionTemperatureUnit = request.IgnitionTemperatureUnit
+                    DangerousCode = request.DangerousCode ?? string.Empty,
+                    Classification = request.Classification ?? string.Empty,
+                    IgnitionTemperature = request.IgnitionTemperature ?? 1,
+                    IgnitionTemperatureUnit = request.IgnitionTemperatureUnit ?? string.Empty
                 },
-                //DischargeSpecification = new SendVesselDischargeSpecificationToIpasDto
-                //{
-                //    IsBundled = false,
-                //    IsOG = false,
-                //    IsUsedSpecialEquipment = false,
-                //    SpecialEquipmentOwner = null,
-                //    CraneNo = "TO DO",
-                //    CraneDriver = "TO DO",
-                //    TallyMan = "TO DO",
-                //    HandlingTypeId = 1
-                //}
+                DischargeSpecification = new SendVesselDischargeSpecificationToIpasDto
+                {
+                    IsBundled = false,
+                    IsOG = false,
+                    IsUsedSpecialEquipment = false,
+                    SpecialEquipmentOwner = string.Empty,
+                    CraneNo = string.Empty,
+                    CraneDriver = string.Empty,
+                    TallyMan = string.Empty,
+                    HandlingTypeId = 1
+                }
             };
         }
 

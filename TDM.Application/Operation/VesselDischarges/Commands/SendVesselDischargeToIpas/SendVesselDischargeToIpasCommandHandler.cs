@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +33,7 @@ namespace TDM.Application.Operation.VesselDischarges.Commands.SendVesselDischarg
             var sendVesselDischargeToIpasRequests = SendVesselDischargeToIpasRequestMapper.Map(vesselDischarges);
             var response = await _vesselDischargeExternalService.SendVesselDischargeToIpas(sendVesselDischargeToIpasRequests);
 
-            vesselDischarges.Join(response,
+            vesselDischarges.Join(response.Where(x => x.IpasVesselDischargeId != Guid.Empty),
             vd => vd.Id,
             r => r.VesselDischargeId,
             (vd, r) => new { VesselDischarge = vd, Response = r })

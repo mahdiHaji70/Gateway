@@ -5,7 +5,7 @@
 
         public ResponseStatuses Status { get; set; }
         public string? Message { get; set; }
-        public List<ErrorModel>? Errors { get; set; }
+        public Dictionary<string, string[]>? Errors { get; set; }
         public T? Data { get; set; }
 
         public static Response<T> Success(T? data = default, string successMessage = "Operation successfully done")
@@ -18,16 +18,15 @@
             };
         }
 
-        public static Response<T> Error(string message = "Operation error", List<ErrorModel>? errors = null)
+        public static Response<T> Error(string message = "Operation error", Dictionary<string, string[]>? errors = null)
         {
-            if (errors != null && errors.Any())
-                message = string.Join(Environment.NewLine, errors.Select(s => s.ErrorMessage).ToList());
-
             return new Response<T>()
             {
-                Message = message,
+                Message = errors != null && errors.Any()
+                    ? string.Join(Environment.NewLine, errors.Values.SelectMany(x => x))
+                    : message,
                 Status = ResponseStatuses.Error,
-                Errors = errors!
+                Errors = errors
             };
         }
 

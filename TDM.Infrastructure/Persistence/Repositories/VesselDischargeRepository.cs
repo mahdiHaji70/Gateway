@@ -73,5 +73,18 @@ namespace TDM.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .AnyAsync(x => x.ManifestContainerId == manifestContainerId, cancellationToken);
         }
+
+        public async Task<List<VesselDischarge>> GetByManifestItemIdAsync(Guid manifestItemId, CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Include(x => x.Store)
+                .Include(x => x.ManifestItem)
+                .Include(x => x.ManifestContainer)
+                    .ThenInclude(x => x!.Container)
+                .Where(x => x.ManifestItemId == manifestItemId)
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync(cancellationToken);
+        }
     }
 }
