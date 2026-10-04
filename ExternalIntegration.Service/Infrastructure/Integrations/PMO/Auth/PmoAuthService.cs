@@ -3,7 +3,9 @@ using ExternalIntegration.Service.Infrastructure.Encryption;
 using ExternalIntegration.Service.Infrastructure.Persistence.Context;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
+using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -17,6 +19,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
         private readonly string _userName;
         private readonly string _password;
         private readonly string _baseAddress;
+        private readonly PmoServiceNames _serviceNames;
         private const string CacheKeyPrefix = "ExternalServiceToken_";
         private readonly IMemoryCache _cache;
         private readonly ITerminalRepository _terminalRepository;
@@ -29,7 +32,8 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
             IConfiguration configuration,
             IMemoryCache cache,
             ITerminalRepository terminalRepository,
-            AesEncryption aesEncryption//,
+            AesEncryption aesEncryption,
+            IOptions<PmoServiceNames> serviceNames
             //ILogger<ExternalAuthService> logger
             )
         {
@@ -37,6 +41,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
             _userName = configuration["ServiceProviderConfig:PMO:Username"]!;
             _password = configuration["ServiceProviderConfig:PMO:Password"]!;
             _baseAddress = configuration["ServiceProviderConfig:PMO:BaseAddress"]!;
+            _serviceNames = serviceNames.Value;
             _cache = cache;
             _terminalRepository = terminalRepository;  
             _aesEncryption = aesEncryption;            
@@ -81,7 +86,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth
         {            
             var request = new PmoRequestBuilder()
                     .WithCredential(_userName, _password)
-                    .WithService("ipas-AccountToken")
+                    .WithService(_serviceNames.AccountToken)
                     .WithParameters(new List<Parameter>
                     {
                      new Parameter {ParameterName = "username",ParameterValue = userName  },
