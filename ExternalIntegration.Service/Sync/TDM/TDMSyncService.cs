@@ -72,12 +72,12 @@ namespace ExternalIntegration.Service.Sync.TDM
 
         }
 
-        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetManifestIssuedStoreReceipts(
-            Guid ipasItemId,
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByBillOfLadingId(
+            Guid billOfLadingId,
             CancellationToken cancellationToken = default)
         {
-            var result = await _storeReceiptRepository.GetManifestIssuedStoreReceiptsAsync(
-                ipasItemId,
+            var result = await _storeReceiptRepository.GetStoreReceiptByBillOfLadingIdAsync(
+                billOfLadingId,
                 cancellationToken);
 
             if (result.Count == 0)

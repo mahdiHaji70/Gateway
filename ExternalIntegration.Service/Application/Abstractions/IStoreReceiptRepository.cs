@@ -10,8 +10,8 @@ namespace ExternalIntegration.Service.Application.Abstractions
       
         Task<DateTime> GetLastDateAsync(string terminalCode);
         Task<List<StoreReceipt>> GetByStorageAgreementNoAsync(string storageAgreementNo);
-        Task<List<StoreReceipt>> GetManifestIssuedStoreReceiptsAsync(
-            Guid ipasItemId,
+        Task<List<StoreReceipt>> GetStoreReceiptByBillOfLadingIdAsync(
+            Guid billOfLadingId,
             CancellationToken cancellationToken = default);
         Task<StoreReceipt> GetByNoAsync(string no);
     }

@@ -11,8 +11,8 @@ namespace TDM.Application.Common.Interfaces
     public interface IStoreReceiptExternalService
     {
        Task<List<StoreReceiptHeadDto>> GetStoreReceipts(string ipasDeclarationNo, CancellationToken cancellationToken = default);
-       Task<List<StoreReceiptHeadDto>> GetManifestIssuedStoreReceipts(
-           Guid ipasItemId,
+       Task<List<StoreReceiptHeadDto>> GetStoreReceiptByBillOfLadingId(
+           Guid billOfLadingId,
            CancellationToken cancellationToken = default);
        Task<SendIpasStoreAllocationResponse> SendIpasStoreAllocation(SendIpasStoreAllocationRequest request, CancellationToken cancellationToken = default);
         }
