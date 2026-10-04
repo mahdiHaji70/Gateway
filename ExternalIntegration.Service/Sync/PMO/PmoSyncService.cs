@@ -267,10 +267,10 @@ namespace ExternalIntegration.Service.Sync.PMO
             {
                 var source = sourceById[storeReceipt.Id];
                 storeReceipt.ManifestItemLinks = GetManifestItemIds(source)
-                    .Select(ipasItemId => new StoreReceiptManifestItem
+                    .Select(billOfLadingId => new StoreReceiptManifestItem
                     {
                         StoreReceiptId = storeReceipt.Id,
-                        IpasItemId = ipasItemId
+                        BillOfLadingId = billOfLadingId
                     })
                     .ToList();
             }

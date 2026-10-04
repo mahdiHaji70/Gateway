@@ -44,7 +44,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .Where(storeReceipt =>
                     !storeReceipt.IsIssued &&
                     (storeReceipt.RequestId == null || storeReceipt.RequestId == Guid.Empty) &&
-                    storeReceipt.ManifestItemLinks.Any(item => item.IpasItemId == billOfLadingId))
+                    storeReceipt.ManifestItemLinks.Any(item => item.BillOfLadingId == billOfLadingId))
                 .ToListAsync(cancellationToken);
         }
 
