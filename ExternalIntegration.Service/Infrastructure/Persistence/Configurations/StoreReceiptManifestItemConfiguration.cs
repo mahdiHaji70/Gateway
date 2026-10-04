@@ -11,9 +11,9 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Configurations
         {
             builder.ToTable("StoreReceiptManifestItems");
 
-            builder.HasKey(x => new { x.StoreReceiptId, x.IpasItemId });
+            builder.HasKey(x => new { x.StoreReceiptId, x.BillOfLadingId });
 
-            builder.HasIndex(x => new { x.IpasItemId, x.StoreReceiptId });
+            builder.HasIndex(x => new { x.BillOfLadingId, x.StoreReceiptId });
 
             builder.HasOne(x => x.StoreReceipt)
                 .WithMany(x => x.ManifestItemLinks)
