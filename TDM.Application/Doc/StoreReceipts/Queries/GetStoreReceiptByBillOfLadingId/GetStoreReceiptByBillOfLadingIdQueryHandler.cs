@@ -2,25 +2,25 @@ using MediatR;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipts.DTOs;
 
-namespace TDM.Application.Doc.StoreReceipts.Queries.GetManifestIssuedStoreReceipts
+namespace TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByBillOfLadingId
 {
-    public class GetManifestIssuedStoreReceiptsQueryHandler
-        : IRequestHandler<GetManifestIssuedStoreReceiptsQuery, IEnumerable<StoreReceiptHeadDto>>
+    public class GetStoreReceiptByBillOfLadingIdQueryHandler
+        : IRequestHandler<GetStoreReceiptByBillOfLadingIdQuery, IEnumerable<StoreReceiptHeadDto>>
     {
         private readonly IStoreReceiptExternalService _externalService;
 
-        public GetManifestIssuedStoreReceiptsQueryHandler(
+        public GetStoreReceiptByBillOfLadingIdQueryHandler(
             IStoreReceiptExternalService externalService)
         {
             _externalService = externalService;
         }
 
         public async Task<IEnumerable<StoreReceiptHeadDto>> Handle(
-            GetManifestIssuedStoreReceiptsQuery request,
+            GetStoreReceiptByBillOfLadingIdQuery request,
             CancellationToken cancellationToken)
         {
-            return await _externalService.GetManifestIssuedStoreReceipts(
-                request.IpasItemId,
+            return await _externalService.GetStoreReceiptByBillOfLadingId(
+                request.BillOfLadingId,
                 cancellationToken);
         }
     }

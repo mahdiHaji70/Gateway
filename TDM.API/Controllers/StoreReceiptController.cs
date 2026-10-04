@@ -7,7 +7,7 @@ using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreemen
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceipts;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptWarehouses;
-using TDM.Application.Doc.StoreReceipts.Queries.GetManifestIssuedStoreReceipts;
+using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByBillOfLadingId;
 
 namespace TDM.API.Controllers
 {
@@ -29,13 +29,13 @@ namespace TDM.API.Controllers
             return Ok(ApiResponse.Success(result));
         }
 
-        [HttpGet("manifest-issued-store-receipts/{ipasItemId:guid}")]
-        public async Task<IActionResult> GetManifestIssuedStoreReceipts(
-            Guid ipasItemId,
+        [HttpGet("store-receipt-by-bill-of-lading-id/{billOfLadingId:guid}")]
+        public async Task<IActionResult> GetStoreReceiptByBillOfLadingId(
+            Guid billOfLadingId,
             CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(
-                new GetManifestIssuedStoreReceiptsQuery(ipasItemId),
+                new GetStoreReceiptByBillOfLadingIdQuery(billOfLadingId),
                 cancellationToken);
 
             return Ok(ApiResponse.Success(result));
