@@ -27,6 +27,28 @@ namespace TDM.Infrastructure.Integrations.Client
             return IpasStoreReceipts;
         }
 
+        public async Task<List<StoreReceiptHeadDto>> GetManifestIssuedStoreReceipts(
+            Guid ipasItemId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<List<IpasStoreReceiptResponseDto>>(
+                "TDM",
+                "GetManifestIssuedStoreReceipts",
+                new { ipasItemId },
+                cancellationToken);
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetManifestIssuedStoreReceipts");
+
+            var receipts = StoreReceiptMapper.Map(response.Data!);
+            foreach (var receipt in receipts)
+            {
+                receipt.DeclarationId = null;
+                receipt.BillOfLadingId = ipasItemId;
+            }
+
+            return receipts;
+        }
+
         public async Task<TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation.SendIpasStoreAllocationResponse> SendIpasStoreAllocation(
             TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation.SendIpasStoreAllocationRequest request,
             CancellationToken cancellationToken = default)

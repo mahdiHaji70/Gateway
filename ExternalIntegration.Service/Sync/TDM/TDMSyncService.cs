@@ -71,6 +71,22 @@ namespace ExternalIntegration.Service.Sync.TDM
             return Response<IEnumerable<StoreReceiptDto>>.Success(_mapper.Map<IEnumerable<StoreReceiptDto>>(result));
 
         }
+
+        public async Task<Response<IEnumerable<StoreReceiptDto>>> GetManifestIssuedStoreReceipts(
+            Guid ipasItemId,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _storeReceiptRepository.GetManifestIssuedStoreReceiptsAsync(
+                ipasItemId,
+                cancellationToken);
+
+            if (result.Count == 0)
+                return Response<IEnumerable<StoreReceiptDto>>.Error("Not Found");
+
+            return Response<IEnumerable<StoreReceiptDto>>.Success(
+                _mapper.Map<IEnumerable<StoreReceiptDto>>(result));
+        }
+
         public async Task<Response<StoreReceiptDto>> GetStoreReceiptByNo(string no)
         {
             var result = await _storeReceiptRepository.GetByNoAsync(no);

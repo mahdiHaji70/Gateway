@@ -7,7 +7,7 @@
         public string containerTypeAndSize { get; set; }
         public string SealNumber { get; set; }
         public string Remark { get; set; }
-        public Guid? billOfLadingId { get; set; }
+        public Guid? BillOfLadingId { get; set; }
         public List<StoreReceiptContainerGoodDto> Goods { get; set; }
         public DangerousSpecificationDto DangerousSpecification { get; set; }
     }

@@ -50,5 +50,7 @@
         public string GeneralCargoList { get; set; }
         public string BulkList { get; set; }
         public string ContainerList { get; set; }
+        public ICollection<StoreReceiptManifestItem> ManifestItemLinks { get; set; }
+            = new List<StoreReceiptManifestItem>();
     }
 }
