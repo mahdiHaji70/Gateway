@@ -260,8 +260,23 @@ namespace ExternalIntegration.Service.Sync.PMO
             var clientResult = await _client.GetStoreReceipts(pmoDateDto);
             var syncMappingDto = _mapper.Map<Response<IEnumerable<StoreReceiptDto>>>(clientResult);
 
+            var sourceById = syncMappingDto.Data.ToDictionary(storeReceipt => storeReceipt.Id);
+            var storeReceipts = _mapper.Map<List<StoreReceipt>>(sourceById.Values);
+
+            foreach (var storeReceipt in storeReceipts)
+            {
+                var source = sourceById[storeReceipt.Id];
+                storeReceipt.ManifestItemLinks = GetManifestItemIds(source)
+                    .Select(ipasItemId => new StoreReceiptManifestItem
+                    {
+                        StoreReceiptId = storeReceipt.Id,
+                        IpasItemId = ipasItemId
+                    })
+                    .ToList();
+            }
+
             var newData = await _storeReceiptRepository.FilterUnpersistedAsync(
-                entities: _mapper.Map<IEnumerable<StoreReceipt>>(syncMappingDto.Data),
+                entities: storeReceipts,
                 idSelector: t => t.Id,
                 dbIdSelector: t => t.Id
             );
@@ -270,6 +285,19 @@ namespace ExternalIntegration.Service.Sync.PMO
             await _unitOfWork.SaveChangesAsync();
 
             return syncMappingDto;
+        }
+
+        private static IEnumerable<Guid> GetManifestItemIds(StoreReceiptDto storeReceipt)
+        {
+            return (storeReceipt.GeneralCargoList ?? Enumerable.Empty<StoreReceiptGeneralCargoDto>())
+                .Select(item => item.BillOfLadingId)
+                .Concat((storeReceipt.BulkList ?? Enumerable.Empty<StoreReceiptBulkDto>())
+                    .Select(item => item.BillOfLadingId))
+                .Concat((storeReceipt.ContainerList ?? Enumerable.Empty<StoreReceiptContainerDto>())
+                    .Select(item => item.BillOfLadingId))
+                .Where(id => id.HasValue && id.Value != Guid.Empty)
+                .Select(id => id!.Value)
+                .Distinct();
         }
 
         public async Task<Response<bool>> SendStoreReceiptAllocation(SendStoreReceiptAllocationDto dto)

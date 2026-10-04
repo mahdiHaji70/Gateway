@@ -10,6 +10,9 @@ namespace ExternalIntegration.Service.Sync.TDM
         Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId,string terminalCode);
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(string storageAgreementNo);
         Task<Response<IEnumerable<StoreReceiptDto>>> GetStoreReceiptByStorageAgreementNo(string storageAgreementNo);
+        Task<Response<IEnumerable<StoreReceiptDto>>> GetManifestIssuedStoreReceipts(
+            Guid ipasItemId,
+            CancellationToken cancellationToken = default);
         Task<Response<StoreReceiptDto>> GetStoreReceiptByNo(string no);
         Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode);
         Task<Response<DateTime>> GetGoodwayBillsLastDate(string terminalCode);

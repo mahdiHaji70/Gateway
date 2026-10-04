@@ -17,6 +17,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<IssueRequest> IssueRequests => Set<IssueRequest>();
         public DbSet<Voyage> Voyages => Set<Voyage>();
         public DbSet<StoreReceipt> StoreReceipts => Set<StoreReceipt>();
+        public DbSet<StoreReceiptManifestItem> StoreReceiptManifestItems => Set<StoreReceiptManifestItem>();
         public DbSet<PMOLog> IntegrationLogs => Set<PMOLog>();
         public DbSet<Manifest> Manifests => Set<Manifest>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)

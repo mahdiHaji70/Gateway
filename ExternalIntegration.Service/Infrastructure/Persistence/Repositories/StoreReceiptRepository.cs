@@ -34,6 +34,20 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
 
              return await  query.ToListAsync();
         }
+
+        public async Task<List<StoreReceipt>> GetManifestIssuedStoreReceiptsAsync(
+            Guid ipasItemId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _storeReceiptDbSet
+                .AsNoTracking()
+                .Where(storeReceipt =>
+                    !storeReceipt.IsIssued &&
+                    (storeReceipt.RequestId == null || storeReceipt.RequestId == Guid.Empty) &&
+                    storeReceipt.ManifestItemLinks.Any(item => item.IpasItemId == ipasItemId))
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<StoreReceipt> GetByNoAsync(string no)
         {
             return await _storeReceiptDbSet
