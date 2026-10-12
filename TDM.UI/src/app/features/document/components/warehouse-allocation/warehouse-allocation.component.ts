@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { StoreReceiptService } from '../../services/store-receipt.service';
@@ -30,7 +31,7 @@ export class WarehouseAllocationComponent {
   loadWarehouses() {
     this.storeReceiptService.getWarehouses(this.storeReceiptId).subscribe({
       next: (res: any) => this.warehouses = (res.data || []) as StoreReceiptWarehouse[],
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -48,17 +49,9 @@ export class WarehouseAllocationComponent {
       },
       error: (error: any) => {
         this.sending = false;
-        this.showApiError(error);
+        showApiError(this.messageService, error);
       }
     });
   }
 
-  private showApiError(error: any) {
-    const response = error?.error;
-    const errors = response?.errors || response?.Errors;
-    const detail = errors && typeof errors === 'object'
-      ? Object.values(errors).flat().join(' | ')
-      : response?.Message || response?.message || response?.title || error?.message || 'Operation failed.';
-    this.messageService.add({ severity: 'error', summary: response?.title || 'Operation failed', detail });
-  }
 }

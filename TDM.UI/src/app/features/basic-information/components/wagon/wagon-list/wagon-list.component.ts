@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../../shared/services/api-error-handler.service';
 import { Wagon } from '../../../models/wagon.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
@@ -60,7 +61,7 @@ export class WagonListComponent {
             this.loadWagons();
           },
           error: (error: any) => {
-            this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });
+            showApiError(this.messageService, error);
 
           }
         });

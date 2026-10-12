@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { BasicInformationService } from '../../services/basic-information.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -60,7 +61,7 @@ export class CountryComponent {
           this.router.navigate(['/country-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          showApiError(this.messageService, error);
         }
       }
       );

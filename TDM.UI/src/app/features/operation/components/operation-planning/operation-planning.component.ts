@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DeclarationService } from '../../services/declaration.service';
@@ -136,7 +137,7 @@ if (!this.form.valid) {
             this.router.navigate(['/operation/operation-planning-list'])
           },
           error: (error: any) => {
-            this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+            showApiError(this.messageService, error);
           }
         });
   

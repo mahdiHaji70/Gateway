@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../../shared/services/api-error-handler.service';
 import { ContainerSize } from '../../../models/container-size.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -60,7 +61,7 @@ export class ContainerSizeListComponent {
             this.loadContainerSizes();
           },
           error: (error: any) => {
-            this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });
+            showApiError(this.messageService, error);
 
           }
         });

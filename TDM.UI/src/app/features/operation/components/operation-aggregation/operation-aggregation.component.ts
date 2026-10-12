@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { OperationAggregationList } from '../../models/operation-aggregation-list.model';
 import { OperationAggregationService } from '../../services/operation-aggregation.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -30,7 +31,7 @@ export class OperationAggregationComponent {
         this.operationAggregations = res.data.map((item: OperationAggregationList) => new OperationAggregationList(item.declarationId, item.number, item.lastDate?.substring(0, 10)));
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
+        showApiError(this.messageService, error);
 
       }
     });
@@ -49,7 +50,7 @@ export class OperationAggregationComponent {
 
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
+        showApiError(this.messageService, error);
       }
     });
   }

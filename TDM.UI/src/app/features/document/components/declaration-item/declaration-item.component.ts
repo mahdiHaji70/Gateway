@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { CargoTypes, cargoTypesDropdown } from '../../../../shared/constants/cargo-types';
 import { FormControl, FormGroup } from '@angular/forms';
 import { getEnumOptions } from '../../../../shared/utils/get-enum-options';
@@ -138,7 +139,7 @@ export class DeclarationItemComponent {
         this.successfulOperation.emit(true);
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+        showApiError(this.messageService, error);
       }
     });
   }
