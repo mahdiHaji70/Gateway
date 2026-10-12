@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { StoreReceiptHead } from '../../models/store-receipt-head.model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -37,7 +38,7 @@ export class MarineStoreReceiptIssueComponent {
         this.manifestItems = (res.data || []).map((item: any) =>
           new DropdownOption(item.ipasItemId, `${item.voyageNo} / ${item.manifestNo}`));
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -46,7 +47,7 @@ export class MarineStoreReceiptIssueComponent {
       next: (res: any) => {
         this.storeReceipts = res.data;
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -57,34 +58,7 @@ export class MarineStoreReceiptIssueComponent {
         this.loadManifestItems();
         this.messageService.add({ severity: 'success', summary: `Successfully created` });
       },
-      error: (error: any) => {
-        const errorResponse = error?.error;
-
-        if (errorResponse?.errors && typeof errorResponse.errors === 'object') {
-          const errorMessages = Object.values(errorResponse.errors)
-            .flat()
-            .join('\n');
-
-          this.messageService.add({
-            severity: 'error',
-            summary: errorResponse.title || 'Validation Error',
-            detail: errorMessages
-          });
-        } else {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Request Failed',
-            detail: errorResponse?.Message || errorResponse?.title || error.message || 'An unexpected error occurred.'
-          });
-        }
-      }
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
-
-  showApiError(error: any) {
-    const errors = error?.error?.Errors;
-    const detail = errors ? Object.values(errors).flat().join(' | ') : error?.message || '';
-    this.messageService.add({ severity: 'error', summary: error?.error?.Message || 'Operation failed', detail });
-  }
-
 }

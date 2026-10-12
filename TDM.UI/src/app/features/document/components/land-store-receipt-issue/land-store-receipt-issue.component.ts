@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -57,27 +58,7 @@ export class LandStoreReceiptIssueComponent {
         this.loadDeclarations();
         this.messageService.add({ severity: 'success', summary: `Successfully created` });
       },
-      error: (error: any) => {
-        const errorResponse = error?.error;
-
-        if (errorResponse?.errors && typeof errorResponse.errors === 'object') {
-          const errorMessages = Object.values(errorResponse.errors)
-            .flat()
-            .join('\n');
-
-          this.messageService.add({
-            severity: 'error',
-            summary: errorResponse.title || 'Validation Error',
-            detail: errorMessages
-          });
-        } else {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Request Failed',
-            detail: errorResponse?.Message || errorResponse?.title || error.message || 'An unexpected error occurred.'
-          });
-        }
-      }
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 }

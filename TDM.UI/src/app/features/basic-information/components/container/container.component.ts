@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { ContainerType } from '../../models/container-type.model';
 import { ContainerSize } from '../../models/container-size.model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -81,7 +82,7 @@ export class ContainerComponent {
           this.router.navigate(['/container-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          showApiError(this.messageService, error);
         }
       }
       );

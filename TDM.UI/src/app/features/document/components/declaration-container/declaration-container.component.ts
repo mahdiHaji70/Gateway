@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BasicInformationService } from '../../../basic-information/services/basic-information.service';
@@ -74,7 +75,7 @@ export class DeclarationContainerComponent {
         this.loadDeclarationContainers();
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+        showApiError(this.messageService, error);
       }
     });
   }
@@ -103,7 +104,7 @@ export class DeclarationContainerComponent {
         this.loadDeclarationContainers();
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+        showApiError(this.messageService, error);
       }
     });
   }

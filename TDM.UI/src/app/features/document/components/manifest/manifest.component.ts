@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ManifestService } from '../../services/manifest.service';
@@ -57,7 +58,7 @@ export class ManifestComponent {
         this.messageService.add({ severity: 'success', summary: res.message });
       },
       error: (failRes: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+        showApiError(this.messageService, failRes);
       }
     });
   }

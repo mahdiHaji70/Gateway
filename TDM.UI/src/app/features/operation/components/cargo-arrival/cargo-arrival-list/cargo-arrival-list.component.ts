@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../../shared/services/api-error-handler.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CargoArrivalService } from '../../../services/cargo-arrival.service';
@@ -63,7 +64,7 @@ cargoArrivals: CargoArrivalFull[] = [];
             this.loadCargoArrivals();
           },
           error: (error: any) => {
-            this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });
+            showApiError(this.messageService, error);
 
           }
         });

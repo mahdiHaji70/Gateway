@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -38,13 +39,13 @@ export class LoginComponent {
               this.router.navigate(['/']).then().catch();
             },
             error: (failRes: any) => {
-              this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+              showApiError(this.messageService, failRes);
             }
           });
 
         },
         error: (failRes: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error });
+          showApiError(this.messageService, failRes);
         }
       });
     }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { BasicInformationService } from '../../services/basic-information.service';
 import { Traffic } from '../../models/traffic.model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -62,7 +63,7 @@ export class TrafficComponent {
           this.router.navigate(['/traffic-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          showApiError(this.messageService, error);
         }
       }
       );
