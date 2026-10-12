@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -72,7 +73,7 @@ export class VesselDischargeComponent {
           new DropdownOption(item.id, `${item.voyageNo} / ${item.manifestNo}`));
         this.loadEditById();
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -84,7 +85,7 @@ export class VesselDischargeComponent {
 
     this.vesselDischargeService.getById(editId).subscribe({
       next: (res: any) => this.loadForEdit(res.data),
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -94,7 +95,7 @@ export class VesselDischargeComponent {
         this.stores = (res.data.items || []).map((item: any) =>
           new DropdownOption(item.id, item.name));
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -108,7 +109,7 @@ export class VesselDischargeComponent {
         this.form.patchValue({ container: undefined });
         this.applyCargoSummary();
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -152,7 +153,7 @@ export class VesselDischargeComponent {
             ignitionTemperatureUnit: data.ignitionTemperatureUnit
           });
         },
-        error: (error: any) => this.showApiError(error)
+        error: (error: any) => showApiError(this.messageService, error)
       });
     }
   }
@@ -245,7 +246,7 @@ export class VesselDischargeComponent {
         this.messageService.add({ severity: 'success', summary: `Successfully ${this.id ? 'updated' : 'added'}` });
         this.router.navigate(['/operation/vessel-discharge-list']);
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -260,10 +261,5 @@ export class VesselDischargeComponent {
     }
   }
 
-  showApiError(error: any) {
-    const errors = error?.error?.Errors;
-    const detail = errors ? Object.values(errors).flat().join(' | ') : error?.message || '';
-    this.messageService.add({ severity: 'error', summary: error?.error?.Message || 'Operation failed', detail });
-  }
 
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../../shared/services/api-error-handler.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { VesselDischargeService } from '../../../services/vessel-discharge.service';
@@ -38,7 +39,7 @@ export class VesselDischargeListComponent {
           isSend: item.isSend
         }));
       },
-      error: (error: any) => this.showApiError(error)
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -70,18 +71,11 @@ export class VesselDischargeListComponent {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadVesselDischarges();
           },
-          error: (error: any) => this.showApiError(error)
+          error: (error: any) => showApiError(this.messageService, error)
         });
       }
     });
   }
 
-  private showApiError(error: any) {
-    this.messageService.add({
-      severity: 'error',
-      summary: error?.error?.Message || 'Operation failed',
-      detail: error?.message || ''
-    });
-  }
 
 }
