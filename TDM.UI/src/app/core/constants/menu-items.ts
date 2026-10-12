@@ -30,6 +30,8 @@ export const MenuItems = [
             { label: 'Manifest', path: 'document/manifest-list' },
             { label: 'Declaration', path: 'document/declaration-list' },
             { label: 'Issue Request', path: 'document/store-receipt-issue-request' },
+            { label: 'Land Store Receipt Issue', path: 'document/land-store-receipt-issue' },
+            { label: 'Marine Store Receipt Issue', path: 'document/marine-store-receipt-issue' },
         ]
     },
     {

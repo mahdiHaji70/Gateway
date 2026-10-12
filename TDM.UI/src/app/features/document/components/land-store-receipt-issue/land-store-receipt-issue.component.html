@@ -1,0 +1,43 @@
+<div class="p-fluid p-formgrid grid">
+    <div class="col-12 group-box">
+        <form [formGroup]="form" ngNativeValidate>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-4">
+                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'"
+                        [required]="true" (change)="loadStoreReceipts($event)">
+                    </app-drop-down>
+                </div>
+            </div>
+        </form>
+        <p-table [value]="storeReceipts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>IPAS No</th>
+                    <th>Consignee</th>
+                    <th>Consignee Rep</th>
+                    <th>Traffic</th>
+                    <th>Goods</th>
+                    <th>Containers</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-storeReceipt>
+                <tr>
+                    <td>{{ storeReceipt.ipasStoreReceiptNo }}</td>
+                    <td>{{ storeReceipt.consigneeName }}</td>
+                    <td>{{ storeReceipt.consigneeRepName }}</td>
+                    <td>{{ storeReceipt.trafficName }}</td>
+                    <td>{{ storeReceipt.storeReceiptGoods?.length || 0 }}</td>
+                    <td>{{ storeReceipt.storeReceiptContainers?.length || 0 }}</td>
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-check"
+                            class="p-button-rounded p-button-text p-button-success"
+                            (click)="createStoreReceipt(storeReceipt)">
+                        </button>                        
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table> 
+    </div>
+</div>
+<p-toast />>

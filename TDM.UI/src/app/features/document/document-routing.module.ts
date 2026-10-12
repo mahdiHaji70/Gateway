@@ -6,6 +6,8 @@ import { StoreReceiptIssueComponent } from './components/store-receipt-issue/sto
 import { StoreReceiptIssueRequestComponent } from './components/store-receipt-issue-request/store-receipt-issue-request.component';
 import { ManifestComponent } from './components/manifest/manifest.component';
 import { ManifestListComponent } from './components/manifest/manifest-list/manifest-list.component';
+import { LandStoreReceiptIssueComponent } from './components/land-store-receipt-issue/land-store-receipt-issue.component';
+import { MarineStoreReceiptIssueComponent } from './components/marine-store-receipt-issue/marine-store-receipt-issue.component';
 
 const routes: Routes = [
     { path: 'declaration-list', component: DeclarationListComponent},
@@ -14,6 +16,8 @@ const routes: Routes = [
     { path: 'manifest-list', component: ManifestListComponent},
     { path: 'manifest', component: ManifestComponent},
     { path: 'store-receipt-issue-request', component: StoreReceiptIssueRequestComponent},
+    { path: 'land-store-receipt-issue', component: LandStoreReceiptIssueComponent},
+    { path: 'marine-store-receipt-issue', component: MarineStoreReceiptIssueComponent},
 
 ];
 

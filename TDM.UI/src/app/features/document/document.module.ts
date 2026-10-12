@@ -33,6 +33,8 @@ import { TagModule } from 'primeng/tag';
 import { CardModule } from 'primeng/card';
 import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
+import { LandStoreReceiptIssueComponent } from './components/land-store-receipt-issue/land-store-receipt-issue.component';
+import { MarineStoreReceiptIssueComponent } from './components/marine-store-receipt-issue/marine-store-receipt-issue.component';
 
 
 
@@ -47,6 +49,8 @@ import { TooltipModule } from 'primeng/tooltip';
     StoreReceiptIssueRequestComponent,
     ManifestComponent,
     ManifestListComponent,
+    LandStoreReceiptIssueComponent,
+    MarineStoreReceiptIssueComponent,
   ],
   imports: [
     CommonModule,
