@@ -9,6 +9,7 @@ import { ManifestListComponent } from './components/manifest/manifest-list/manif
 import { LandStoreReceiptIssueComponent } from './components/land-store-receipt-issue/land-store-receipt-issue.component';
 import { MarineStoreReceiptIssueComponent } from './components/marine-store-receipt-issue/marine-store-receipt-issue.component';
 import { StoreReceiptListComponent } from './components/store-receipt-list/store-receipt-list.component';
+import { WarehouseAllocationComponent } from './components/warehouse-allocation/warehouse-allocation.component';
 
 const routes: Routes = [
     { path: 'declaration-list', component: DeclarationListComponent},
@@ -20,7 +21,7 @@ const routes: Routes = [
     { path: 'store-receipts', component: StoreReceiptListComponent},
     { path: 'land-store-receipt-issue', component: LandStoreReceiptIssueComponent},
     { path: 'marine-store-receipt-issue', component: MarineStoreReceiptIssueComponent},
-    { path: 'warehouse-allocation/:id/:srNo', component: MarineStoreReceiptIssueComponent},
+    { path: 'warehouse-allocation/:id/:srNo', component: WarehouseAllocationComponent},
 
 ];
 

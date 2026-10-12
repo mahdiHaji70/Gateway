@@ -42,8 +42,8 @@ export class StoreReceiptListComponent {
     this.router.navigate(['/document/marine-store-receipt-issue']);
   }
 
-  onWarehouseAllocation(id: string) {
-    console.log(id);
+  onWarehouseAllocation(id: string, srNo: string) {
+    this.router.navigate(['/document/warehouse-allocation', id, srNo]);
   }
 
 }

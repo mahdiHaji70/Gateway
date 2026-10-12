@@ -24,6 +24,14 @@ export class StoreReceiptService {
     return this.apiService.get(_url);
   }
 
+  getWarehouses(storeReceiptId: string): Observable<any> {
+    return this.apiService.get(`${ApiEndpoints.Store_Receipt}/${storeReceiptId}/warehouses`);
+  }
+
+  sendIpasStoreAllocation(storeReceiptId: string): Observable<any> {
+    return this.apiService.post(`${ApiEndpoints.Store_Receipt}/send-ipas-store-allocation/${storeReceiptId}`, {});
+  }
+
   createStoreReceipt(storeReceipt: StoreReceiptHead) {
     let _url = ApiEndpoints.Store_Receipt + `/create-storeReceipt`;
     return this.apiService.post(_url, storeReceipt);

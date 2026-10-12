@@ -32,7 +32,7 @@
             <td>{{ storeReceipt.arrivalTypeName }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-warehouse" class="p-button-rounded p-button-text"
-                    (click)="onWarehouseAllocation(storeReceipt.id)">
+                    (click)="onWarehouseAllocation(storeReceipt.id, storeReceipt.ipasStoreReceiptNo)">
                 </button>
                 <!-- <button pButton pRipple type="button" icon="pi pi-times"
                     class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,declaration.id)">
