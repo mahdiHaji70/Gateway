@@ -1,0 +1,44 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <p-button severity="success" label="Issue land side" icon="pi pi-plus" class="mr-2" (onClick)="onIssueLandSide()" />
+        <p-button severity="success" label="Issue marine side" icon="pi pi-plus" class="mr-2" (onClick)="onIssueMarineSide()" />
+        <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadStoreReceipts()" />
+    </ng-template>
+
+</p-toolbar>
+<p-table [value]="storeReceipts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Number</th>
+            <th>Date</th>
+            <th>Consignee Name</th>
+            <th>Consignee Rep Name</th>
+            <th>Cargo Type Name</th>
+            <th>First Discharge Date</th>
+            <th>Traffic Name</th>
+            <th>Arrival Type Name</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-storeReceipt>
+        <tr>
+            <td>{{ storeReceipt.ipasStoreReceiptNo }}</td>
+            <td>{{ storeReceipt.issueDate | date:'short' }}</td>
+            <td>{{ storeReceipt.consigneeName }}</td>
+            <td>{{ storeReceipt.consigneeRepName }}</td>
+            <td>{{ storeReceipt.cargoTypeName }}</td>
+            <td>{{ storeReceipt.firstDischargeDate | date:'short'  }}</td>
+            <td>{{ storeReceipt.trafficName }}</td>
+            <td>{{ storeReceipt.arrivalTypeName }}</td>
+            <td>
+                <button pButton pRipple type="button" icon="pi pi-warehouse" class="p-button-rounded p-button-text"
+                    (click)="onWarehouseAllocation(storeReceipt.id)">
+                </button>
+                <!-- <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,declaration.id)">
+                </button> -->
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast />

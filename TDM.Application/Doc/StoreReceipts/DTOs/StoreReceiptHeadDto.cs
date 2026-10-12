@@ -7,6 +7,7 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
 {
     public class StoreReceiptHeadDto
     {
+        public Guid Id { get; set; }
         public Guid IpasStoreReceiptId { get; set; }
         public string TerminalCode { get; set; }
         public string IPASStoreReceiptNo { get; set; }
@@ -33,6 +34,7 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
         public Guid? RequestId { get; set; }
         public string VoyageNoticeNo { get; set; }
         public Guid ArrivalTypeId { get; set; }
+        public string ArrivalTypeCode { get; set; }
         public string ArrivalTypeName { get; set; }
         public Guid? DeclarationId { get; set; }
         public string? IpasDeclarationNo { get;  set; }

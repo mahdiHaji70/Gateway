@@ -9,6 +9,11 @@ export class StoreReceiptService {
 
   constructor(private apiService: ApiService) { }
 
+  getStoreReceipts(){
+    let _url = ApiEndpoints.Store_Receipt + `/storeReceipts`;
+    return this.apiService.get(_url);
+  }
+
   getStoreReceiptsByDeclarationNo(declarationNo: string): Observable<any> {
     let _url = ApiEndpoints.Store_Receipt + `/storeReceipt-by-ipasDeclarationNo/${declarationNo}`;
     return this.apiService.get(_url);
