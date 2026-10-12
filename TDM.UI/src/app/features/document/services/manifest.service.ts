@@ -5,9 +5,7 @@ import { ApiEndpoints } from '../../../core/constants/api-endpoints';
 import { ManifestDto } from '../models/manifest.model';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ManifestService {
 
   constructor(private apiService: ApiService,
@@ -25,12 +23,16 @@ export class ManifestService {
     return this.apiService.get(_url);
   }
 
+  getItemsLookup(): Observable<any> {
+    return this.apiService.get(ApiEndpoints.Manifest_Items_Lookup);
+  }
+
   getManifestById(id: string) {
     var _url = ApiEndpoints.Manifests + '/request-manifest' + `/${id}`
     return this.apiService.get(_url);
   }
 
-  saveManifest(manifest: ManifestDto){
+  saveManifest(manifest: ManifestDto) {
     var _url = ApiEndpoints.Manifests + '/create-manifest'
     return this.apiService.post(_url, manifest);
   }
