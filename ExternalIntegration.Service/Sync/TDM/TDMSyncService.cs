@@ -48,7 +48,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             var goodwayBills = await _goodwayBillRepository.GetByStorageAgreementIdAsync(storageAgreementId, terminalCode);
 
             if (goodwayBills == null)
-                return Response<IEnumerable<GoodwayBillDto>>.Error("Not Found");
+                return Response<IEnumerable<GoodwayBillDto>>.Error("No data found");
             return Response<IEnumerable<GoodwayBillDto>>.Success(_mapper.Map<IEnumerable<GoodwayBillDto>>(goodwayBills));
         }
         public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequest(string storageAgreementNo)
@@ -56,7 +56,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             var result = await _issueRequestRepository.GetByStorageAgreementNoAsync(storageAgreementNo);
 
             if (result == null)
-                return Response<IEnumerable<IssueRequestDto>>.Error("Not Found");
+                return Response<IEnumerable<IssueRequestDto>>.Error("No data found");
 
             return Response<IEnumerable<IssueRequestDto>>.Success(_mapper.Map<IEnumerable<IssueRequestDto>>(result));
         }
@@ -66,7 +66,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             var result = await _storeReceiptRepository.GetByStorageAgreementNoAsync(storageAgreementNo);
 
             if (result == null)
-                return Response<IEnumerable<StoreReceiptDto>>.Error("Not Found");
+                return Response<IEnumerable<StoreReceiptDto>>.Error("No data found");
 
             return Response<IEnumerable<StoreReceiptDto>>.Success(_mapper.Map<IEnumerable<StoreReceiptDto>>(result));
 
@@ -81,7 +81,7 @@ namespace ExternalIntegration.Service.Sync.TDM
                 cancellationToken);
 
             if (result.Count == 0)
-                return Response<IEnumerable<StoreReceiptDto>>.Error("Not Found");
+                return Response<IEnumerable<StoreReceiptDto>>.Error("No data found");
 
             return Response<IEnumerable<StoreReceiptDto>>.Success(
                 _mapper.Map<IEnumerable<StoreReceiptDto>>(result));
@@ -92,7 +92,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             var result = await _storeReceiptRepository.GetByNoAsync(no);
 
             if (result == null)
-                return Response<StoreReceiptDto>.Error("Not Found");
+                return Response<StoreReceiptDto>.Error("No data found");
 
             return Response<StoreReceiptDto>.Success(_mapper.Map<StoreReceiptDto>(result));
 
@@ -103,7 +103,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             var result = await _vesselLoadingPermitRepository.GetByWarehouseReceiptIdAsync(warehouseReceiptId);
 
             if (result == null)
-                return Response<VesselLoadingPermitResultDto>.Error("Not Found");
+                return Response<VesselLoadingPermitResultDto>.Error("No data found");
 
             return Response<VesselLoadingPermitResultDto>.Success(
                 _mapper.Map<VesselLoadingPermitResultDto>(result));
@@ -115,7 +115,7 @@ namespace ExternalIntegration.Service.Sync.TDM
                 warehouseReceiptId);
 
             if (result == null)
-                return Response<LoadingPermitDto>.Error("Not Found");
+                return Response<LoadingPermitDto>.Error("No data found");
 
             return Response<LoadingPermitDto>.Success(_mapper.Map<LoadingPermitDto>(result));
         }

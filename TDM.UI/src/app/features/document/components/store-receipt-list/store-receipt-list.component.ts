@@ -46,4 +46,10 @@ export class StoreReceiptListComponent {
     this.router.navigate(['/document/warehouse-allocation', id, srNo]);
   }
 
+  onLoadingPermit(storeReceipt: StoreReceiptHead) {
+    const route = String(storeReceipt.arrivalTypeCode) === '0'
+      ? '/operation/vessel-loading-permit'
+      : '/operation/loading-permit';
+    this.router.navigate([route, storeReceipt.ipasStoreReceiptId, storeReceipt.ipasStoreReceiptNo]);
+  }
 }

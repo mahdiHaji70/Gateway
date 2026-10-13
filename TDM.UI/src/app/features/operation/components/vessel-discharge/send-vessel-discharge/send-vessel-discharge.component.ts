@@ -35,7 +35,6 @@ export class SendVesselDischargeComponent {
     this.vesselDischargeService.sendToIpas(manifestItemId).subscribe({
       next: (res: any) => {
         (res.data || []).forEach((result: any) => {
-          debugger
           const discharge = this.discharges.find(x => x.id === result.vesselDischargeId);
           if (!discharge) return;
           const success = !!result.ipasVesselDischargeId && result.ipasVesselDischargeId !== '00000000-0000-0000-0000-000000000000';

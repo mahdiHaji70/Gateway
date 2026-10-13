@@ -1,0 +1,49 @@
+﻿<div class="p-fluid p-formgrid grid">
+  <div class="col-12 group-box">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <span class="text-xl font-semibold">Store Receipt: {{ storeReceiptNo }}</span>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table [value]="loadingPermit ? [loadingPermit] : []" styleClass="p-datatable-gridlines"
+      [tableStyle]="{ 'min-width': '60rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Terminal</th>
+          <th>Date</th>
+          <th>Serial No</th>
+          <th>Owner Name</th>
+          <th>Owner Rep Name</th>
+          <th>Expiration Date</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-permit>
+        <tr>
+          <td>{{ permit.terminal }}</td>
+          <td>{{ permit.date | date:'short' }}</td>
+          <td>{{ permit.serialno }}</td>
+          <td>{{ permit.ownerName }}</td>
+          <td>{{ permit.ownerRepName }}</td>
+          <td>{{ permit.expirationDate | date:'short' }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <form [formGroup]="form" ngNativeValidate class="mt-4">
+      <div class="grid align-items-end">
+        <div class="col-12 md:col-3 mb-2">
+          <app-checkbox [formGroup]="form" [controlName]="'isApproved'"></app-checkbox>
+        </div>
+
+        <div class="col-12 md:col-7 mt-5">
+          <app-input [formGroup]="form" [controlName]="'description'" [required]="true"></app-input>
+        </div>
+      </div>
+      <div class="col-12 md:col-5 align-items-center" style="justify-self: center;">
+        <button pButton type="submit" label="Confirm" icon="fa-plus" [disabled]="form.invalid" (click)="confirmLoadingPermit()"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<p-toast />
