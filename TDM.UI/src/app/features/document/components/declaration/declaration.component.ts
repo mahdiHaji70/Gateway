@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DeclarationType } from '../../../basic-information/models/declaration-type.model';
 import { BasicInformationService } from '../../../basic-information/services/basic-information.service';
@@ -156,7 +157,7 @@ export class DeclarationComponent {
         this.loadDeclarationItems();
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+        showApiError(this.messageService, error);
       }
     });
   }
@@ -203,7 +204,7 @@ export class DeclarationComponent {
         this.loadDeclarationItems();
       },
       error: (failRes: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+        showApiError(this.messageService, failRes);
       }
     });
   }
@@ -214,7 +215,7 @@ export class DeclarationComponent {
         this.messageService.add({ severity: 'success', summary: res.message });
       },
       error: (failRes: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+        showApiError(this.messageService, failRes);
       }
     });
   }
@@ -226,7 +227,7 @@ export class DeclarationComponent {
         this.loadDeclarationItems();
       },
       error: (failRes: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: failRes.error.Message });
+        showApiError(this.messageService, failRes);
       }
     });
   }

@@ -22,6 +22,8 @@ import { SendDischargeComponent } from './components/discharge/send-discharge/se
 import { VesselDischargeComponent } from './components/vessel-discharge/vessel-discharge.component';
 import { VesselDischargeListComponent } from './components/vessel-discharge/vessel-discharge-list/vessel-discharge-list.component';
 import { SendVesselDischargeComponent } from './components/vessel-discharge/send-vessel-discharge/send-vessel-discharge.component';
+import { LoadingPermitComponent } from './components/loading-permit/loading-permit.component';
+import { VesselLoadingPermitComponent } from './components/vessel-loading-permit/vessel-loading-permit.component';
 
 const routes: Routes = [  
   { path: 'gate-in-list', component: GateInListComponent},
@@ -63,6 +65,8 @@ const routes: Routes = [
   { path: 'exit-from-store/:id', component: ExitFromStoreComponent},
   
   { path: 'send-discharge', component: SendDischargeComponent},
+  { path: 'loading-permit/:id/:srNo', component: LoadingPermitComponent},
+  { path: 'vessel-loading-permit/:id/:srNo', component: VesselLoadingPermitComponent},
 ];
 
 @NgModule({

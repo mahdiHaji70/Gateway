@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { SyncService } from '../../services/sync.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
@@ -261,10 +262,6 @@ export class SyncGatewayComponent {
   handleError(error: any, syncButton: SyncButton) {
     syncButton.severity = 'danger';
     syncButton.styleClass = 'p-button-danger';
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Operation failed',
-      detail: error?.message || ''
-    });
+    showApiError(this.messageService, error);
   }
 }

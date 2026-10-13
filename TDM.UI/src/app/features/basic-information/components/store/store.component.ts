@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StoreTypes, storeTypesDropdown } from '../../../../shared/constants/store-types';
 import { BasicInformationService } from '../../services/basic-information.service';
@@ -90,7 +91,7 @@ export class StoreComponent {
           this.router.navigate(['/store-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          showApiError(this.messageService, error);
         }
       }
       );

@@ -35,23 +35,23 @@ export class StoreReceiptIssueComponent {
   }
 
   onDeclarationSelected(event: any) {
-    this.storeReceiptService.getRequestsByDeclarationId(event.value.id).subscribe({
-      next: (res: any) => {
-        this.receiptRequests = res.data;
-      },
-      error: (error: any) => { }
-    });
+    // this.storeReceiptService.getRequestsByDeclarationId(event.value.id).subscribe({
+    //   next: (res: any) => {
+    //     this.receiptRequests = res.data;
+    //   },
+    //   error: (error: any) => { }
+    // });
   }
 
   issueStoreReceipt(receiptRequest: any) {
-    this.storeReceiptService.createStoreReceiptByRequestId(receiptRequest.id).subscribe({
-      next: (res: any) => {       
-        this.clearItems();
-        this.onDeclarationSelected({ value: { id: this.selectedDeclaration.id } });
-          this.messageService.add({ severity: 'success', summary: `Change package saved successfully` }); 
-      },
-      error: (error: any) => { }
-    });
+    // this.storeReceiptService.createStoreReceiptByRequestId(receiptRequest.id).subscribe({
+    //   next: (res: any) => {       
+    //     this.clearItems();
+    //     this.onDeclarationSelected({ value: { id: this.selectedDeclaration.id } });
+    //       this.messageService.add({ severity: 'success', summary: `Change package saved successfully` }); 
+    //   },
+    //   error: (error: any) => { }
+    // });
   }
 
   clearItems(){

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../../shared/services/api-error-handler.service';
 import { Gate } from '../../../models/gate.model';
 import { BasicInformationService } from '../../../../basic-information/services/basic-information.service';
 import { Router } from '@angular/router';
@@ -63,7 +64,7 @@ gates: GateFull[] = [];
             this.loadGates();
           },
           error: (error: any) => {
-            this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: 'Operation failed' });
+            showApiError(this.messageService, error);
 
           }
         });

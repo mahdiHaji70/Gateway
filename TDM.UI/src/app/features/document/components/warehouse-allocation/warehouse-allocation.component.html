@@ -1,0 +1,44 @@
+<div class="p-fluid p-formgrid grid">
+  <div class="col-12 group-box">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <span class="text-xl font-semibold">Store Receipt: {{ storeReceiptNo }}</span>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <p-button label="Send To IPAS" icon="pi pi-send" severity="success" [loading]="sending" (onClick)="sendToIpas()"></p-button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table [value]="warehouses" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '60rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Storage Area Code</th>
+          <th>Storage Area</th>
+          <th>Commodity</th>
+          <th>HS Code</th>
+          <th>Package</th>
+          <th>Package Type</th>
+          <th>Operation Date</th>
+          <th>Quantity</th>
+          <th>Weight</th>
+          <th>Volume</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-warehouse>
+        <tr>
+          <td>{{ warehouse.storageAreaCode }}</td>
+          <td>{{ warehouse.storageAreaName }}</td>
+          <td>{{ warehouse.commodityName }}</td>
+          <td>{{ warehouse.hsCode }}</td>
+          <td>{{ warehouse.packageName }}</td>
+          <td>{{ warehouse.packageTypeCode }}</td>
+          <td>{{ warehouse.operationDate | date:'short' }}</td>
+          <td>{{ warehouse.quantity }}</td>
+          <td>{{ warehouse.weight }}</td>
+          <td>{{ warehouse.volume }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-toast />

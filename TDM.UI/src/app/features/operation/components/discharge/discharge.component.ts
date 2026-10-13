@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { DischargeService } from '../../services/discharge.service';
@@ -178,7 +179,7 @@ export class DischargeComponent {
           this.router.navigate(['/operation/discharge-list'])
         },
         error: (error: any) => {
-          this.showApiError(error);
+          showApiError(this.messageService, error);
         }
       });
 
@@ -192,29 +193,6 @@ export class DischargeComponent {
         ignitionTemperature: 0,
         ignitionTemperatureUnit: '',
       });
-  }
-  showApiError(error: any) {
-    const message = error?.error?.Message || 'Operation failed';
-    const errors = error?.error?.Errors;
-
-    if (errors) {
-      const detail = Object.values(errors)
-        .flat()
-        .join(' | ');
-
-      this.messageService.add({
-        severity: 'error',
-        summary: message,
-        detail
-      });
-      return;
-    }
-
-    this.messageService.add({
-      severity: 'error',
-      summary: message,
-      detail: error?.message || ''
-    });
   }
 
 }

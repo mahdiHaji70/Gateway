@@ -156,7 +156,8 @@ namespace TDM.Infrastructure.Persistence.Repositories
                     Id = item.Id,
                     ManifestItemId = item.Id,
                     VoyageNo = x.VoyageNo,
-                    ManifestNo = item.ManifestNo
+                    ManifestNo = item.ManifestNo,
+                    IpasItemId = item.IpasItemId
                 }))
                 .OrderBy(x => x.VoyageNo)
                 .ThenBy(x => x.ManifestNo)

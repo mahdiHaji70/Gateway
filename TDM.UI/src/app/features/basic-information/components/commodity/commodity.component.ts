@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BasicInformationService } from '../../services/basic-information.service';
 import { MessageService } from 'primeng/api';
@@ -62,7 +64,7 @@ export class CommodityComponent {
           this.router.navigate(['/commodity-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          showApiError(this.messageService, error);
         }
       }
       );

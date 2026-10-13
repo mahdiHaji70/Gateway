@@ -38,10 +38,10 @@ namespace TDM.Domain.Entities
                 throw new DomainValidationException("Name is required.");
 
             if (string.IsNullOrEmpty(hsCOde))
-                throw new DomainValidationException("Post code is required.");
+                throw new DomainValidationException("HS code is required.");
 
             if (hsCOde.Length != 8)
-                throw new DomainValidationException("Post code must be 8 digits.");
+                throw new DomainValidationException("HS code must be 8 digits.");
         }
     }
 }

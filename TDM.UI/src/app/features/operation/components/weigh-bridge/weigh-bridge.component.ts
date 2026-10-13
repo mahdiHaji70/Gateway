@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { DeclarationService } from '../../services/declaration.service';
@@ -105,7 +106,7 @@ export class WeighBridgeComponent {
               this.router.navigate(['/operation/weigh-bridge-list'])
             },
             error: (error: any) => {
-              this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+              showApiError(this.messageService, error);
             }
           });
     

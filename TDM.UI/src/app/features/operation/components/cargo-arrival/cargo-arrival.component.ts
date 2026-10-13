@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { ArrivalDeclarationTypes, arrivalDeclarationTypesDropdown } from '../../../../shared/constants/arrival-declaration-types';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -112,7 +113,7 @@ export class CargoArrivalComponent {
           this.router.navigate(['/operation/cargo-arrival-list'])
         },
         error: (error: any) => {
-          this.messageService.add({ severity: 'error', summary: 'Operation failed', detail: error.message });
+          showApiError(this.messageService, error);
         }
       });
 

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DeclarationService } from '../../services/declaration.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { OperationAggregationService } from '../../services/operation-aggregation.service';
@@ -88,7 +89,7 @@ export class StuffComponent {
         this.messageService.add({ severity: 'success', summary: `Store receipt request saved successfully` });
       },
       error: (error: any) => { 
-        this.messageService.add({ severity: 'error', summary: error.error.Message });
+        showApiError(this.messageService, error);
       }
     });
   }
