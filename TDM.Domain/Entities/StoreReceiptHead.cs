@@ -11,6 +11,7 @@ namespace TDM.Domain.Entities
         private readonly List<StoreReceiptGood> _storeReceiptGoods = [];
         private readonly List<StoreReceiptContainer> _storeReceiptContainers = [];
 
+        public Guid IPASStoreReceiptId { get; private set; }
         public string TerminalCode { get; private set; }
         public string IPASStoreReceiptNo { get; private set; }
         public DateTime IssueDate { get; private set; }
@@ -44,6 +45,7 @@ namespace TDM.Domain.Entities
         }
 
         public StoreReceiptHead(
+            Guid ipasStoreReceiptId,
             string terminalCode,
             string ipasStoreReceiptNo,
             DateTime issueDate,
@@ -61,6 +63,7 @@ namespace TDM.Domain.Entities
             Guid? billOfLadingId)
         {
             SetProperty(
+                ipasStoreReceiptId,
                 terminalCode,
                 ipasStoreReceiptNo,
                 issueDate,
@@ -96,6 +99,7 @@ namespace TDM.Domain.Entities
             Guid? billOfLadingId)
         {
             SetProperty(
+                IPASStoreReceiptId,
                 terminalCode,
                 ipasStoreReceiptNo,
                 issueDate,
@@ -114,6 +118,7 @@ namespace TDM.Domain.Entities
         }
 
         private void SetProperty(
+            Guid ipasStoreReceiptId,
             string terminalCode,
             string ipasStoreReceiptNo,
             DateTime issueDate,
@@ -145,6 +150,7 @@ namespace TDM.Domain.Entities
                 declarationId,
                 billOfLadingId);
 
+            IPASStoreReceiptId = ipasStoreReceiptId;
             TerminalCode = terminalCode;
             IPASStoreReceiptNo = ipasStoreReceiptNo;
             IssueDate = issueDate;

@@ -82,6 +82,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             var containerByKey = foundContainers.ToDictionary(x => $"{x.No}|{x.ContainerTypeAndSize.TypeAndSizeCode}", StringComparer.OrdinalIgnoreCase);
 
             var receipt = new StoreReceiptHead(
+                request.IPASStoreReceiptId,
                 request.TerminalCode,
                 request.IPASStoreReceiptNo,
                 request.IssueDate,
