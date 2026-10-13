@@ -18,7 +18,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
 
             return new StoreReceiptHeadDto
             {
-                IpasStoreReceiptId = dto.Id,
+                IPASStoreReceiptId = dto.Id,
                 TerminalCode = dto.terminalCode,
                 IPASStoreReceiptNo = dto.No,
                 IssueDate = dto.Date,

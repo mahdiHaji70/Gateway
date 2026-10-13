@@ -8,6 +8,7 @@ namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
 {
     public class CreateStoreReceiptHeadCommand : IRequest<Guid>
     {
+        public Guid IPASStoreReceiptId { get; set; }
         public string TerminalCode { get; set; }
         public string IPASStoreReceiptNo { get; set; }
         public DateTime IssueDate { get; set; }

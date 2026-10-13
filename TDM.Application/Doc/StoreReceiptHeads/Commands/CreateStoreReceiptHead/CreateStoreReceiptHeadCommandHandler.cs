@@ -23,6 +23,7 @@ namespace TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt
         {
           
             var storeReceiptHead = new StoreReceiptHead(
+                                        request.IPASStoreReceiptId,
                                         request.TerminalCode,
                                         request.IPASStoreReceiptNo,
                                         request.IssueDate,
