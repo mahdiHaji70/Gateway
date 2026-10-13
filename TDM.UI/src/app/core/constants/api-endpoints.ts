@@ -37,6 +37,8 @@ export class ApiEndpoints {
   public static readonly Store_Receipt_Request = `${this.BASE_URL}/StoreReceiptRequest`;    
   public static readonly Store_Receipt = `${this.BASE_URL}/StoreReceipt`;    
   public static readonly Stuff = `${this.BASE_URL}/Stuff`; 
+  public static readonly LoadingPermit = `${this.BASE_URL}/LoadingPermits`;
+  public static readonly VesselLoadingPermit = `${this.BASE_URL}/VesselLoadingPermits`; 
   
   //For BASE_GATEWAY_URL
   public static readonly Goodway_Bill = `${this.BASE_GATEWAY_URL}/PMO/GetGoodwayBill`; 

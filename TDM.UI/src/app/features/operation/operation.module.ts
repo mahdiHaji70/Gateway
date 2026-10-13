@@ -46,6 +46,10 @@ import { VesselDischargeListComponent } from './components/vessel-discharge/vess
 import { VesselDischargeService } from './services/vessel-discharge.service';
 import { ManifestService } from './services/manifest.service';
 import { SendVesselDischargeComponent } from './components/vessel-discharge/send-vessel-discharge/send-vessel-discharge.component';
+import { LoadingPermitComponent } from './components/loading-permit/loading-permit.component';
+import { LoadingPermitService } from './services/loading-permit.service';
+import { VesselLoadingPermitComponent } from './components/vessel-loading-permit/vessel-loading-permit.component';
+import { VesselLoadingPermitService } from './services/vessel-loading-permit.service';
 
 @NgModule({
   declarations: [    
@@ -70,7 +74,9 @@ import { SendVesselDischargeComponent } from './components/vessel-discharge/send
     SendDischargeComponent,
     VesselDischargeComponent,
     VesselDischargeListComponent,
-    SendVesselDischargeComponent
+    SendVesselDischargeComponent,
+    LoadingPermitComponent,
+    VesselLoadingPermitComponent
   ],
   imports: [
     CommonModule,
@@ -101,7 +107,9 @@ import { SendVesselDischargeComponent } from './components/vessel-discharge/send
     StoreReceiptRequestService,
     StuffService,
     VesselDischargeService,
-    ManifestService
+    ManifestService,
+    LoadingPermitService,
+    VesselLoadingPermitService
   ]
 })
 export class OperationModule { }

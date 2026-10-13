@@ -25,6 +25,7 @@ export class StoreReceiptHead {
   requestId?: string;
   voyageNoticeNo!: string;
   arrivalTypeId!: string;
+  arrivalTypeCode!: string;
   arrivalTypeName!: string;
   declarationId?: string;
   ipasDeclarationNo?: string;
