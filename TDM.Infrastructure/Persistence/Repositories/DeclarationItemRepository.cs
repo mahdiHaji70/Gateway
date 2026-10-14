@@ -61,6 +61,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
             .Include(x => x.Declaration)
             .Include(x => x.Commodity)
             .Include(x => x.Package)
+            .Include(x=>x.CargoType)
             .Include(x => x.DeclarationContainers)
                 .ThenInclude(c => c.Container)
                 .ThenInclude(ct => ct.ContainerTypeAndSize)
