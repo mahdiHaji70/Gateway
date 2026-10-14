@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TDM.Application.Common.Interfaces;
@@ -29,6 +29,7 @@ namespace TDM.Infrastructure
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IPackageRepository, PackageRepository>();
             services.AddScoped<ITrafficRepository, TrafficRepository>();
+            services.AddScoped<IOperationTypeRepository, OperationTypeRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
             services.AddScoped<IUserTerminalRepository, UserTerminalRepository>();
             services.AddScoped<IDeclarationRepository, DeclarationRepository>();

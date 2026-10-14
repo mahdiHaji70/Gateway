@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { showApiError } from '../../../../../shared/services/api-error-handler.service';
 import { OperationType } from '../../../models/operation-type.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
@@ -27,9 +28,9 @@ operationTypes: OperationType[] = [];
   }
 
   loadOperationTypes(){
-    this.basicInformationService.getAll('OperationType').subscribe({
+    this.basicInformationService.getAll('OperationTypes').subscribe({
       next: (res: any) => {
-        this.operationTypes = res.data.map((item: any) => new OperationType(item.code, item.name, item.id));
+        this.operationTypes = res.data.items.map((item: any) => new OperationType(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
@@ -55,7 +56,7 @@ operationTypes: OperationType[] = [];
       rejectIcon: "none",
 
       accept: () => {
-        this.basicInformationService.removeBasicInformation('OperationType', id).subscribe({
+        this.basicInformationService.removeBasicInformation('OperationTypes', id).subscribe({
           next: (res: any) => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadOperationTypes();

@@ -31,8 +31,7 @@ export const MenuItems = [
             { label: 'Declaration', path: 'document/declaration-list' },
             { label: 'Issue Request', path: 'document/store-receipt-issue-request' },
             { label: 'Store Receipts', path: 'document/store-receipts' },
-            // { label: 'Land Store Receipt Issue', path: 'document/land-store-receipt-issue' },
-            // { label: 'Marine Store Receipt Issue', path: 'document/marine-store-receipt-issue' },
+            
         ]
     },
     {
@@ -53,6 +52,7 @@ export const MenuItems = [
             { label: 'Cargo Type', path: 'cargo-type-list' },
             { label: 'Terminal', path: 'terminal-list' },
             { label: 'User Terminal', path: 'user-terminal-list' },
+            { label: 'Operation Type', path: 'operation-type-list' },
             //{ label: 'Container Size', path: 'container-size-list' },
             //{ label: 'Terminal', path: 'terminal-list' },
             // { label: 'Declaration Type', path: 'declaration-type-list' },
@@ -60,7 +60,7 @@ export const MenuItems = [
             // { label: 'Vessel', path: 'vessel-list' },
             // { label: 'Wagon', path: 'wagon-list' },
             // { label: 'Truck', path: 'truck-list' },
-            // { label: 'Operation Type', path: 'operation-type-list' },
+            
         ]
     }
 

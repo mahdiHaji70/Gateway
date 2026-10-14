@@ -31,7 +31,7 @@ id?: any;
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
-        this.basicInformationService.getById('OperationType', this.id).subscribe((res: any) => {
+        this.basicInformationService.getById('OperationTypes', this.id).subscribe((res: any) => {
           this.form.patchValue(res.data);
         });
       }
@@ -52,8 +52,8 @@ id?: any;
     );
 
     const operationTypeAction$ = this.id
-      ? this.basicInformationService.putBasicInformation('OperationType', operationType)
-      : this.basicInformationService.postBasicInformation('OperationType', operationType);
+      ? this.basicInformationService.putBasicInformation('OperationTypes', operationType)
+      : this.basicInformationService.postBasicInformation('OperationTypes', operationType);
 
       operationTypeAction$
       .subscribe({
