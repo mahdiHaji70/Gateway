@@ -17,7 +17,8 @@ namespace TDM.Infrastructure
         {
             services.AddDbContext<TDMDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+                    configuration.GetConnectionString("DefaultConnection"))
+                    .EnableDetailedErrors());
 
             services.AddHttpClient<IRequestExecutor, RequestExecutor>();
             services.AddHttpClient<AuthService>();

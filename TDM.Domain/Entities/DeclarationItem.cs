@@ -74,7 +74,7 @@ namespace TDM.Domain.Entities
         private void Validate(long quantity, decimal grossWeight, decimal netWeight, Guid declarationId, Guid commodityId, Guid packageId,
             Guid cargoTypeId)
         {
-            if (quantity <= 0)
+            if (quantity < 0)
                 throw new DomainValidationException("Quantity must be greater than zero.");
 
             if (grossWeight <= 0)
