@@ -53,6 +53,7 @@ export const MenuItems = [
             { label: 'Terminal', path: 'terminal-list' },
             { label: 'User Terminal', path: 'user-terminal-list' },
             { label: 'Operation Type', path: 'operation-type-list' },
+            { label: 'Service', path: 'service-list' },
             //{ label: 'Container Size', path: 'container-size-list' },
             //{ label: 'Terminal', path: 'terminal-list' },
             // { label: 'Declaration Type', path: 'declaration-type-list' },
