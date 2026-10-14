@@ -14,5 +14,17 @@ export const RouteItems = [
     {
         label: 'Issue marine side store receipt',
         path: 'document/marine-store-receipt-issue'
+    },
+    {
+        label: 'Vessel loading permit',
+        path: 'document/vessel-loading-permit'
+    },
+    {
+        label: 'Warehouse allocation',
+        path: 'document/warehouse-allocation'
+    },
+    {
+        label: 'Loading permit',
+        path: 'document/loading-permit'
     }
 ];

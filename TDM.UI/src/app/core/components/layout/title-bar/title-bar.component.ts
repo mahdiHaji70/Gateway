@@ -26,8 +26,7 @@ export class TitleBarComponent {
     this.routerSub = this.router.events.subscribe((event: any) => {
       if (event.routerEvent instanceof NavigationEnd) {
         const url = event.routerEvent.urlAfterRedirects || event.routerEvent.url;
-        // e.g. '/store-request'
-        const mainPath = url.startsWith('/') ? url.replace(/^\/+([^\/]+\/[^\/]+).*/, '$1') : url;
+        const mainPath = url.split('?')[0].replace(/^\/+/, '');
         if (mainPath === '')
           this.title = 'Dashboard';
         else
@@ -42,22 +41,22 @@ export class TitleBarComponent {
 }
 
 function findLabelByPath(menuItems: any[], routeItems: any[], targetPath: string): string | undefined {
-  var founded = false;
   for (const menu of menuItems) {
     if (menu.items) {
-      const found = menu.items.find((item: any) => item.path.startsWith(targetPath));
+      const found = menu.items.find((item: any) => isRouteMatch(item.path, targetPath));
       if (found) {
-        founded = true;
         return found.label;
       }
     }
   }
 
-  if (!founded) {
-    const found = routeItems.find((item: any) => item.path.startsWith(targetPath));
-    if (found) {
-      return found.label;
-    }
+  const found = routeItems.find((item: any) => isRouteMatch(item.path, targetPath));
+  if (found) {
+    return found.label;
   }
   return undefined;
+}
+
+function isRouteMatch(routePath: string, targetPath: string): boolean {
+  return targetPath === routePath || targetPath.startsWith(`${routePath}/`);
 }
