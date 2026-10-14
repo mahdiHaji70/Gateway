@@ -12,6 +12,7 @@ using TDM.Application.BasicInformation.StoreTypes.DTOs;
 using TDM.Application.BasicInformation.Terminals.DTOs;
 using TDM.Application.BasicInformation.Traffics.DTOs;
 using TDM.Application.BasicInformation.OperationTypes.DTOs;
+using TDM.Application.BasicInformation.Services.DTOs;
 using TDM.Application.BasicInformation.UsersTerminal.DTOs;
 using TDM.Application.Common.Models;
 using TDM.Application.Doc.DeclarationItems.DTOs;
@@ -38,6 +39,8 @@ namespace TDM.Application.Common.Mappings
             CreateMap<Traffic, TrafficDto>();
 
             CreateMap<OperationType, OperationTypeDto>();
+
+            CreateMap<Service, ServiceDto>();
 
             CreateMap<Package, PackageDto>();
 

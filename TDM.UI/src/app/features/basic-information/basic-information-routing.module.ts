@@ -30,6 +30,8 @@ import { TruckListComponent } from './components/truck/truck-list/truck-list.com
 import { TruckComponent } from './components/truck/truck.component';
 import { OperationTypeListComponent } from './components/operation-type/operation-type-list/operation-type-list.component';
 import { OperationTypeComponent } from './components/operation-type/operation-type.component';
+import { ServiceListComponent } from './components/service/service-list/service-list.component';
+import { ServiceComponent } from './components/service/service.component';
 import { StoreTypeListComponent } from './components/store-type/store-type-list/store-type-list.component';
 import { StoreTypeComponent } from './components/store-type/store-type.component';
 import { StoreListComponent } from './components/store/store-list/store-list.component';
@@ -109,6 +111,10 @@ const routes: Routes = [
   { path: 'operation-type-list', component: OperationTypeListComponent },
   { path: 'operation-type', component: OperationTypeComponent },
   { path: 'operation-type/:id', component: OperationTypeComponent },
+
+  { path: 'service-list', component: ServiceListComponent },
+  { path: 'service', component: ServiceComponent },
+  { path: 'service/:id', component: ServiceComponent },
 
   { path: 'store-type-list', component: StoreTypeListComponent },
   { path: 'store-type', component: StoreTypeComponent },

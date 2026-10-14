@@ -42,6 +42,8 @@ import { TruckComponent } from './components/truck/truck.component';
 import { TruckListComponent } from './components/truck/truck-list/truck-list.component';
 import { OperationTypeComponent } from './components/operation-type/operation-type.component';
 import { OperationTypeListComponent } from './components/operation-type/operation-type-list/operation-type-list.component';
+import { ServiceComponent } from './components/service/service.component';
+import { ServiceListComponent } from './components/service/service-list/service-list.component';
 import { ContainerTypeAndSizeComponent } from './components/container-type-and-size/container-type-and-size.component';
 import { ContainerTypeAndSizeListComponent } from './components/container-type-and-size/container-type-and-size-list/container-type-and-size-list.component';
 import { StoreTypeComponent } from './components/store-type/store-type.component';
@@ -87,6 +89,8 @@ import { UserService } from './services/user.service';
     TruckListComponent,
     OperationTypeComponent,
     OperationTypeListComponent,
+    ServiceComponent,
+    ServiceListComponent,
     ContainerTypeAndSizeComponent,
     ContainerTypeAndSizeListComponent,
     StoreTypeComponent,
