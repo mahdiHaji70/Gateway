@@ -28,16 +28,16 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("CreatedByUserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -873,6 +873,39 @@ namespace TDM.Infrastructure.Migrations
                     b.ToTable("ManifestItems", "doc");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.OperationType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OperationTypes", "basicInfo");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
                 {
                     b.Property<Guid>("Id")
@@ -911,6 +944,11 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1191,14 +1229,19 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("CreatedByUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatorName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<Guid?>("DeclarationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("FirstDischargeDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("IPASStoreReceiptId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("IPASStoreReceiptNo")
                         .IsRequired()
@@ -1240,8 +1283,6 @@ namespace TDM.Infrastructure.Migrations
 
                     b.HasIndex("ConsigneeRepId");
 
-                    b.HasIndex("CreatorId");
-
                     b.HasIndex("DeclarationId");
 
                     b.HasIndex("StoreReceiptStateId");
@@ -1256,6 +1297,11 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -2060,12 +2106,6 @@ namespace TDM.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TDM.Domain.Entities.Company", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TDM.Domain.Entities.Declaration", "Declaration")
                         .WithMany()
                         .HasForeignKey("DeclarationId");
@@ -2089,8 +2129,6 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("Consignee");
 
                     b.Navigation("ConsigneeRep");
-
-                    b.Navigation("Creator");
 
                     b.Navigation("Declaration");
 
