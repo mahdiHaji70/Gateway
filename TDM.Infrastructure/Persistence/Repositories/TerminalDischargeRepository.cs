@@ -128,6 +128,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
         {
             return await _dbSet
                 .AsNoTracking()
+                .Where(x => x.IpasTerminalDischargeId != null)
                 .GroupBy(x => new
                 {
                     DeclarationId = x.DeclarationItem.DeclarationId,

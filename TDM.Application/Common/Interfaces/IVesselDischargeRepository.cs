@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Models;
+using TDM.Application.Operation.VesselDischarges.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Interfaces
@@ -11,5 +12,7 @@ namespace TDM.Application.Common.Interfaces
         public Task<List<VesselDischarge>> GetUnsentVesselDischargesToIpasAsync(Guid manifestItemId);
         public Task<List<VesselDischarge>> GetByManifestItemIdAsync(Guid manifestItemId, CancellationToken cancellationToken = default);
         public Task<bool> ExistsByManifestContainerIdAsync(Guid manifestContainerId, CancellationToken cancellationToken = default);
+        public Task<List<GroupedVesselDischargeDto>> GetGroupedAsync(
+            CancellationToken cancellationToken = default);
     }
 }
