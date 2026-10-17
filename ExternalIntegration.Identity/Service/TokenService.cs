@@ -18,6 +18,7 @@ namespace IntegratedIdentity.Service
         public string GenerateAccessToken(User user)
         {
             var jwtSettings = _config.GetSection("Jwt");
+            var lifetimeMinutes = jwtSettings.GetValue<int>("AccessTokenLifetimeMinutes", 480);
 
             var claims = new List<Claim>
         {
@@ -36,7 +37,7 @@ namespace IntegratedIdentity.Service
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(30),
+                expires: DateTime.UtcNow.AddMinutes(lifetimeMinutes),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
