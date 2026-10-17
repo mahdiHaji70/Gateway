@@ -29,6 +29,7 @@ namespace TDM.Infrastructure.Persistence.Configurations
             builder.HasOne(c => c.ConsigneeRep)
             .WithMany(cn => cn.ConsigneeRepDeclarations)
             .HasForeignKey(c => c.ConsigneeRepId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
         }
     }

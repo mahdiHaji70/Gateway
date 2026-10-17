@@ -1,5 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DeclarationType } from '../../../basic-information/models/declaration-type.model';
 import { BasicInformationService } from '../../../basic-information/services/basic-information.service';
@@ -59,6 +61,7 @@ export class DeclarationComponent {
     private declarationService: DeclarationService,
     private declarationItemService: DeclarationItemService,
     private route: ActivatedRoute,
+    private localStorageService: LocalStorageService,
   ) {
   }
 
@@ -75,7 +78,9 @@ export class DeclarationComponent {
             endDate: new Date(data.endDate),
             traffic: new DropdownOption(data.trafficId, data.trafficName),
             contact: new DropdownOption(data.consigneeId, data.consigneeName),
-            contactRep: new DropdownOption(data.consigneeRepId, data.consigneeRepName),
+            contactRep: data.consigneeRepId
+              ? new DropdownOption(data.consigneeRepId, data.consigneeRepName)
+              : null,
             description: data.description,
           });
         });
@@ -180,6 +185,12 @@ export class DeclarationComponent {
 
     let declarationType: any = this.form.get('declarationType')?.value!;
 
+    const terminalCode = this.localStorageService.getItem('terminalCode');
+    if (!terminalCode?.trim()) {
+      this.messageService.add({ severity: 'error', summary: 'Terminal code is missing. Please sign in again.' });
+      return;
+    }
+
     const declaration: Declaration = new Declaration(
       this.form.get('number')?.value!,
       formatUTCDate(this.form.get('date')?.value! as Date),
@@ -187,10 +198,9 @@ export class DeclarationComponent {
       formatUTCDate(this.form.get('endDate')?.value! as Date),
       this.form.get('contact')?.value!.id!,
       this.form.get('traffic')?.value!.id!,
-      //todo change terminal id to dynamic mode
-      '088',
+      terminalCode,
       this.form.get('description')?.value!,
-      this.form.get('contactRep')?.value!.id!,
+      this.form.get('contactRep')?.value?.id ?? null,
       this.id);
 
     const declarationAction$ = this.id

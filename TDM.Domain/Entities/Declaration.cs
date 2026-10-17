@@ -1,5 +1,6 @@
 
 using TDM.Domain.Common;
+using TDM.Domain.Enums;
 using TDM.Domain.Exceptions;
 
 namespace TDM.Domain.Entities
@@ -19,8 +20,8 @@ namespace TDM.Domain.Entities
         public Guid ConsigneeId { get; set; }
         public Company Consignee { get; set; }
 
-        public Guid ConsigneeRepId { get; set; }
-        public Company ConsigneeRep { get; set; }
+        public Guid? ConsigneeRepId { get; set; }
+        public Company? ConsigneeRep { get; set; }
 
         public Guid? IpasDeclarationId { get; private set; }
         public string? IpasDeclarationNo { get; private set; }
@@ -28,6 +29,9 @@ namespace TDM.Domain.Entities
 
         public ICollection<DeclarationItem> DeclarationItems { get; private set; } = new List<DeclarationItem>();
 
+        private Declaration()
+        {
+        }
 
         public Declaration(
             string number,
@@ -35,12 +39,13 @@ namespace TDM.Domain.Entities
             DateTime startDate,
             DateTime endDate,
             Guid consigneeId,
-            Guid consigneeRepId,
+            Guid? consigneeRepId,
             Guid trafficId,
             string description,
-            string terminalCode)
+            string terminalCode,
+            CompanyType consigneeType = CompanyType.Company)
         {
-            Validate(number, date, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode);
+            Validate(number, date, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode, consigneeType);
 
             Number = number;
             Date = date;
@@ -59,12 +64,13 @@ namespace TDM.Domain.Entities
             DateTime startDate,
             DateTime endDate,
             Guid consigneeId,
-            Guid consigneeRepId,
+            Guid? consigneeRepId,
             Guid trafficId,
             string description,
-            string terminalCode)
+            string terminalCode,
+            CompanyType consigneeType = CompanyType.Company)
         {
-            Validate(number, date, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode);
+            Validate(number, date, startDate, endDate, consigneeId, consigneeRepId, trafficId, description, terminalCode, consigneeType);
 
             Number = number;
             Date = date;
@@ -94,7 +100,7 @@ namespace TDM.Domain.Entities
         }
 
         private void Validate(string number, DateTime date, DateTime startDate, DateTime EndDate,
-        Guid consigneeId, Guid consigneeRepId, Guid trafficId, string description, string terminalCode)
+        Guid consigneeId, Guid? consigneeRepId, Guid trafficId, string description, string terminalCode, CompanyType consigneeType)
         {
             if (string.IsNullOrEmpty(number))
                 throw new DomainValidationException("Number is required.");
@@ -111,7 +117,7 @@ namespace TDM.Domain.Entities
             if (consigneeId == Guid.Empty)
                 throw new DomainValidationException("Consignee Id is required.");
 
-            if (consigneeRepId == Guid.Empty)
+            if (consigneeRepId == Guid.Empty || (!consigneeRepId.HasValue && consigneeType != CompanyType.Person))
                 throw new DomainValidationException("Consignee rep Id is required.");
 
             if (trafficId == Guid.Empty)
