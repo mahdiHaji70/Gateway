@@ -10,6 +10,7 @@ namespace TDM.Domain.Entities
     {
         private readonly List<StoreReceiptGood> _storeReceiptGoods = [];
         private readonly List<StoreReceiptContainer> _storeReceiptContainers = [];
+        private readonly List<StoreReceiptOperation> _storeReceiptOperations = [];
 
         public Guid IPASStoreReceiptId { get; private set; }
         public string TerminalCode { get; private set; }
@@ -39,6 +40,9 @@ namespace TDM.Domain.Entities
 
         public IReadOnlyCollection<StoreReceiptContainer> StoreReceiptContainers
             => _storeReceiptContainers.AsReadOnly();
+
+        public IReadOnlyCollection<StoreReceiptOperation> StoreReceiptOperations
+            => _storeReceiptOperations.AsReadOnly();
 
         protected StoreReceiptHead()
         {
@@ -286,6 +290,52 @@ namespace TDM.Domain.Entities
             _storeReceiptContainers.Add(container);
 
             return container;
+        }
+
+        public StoreReceiptOperation AddOperation(
+            Guid parentId,
+            Guid storeReceiptContainerId,
+            Guid operationTypeId,
+            Guid serviceId,
+            Guid storeId,
+            DateTime date,
+            long packNb,
+            decimal weight,
+            decimal volume,
+            bool isNonPalletized,
+            bool isDamaged,
+            bool isVoluminous,
+            bool isDangerous,
+            string dangerousCode,
+            string classification,
+            decimal ignitionTemperature,
+            string ignitionTemperatureUnit,
+            decimal unitWeight)
+        {
+            var operation = new StoreReceiptOperation(
+                parentId,
+                Id,
+                storeReceiptContainerId,
+                operationTypeId,
+                serviceId,
+                storeId,
+                date,
+                packNb,
+                weight,
+                volume,
+                isNonPalletized,
+                isDamaged,
+                isVoluminous,
+                isDangerous,
+                dangerousCode,
+                classification,
+                ignitionTemperature,
+                ignitionTemperatureUnit,
+                unitWeight);
+
+            _storeReceiptOperations.Add(operation);
+
+            return operation;
         }
 
 

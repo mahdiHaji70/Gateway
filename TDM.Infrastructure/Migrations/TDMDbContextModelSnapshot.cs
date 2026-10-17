@@ -1325,6 +1325,99 @@ namespace TDM.Infrastructure.Migrations
                     b.ToTable("StoreReceiptHeads", "doc");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptOperation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Classification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DangerousCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("IgnitionTemperature")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("IgnitionTemperatureUnit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDamaged")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDangerous")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNonPalletized")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVoluminous")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OperationTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("PackNb")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StoreReceiptContainerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StoreReceiptHeadId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("UnitWeight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Volume")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperationTypeId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("StoreReceiptContainerId");
+
+                    b.HasIndex("StoreReceiptHeadId");
+
+                    b.ToTable("StoreReceiptOperations", "doc");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptState", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2170,6 +2263,49 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("Traffic");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptOperation", b =>
+                {
+                    b.HasOne("TDM.Domain.Entities.OperationType", "OperationType")
+                        .WithMany("StoreReceiptOperations")
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Service", "Service")
+                        .WithMany("StoreReceiptOperations")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.Store", "Store")
+                        .WithMany("StoreReceiptOperations")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.StoreReceiptContainer", "StoreReceiptContainer")
+                        .WithMany("StoreReceiptOperations")
+                        .HasForeignKey("StoreReceiptContainerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TDM.Domain.Entities.StoreReceiptHead", "StoreReceiptHead")
+                        .WithMany("StoreReceiptOperations")
+                        .HasForeignKey("StoreReceiptHeadId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("OperationType");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Store");
+
+                    b.Navigation("StoreReceiptContainer");
+
+                    b.Navigation("StoreReceiptHead");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.TerminalDischarge", b =>
                 {
                     b.HasOne("TDM.Domain.Entities.CargoType", null)
@@ -2344,6 +2480,11 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("ManifestItemVesselDischarges");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.OperationType", b =>
+                {
+                    b.Navigation("StoreReceiptOperations");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.Package", b =>
                 {
                     b.Navigation("PackageDeclarationContainerGoods");
@@ -2359,8 +2500,15 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("PackageStoreReceiptGoods");
                 });
 
+            modelBuilder.Entity("TDM.Domain.Entities.Service", b =>
+                {
+                    b.Navigation("StoreReceiptOperations");
+                });
+
             modelBuilder.Entity("TDM.Domain.Entities.Store", b =>
                 {
+                    b.Navigation("StoreReceiptOperations");
+
                     b.Navigation("StoreTerminalDischarges");
 
                     b.Navigation("StoreVesselDischarges");
@@ -2369,6 +2517,8 @@ namespace TDM.Infrastructure.Migrations
             modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptContainer", b =>
                 {
                     b.Navigation("StoreReceiptContainerGoods");
+
+                    b.Navigation("StoreReceiptOperations");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptHead", b =>
@@ -2376,6 +2526,8 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("StoreReceiptContainers");
 
                     b.Navigation("StoreReceiptGoods");
+
+                    b.Navigation("StoreReceiptOperations");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.StoreReceiptState", b =>

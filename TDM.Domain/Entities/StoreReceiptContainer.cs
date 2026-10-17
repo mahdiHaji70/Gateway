@@ -9,6 +9,7 @@ namespace TDM.Domain.Entities
     public class StoreReceiptContainer : BaseEntity
     {
         private readonly List<StoreReceiptContainerGood> _storeReceiptContainerGoods = [];
+        private readonly List<StoreReceiptOperation> _storeReceiptOperations = [];
 
         public Guid StoreReceiptHeadId { get; private set; }
 
@@ -33,6 +34,9 @@ namespace TDM.Domain.Entities
         public IReadOnlyCollection<StoreReceiptContainerGood>
             StoreReceiptContainerGoods
             => _storeReceiptContainerGoods.AsReadOnly();
+
+        public IReadOnlyCollection<StoreReceiptOperation> StoreReceiptOperations
+            => _storeReceiptOperations.AsReadOnly();
         protected StoreReceiptContainer()
         {
         }
