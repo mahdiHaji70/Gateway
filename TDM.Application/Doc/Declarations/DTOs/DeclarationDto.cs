@@ -18,7 +18,7 @@ namespace TDM.Application.Doc.Declarations.DTOs
         public Guid ConsigneeId{ get; set; }
         public string? ConsigneeName{ get; set; }
 
-        public Guid ConsigneeRepId { get; set; }
+        public Guid? ConsigneeRepId { get; set; }
         public string? ConsigneeRepName{ get;set; }
 
         public string? IpasDeclarationId { get; set; }

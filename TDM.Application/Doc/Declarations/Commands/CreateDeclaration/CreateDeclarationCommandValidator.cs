@@ -27,8 +27,8 @@ namespace TDM.Application.Doc.Declarations.Commands.CreateDeclaration
                 .WithMessage("Consignee Id is required.");
             
             RuleFor(x => x.ConsigneerepId)
-                .NotEmpty()
-                .WithMessage("Consignee rep Id is required.");
+                .Must(id => !id.HasValue || id.Value != Guid.Empty)
+                .WithMessage("Consignee rep Id cannot be empty.");
 
             RuleFor(x => x.TrafficId)
                 .NotEmpty()

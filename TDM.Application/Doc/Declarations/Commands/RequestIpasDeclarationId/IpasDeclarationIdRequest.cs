@@ -19,12 +19,12 @@ namespace TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId
         public string ConsigneePostCode { get; set; } = default!;
         public string ConsigneeAddress { get; set; } = default!;
         public bool ConsigneeIsCompany { get; set; } = default!;
-        public string ConsigneeRepName { get; set; } = default!;
-        public string ConsigneeRepNationalId { get; set; } = default!;
-        public DateTime ConsigneeRepBirthDate { get; set; } = default!;
-        public string ConsigneeRepMobile { get; set; } = default!;
-        public string ConsigneeRepPostCode { get; set; } = default!;
-        public string ConsigneeRepAddress { get; set; } = default!;
-        public bool ConsigneeRepIsCompany { get; set; } = default!;
+        public string? ConsigneeRepName { get; set; } = default!;
+        public string? ConsigneeRepNationalId { get; set; } = default!;
+        public DateTime? ConsigneeRepBirthDate { get; set; } = default!;
+        public string? ConsigneeRepMobile { get; set; } = default!;
+        public string? ConsigneeRepPostCode { get; set; } = default!;
+        public string? ConsigneeRepAddress { get; set; } = default!;
+        public bool? ConsigneeRepIsCompany { get; set; } = default!;
     }
 }

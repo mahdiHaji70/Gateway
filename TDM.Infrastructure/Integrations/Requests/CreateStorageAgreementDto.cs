@@ -8,7 +8,7 @@
         public DateTime FinishDate { get; set; }
         public string CustomsProcedureCode { get; set; } = default!;
         public OwnerDto Owner { get; set; } = default!;
-        public OwnerRepDto OwnerRep { get; set; } = default!;
+        public OwnerRepDto? OwnerRep { get; set; }
         public string WorkflowRemark { get; set; } = default!;
     }
 }

@@ -8,12 +8,15 @@ namespace TDM.Application.Doc.Declarations.Commands.UpdateDeclaration
     {
         private readonly IRepository<Declaration> _declarationRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICompanyRepository _companyRepository;
 
         public UpdateDeclarationCommandHandler(IUnitOfWork unitOfWork
-            , IRepository<Declaration> declarationRepository)
+            , IRepository<Declaration> declarationRepository
+            , ICompanyRepository companyRepository)
         {
             _unitOfWork = unitOfWork;
             _declarationRepository = declarationRepository;
+            _companyRepository = companyRepository;
         }
 
         public async Task<Guid> Handle(UpdateDeclarationCommand request, CancellationToken cancellationToken)
@@ -22,6 +25,9 @@ namespace TDM.Application.Doc.Declarations.Commands.UpdateDeclaration
 
             if (declaration == null)
                 throw new Exception("Declaration not found");
+
+            var consignee = await _companyRepository.GetAsync(request.ConsigneeId)
+                ?? throw new Exception("Consignee not found");
 
             declaration.Update(
                 request.Number,
@@ -32,7 +38,8 @@ namespace TDM.Application.Doc.Declarations.Commands.UpdateDeclaration
                 request.ConsigneeRepId,
                 request.TrafficId,
                 request.Description,
-                request.TerminalCode);
+                request.TerminalCode,
+                consignee.CompanyType);
 
             _declarationRepository.Update(declaration);
 

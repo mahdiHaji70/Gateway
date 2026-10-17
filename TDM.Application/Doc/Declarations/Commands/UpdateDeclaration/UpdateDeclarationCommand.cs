@@ -10,7 +10,7 @@ namespace TDM.Application.Doc.Declarations.Commands.UpdateDeclaration
         public DateTime StartDate { get; init; } = default!;
         public DateTime EndDate { get; init; } = default!;
         public Guid ConsigneeId { get; set; }
-        public Guid ConsigneeRepId { get; set; }
+        public Guid? ConsigneeRepId { get; set; }
         public Guid TrafficId { get; set; }
         public string Description { get; set; } = default!;
         public string TerminalCode { get; set; } = default!;

@@ -22,16 +22,16 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 IsCompany = ipasDeclarationIdRequest.ConsigneeIsCompany
             };
 
-            var ownerRepDto = new OwnerRepDto
+            var ownerRepDto = ipasDeclarationIdRequest.ConsigneeRepBirthDate is DateTime birthDate ? new OwnerRepDto
             {
-                Name = ipasDeclarationIdRequest.ConsigneeRepName,
-                NationalID = ipasDeclarationIdRequest.ConsigneeRepNationalId,
+                Name = ipasDeclarationIdRequest.ConsigneeRepName!,
+                NationalID = ipasDeclarationIdRequest.ConsigneeRepNationalId!,
                 Email = "test@gmail.com",
-                BirthDate = ipasDeclarationIdRequest.ConsigneeRepBirthDate,
-                CellPhone = ipasDeclarationIdRequest.ConsigneeRepMobile,
-                PostalCode = ipasDeclarationIdRequest.ConsigneeRepPostCode,
-                Address = ipasDeclarationIdRequest.ConsigneeRepAddress,                
-            };
+                BirthDate = birthDate,
+                CellPhone = ipasDeclarationIdRequest.ConsigneeRepMobile!,
+                PostalCode = ipasDeclarationIdRequest.ConsigneeRepPostCode!,
+                Address = ipasDeclarationIdRequest.ConsigneeRepAddress!,
+            } : null;
 
             return new CreateStorageAgreementDto 
             { 

@@ -25,13 +25,13 @@ namespace TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId
                 ConsigneePostCode = declaration.Consignee.PostCode,
                 ConsigneeAddress = declaration.Consignee.Address,
                 ConsigneeIsCompany = declaration.Consignee.CompanyType == CompanyType.Company ? true : false,
-                ConsigneeRepName = declaration.ConsigneeRep.Name,
-                ConsigneeRepNationalId = declaration.ConsigneeRep.NationalId,
-                ConsigneeRepBirthDate = declaration.ConsigneeRep.RegisterDate,
-                ConsigneeRepMobile = declaration.ConsigneeRep.Mobile,
-                ConsigneeRepPostCode = declaration.ConsigneeRep.PostCode,
-                ConsigneeRepAddress = declaration.ConsigneeRep.Address,
-                ConsigneeRepIsCompany = declaration.ConsigneeRep.CompanyType == CompanyType.Company ? true : false,
+                ConsigneeRepName = declaration.ConsigneeRep?.Name,
+                ConsigneeRepNationalId = declaration.ConsigneeRep?.NationalId,
+                ConsigneeRepBirthDate = declaration.ConsigneeRep?.RegisterDate,
+                ConsigneeRepMobile = declaration.ConsigneeRep?.Mobile,
+                ConsigneeRepPostCode = declaration.ConsigneeRep?.PostCode,
+                ConsigneeRepAddress = declaration.ConsigneeRep?.Address,
+                ConsigneeRepIsCompany = declaration.ConsigneeRep == null ? null : declaration.ConsigneeRep.CompanyType == CompanyType.Company,
             };
         }
 
