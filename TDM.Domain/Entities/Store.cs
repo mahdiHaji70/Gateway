@@ -14,6 +14,7 @@ namespace TDM.Domain.Entities
         public StoreType StoreType { get; set; } = null!;
         public ICollection<TerminalDischarge> StoreTerminalDischarges { get; private set; } = new List<TerminalDischarge>();
         public ICollection<VesselDischarge> StoreVesselDischarges { get; private set; } = new List<VesselDischarge>();
+        public ICollection<StoreReceiptOperation> StoreReceiptOperations { get; private set; } = new List<StoreReceiptOperation>();
 
         public Store(string name, string code, Guid storeTypeId) => SetProperty(name, code, storeTypeId);
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;
+using TDM.Application.Operation.TerminalDischarges.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Infrastructure.Persistence.Repositories
@@ -123,6 +124,71 @@ namespace TDM.Infrastructure.Persistence.Repositories
                        .Where(x => x.DeclarationItem.Declaration.IpasDeclarationNo == ipasDeclarationNo
                                 && x.IpasTerminalDischargeId == null)
                        .ToListAsync();
+        }
+
+        public async Task<List<GroupedTerminalDischargeDto>> GetGroupedWithoutVehicleNumberAsync(
+            Guid declarationId,
+            Guid? issueRequestId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Where(x => x.DeclarationItem.DeclarationId == declarationId
+                    && (!issueRequestId.HasValue || x.IssueRequestId == issueRequestId)
+                    && x.IpasTerminalDischargeId != null)
+                .GroupBy(x => new
+                {
+                    DeclarationId = x.DeclarationItem.DeclarationId,
+                    IpasDeclarationNo = x.DeclarationItem.Declaration.IpasDeclarationNo,
+                    x.TerminalCode,
+                    CargoTypeId = x.DeclarationItem.CargoTypeId,
+                    CargoTypeName = x.DeclarationItem.CargoType.Name,
+                    x.StoreId,
+                    StoreName = x.Store.Name,
+                    x.DeclarationItemId,
+                    x.WayBillNo,
+                    x.WayBillId,
+                    x.DischargeDate,
+                    x.IsNonPalletized,
+                    x.IsDamaged,
+                    x.IsVoluminous,
+                    x.IsDangerous,
+                    x.DangerousCode,
+                    x.Classification,
+                    x.IgnitionTemperature,
+                    x.IgnitionTemperatureUnit,
+                    x.IpasTerminalDischargeId,
+                    x.IpasTerminalDischargeReceivedAt
+                })
+                .Select(group => new GroupedTerminalDischargeDto
+                {
+                    DeclarationId = group.Key.DeclarationId,
+                    IpasDeclarationNo = group.Key.IpasDeclarationNo,
+                    TerminalCode = group.Key.TerminalCode,
+                    CargoTypeId = group.Key.CargoTypeId,
+                    CargoTypeName = group.Key.CargoTypeName,
+                    StoreId = group.Key.StoreId,
+                    StoreName = group.Key.StoreName,
+                    DeclarationItemId = group.Key.DeclarationItemId,
+                    WayBillNo = group.Key.WayBillNo,
+                    WayBillId = group.Key.WayBillId,
+                    DischargeDate = group.Key.DischargeDate,
+                    PackNB = group.Sum(x => x.PackNB),
+                    Weight = group.Sum(x => x.Weight),
+                    Volume = group.Sum(x => x.Volume),
+                    IsNonPalletized = group.Key.IsNonPalletized,
+                    IsDamaged = group.Key.IsDamaged,
+                    IsVoluminous = group.Key.IsVoluminous,
+                    IsDangerous = group.Key.IsDangerous,
+                    DangerousCode = group.Key.DangerousCode,
+                    Classification = group.Key.Classification,
+                    IgnitionTemperature = group.Key.IgnitionTemperature,
+                    IgnitionTemperatureUnit = group.Key.IgnitionTemperatureUnit,
+                    IpasTerminalDischargeId = group.Key.IpasTerminalDischargeId,
+                    IpasTerminalDischargeReceivedAt = group.Key.IpasTerminalDischargeReceivedAt,
+                    IsSend = group.Key.IpasTerminalDischargeId != null
+                })
+                .ToListAsync(cancellationToken);
         }
 
     }

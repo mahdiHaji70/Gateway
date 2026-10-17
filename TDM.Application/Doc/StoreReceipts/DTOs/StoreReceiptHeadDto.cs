@@ -38,7 +38,7 @@ namespace TDM.Application.Doc.StoreReceipts.DTOs
         public string ArrivalTypeName { get; set; }
         public Guid? DeclarationId { get; set; }
         public string? IpasDeclarationNo { get;  set; }
-        public Guid? BillOfLadingId { get; set; }
+        public Guid? ManifestItemId { get; set; }
         public List<StoreReceiptGoodDto> StoreReceiptGoods { get;  set; } 
         public List<StoreReceiptContainerDto> StoreReceiptContainers { get;  set; } 
 

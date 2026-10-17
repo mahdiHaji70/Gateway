@@ -38,7 +38,6 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 StoreReceiptStateName = dto.StateName,
                 RequestId = dto.RequestId,
                 
-                BillOfLadingId = GetBillOfLadingId(dto),
                 StoreReceiptGoods = MapGoods(dto),
                 StoreReceiptContainers = MapContainers(dto)
             };
@@ -143,12 +142,6 @@ namespace TDM.Infrastructure.Integrations.Mapper
             return string.Empty;
         }
 
-        private static Guid? GetBillOfLadingId(IpasStoreReceiptResponseDto dto)
-        {
-            return dto.GeneralCargoList?.FirstOrDefault(x => x.BillOfLadingId.HasValue)?.BillOfLadingId
-                ?? dto.BulkList?.FirstOrDefault(x => x.BillOfLadingId.HasValue)?.BillOfLadingId
-                ?? dto.ContainerList?.FirstOrDefault(x => x.billOfLadingId.HasValue)?.billOfLadingId;
-        }
         public static List<StoreReceiptHeadDto> Map(List<IpasStoreReceiptResponseDto> dto)
         {
             return dto.Select(Map).ToList();

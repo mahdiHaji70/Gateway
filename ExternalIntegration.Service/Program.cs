@@ -81,7 +81,10 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.Equals("T
 {
     app.MapOpenApi();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+    });
 }
 
 app.UseCors("AllowAngular");

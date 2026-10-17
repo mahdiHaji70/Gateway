@@ -64,13 +64,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .WithMessage("First discharge date is required.");
 
             RuleFor(x => x)
-            .Must(x => x.DeclarationId.HasValue || x.BillOfLadingId.HasValue)
-            .WithMessage("Either DeclarationId or BillOfLadingId must be provided.");
+            .Must(x => x.DeclarationId.HasValue || x.ManifestItemId.HasValue)
+            .WithMessage("Either DeclarationId or ManifestItemId must be provided.");
 
             RuleFor(x => x)
                 .Must(x =>
-                    x.DeclarationId.HasValue ^ x.BillOfLadingId.HasValue)
-                .WithMessage("Provide either DeclarationId or BillOfLadingId, but not both.");
+                    x.DeclarationId.HasValue ^ x.ManifestItemId.HasValue)
+                .WithMessage("Provide either DeclarationId or ManifestItemId, but not both.");
 
             RuleForEach(x => x.StoreReceiptGoods)
                    .SetValidator(new CreateStoreReceiptGoodCommandValidator());
