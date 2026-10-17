@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Models;
+using TDM.Application.Operation.TerminalDischarges.DTOs;
 using TDM.Domain.Entities;
 
 namespace TDM.Application.Common.Interfaces
@@ -14,6 +15,8 @@ namespace TDM.Application.Common.Interfaces
             Guid declarationId, int pageNumber, int pageSize);
         public Task<List<TerminalDischarge>> GetIpasSubmissionByIPASDeclarationNoAsync(string ipasDeclarationNo);
         public Task<List<TerminalDischarge>> GetByIssueRequestIdAsync(Guid issueRequestId);
+        public Task<List<GroupedTerminalDischargeDto>> GetGroupedWithoutVehicleNumberAsync(
+            CancellationToken cancellationToken = default);
 
 
     }
