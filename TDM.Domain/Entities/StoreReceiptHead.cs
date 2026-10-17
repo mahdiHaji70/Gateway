@@ -34,7 +34,8 @@ namespace TDM.Domain.Entities
         public ArrivalType ArrivalType { get; private set; }
         public Guid? DeclarationId { get; private set; }
         public Declaration? Declaration { get; private set; }
-        public Guid? BillOfLadingId { get; private  set; }
+        public Guid? ManifestItemId { get; private set; }
+        public ManifestItem? ManifestItem { get; private set; }
         public IReadOnlyCollection<StoreReceiptGood> StoreReceiptGoods
          => _storeReceiptGoods.AsReadOnly();
 
@@ -64,7 +65,7 @@ namespace TDM.Domain.Entities
             string voyageNoticeNo,
             Guid arrivalTypeId,
             Guid? declarationId,
-            Guid? billOfLadingId)
+            Guid? manifestItemId)
         {
             SetProperty(
                 ipasStoreReceiptId,
@@ -82,7 +83,7 @@ namespace TDM.Domain.Entities
                 voyageNoticeNo,
                 arrivalTypeId,
                 declarationId,
-                billOfLadingId);
+                manifestItemId);
         }
 
         public void Update(
@@ -100,7 +101,7 @@ namespace TDM.Domain.Entities
             string voyageNoticeNo,
             Guid arrivalTypeId,
             Guid? declarationId,
-            Guid? billOfLadingId)
+            Guid? manifestItemId)
         {
             SetProperty(
                 IPASStoreReceiptId,
@@ -118,7 +119,7 @@ namespace TDM.Domain.Entities
                 voyageNoticeNo,
                 arrivalTypeId,
                 declarationId,
-                billOfLadingId);
+                manifestItemId);
         }
 
         private void SetProperty(
@@ -137,7 +138,7 @@ namespace TDM.Domain.Entities
             string voyageNoticeNo,
             Guid arrivalTypeId,
             Guid? declarationId,
-            Guid? billOfLadingId)
+            Guid? manifestItemId)
         {
             Validate(
                 terminalCode,
@@ -152,7 +153,7 @@ namespace TDM.Domain.Entities
                 voyageNoticeNo,
                 arrivalTypeId,
                 declarationId,
-                billOfLadingId);
+                manifestItemId);
 
             IPASStoreReceiptId = ipasStoreReceiptId;
             TerminalCode = terminalCode;
@@ -169,7 +170,7 @@ namespace TDM.Domain.Entities
             VoyageNoticeNo = voyageNoticeNo;
             ArrivalTypeId = arrivalTypeId;
             DeclarationId = declarationId;
-            BillOfLadingId = billOfLadingId;
+            ManifestItemId = manifestItemId;
         }
 
         private void Validate(
@@ -185,7 +186,7 @@ namespace TDM.Domain.Entities
             string voyageNoticeNo,
             Guid arrivalTypeId,
             Guid? declarationId,
-            Guid? billOfLadingId)
+            Guid? manifestItemId)
         {
             if (string.IsNullOrWhiteSpace(terminalCode))
                 throw new DomainValidationException("Terminal code is required.");
@@ -217,8 +218,8 @@ namespace TDM.Domain.Entities
            // if (arrivalTypeId == Guid.Empty)
              //   throw new DomainValidationException("Arrival type is required.");
 
-            if (!declarationId.HasValue && !billOfLadingId.HasValue)
-                throw new DomainValidationException("Either DeclarationId or BillOfLadingId must be provided.");
+            if (!declarationId.HasValue && !manifestItemId.HasValue)
+                throw new DomainValidationException("Either DeclarationId or ManifestItemId must be provided.");
         }
         public StoreReceiptGood AddGood(
                     Guid commodityId,
@@ -293,8 +294,8 @@ namespace TDM.Domain.Entities
         }
 
         public StoreReceiptOperation AddOperation(
-            Guid parentId,
-            Guid storeReceiptContainerId,
+            Guid? parentId,
+            Guid? storeReceiptContainerId,
             Guid operationTypeId,
             Guid serviceId,
             Guid storeId,

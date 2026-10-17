@@ -25,7 +25,8 @@ namespace TDM.Infrastructure.Persistence.Repositories
            .Include(x => x.StoreReceiptState)
            .Include(x => x.CargoType)
            .Include(x => x.Traffic)
-           .Include(x => x.Declaration);
+           .Include(x => x.Declaration)
+           .Include(x => x.ManifestItem);
 
             var totalCount = await query.CountAsync();
 
@@ -54,6 +55,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
                        .Include(x => x.CargoType)
                        .Include(x => x.Traffic)
                        .Include(x => x.Declaration)
+                       .Include(x => x.ManifestItem)
                        .FirstOrDefaultAsync(x => x.Id == id);
         }
 

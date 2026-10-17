@@ -17,9 +17,9 @@ namespace TDM.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StoreReceiptHeadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StoreReceiptContainerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StoreReceiptContainerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OperationTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

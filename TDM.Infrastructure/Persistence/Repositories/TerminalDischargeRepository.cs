@@ -123,7 +123,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
                        .ToListAsync();
         }
 
-        public async Task<List<GroupedTerminalDischargeDto>> GetGroupedAsync(
+        public async Task<List<GroupedTerminalDischargeDto>> GetGroupedWithoutVehicleNumberAsync(
             Guid declarationId,
             Guid? issueRequestId,
             CancellationToken cancellationToken = default)

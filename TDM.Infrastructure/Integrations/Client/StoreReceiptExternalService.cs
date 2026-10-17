@@ -43,7 +43,6 @@ namespace TDM.Infrastructure.Integrations.Client
             foreach (var receipt in receipts)
             {
                 receipt.DeclarationId = null;
-                receipt.BillOfLadingId = billOfLadingId;
             }
 
             return receipts;

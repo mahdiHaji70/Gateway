@@ -22,6 +22,10 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         private readonly IContainerRepository _containerRepository;
         private readonly IRepository<StoreReceiptState> _storeReceiptStateRepository;
         private readonly IRepository<ArrivalType> _arrivalTypeRepository;
+        private readonly IOperationTypeRepository _operationTypeRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly ITerminalDischargeRepository _terminalDischargeRepository;
+        private readonly IVesselDischargeRepository _vesselDischargeRepository;
 
         private readonly IUnitOfWork _unitOfWork;
 
@@ -35,7 +39,11 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             , IPackageRepository packageRepository
             , IContainerRepository containerRepository
             , IRepository<StoreReceiptState> storeReceiptStateRepository
-            , IRepository<ArrivalType> arrivalTypeRepository)
+            , IRepository<ArrivalType> arrivalTypeRepository
+            , IOperationTypeRepository operationTypeRepository
+            , IServiceRepository serviceRepository
+            , ITerminalDischargeRepository terminalDischargeRepository
+            , IVesselDischargeRepository vesselDischargeRepository)
         {
             _unitOfWork = unitOfWork;
             _storeReceiptHeadRepository = storeReceiptHeadRepository;
@@ -48,6 +56,10 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             _containerRepository = containerRepository;
             _storeReceiptStateRepository = storeReceiptStateRepository;
             _arrivalTypeRepository = arrivalTypeRepository;
+            _operationTypeRepository = operationTypeRepository;
+            _serviceRepository = serviceRepository;
+            _terminalDischargeRepository = terminalDischargeRepository;
+            _vesselDischargeRepository = vesselDischargeRepository;
         }
 
         public async Task<Guid> Handle(CreateStoreReceiptCommand request, CancellationToken cancellationToken)
@@ -97,7 +109,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 request.VoyageNoticeNo,
                 arrivalTypeId,
                 request.DeclarationId,
-                request.BillOfLadingId);
+                request.ManifestItemId);
+
+            var storeReceiptContainerIdsByContainerNo = new Dictionary<string, Guid>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var goodRequest in goods)
             {
@@ -137,6 +151,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                     containerRequest.IgnitionTemperature,
                     containerRequest.IgnitionTemperatureUnit);
 
+                if (!string.IsNullOrWhiteSpace(containerRequest.ContainerNo))
+                    storeReceiptContainerIdsByContainerNo[containerRequest.ContainerNo] = container.Id;
+
                 foreach (var goodRequest in containerRequest.StoreReceiptContainerGoods ?? new List<CreateStoreReceiptContainerGoodCommand>())
                 {
                     var commodityId = ResolveCommodityId(goodRequest.CommodityId, goodRequest.HsCode, commodityByCode);
@@ -159,10 +176,110 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 }
             }
 
+            await AddStoreReceiptOperationsAsync(
+                receipt,
+                request,
+                storeReceiptContainerIdsByContainerNo,
+                cancellationToken);
+
             await _storeReceiptHeadRepository.InsertAsync(receipt);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return receipt.Id;
+        }
+
+        private async Task AddStoreReceiptOperationsAsync(
+            StoreReceiptHead receipt,
+            CreateStoreReceiptCommand request,
+            IReadOnlyDictionary<string, Guid> storeReceiptContainerIdsByContainerNo,
+            CancellationToken cancellationToken)
+        {
+            if (request.ArrivalTypeCode != "0" && request.ArrivalTypeCode != "1")
+                return;
+
+            var operationType = (await _operationTypeRepository.GetAllAsync())
+                ?.FirstOrDefault(x => string.Equals(x.Code, "PRT", StringComparison.OrdinalIgnoreCase));
+            if (operationType == null)
+                throw new InvalidOperationException("Operation type was not found for code 'PRT'.");
+
+            var service = (await _serviceRepository.GetAllAsync())
+                ?.FirstOrDefault(x => string.Equals(x.Code, "DIS", StringComparison.OrdinalIgnoreCase));
+            if (service == null)
+                throw new InvalidOperationException("Service was not found for code 'DIS'.");
+
+            if (request.ArrivalTypeCode == "0")
+            {
+                if (!request.DeclarationId.HasValue)
+                    throw new InvalidOperationException("Declaration id is required for terminal store receipts.");
+
+                var discharges = await _terminalDischargeRepository.GetGroupedWithoutVehicleNumberAsync(
+                    request.DeclarationId.Value,
+                    request.RequestId,
+                    cancellationToken);
+
+                foreach (var discharge in discharges)
+                {
+                    receipt.AddOperation(
+                        parentId: null,
+                        storeReceiptContainerId: null,
+                        operationTypeId: operationType.Id,
+                        serviceId: service.Id,
+                        storeId: discharge.StoreId,
+                        date: discharge.DischargeDate,
+                        packNb: discharge.PackNB,
+                        weight: discharge.Weight,
+                        volume: discharge.Volume,
+                        isNonPalletized: discharge.IsNonPalletized,
+                        isDamaged: discharge.IsDamaged,
+                        isVoluminous: discharge.IsVoluminous,
+                        isDangerous: discharge.IsDangerous,
+                        dangerousCode: discharge.DangerousCode,
+                        classification: discharge.Classification,
+                        ignitionTemperature: discharge.IgnitionTemperature,
+                        ignitionTemperatureUnit: discharge.IgnitionTemperatureUnit,
+                        unitWeight: 0);
+                }
+
+                return;
+            }
+
+            if (!request.ManifestItemId.HasValue)
+                throw new InvalidOperationException("Manifest item id is required for vessel store receipts.");
+
+            var vesselDischarges = await _vesselDischargeRepository.GetGroupedAsync(
+                request.ManifestItemId.Value,
+                cancellationToken);
+
+            foreach (var discharge in vesselDischarges)
+            {
+                Guid? storeReceiptContainerId = null;
+                if (discharge.ManifestContainerId.HasValue
+                    && !string.IsNullOrWhiteSpace(discharge.ContainerNo)
+                    && storeReceiptContainerIdsByContainerNo.TryGetValue(discharge.ContainerNo, out var generatedContainerId))
+                {
+                    storeReceiptContainerId = generatedContainerId;
+                }
+
+                receipt.AddOperation(
+                    parentId: null,
+                    storeReceiptContainerId: storeReceiptContainerId,
+                    operationTypeId: operationType.Id,
+                    serviceId: service.Id,
+                    storeId: discharge.StoreId,
+                    date: discharge.DischargeDate,
+                    packNb: discharge.PackNB,
+                    weight: discharge.Weight,
+                    volume: discharge.Volume,
+                    isNonPalletized: discharge.IsNonPalletized,
+                    isDamaged: discharge.IsDamaged,
+                    isVoluminous: discharge.IsVoluminous,
+                    isDangerous: discharge.IsDangerous,
+                    dangerousCode: discharge.DangerousCode,
+                    classification: discharge.Classification,
+                    ignitionTemperature: discharge.IgnitionTemperature ?? 0,
+                    ignitionTemperatureUnit: discharge.IgnitionTemperatureUnit,
+                    unitWeight: discharge.UnitWeight);
+            }
         }
 
         private async Task<Guid> ResolveCompanyIdAsync(Guid id, string nationalId, string field, CancellationToken cancellationToken)

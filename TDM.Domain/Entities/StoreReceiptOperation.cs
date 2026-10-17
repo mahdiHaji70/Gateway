@@ -7,12 +7,12 @@ namespace TDM.Domain.Entities
 {
     public class StoreReceiptOperation : BaseEntity
     {
-        public Guid ParentId { get; private set; }
+        public Guid? ParentId { get; private set; }
 
         public Guid StoreReceiptHeadId { get; private set; }
         public StoreReceiptHead StoreReceiptHead { get; private set; }
 
-        public Guid StoreReceiptContainerId { get; private set; }
+        public Guid? StoreReceiptContainerId { get; private set; }
         public StoreReceiptContainer StoreReceiptContainer { get; private set; }
 
         public Guid OperationTypeId { get; private set; }
@@ -43,9 +43,9 @@ namespace TDM.Domain.Entities
         }
 
         public StoreReceiptOperation(
-            Guid parentId,
+            Guid? parentId,
             Guid storeReceiptHeadId,
-            Guid storeReceiptContainerId,
+            Guid? storeReceiptContainerId,
             Guid operationTypeId,
             Guid serviceId,
             Guid storeId,
@@ -86,9 +86,9 @@ namespace TDM.Domain.Entities
         }
 
         public void Update(
-            Guid parentId,
+            Guid? parentId,
             Guid storeReceiptHeadId,
-            Guid storeReceiptContainerId,
+            Guid? storeReceiptContainerId,
             Guid operationTypeId,
             Guid serviceId,
             Guid storeId,
@@ -129,9 +129,9 @@ namespace TDM.Domain.Entities
         }
 
         private void SetProperty(
-            Guid parentId,
+            Guid? parentId,
             Guid storeReceiptHeadId,
-            Guid storeReceiptContainerId,
+            Guid? storeReceiptContainerId,
             Guid operationTypeId,
             Guid serviceId,
             Guid storeId,
@@ -186,9 +186,9 @@ namespace TDM.Domain.Entities
         }
 
         private static void Validate(
-            Guid parentId,
+            Guid? parentId,
             Guid storeReceiptHeadId,
-            Guid storeReceiptContainerId,
+            Guid? storeReceiptContainerId,
             Guid operationTypeId,
             Guid serviceId,
             Guid storeId,
@@ -200,14 +200,8 @@ namespace TDM.Domain.Entities
             string ignitionTemperatureUnit,
             decimal unitWeight)
         {
-            if (parentId == Guid.Empty)
-                throw new DomainValidationException("Parent is required.");
-
             if (storeReceiptHeadId == Guid.Empty)
                 throw new DomainValidationException("Store receipt head is required.");
-
-            if (storeReceiptContainerId == Guid.Empty)
-                throw new DomainValidationException("Store receipt container is required.");
 
             if (operationTypeId == Guid.Empty)
                 throw new DomainValidationException("Operation type is required.");

@@ -20,6 +20,7 @@ namespace TDM.Infrastructure.Persistence.Configurations
             builder.HasOne(x => x.StoreReceiptContainer)
                 .WithMany(x => x.StoreReceiptOperations)
                 .HasForeignKey(x => x.StoreReceiptContainerId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.OperationType)

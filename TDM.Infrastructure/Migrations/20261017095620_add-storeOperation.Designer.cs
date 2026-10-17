@@ -1376,7 +1376,7 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<long>("PackNb")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ServiceId")
@@ -1385,7 +1385,7 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("StoreId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StoreReceiptContainerId")
+                    b.Property<Guid?>("StoreReceiptContainerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StoreReceiptHeadId")
@@ -2173,7 +2173,7 @@ namespace TDM.Infrastructure.Migrations
                         .WithMany("StoreReceiptContainerGoods")
                         .HasForeignKey("StoreReceiptContainerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired(false);
 
                     b.Navigation("Commodity");
 

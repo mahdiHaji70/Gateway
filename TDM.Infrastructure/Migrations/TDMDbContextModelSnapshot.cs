@@ -646,7 +646,7 @@ namespace TDM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BillOfLadingId")
+                    b.Property<Guid?>("ManifestItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Classification")
@@ -1318,6 +1318,8 @@ namespace TDM.Infrastructure.Migrations
 
                     b.HasIndex("DeclarationId");
 
+                    b.HasIndex("ManifestItemId");
+
                     b.HasIndex("StoreReceiptStateId");
 
                     b.HasIndex("TrafficId");
@@ -1373,7 +1375,7 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<long>("PackNb")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ServiceId")
@@ -1382,7 +1384,7 @@ namespace TDM.Infrastructure.Migrations
                     b.Property<Guid>("StoreId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StoreReceiptContainerId")
+                    b.Property<Guid?>("StoreReceiptContainerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StoreReceiptHeadId")
@@ -2170,7 +2172,7 @@ namespace TDM.Infrastructure.Migrations
                         .WithMany("StoreReceiptContainerGoods")
                         .HasForeignKey("StoreReceiptContainerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired(false);
 
                     b.Navigation("Commodity");
 
@@ -2236,6 +2238,11 @@ namespace TDM.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DeclarationId");
 
+                    b.HasOne("TDM.Domain.Entities.ManifestItem", "ManifestItem")
+                        .WithMany("StoreReceiptHeads")
+                        .HasForeignKey("ManifestItemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("TDM.Domain.Entities.StoreReceiptState", "StoreReceiptState")
                         .WithMany("StoreReceiptStateStoreReceiptHeads")
                         .HasForeignKey("StoreReceiptStateId")
@@ -2257,6 +2264,8 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("ConsigneeRep");
 
                     b.Navigation("Declaration");
+
+                    b.Navigation("ManifestItem");
 
                     b.Navigation("StoreReceiptState");
 
@@ -2478,6 +2487,8 @@ namespace TDM.Infrastructure.Migrations
                     b.Navigation("ManifestGoods");
 
                     b.Navigation("ManifestItemVesselDischarges");
+
+                    b.Navigation("StoreReceiptHeads");
                 });
 
             modelBuilder.Entity("TDM.Domain.Entities.OperationType", b =>
