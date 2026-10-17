@@ -2,7 +2,6 @@ export class Discharge {
 
     id?: string;
     declarationItemId: string;
-    cargoTypeId: string;
     storeId: string;
     wayBillNo: string;
     wayBillId: string;
@@ -26,7 +25,6 @@ export class Discharge {
 
     constructor(
         declarationItemId: string,
-        cargoTypeId: string,
         storeId: string,
         wayBillNo: string,
         wayBillId: string,
@@ -48,7 +46,6 @@ export class Discharge {
     ) {
         this.id = id;
         this.declarationItemId = declarationItemId;
-        this.cargoTypeId = cargoTypeId;
         this.storeId = storeId;
         this.wayBillNo = wayBillNo;
         this.wayBillId = wayBillId;

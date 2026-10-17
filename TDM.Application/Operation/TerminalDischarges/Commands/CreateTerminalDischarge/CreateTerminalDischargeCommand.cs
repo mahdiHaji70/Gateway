@@ -8,7 +8,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDi
     public class CreateTerminalDischargeCommand : IRequest<Guid>
     {
         public string TerminalCode { get; set; }
-        public Guid CargoTypeId { get; set; }
         public Guid StoreId { get; set; }
         public Guid DeclarationItemId { get; set; }
         public string WayBillNo { get; set; }

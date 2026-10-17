@@ -20,7 +20,8 @@ namespace TDM.Infrastructure.Persistence.Repositories
            .AsNoTracking()
            .Include(x => x.Store)
            .Include(x => x.DeclarationItem)
-           .ThenInclude(x => x.Declaration);
+           .ThenInclude(x => x.Declaration)
+           .Include(x => x.DeclarationItem.CargoType);
           
             var totalCount = await query.CountAsync();
 
@@ -47,6 +48,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .Include(x => x.Store)
                         .Include(x => x.DeclarationItem)
                         .ThenInclude(x => x.Declaration)
+           .Include(x => x.DeclarationItem.CargoType)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<List<TerminalDischarge>?> GetByDeclarationIdAsync(Guid id)
@@ -91,6 +93,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
            .Include(x => x.Store)
            .Include(x => x.DeclarationItem)
            .ThenInclude(x => x.Declaration)
+           .Include(x => x.DeclarationItem.CargoType)
            .Where(x => x.DeclarationItem.Declaration.Id == declarationId);
 
 

@@ -34,6 +34,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
 
             var ipasTerminalDischargeRequest = SendIpasTerminalDischargeRequestMapper.Map(terminalDischarges);
             var response = await _terminalDischargeExternalService.SendIpasTerminalDischarge(ipasTerminalDischargeRequest);
+            
 
            terminalDischarges.Join(response,
            td => td.Id,
