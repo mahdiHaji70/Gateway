@@ -13,6 +13,7 @@ namespace TDM.Application.Common.Interfaces
         public Task<List<VesselDischarge>> GetByManifestItemIdAsync(Guid manifestItemId, CancellationToken cancellationToken = default);
         public Task<bool> ExistsByManifestContainerIdAsync(Guid manifestContainerId, CancellationToken cancellationToken = default);
         public Task<List<GroupedVesselDischargeDto>> GetGroupedAsync(
+            Guid manifestItemId,
             CancellationToken cancellationToken = default);
     }
 }

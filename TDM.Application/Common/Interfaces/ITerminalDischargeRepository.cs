@@ -15,7 +15,9 @@ namespace TDM.Application.Common.Interfaces
             Guid declarationId, int pageNumber, int pageSize);
         public Task<List<TerminalDischarge>> GetIpasSubmissionByIPASDeclarationNoAsync(string ipasDeclarationNo);
         public Task<List<TerminalDischarge>> GetByIssueRequestIdAsync(Guid issueRequestId);
-        public Task<List<GroupedTerminalDischargeDto>> GetGroupedWithoutVehicleNumberAsync(
+        public Task<List<GroupedTerminalDischargeDto>> GetGroupedAsync(
+            Guid declarationId,
+            Guid? issueRequestId,
             CancellationToken cancellationToken = default);
 
 

@@ -89,11 +89,13 @@ namespace TDM.Infrastructure.Persistence.Repositories
         }
 
         public async Task<List<GroupedVesselDischargeDto>> GetGroupedAsync(
+            Guid manifestItemId,
             CancellationToken cancellationToken = default)
         {
             return await _dbSet
                 .AsNoTracking()
-                .Where(x => x.IpasVesselDischargeId != null)
+                .Where(x => x.ManifestItemId == manifestItemId
+                    && x.IpasVesselDischargeId != null)
                 .GroupBy(x => new
                 {
                     x.TerminalCode,

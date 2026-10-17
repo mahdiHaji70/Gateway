@@ -123,12 +123,16 @@ namespace TDM.Infrastructure.Persistence.Repositories
                        .ToListAsync();
         }
 
-        public async Task<List<GroupedTerminalDischargeDto>> GetGroupedWithoutVehicleNumberAsync(
+        public async Task<List<GroupedTerminalDischargeDto>> GetGroupedAsync(
+            Guid declarationId,
+            Guid? issueRequestId,
             CancellationToken cancellationToken = default)
         {
             return await _dbSet
                 .AsNoTracking()
-                .Where(x => x.IpasTerminalDischargeId != null)
+                .Where(x => x.DeclarationItem.DeclarationId == declarationId
+                    && (!issueRequestId.HasValue || x.IssueRequestId == issueRequestId)
+                    && x.IpasTerminalDischargeId != null)
                 .GroupBy(x => new
                 {
                     DeclarationId = x.DeclarationItem.DeclarationId,
