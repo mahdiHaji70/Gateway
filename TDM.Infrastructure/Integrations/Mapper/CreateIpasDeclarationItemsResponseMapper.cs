@@ -39,7 +39,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     GrossWeight = Convert.ToDecimal(x.Weight),
                     NetWeight = Convert.ToDecimal(x.Weight),
                     HSCode = x.HsCode!,
-                    PackageCode = string.Empty,
+                    PackageCode = "VL",
                     CargoTypeId = Domain.Enums.CargoTypes.Bulk
                 }));
             }
