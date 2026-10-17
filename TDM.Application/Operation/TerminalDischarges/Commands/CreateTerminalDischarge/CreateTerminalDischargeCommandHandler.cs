@@ -25,7 +25,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDi
         {
             var terminalDischarge = new TerminalDischarge(
                                           request.TerminalCode,
-                                          request.CargoTypeId,
                                           request.StoreId,
                                           request.DeclarationItemId,
                                           request.WayBillNo,

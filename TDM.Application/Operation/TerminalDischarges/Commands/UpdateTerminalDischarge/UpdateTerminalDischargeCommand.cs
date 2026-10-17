@@ -9,7 +9,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDi
     {
         public Guid Id { get; set; }
         public string TerminalCode { get; set; }
-        public Guid CargoTypeId { get; set; }
         public Guid StoreId { get; set; }
         public Guid DeclarationItemId { get; set; }
         public string WayBillNo { get; set; }

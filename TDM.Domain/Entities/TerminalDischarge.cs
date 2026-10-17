@@ -42,7 +42,6 @@ namespace TDM.Domain.Entities
 
         public TerminalDischarge(
      string terminalCode,
-     Guid cargoTypeId,
      Guid storeId,
      Guid declarationItemId,
      string wayBillNo,

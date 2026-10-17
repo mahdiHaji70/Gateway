@@ -12,6 +12,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.SendIpasTerminal
             return new SendIpasTerminalDischargeRequest
             {
                 TerminalDischargeId=terminalDischarge.Id,
+                CargoTypeId = terminalDischarge.DeclarationItem.CargoTypeId,
                 TerminalCode = terminalDischarge.TerminalCode.ToString(),
                 IpasDeclarationNo = terminalDischarge.DeclarationItem.Declaration.IpasDeclarationNo,
                 WaybillId = terminalDischarge.WayBillId,

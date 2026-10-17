@@ -19,14 +19,12 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 export class DischargeComponent {
   id?: string;
   declarationItems: DropdownOption[] = [];
-  cargoTypes: DropdownOption[] = [];
   stores: DropdownOption[] = [];
   goodwayBillsRaw: any[] = [];
   goodwayBills: DropdownOption[] = [];
 
   form = new FormGroup({
     declarationItem: new FormControl<DropdownOption | undefined>(undefined),
-    cargoType: new FormControl<DropdownOption | undefined>(undefined),
     store: new FormControl<DropdownOption | undefined>(undefined),
     goodwayBill: new FormControl<DropdownOption | undefined>(undefined),
     dischargeDate: new FormControl<Date | undefined>(undefined),
@@ -57,7 +55,6 @@ export class DischargeComponent {
   }
   ngOnInit() {
     this.loadDeclarationItems();
-    this.loadCargoTypes();
     this.loadStores();
 
     this.route.params.subscribe((params: any) => {
@@ -68,7 +65,6 @@ export class DischargeComponent {
           
           this.form.setValue({
             declarationItem: new DropdownOption(res.data.declarationItemId, res.data.ipasDeclarationNo),
-            cargoType: new DropdownOption(res.data.cargoTypeId, res.data.cargoTypeName),
             store: new DropdownOption(res.data.storeId, res.data.storeName),
             goodwayBill: new DropdownOption(res.data.waybillId,
               `WayBiil No: ${res.data.waybillNo} , Vehicle Number: ${res.data.vehicleNumber}`),
@@ -97,15 +93,6 @@ export class DischargeComponent {
     this.declarationItemService.getAll().subscribe({
       next: (res: any) => {
         this.declarationItems = res.data.items.map((item: any) => new DropdownOption(item.id, item.ipasDeclarationNo));
-      },
-      error: (error: any) => { }
-    });
-  }
-
-  loadCargoTypes() {
-    this.basicInformationService.getAll('CargoTypes').subscribe({
-      next: (res: any) => {
-        this.cargoTypes = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -147,7 +134,6 @@ export class DischargeComponent {
 
     const discharge: Discharge = new Discharge(
       this.form.get('declarationItem')?.value!.id!,
-      this.form.get('cargoType')?.value!.id!,
       this.form.get('store')?.value!.id!,
       selectedGoodwayBill.waybillNo,
       selectedGoodwayBill.waybillId,

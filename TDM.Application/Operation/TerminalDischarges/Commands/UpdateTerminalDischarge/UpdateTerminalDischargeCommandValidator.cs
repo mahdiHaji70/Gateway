@@ -14,9 +14,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.UpdateTerminalDi
             RuleFor(x => x.TerminalCode)
            .NotEmpty();
 
-            RuleFor(x => x.CargoTypeId)
-                .NotEmpty();
-
             RuleFor(x => x.StoreId)
                 .NotEmpty();
 
