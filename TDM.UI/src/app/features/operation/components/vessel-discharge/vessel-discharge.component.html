@@ -4,11 +4,11 @@
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
                     <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'manifestItem'"
-                        [required]="true" (change)="loadManifestItem($event)"></app-drop-down>
+                        [required]="true" (selectionChange)="loadManifestItem($event)"></app-drop-down>
                 </div>
                 <div class="col-12 md:col-6 lg:col-4">
                     <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'"
-                        [required]="false" (change)="onContainerChange($event)"></app-drop-down>
+                        [required]="false" (selectionChange)="onContainerChange($event)"></app-drop-down>
                 </div>
                 <div class="col-12 md:col-6 lg:col-4">
                     <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'"

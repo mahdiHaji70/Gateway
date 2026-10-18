@@ -5,7 +5,7 @@
             <div class="col-12 md:col-6 lg:col-4">
                 <form [formGroup]="form" ngNativeValidate>
                     <app-drop-down [options]="voyages" [formGroup]="form" [controlName]="'voyage'" [required]="true"
-                        (change)="loadManifest($event)">
+                        (selectionChange)="loadManifest($event)">
                     </app-drop-down>
                 </form>
             </div>

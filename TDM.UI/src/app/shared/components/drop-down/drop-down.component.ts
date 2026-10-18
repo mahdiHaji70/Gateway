@@ -13,7 +13,7 @@ export class DropDownComponent {
   @Input() options?: any[];
   @Input() required: boolean = false;
   @Input() optionLabel: string = 'name';
-  @Output() change = new EventEmitter<boolean>();
+  @Output() selectionChange = new EventEmitter<any>();
 
   label?: string;
   selectedOption: any;
@@ -32,6 +32,6 @@ export class DropDownComponent {
 
   onChange(event: any) { 
     const value = event?.value ?? event?.target?.value;
-    this.change.emit(value);
+    this.selectionChange.emit(value);
   }
 }
