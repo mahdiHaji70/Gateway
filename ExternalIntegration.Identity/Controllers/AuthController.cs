@@ -65,15 +65,73 @@ namespace IntegratedIdentity.Controllers
                 return Unauthorized("Invalid credentials");
 
             var accessToken = _tokenService.GenerateAccessToken(user);
+            var refreshToken = _tokenService.GenerateRefreshToken();
 
-            //to do
-            var finalResult = new {
-                accessToken = accessToken,
-                refreshToken = string.Empty,
-                time = DateTimeOffset.UtcNow
-            };
+            user.RefreshTokenHash = TokenService.HashRefreshToken(refreshToken.Token);
+            user.RefreshTokenExpiresAt = refreshToken.ExpiresAt;
+            await _identityDbContext.SaveChangesAsync();
 
-            return Ok(finalResult);
+            return Ok(new TokenResponseDto
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = refreshToken.Token,
+                AccessTokenExpiresAt = accessToken.ExpiresAt.ToLocalTime(),
+                RefreshTokenExpiresAt = refreshToken.ExpiresAt.ToLocalTime()
+            });
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh(RefreshTokenRequestDto model)
+        {
+            if (string.IsNullOrWhiteSpace(model.RefreshToken))
+                return Unauthorized("Refresh token is required.");
+
+            var refreshTokenHash = TokenService.HashRefreshToken(model.RefreshToken);
+            var user = await _identityDbContext.User
+                .FirstOrDefaultAsync(x => x.RefreshTokenHash == refreshTokenHash);
+
+            if (user is null
+                || !user.IsActive
+                || !user.RefreshTokenExpiresAt.HasValue
+                || user.RefreshTokenExpiresAt.Value <= DateTime.UtcNow)
+            {
+                return Unauthorized("Refresh token is invalid or expired.");
+            }
+
+            var accessToken = _tokenService.GenerateAccessToken(user);
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            user.RefreshTokenHash = TokenService.HashRefreshToken(refreshToken.Token);
+            user.RefreshTokenExpiresAt = refreshToken.ExpiresAt;
+            await _identityDbContext.SaveChangesAsync();
+
+            return Ok(new TokenResponseDto
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = refreshToken.Token,
+                AccessTokenExpiresAt = accessToken.ExpiresAt.ToLocalTime(),
+                RefreshTokenExpiresAt = refreshToken.ExpiresAt.ToLocalTime()
+            });
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(RefreshTokenRequestDto model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.RefreshToken))
+            {
+                var refreshTokenHash = TokenService.HashRefreshToken(model.RefreshToken);
+                var user = await _identityDbContext.User
+                    .FirstOrDefaultAsync(x => x.RefreshTokenHash == refreshTokenHash);
+
+                if (user is not null)
+                {
+                    user.RefreshTokenHash = null;
+                    user.RefreshTokenExpiresAt = null;
+                    await _identityDbContext.SaveChangesAsync();
+                }
+            }
+
+            return NoContent();
         }
 
         [HttpGet("get_all_users")]

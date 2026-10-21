@@ -8,5 +8,7 @@ namespace IntegratedIdentity.Domain
         public required string NationalId { get; set; }        
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? RefreshTokenHash { get; set; }
+        public DateTime? RefreshTokenExpiresAt { get; set; }
     }
 }

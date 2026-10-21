@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace IntegratedIdentity.Service
@@ -15,10 +16,11 @@ namespace IntegratedIdentity.Service
             _config = config;
         }
 
-        public string GenerateAccessToken(User user)
+        public (string Token, DateTime ExpiresAt) GenerateAccessToken(User user)
         {
             var jwtSettings = _config.GetSection("Jwt");
             var lifetimeMinutes = jwtSettings.GetValue<int>("AccessTokenLifetimeMinutes", 480);
+            var expiresAt = DateTime.UtcNow.AddMinutes(lifetimeMinutes);
 
             var claims = new List<Claim>
         {
@@ -37,10 +39,23 @@ namespace IntegratedIdentity.Service
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(lifetimeMinutes),
+                expires: expiresAt,
                 signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return (new JwtSecurityTokenHandler().WriteToken(token), expiresAt);
+        }
+
+        public (string Token, DateTime ExpiresAt) GenerateRefreshToken()
+        {
+            var lifetimeDays = _config.GetSection("Jwt").GetValue<int>("RefreshTokenLifetimeDays", 30);
+            var bytes = RandomNumberGenerator.GetBytes(64);
+            return (Convert.ToBase64String(bytes), DateTime.UtcNow.AddDays(lifetimeDays));
+        }
+
+        public static string HashRefreshToken(string refreshToken)
+        {
+            var hash = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
+            return Convert.ToHexString(hash);
         }
     }
 }
