@@ -34,11 +34,23 @@ namespace TDM.Infrastructure.Integrations.Client
             return IpasIssueRequests;
         }
 
+        public async Task<bool> IsIssueRequestApproved(Guid requestId, CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<IssueRequestResponseDto>(
+                "TDM", "GetIssueRequestByRequestId", new { requestId }, cancellationToken);
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetIssueRequestByRequestId");
+            var issueRequest = response.Data
+                ?? throw new InvalidOperationException("Issue request not found.");
+
+            return issueRequest.IsApproved;
+        }
+
         public async Task<String> IssueRequestConfirmation(IssueRequestConfirmationRequest issueRequestConfirmationRequest, CancellationToken cancellationToken)
         {
             var issueRequestConfirmationDto = IssueRequestConfirmationMapper.Map(issueRequestConfirmationRequest);
 
-            var response = await _requestExecutor.PostAsync<string>("PMO", "IssueRequestConfirmation", issueRequestConfirmationDto);
+            var response = await _requestExecutor.PostAsync<string>("PMO", "IssueRequestConfirmation", issueRequestConfirmationDto, cancellationToken);
 
             ExternalResponseHelper.EnsureSuccess(response, "IssueRequestConfirmation");
             return response.Data;

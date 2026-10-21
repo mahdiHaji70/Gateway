@@ -4,6 +4,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Xml.Linq;
 using TDM.Domain.Common;
+using TDM.Domain.Enums;
 using TDM.Domain.Exceptions;
 
 namespace TDM.Domain.Entities
@@ -51,6 +52,7 @@ namespace TDM.Domain.Entities
      long packNB,
      decimal weight,
      decimal volume,
+     Guid cargoTypeId,
      bool isNonPalletized = false,
      bool isDamaged = false,
      bool isVoluminous = false,
@@ -62,7 +64,7 @@ namespace TDM.Domain.Entities
      Guid? issueRequestId = null,
      decimal unitWeight = 0)
      => SetProperty(terminalCode, storeId, declarationItemId, wayBillNo,
-                    wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
+                    wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume, cargoTypeId,
                     isNonPalletized, isDamaged, isVoluminous, isDangerous,
                     dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId, unitWeight);
 
@@ -77,6 +79,7 @@ namespace TDM.Domain.Entities
             long packNB,
             decimal weight,
             decimal volume,
+            Guid cargoTypeId,
             bool isNonPalletized = false,
             bool isDamaged = false,
             bool isVoluminous = false,
@@ -88,7 +91,7 @@ namespace TDM.Domain.Entities
             Guid? issueRequestId = null,
             decimal unitWeight = 0)
             => SetProperty(terminalCode, storeId, declarationItemId, wayBillNo,
-                           wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume,
+                           wayBillId, dischargeDate, vehicleNumber, packNB, weight, volume, cargoTypeId,
                            isNonPalletized, isDamaged, isVoluminous, isDangerous,
                            dangerousCode, classification, ignitionTemperature, ignitionTemperatureUnit, issueRequestId, unitWeight);
 
@@ -103,6 +106,7 @@ namespace TDM.Domain.Entities
             long packNB,
             decimal weight,
             decimal volume,
+            Guid cargoTypeId,
             bool isNonPalletized,
             bool isDamaged,
             bool isVoluminous,
@@ -116,7 +120,7 @@ namespace TDM.Domain.Entities
         {
             Validate(terminalCode, storeId, declarationItemId,
                      wayBillNo, wayBillId, dischargeDate, vehicleNumber,
-                     packNB, weight, volume, isDangerous, dangerousCode,
+                     packNB, weight, volume, cargoTypeId, isDangerous, dangerousCode,
                      ignitionTemperature, ignitionTemperatureUnit);
 
             TerminalCode = terminalCode;
@@ -143,14 +147,17 @@ namespace TDM.Domain.Entities
 
         public void SetIpasReceived(Guid ipasTerminalDischargeId, DateTime receivedAt)
         {
-            if (ipasTerminalDischargeId == Guid.Empty)
-                throw new DomainValidationException("IpasTerminalDischargeId is required.");
+            if (ipasTerminalDischargeId != Guid.Empty)
+            {
+                IpasTerminalDischargeId = ipasTerminalDischargeId;
+                IpasTerminalDischargeReceivedAt = receivedAt;
+            }
+        }
 
-            if (receivedAt == default)
-                throw new DomainValidationException("IpasTerminalDischargeReceivedAt is required.");
-
-            IpasTerminalDischargeId = ipasTerminalDischargeId;
-            IpasTerminalDischargeReceivedAt = receivedAt;
+        public void EnsureCanDelete()
+        {
+            if (IpasTerminalDischargeId.HasValue && IpasTerminalDischargeId.Value != Guid.Empty)
+                throw new DomainValidationException("Terminal discharge cannot be deleted after successful submission to IPAS.");
         }
 
         private void Validate(
@@ -164,6 +171,7 @@ namespace TDM.Domain.Entities
             long packNB,
             decimal weight,
             decimal volume,
+            Guid cargoTypeId,
             bool isDangerous,
             string dangerousCode,
             decimal ignitionTemperature,
@@ -196,8 +204,8 @@ namespace TDM.Domain.Entities
                 throw new DomainValidationException("DischargeDate cannot be in the future.");
 
 
-            if (packNB <= 0)
-                throw new DomainValidationException("PackNB cannot be negative.");
+            if (cargoTypeId != CargoTypes.Bulk && packNB <= 0)
+                throw new DomainValidationException("PackNB must be greater than zero for non-bulk cargo.");
 
             if (weight <= 0)
                 throw new DomainValidationException("Weight must be greater than zero.");

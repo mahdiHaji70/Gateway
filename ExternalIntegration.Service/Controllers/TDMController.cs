@@ -93,6 +93,13 @@ namespace ExternalIntegration.Service.Controllers
         {
             return await _tdmSyncService.GetStoreReceiptsLastDate(terminalCode);
         }
+        [HttpGet("GetIssueRequestByRequestId")]
+        public async Task<Response<IssueRequestDto>> GetIssueRequestByRequestId(
+            [FromQuery] Guid requestId, CancellationToken cancellationToken)
+        {
+            return await _tdmSyncService.GetIssueRequestByRequestId(requestId, cancellationToken);
+        }
+
         [HttpGet("GetIssueRequestById")]
         public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequestById([FromQuery] Guid id)
         {

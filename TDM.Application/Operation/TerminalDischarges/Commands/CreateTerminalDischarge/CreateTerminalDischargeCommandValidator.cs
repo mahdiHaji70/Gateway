@@ -34,9 +34,6 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDi
                 .NotEmpty()
                 .MaximumLength(20);
 
-            RuleFor(x => x.PackNB)
-                .GreaterThan(0);
-
             RuleFor(x => x.Weight)
                 .GreaterThan(0);
 

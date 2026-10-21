@@ -29,11 +29,18 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .Where(t => t.StorageAgreementNo == storageAgreementNo &&
                               t.IsApproved == false).ToListAsync();
         }
-        public async void UpdateIssueRequestApprovalAsync(Guid requestId, bool isApproved)
+        public async Task UpdateIssueRequestApprovalAsync(Guid requestId, bool isApproved)
         {
-            var record = _IssueRequestDbSet.FirstOrDefault(t => t.RequestId == requestId);
+            var record = await _IssueRequestDbSet.FirstOrDefaultAsync(t => t.RequestId == requestId)
+                ?? throw new InvalidOperationException("Issue request not found.");
             record.IsApproved = isApproved;
             _IssueRequestDbSet.Update(record);
+        }
+
+        public async Task<IssueRequest?> GetByRequestIdAsync(Guid requestId, CancellationToken cancellationToken = default)
+        {
+            return await _IssueRequestDbSet.AsNoTracking()
+                .FirstOrDefaultAsync(t => t.RequestId == requestId, cancellationToken);
         }
 
         public  async Task<List<IssueRequest>> GetByIdNoAsync(Guid id)

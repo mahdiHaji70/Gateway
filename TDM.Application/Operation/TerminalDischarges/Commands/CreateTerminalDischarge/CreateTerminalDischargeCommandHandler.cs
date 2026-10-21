@@ -12,17 +12,23 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDi
     {
         private readonly IRepository<TerminalDischarge> _TerminalDischargeRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepository<DeclarationItem> _declarationItemRepository;
 
         public CreateTerminalDischargeCommandHandler(IUnitOfWork unitOfWork
-            , IRepository<TerminalDischarge> TerminalDischargeRepository)
+            , IRepository<TerminalDischarge> TerminalDischargeRepository
+            , IRepository<DeclarationItem> declarationItemRepository)
         {
             _unitOfWork = unitOfWork;
             _unitOfWork = unitOfWork;
             _TerminalDischargeRepository = TerminalDischargeRepository;
+            _declarationItemRepository = declarationItemRepository;
         }
 
         public async Task<Guid> Handle(CreateTerminalDischargeCommand request, CancellationToken cancellationToken)
         {
+            var declarationItem = await _declarationItemRepository.GetAsync(request.DeclarationItemId)
+                ?? throw new Exception("Declaration item not found");
+
             var terminalDischarge = new TerminalDischarge(
                                           request.TerminalCode,
                                           request.StoreId,
@@ -34,6 +40,7 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.CreateTerminalDi
                                           request.PackNB,
                                           request.Weight,
                                           request.Volume,
+                                          declarationItem.CargoTypeId,
                                           request.IsNonPalletized,
                                           request.IsDamaged,
                                           request.IsVoluminous,
