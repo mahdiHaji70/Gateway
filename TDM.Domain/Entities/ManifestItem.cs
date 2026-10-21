@@ -38,6 +38,9 @@ namespace TDM.Domain.Entities
         public ICollection<VesselDischarge> ManifestItemVesselDischarges { get; private set; }
             = new List<VesselDischarge>();
 
+        public ICollection<StoreReceiptHead> StoreReceiptHeads { get; private set; }
+            = new List<StoreReceiptHead>();
+
         private ManifestItem()
         {
         }

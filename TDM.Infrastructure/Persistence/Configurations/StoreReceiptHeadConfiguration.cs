@@ -50,6 +50,11 @@ namespace TDM.Infrastructure.Persistence.Configurations
          .HasForeignKey(c => c.ArrivalTypeId)
          .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(c => c.ManifestItem)
+                .WithMany(cn => cn.StoreReceiptHeads)
+                .HasForeignKey(c => c.ManifestItemId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 

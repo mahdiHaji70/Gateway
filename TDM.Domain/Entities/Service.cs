@@ -7,6 +7,7 @@ namespace TDM.Domain.Entities
     {
         public string Name { get; set; }
         public string Code { get; set; }
+        public ICollection<StoreReceiptOperation> StoreReceiptOperations { get; private set; } = new List<StoreReceiptOperation>();
 
         public Service(string name, string code)
         {
