@@ -10,6 +10,12 @@
         public string No { get; set; }
         public DateTime Date { get; set; }
         public DateTime? CreationDate { get; set; }
+        public string? TrackingId { get; set; }
+        public DateTime? ExpirationDate { get; set; }
+        public int? GoodClassification { get; set; }
+        public string? VoyageNoticeNo { get; set; }
+        public int? ArrivalType { get; set; }
+        public string? LocalNo { get; set; }
         public DateTime? InquiryLastTryDate { get; set; }
         public int InquiryState { get; set; }
         public string InquiryStateName { get; set; }
