@@ -22,11 +22,8 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConf
         public async Task<string> Handle(IssueRequestConfirmationCommand request, CancellationToken cancellationToken)
         {
             if (await _issueRequestExternalService.IsIssueRequestApproved(request.RequestId, cancellationToken))
-                throw new ValidationException(new[]
-                {
-                    new ValidationFailure(nameof(request.RequestId),
-                        "This request has already been approved and submitted. It cannot be submitted again.")
-                });
+                throw new Exception("This request has already been approved and submitted. It cannot be submitted again.");
+        
 
             var result =
                 await _issueRequestExternalService.IssueRequestConfirmation(new IssueRequestConfirmationRequest
