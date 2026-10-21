@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConfirmation
 {
@@ -19,6 +21,13 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConf
 
         public async Task<string> Handle(IssueRequestConfirmationCommand request, CancellationToken cancellationToken)
         {
+            if (await _issueRequestExternalService.IsIssueRequestApproved(request.RequestId, cancellationToken))
+                throw new ValidationException(new[]
+                {
+                    new ValidationFailure(nameof(request.RequestId),
+                        "This request has already been approved and submitted. It cannot be submitted again.")
+                });
+
             var result =
                 await _issueRequestExternalService.IssueRequestConfirmation(new IssueRequestConfirmationRequest
                 {
@@ -26,7 +35,7 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConf
                     TerminalCode = request.TerminalCode,
                     Description = request.Description,
                     IsApproved = request.IsApproved
-                });
+                }, cancellationToken);
 
             return result;
         }

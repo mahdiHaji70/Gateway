@@ -8,6 +8,7 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface IIssueRequestStoreReceiptExternalService
     {
+        Task<bool> IsIssueRequestApproved(Guid requestId, CancellationToken cancellationToken = default);
        Task<List<IpasIssueRequestStoreReceiptResponse>> GetIssueReceiptStoreReceipts(string ipasDeclarationNo, CancellationToken cancellationToken = default);
         Task<String> IssueRequestConfirmation(IssueRequestConfirmationRequest issueRequestConfirmationRequest, CancellationToken cancellationToken = default);
         Task<List<IpasIssueRequestStoreReceiptResponse>> GetIssueReceiptById(Guid id, CancellationToken cancellationToken = default);
