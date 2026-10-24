@@ -40,10 +40,8 @@ namespace TDM.Infrastructure.Integrations.Client
                 "TDM", "GetIssueRequestByRequestId", new { requestId }, cancellationToken);
 
             ExternalResponseHelper.EnsureSuccess(response, "GetIssueRequestByRequestId");
-            var issueRequest = response.Data
-                ?? throw new InvalidOperationException("Issue request not found.");
 
-            return issueRequest.IsApproved;
+            return response.Data!.IsApproved;
         }
 
         public async Task<String> IssueRequestConfirmation(IssueRequestConfirmationRequest issueRequestConfirmationRequest, CancellationToken cancellationToken)

@@ -25,10 +25,10 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         public string StoreReceiptStateCode { get; set; }
         public string StoreReceiptStateName { get; set; }
         public Guid? RequestId { get; set; }
-        public string VoyageNoticeNo { get; set; }
+        public string? VoyageNoticeNo { get; set; }
         public Guid ArrivalTypeId { get; set; }
-        public string ArrivalTypeCode { get; set; }
-        public string ArrivalTypeName { get; set; }
+        public string? ArrivalTypeCode { get; set; }
+        public string? ArrivalTypeName { get; set; }
         public Guid? DeclarationId { get; set; }
         public Guid? ManifestItemId { get; set; }
         public List<CreateStoreReceiptGoodCommand> StoreReceiptGoods { get;  set; } 
@@ -58,8 +58,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         public Guid CommodityId { get; set; }
         public string HsCode { get; set; }
         public Guid PackageId { get; set; }
-        public string PackageTypeCode { get; set; }
-        public string BrandName { get; set; }
+        public string? PackageTypeCode { get; set; }
+        public string? BrandName { get; set; }
         public bool NoBrandName { get; set; }
         public decimal PackNB { get; set; }
         public decimal GrossWeight { get; set; }
@@ -79,8 +79,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         public Guid CommodityId { get; set; }
         public string HsCode { get; set; }
         public Guid PackageId { get; set; }
-        public string PackageTypeCode { get; set; }
-        public string BrandName { get; set; }
+        public string? PackageTypeCode { get; set; }
+        public string? BrandName { get; set; }
         public bool NoBrandName { get; set; }
         public decimal PackNB { get; set; }
         public decimal GrossWeight { get; set; }

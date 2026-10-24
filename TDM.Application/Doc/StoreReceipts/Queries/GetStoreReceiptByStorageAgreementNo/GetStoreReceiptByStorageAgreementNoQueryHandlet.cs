@@ -31,9 +31,9 @@ namespace TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgre
                 throw new Exception("Declaration not found");
 
             var ipasStoreReceipts =
-                await _storeReceiptExternalService.GetStoreReceipts(request.ipasDeclarationNo);
+                await _storeReceiptExternalService.GetStoreReceipts(request.ipasDeclarationNo, cancellationToken);
 
-            return _mapper.Map<IEnumerable<StoreReceiptHeadDto>>(ipasStoreReceipts);
+            return _mapper.Map<List<StoreReceiptHeadDto>>(ipasStoreReceipts);
         }
 
     }

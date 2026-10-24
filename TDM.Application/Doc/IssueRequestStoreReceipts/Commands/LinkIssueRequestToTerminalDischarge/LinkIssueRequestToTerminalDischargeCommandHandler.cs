@@ -5,6 +5,7 @@ using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.IssueRequestStoreReceipt.Commands.IssueRequestConfirmation;
 using TDM.Domain.Entities;
+using TDM.Domain.Enums;
 
 namespace TDM.Application.Doc.IssueRequestStoreReceipts.Commands.LinkIssueRequestToTerminalDischarge
 {
@@ -49,7 +50,8 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipts.Commands.LinkIssueReques
                 var terminalDischarge =
                     terminalDischarges.FirstOrDefault(x =>
                         x.IssueRequestId == null &&
-                        x.DeclarationItem.Package.Code == item.PackageType &&
+                        (x.DeclarationItem.CargoTypeId == CargoTypes.Bulk ||
+                         x.DeclarationItem.Package.Code == item.PackageTypeCode) &&
                         x.PackNB == item.PackageQuantity &&
                         Math.Abs(x.Weight - item.Weight) < 0.001m
                     );
@@ -57,7 +59,7 @@ namespace TDM.Application.Doc.IssueRequestStoreReceipts.Commands.LinkIssueReques
                 if (terminalDischarge == null)
                     throw new Exception(
                                 $"TerminalDischarge matching the issue request item was not found. " +
-                                $"PackageType: {item.PackageType}, " +
+                                $"PackageTypeCode: '{item.PackageTypeCode}' (not checked for Bulk cargo), " +
                                 $"PackageQuantity: {item.PackageQuantity}, " +
                                 $"Weight: {item.Weight}");
 

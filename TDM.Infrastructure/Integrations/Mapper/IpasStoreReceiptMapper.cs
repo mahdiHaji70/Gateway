@@ -37,6 +37,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 StoreReceiptStateCode = dto.State.ToString(),
                 StoreReceiptStateName = dto.StateName,
                 RequestId = dto.RequestId,
+                VoyageNoticeNo = dto.VoyageNoticeNo,
                 StoreReceiptGoods = MapGoods(dto),
                 StoreReceiptContainers = MapContainers(dto)
             };
@@ -45,7 +46,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
 
         private static List<StoreReceiptGoodDto> MapGoods(IpasStoreReceiptResponseDto dto)
         {
-            return dto.GeneralCargoList?.Select(cargo => new StoreReceiptGoodDto
+            return (dto.GeneralCargoList?.Select(cargo => new StoreReceiptGoodDto
             {
                 HsCode = cargo.HsCode,
                 PackageTypeCode = cargo.PackageTypeCode,
@@ -68,11 +69,13 @@ namespace TDM.Infrastructure.Integrations.Mapper
                 Classification = cargo.DangerousSpecification?.Classification,
                 IgnitionTemperature = cargo.DangerousSpecification?.IgnitionTemperature ?? 0,
                 IgnitionTemperatureUnit = cargo.DangerousSpecification?.IgnitionTemperatureUnit
-            }).Concat(
+            }) ?? Enumerable.Empty<StoreReceiptGoodDto>()).Concat(
                 dto.BulkList?.Select(bulk => new StoreReceiptGoodDto
                 {
                     HsCode = bulk.HsCode,
                     CommodityName = bulk.Description,
+                    PackageTypeCode = "VL",
+                    NoBrandName = true,
                     PackNB = 0,
                     GrossWeight = bulk.Weight,
                     NetWeight = bulk.Weight,
@@ -85,7 +88,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     IgnitionTemperature = bulk.DangerousSpecification?.IgnitionTemperature ?? 0,
                     IgnitionTemperatureUnit = bulk.DangerousSpecification?.IgnitionTemperatureUnit
                 }) ?? Enumerable.Empty<StoreReceiptGoodDto>())
-                .ToList() ?? new List<StoreReceiptGoodDto>();
+                .ToList();
         }
 
         private static List<StoreReceiptContainerDto> MapContainers(IpasStoreReceiptResponseDto dto)

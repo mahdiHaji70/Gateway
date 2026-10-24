@@ -1,5 +1,6 @@
 ﻿using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Domain.Entities;
+
 using ExternalIntegration.Service.Infrastructure.Persistence.Context;
 using ExternalIntegration.Service.Sync.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +32,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         }
         public async Task UpdateIssueRequestApprovalAsync(Guid requestId, bool isApproved)
         {
-            var record = await _IssueRequestDbSet.FirstOrDefaultAsync(t => t.RequestId == requestId)
-                ?? throw new InvalidOperationException("Issue request not found.");
+            var record = await _IssueRequestDbSet.FirstOrDefaultAsync(t => t.RequestId == requestId);
             record.IsApproved = isApproved;
             _IssueRequestDbSet.Update(record);
         }
@@ -43,7 +43,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(t => t.RequestId == requestId, cancellationToken);
         }
 
-        public  async Task<List<IssueRequest>> GetByIdNoAsync(Guid id)
+        public async Task<List<IssueRequest>> GetByIdNoAsync(Guid id)
         {
             return await _IssueRequestDbSet
                 .AsNoTracking()

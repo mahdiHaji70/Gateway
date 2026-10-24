@@ -6,6 +6,7 @@ using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt;
 using TDM.Domain.Entities;
 using System.Linq;
+using TDM.Application.Common.Exceptions;
 
 namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 {
@@ -106,7 +107,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 trafficId,
                 stateId,
                 request.RequestId,
-                request.VoyageNoticeNo,
+                request.VoyageNoticeNo ?? string.Empty,
                 arrivalTypeId,
                 request.DeclarationId,
                 request.ManifestItemId);
@@ -120,7 +121,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 receipt.AddGood(
                     commodityId,
                     packageId,
-                    goodRequest.BrandName,
+                    goodRequest.BrandName ?? string.Empty,
                     goodRequest.NoBrandName,
                     goodRequest.PackNB,
                     goodRequest.GrossWeight,
@@ -161,7 +162,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                     container.AddGood(
                         commodityId,
                         packageId,
-                        goodRequest.BrandName,
+                        goodRequest.BrandName ?? string.Empty,
                         goodRequest.NoBrandName,
                         goodRequest.PackNB,
                         goodRequest.GrossWeight,
@@ -200,12 +201,12 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             var operationType = (await _operationTypeRepository.GetAllAsync())
                 ?.FirstOrDefault(x => string.Equals(x.Code, "PRT", StringComparison.OrdinalIgnoreCase));
             if (operationType == null)
-                throw new InvalidOperationException("Operation type was not found for code 'PRT'.");
+                throw new NotFoundException("Operation type with code 'PRT'");
 
             var service = (await _serviceRepository.GetAllAsync())
                 ?.FirstOrDefault(x => string.Equals(x.Code, "DIS", StringComparison.OrdinalIgnoreCase));
             if (service == null)
-                throw new InvalidOperationException("Service was not found for code 'DIS'.");
+                throw new NotFoundException("Service with code 'DIS'");
 
             if (request.ArrivalTypeCode == "0")
             {
@@ -290,7 +291,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 throw new InvalidOperationException($"{field} id or national id is required.");
 
             var companies = await _companyRepository.GetByNationalIdsAsync(new[] { nationalId }, cancellationToken);
-            return companies.FirstOrDefault()?.Id ?? throw new InvalidOperationException($"{field} was not found for national id '{nationalId}'.");
+            return companies.FirstOrDefault()?.Id ?? throw new NotFoundException($"{field} with national id '{nationalId}'");
         }
 
         private async Task<Guid> ResolveTrafficIdAsync(Guid id, string code, CancellationToken cancellationToken)
@@ -301,7 +302,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 throw new InvalidOperationException("Traffic id or traffic code is required.");
 
             var traffic = (await _trafficRepository.GetByCodesAsync(new[] { code }, cancellationToken)).FirstOrDefault();
-            return traffic?.Id ?? throw new InvalidOperationException($"Traffic was not found for code '{code}'.");
+            return traffic?.Id ?? throw new NotFoundException($"Traffic with code '{code}'");
         }
 
         private async Task<Guid> ResolveStateIdAsync(Guid id, string code, string name, CancellationToken cancellationToken)
@@ -310,7 +311,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             {
                 var statesByCode = await _storeReceiptStateRepository.GetAllAsync();
                 var stateByCode = statesByCode?.FirstOrDefault(x => string.Equals(x.Code, code, StringComparison.OrdinalIgnoreCase));
-                return stateByCode?.Id ?? throw new InvalidOperationException($"Store receipt state was not found for code '{code}'.");
+                return stateByCode?.Id ?? throw new NotFoundException($"Store receipt state with code '{code}'");
             }
 
             if (id != Guid.Empty)
@@ -320,7 +321,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 
             var states = await _storeReceiptStateRepository.GetAllAsync();
             var state = states?.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
-            return state?.Id ?? throw new InvalidOperationException($"Store receipt state was not found for name '{name}'.");
+            return state?.Id ?? throw new NotFoundException($"Store receipt state with name '{name}'");
         }
 
         private async Task<Guid> ResolveArrivalTypeIdAsync(Guid id, string code, string name, CancellationToken cancellationToken)
@@ -329,7 +330,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             {
                 var arrivalTypesByCode = await _arrivalTypeRepository.GetAllAsync();
                 var arrivalTypeByCode = arrivalTypesByCode?.FirstOrDefault(x => string.Equals(x.Code, code, StringComparison.OrdinalIgnoreCase));
-                return arrivalTypeByCode?.Id ?? throw new InvalidOperationException($"Arrival type was not found for code '{code}'.");
+                return arrivalTypeByCode?.Id ?? throw new NotFoundException($"Arrival type with code '{code}'");
             }
 
             if (id != Guid.Empty)
@@ -339,7 +340,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 
             var arrivalTypes = await _arrivalTypeRepository.GetAllAsync();
             var arrivalType = arrivalTypes?.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
-            return arrivalType?.Id ?? throw new InvalidOperationException($"Arrival type was not found for name '{name}'.");
+            return arrivalType?.Id ?? throw new NotFoundException($"Arrival type with name '{name}'");
         }
 
         private static Guid ResolveCommodityId(Guid id, string hsCode, IReadOnlyDictionary<string, Commodity> commodities)
@@ -348,7 +349,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 return id;
             if (!string.IsNullOrWhiteSpace(hsCode) && commodities.TryGetValue(hsCode, out var commodity))
                 return commodity.Id;
-            throw new InvalidOperationException($"Commodity was not found for HS code '{hsCode}'.");
+            throw new NotFoundException($"Commodity with HS code '{hsCode}'");
         }
 
         private static Guid ResolvePackageId(Guid id, string code, IReadOnlyDictionary<string, Package> packages)
@@ -357,7 +358,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 return id;
             if (!string.IsNullOrWhiteSpace(code) && packages.TryGetValue(code, out var package))
                 return package.Id;
-            throw new InvalidOperationException($"Package was not found for code '{code}'.");
+            throw new NotFoundException($"Package with code '{code}'");
         }
 
         private static Guid ResolveContainerId(CreateStoreReceiptContainerCommand request, IReadOnlyDictionary<string, Container> containers)
@@ -367,7 +368,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             var key = $"{request.ContainerNo}|{request.ContainerTypeAndSizeCode}";
             if (containers.TryGetValue(key, out var container))
                 return container.Id;
-            throw new InvalidOperationException($"Container was not found for no '{request.ContainerNo}' and type code '{request.ContainerTypeAndSizeCode}'.");
+            throw new NotFoundException($"Container with no '{request.ContainerNo}' and type code '{request.ContainerTypeAndSizeCode}'");
         }
     }
 
