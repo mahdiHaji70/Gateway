@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
   styleUrl: './vessel-list.component.scss'
 })
 export class VesselListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   vessels: Vessel[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class VesselListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadVessels();
-  }
-
-  loadVessels() {
-    this.basicInformationService.getAll('Vessel').subscribe({
+  loadVessels(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('Vessel', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.vessels = res.data.map((item: any) => new Vessel(item.name, item.imoNumber, item.storeCount, item.grt, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadVessels(pageNumber, event.rows);
   }
 
   onAdd() {

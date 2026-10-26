@@ -11,6 +11,10 @@ import { City, CityDto } from '../../../models/city.model';
   styleUrl: './city-list.component.scss'
 })
 export class CityListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   cities: CityDto[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class CityListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadCities();
-  }
-
-  loadCities() {
-    this.basicInformationService.getAll('cities').subscribe({
+  loadCities(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('cities', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.cities = res.data.items.map((item: any) => new CityDto(item.code, item.name, item.countryCode, item.countryName, item.countryId, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadCities(pageNumber, event.rows);
   }
 
   onAdd() {

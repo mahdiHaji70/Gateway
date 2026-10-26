@@ -25,8 +25,7 @@ function withAccessToken(request: HttpRequest<unknown>, token: string) {
   });
 }
 
-export const authInterceptor: HttpInterceptorFn = (request, next) => {
-  debugger
+export const authInterceptor: HttpInterceptorFn = (request, next) => {  
   const authService = inject(AuthService);
   const router = inject(Router);
   const accessToken = authService.getAccessToken();
@@ -36,7 +35,6 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
 
   return next(authenticatedRequest).pipe(
     catchError((error: HttpErrorResponse) => {
-      debugger;
       if (error.status !== 401 || isAuthenticationRequest(request.url)) {
         return throwError(() => error);
       }

@@ -9,8 +9,8 @@ export class DischargeService {
 
   constructor(private apiService: ApiService) { }
 
-  getDischarges(): Observable<any> {
-    let _url = ApiEndpoints.Terminal_Discharges;
+  getDischarges(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
+    let _url = ApiEndpoints.Terminal_Discharges + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.apiService.get(_url);
   }
 

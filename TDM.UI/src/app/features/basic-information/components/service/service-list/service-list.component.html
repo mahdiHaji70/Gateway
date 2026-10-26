@@ -4,7 +4,13 @@
         <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadServices()" />
     </ng-template>
 </p-toolbar>
-<p-table [value]="services" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="services" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr><th>Code</th><th>Name</th><th>Actions</th></tr>
     </ng-template>

@@ -11,6 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './container-type-and-size-list.component.scss'
 })
 export class ContainerTypeAndSizeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   containerTypes: ContainerTypeAndSize[] = [];
 
     /**
@@ -21,19 +25,22 @@ export class ContainerTypeAndSizeListComponent {
       private messageService: MessageService,
       private confirmationService: ConfirmationService) {
     }
-  
-    ngOnInit() {
-      this.loadContainerTypesAndSizes();
-    }
-  
-    loadContainerTypesAndSizes(){
-      this.basicInformationService.getAll('ContainerTypesAndSizes').subscribe({
+    loadContainerTypesAndSizes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+      this.basicInformationService.getAll('ContainerTypesAndSizes', pageNumber, pageSize).subscribe({
         next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
           this.containerTypes = res.data.items.map((item: any) => new ContainerTypeAndSize(item.typeAndSizeCode, item.typeAndSize, item.id));
         },
         error: (error: any) => { }
       });
     }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadContainerTypesAndSizes(pageNumber, event.rows);
+  }
 
     onAdd(){
       this.router.navigate(['/container-type-and-size']);

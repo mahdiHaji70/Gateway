@@ -12,6 +12,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './operation-type-list.component.scss'
 })
 export class OperationTypeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
 operationTypes: OperationType[] = [];
 
   /**
@@ -22,18 +26,21 @@ operationTypes: OperationType[] = [];
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadOperationTypes();
-  }
-
-  loadOperationTypes(){
-    this.basicInformationService.getAll('OperationTypes').subscribe({
+  loadOperationTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('OperationTypes', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.operationTypes = res.data.items.map((item: any) => new OperationType(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadOperationTypes(pageNumber, event.rows);
   }
 
   onAdd(){

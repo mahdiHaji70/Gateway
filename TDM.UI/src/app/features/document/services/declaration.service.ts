@@ -9,8 +9,8 @@ export class DeclarationService {
 
   constructor(private apiService: ApiService) { }
 
-  getDeclarations(): Observable<any> {
-    let _url = ApiEndpoints.Declarations;
+  getDeclarations(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
+    let _url = ApiEndpoints.Declarations + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.apiService.get(_url);
   }
 

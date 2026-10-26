@@ -11,6 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './user-terminal-list.component.scss'
 })
 export class UserTerminalListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   userTerminals: UserTerminalFull[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class UserTerminalListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadUserTerminals();
-  }
-
-  loadUserTerminals() {
-    this.basicInformationService.getAll('UsersTerminal').subscribe({
+  loadUserTerminals(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('UsersTerminal', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.userTerminals = res.data.items.map((item: any) => new UserTerminalFull(item.userNationalId, item.terminalId, item.terminalName, item.terminalCode, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadUserTerminals(pageNumber, event.rows);
   }
 
   onAdd() {

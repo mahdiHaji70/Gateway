@@ -9,8 +9,8 @@ export class WeighBridgeService {
 
   constructor(private apiService: ApiService) { }
 
-  getWeighBridges(): Observable<any> {
-    let _url = ApiEndpoints.Weight_Bridge + '/GetAll';
+  getWeighBridges(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
+    let _url = ApiEndpoints.Weight_Bridge + '/GetAll' + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.apiService.get(_url);
   }
 

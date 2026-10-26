@@ -11,6 +11,10 @@ import { VesselDischargeFull } from '../../../models/vessel-discharge-full.model
   styleUrl: './vessel-discharge-list.component.scss'
 })
 export class VesselDischargeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   vesselDischarges: VesselDischargeFull[] = [];
 
   constructor(
@@ -18,14 +22,12 @@ export class VesselDischargeListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private vesselDischargeService: VesselDischargeService) { }
-
-  ngOnInit() {
-    this.loadVesselDischarges();
-  }
-
-  loadVesselDischarges() {
-    this.vesselDischargeService.getVesselDischarges().subscribe({
+  loadVesselDischarges(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.vesselDischargeService.getVesselDischarges(pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.vesselDischarges = (res.data?.items || []).map((item: any) => ({
           id: item.id,
           manifestItemNo: item.manifestItemNo,
@@ -43,6 +45,11 @@ export class VesselDischargeListComponent {
     });
   }
 
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadVesselDischarges(pageNumber, event.rows);
+  }
   onAdd() {
     this.router.navigate(['/operation/vessel-discharge']);
   }

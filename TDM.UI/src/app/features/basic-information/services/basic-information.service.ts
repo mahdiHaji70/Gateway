@@ -9,8 +9,8 @@ export class BasicInformationService {
 
   constructor(private apiService: ApiService) { }
 
-  getAll(path: string): Observable<any>{
-    let _url = ApiEndpoints.BASE_URL + `/${path}?pageNumber=1&pageSize=10`;
+  getAll(path: string, pageNumber: number = 1, pageSize: number = 10): Observable<any>{
+    let _url = ApiEndpoints.BASE_URL + `/${path}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.apiService.get(_url);
   }
 

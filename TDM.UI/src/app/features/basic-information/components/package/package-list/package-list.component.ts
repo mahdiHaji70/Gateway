@@ -11,6 +11,10 @@ import { Package } from '../../../models/package.model';
   styleUrl: './package-list.component.scss'
 })
 export class PackageListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   packages: Package[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class PackageListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadPackages();
-  }
-
-  loadPackages(){
-    this.basicInformationService.getAll('packages').subscribe({
+  loadPackages(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('packages', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.packages = res.data.items.map((item: any) => new Package(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadPackages(pageNumber, event.rows);
   }
 
   onAdd(){

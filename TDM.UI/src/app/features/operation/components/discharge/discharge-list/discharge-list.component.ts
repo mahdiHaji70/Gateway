@@ -11,6 +11,10 @@ import { DischargeService } from '../../../services/discharge.service';
   styleUrl: './discharge-list.component.scss'
 })
 export class DischargeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   discharges: DischargeFull[] = [];
 
   /**
@@ -21,14 +25,12 @@ export class DischargeListComponent {
     private confirmationService: ConfirmationService,
     private dischargeService: DischargeService) {
   }
-
-  ngOnInit() {
-    this.loadDischarges();
-  }
-
-  loadDischarges() {
-    this.dischargeService.getDischarges().subscribe({
+  loadDischarges(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.dischargeService.getDischarges(pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.discharges = res.data.items.map((item: any) => new DischargeFull(item.declarationId, item.ipasDeclarationNo, item.dischargeDate, item.vehicleNumber,
           item.wayBillNo, item.storeId, item.storeName, item.packNB, item.weight, item.volume, item.id));
       },
@@ -36,6 +38,11 @@ export class DischargeListComponent {
     });
   }
 
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadDischarges(pageNumber, event.rows);
+  }
   onAdd() {
     this.router.navigate(['/operation/discharge']);
   }

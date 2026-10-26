@@ -11,6 +11,10 @@ import { BasicInformationService } from '../../../services/basic-information.ser
   styleUrl: './service-list.component.scss'
 })
 export class ServiceListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   services: Service[] = [];
 
   constructor(
@@ -18,18 +22,21 @@ export class ServiceListComponent {
     private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
-
-  ngOnInit() {
-    this.loadServices();
-  }
-
-  loadServices() {
-    this.basicInformationService.getAll('Services').subscribe({
+  loadServices(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('Services', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.services = res.data.items.map((item: any) => new Service(item.code, item.name, item.id));
       },
       error: (error: any) => showApiError(this.messageService, error)
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadServices(pageNumber, event.rows);
   }
 
   onAdd() { this.router.navigate(['/service']); }

@@ -12,8 +12,8 @@ export class ManifestService {
     private localStorageService: LocalStorageService
   ) { }
 
-  getManifests(): Observable<any> {
-    let _url = ApiEndpoints.Manifests;
+  getManifests(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
+    let _url = ApiEndpoints.Manifests + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.apiService.get(_url);
   }
 

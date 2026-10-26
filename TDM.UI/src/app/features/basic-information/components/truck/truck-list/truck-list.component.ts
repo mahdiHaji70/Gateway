@@ -11,6 +11,10 @@ import { Truck } from '../../../models/truck.model';
   styleUrl: './truck-list.component.scss'
 })
 export class TruckListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
 trucks: Truck[] = [];
 
   /**
@@ -21,18 +25,21 @@ trucks: Truck[] = [];
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadTrucks();
-  }
-
-  loadTrucks() {
-    this.basicInformationService.getAll('Truck').subscribe({
+  loadTrucks(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('Truck', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.trucks = res.data.map((item: any) => new Truck(item.leftSide, item.charecter, item.rightSide, item.serial, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadTrucks(pageNumber, event.rows);
   }
 
   onAdd() {

@@ -11,6 +11,9 @@ import { DeclarationFull } from '../../../models/declaration-full.model';
 })
 export class DeclarationListComponent {
   declarations: DeclarationFull[] = [];
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
 
   /**
    *
@@ -21,12 +24,15 @@ export class DeclarationListComponent {
   }
 
   ngOnInit() {
-    this.loadDeclarations();
   }
 
-  loadDeclarations() {
-    this.declarationService.getDeclarations().subscribe({
+  loadDeclarations(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+
+    this.declarationService.getDeclarations(pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.declarations = res.data.items.map((item: any) => 
           new DeclarationFull(item.id!, item.number, item.date, item.startDate, item.endDate, item.trafficId,
             item.trafficName, item.consigneeId, item.consigneeName, item.description, item.ipasDeclarationNo,
@@ -34,6 +40,11 @@ export class DeclarationListComponent {
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadDeclarations(pageNumber, event.rows);
   }
 
   onAdd() {

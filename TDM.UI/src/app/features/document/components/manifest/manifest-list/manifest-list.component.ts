@@ -10,6 +10,10 @@ import { ManifestFull } from '../../../models/manifest-full.model';
   styleUrl: './manifest-list.component.scss'
 })
 export class ManifestListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   manifests: ManifestFull[] = [];
 
   /**
@@ -20,18 +24,20 @@ export class ManifestListComponent {
     private manifestService: ManifestService) {
   }
 
-  ngOnInit(){
-    this.loadManifests();
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadManifests(pageNumber, event.rows);
   }
-
-
   onFetchingManifests() {
     this.router.navigate(['/document/manifest']);
   }
 
-  loadManifests() {
-    this.manifestService.getManifests().subscribe({
+  loadManifests(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.manifestService.getManifests(pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.manifests = res.data.items.map((item: any) =>
           new ManifestFull(item.id!, item.manifestRegistrationNumber, item.voyageNo, item.noticeNo, item.shipAgent,
             item.vesselName, item.imo, item.manifestNo, item.trafficName, item.consigneeName, item.cargoTypeName, item.hsCode, item.commodityName, item.packageName

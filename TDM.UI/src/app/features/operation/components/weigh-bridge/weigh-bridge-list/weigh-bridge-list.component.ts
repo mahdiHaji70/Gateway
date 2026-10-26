@@ -12,6 +12,10 @@ import { WeighBridgeService } from '../../../services/weigh-bridge.service';
   styleUrl: './weigh-bridge-list.component.scss'
 })
 export class WeighBridgeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   weighBridges: WeightBridgeFull[] = [];
 
   /**
@@ -23,14 +27,12 @@ export class WeighBridgeListComponent {
     private confirmationService: ConfirmationService,
     private weighBridgeService: WeighBridgeService) {
   }
-
-  ngOnInit() {
-    this.loadWeighBridges();
-  }
-
-  loadWeighBridges() {
-    this.weighBridgeService.getWeighBridges().subscribe({
+  loadWeighBridges(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.weighBridgeService.getWeighBridges(pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.weighBridges = res.data.map((item: WeightBridgeFull) => new WeightBridgeFull(item.declarationId, item.declarationNumber, item.gateEventId,
           item.vehicleId, item.vehicleName, item.grossWeight, item.tareWeight, item.startDate, item.endDate, item.id));
       },
@@ -38,6 +40,11 @@ export class WeighBridgeListComponent {
     });
   }
 
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadWeighBridges(pageNumber, event.rows);
+  }
   onAdd() {
     this.router.navigate(['/operation/weigh-bridge']);
   }

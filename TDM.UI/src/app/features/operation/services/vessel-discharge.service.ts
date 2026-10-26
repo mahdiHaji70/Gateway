@@ -11,8 +11,9 @@ export class VesselDischargeService {
 
   constructor(private apiService: ApiService) { }
 
-  getVesselDischarges(): Observable<any> {
-    return this.apiService.get(ApiEndpoints.Vessel_Discharges);
+  getVesselDischarges(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
+    let _url = ApiEndpoints.Vessel_Discharges + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.apiService.get(_url);
   }
 
   getById(id: string): Observable<any> {

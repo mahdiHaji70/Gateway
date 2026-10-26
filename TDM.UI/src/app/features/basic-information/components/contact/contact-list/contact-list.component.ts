@@ -12,6 +12,10 @@ import { contactTypesDropdown } from '../../../../../shared/constants/contact-ty
   styleUrl: './contact-list.component.scss'
 })
 export class ContactListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   contacts: Contact[] = [];
 
   /**
@@ -22,14 +26,12 @@ export class ContactListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadContacts();
-  }
-
-  loadContacts(){
-    this.basicInformationService.getAll('companies').subscribe({
+  loadContacts(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('companies', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.contacts = res.data.items.map((item: Contact) => new ContactList(contactTypesDropdown.find(
           (type) => type.value === item.companyType
         )!.name!, item.name!, item. nationalId!, new Date(item.registerDate!).toDateString(),
@@ -38,6 +40,11 @@ export class ContactListComponent {
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadContacts(pageNumber, event.rows);
   }
 
   onAdd(){
