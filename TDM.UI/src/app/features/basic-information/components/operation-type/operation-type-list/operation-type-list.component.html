@@ -3,6 +3,10 @@
         <p-button severity="success" label="New" icon="pi pi-plus" class="mr-2" (onClick)="onAdd()" />
         <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadOperationTypes()" />
     </ng-template>
+    <ng-template pTemplate="right">
+        <input type="text" class="p-inputtext p-component" placeholder="Search" [(ngModel)]="search" (keyup.enter)="onSearch()" />
+        <p-button severity="secondary" label="Search" icon="pi pi-search" class="ml-2" (onClick)="onSearch()" />
+    </ng-template>
 
 </p-toolbar>
 <p-table [value]="operationTypes" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"

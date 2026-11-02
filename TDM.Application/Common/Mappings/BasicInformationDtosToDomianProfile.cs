@@ -33,6 +33,7 @@ namespace TDM.Application.Common.Mappings
             CreateMap(typeof(PagedResult<>), typeof(PagedResult<>));
 
             CreateMap<Company, CompanyDto>();
+            CreateMap<Company, CompanyLookupDto>();
 
             CreateMap<Commodity, CommodityDto>();
 

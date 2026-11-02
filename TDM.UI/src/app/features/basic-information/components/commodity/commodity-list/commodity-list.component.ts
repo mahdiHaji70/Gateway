@@ -14,7 +14,7 @@ export class CommodityListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   commodities: Commodity[] = [];
 
   /**
@@ -28,8 +28,7 @@ export class CommodityListComponent {
   loadCommodities(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('commodities', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('commodities', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.commodities = res.data.items.map((item: any) => new Commodity(item.name, item.hsCode, item.id));
       },
@@ -41,7 +40,7 @@ export class CommodityListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadCommodities(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadCommodities(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/commodity']);
   }
@@ -78,4 +77,4 @@ export class CommodityListComponent {
       }
     });
   }
-}
+}

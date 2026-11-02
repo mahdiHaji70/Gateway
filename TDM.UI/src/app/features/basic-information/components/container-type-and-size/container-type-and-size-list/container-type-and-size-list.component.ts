@@ -14,7 +14,7 @@ export class ContainerTypeAndSizeListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   containerTypes: ContainerTypeAndSize[] = [];
 
     /**
@@ -28,8 +28,7 @@ export class ContainerTypeAndSizeListComponent {
     loadContainerTypesAndSizes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-      this.basicInformationService.getAll('ContainerTypesAndSizes', pageNumber, pageSize).subscribe({
-        next: (res: any) => {
+    this.basicInformationService.getAll('ContainerTypesAndSizes', pageNumber, pageSize, this.search).subscribe({        next: (res: any) => {
         this.totalRecords = res.data.totalCount;
           this.containerTypes = res.data.items.map((item: any) => new ContainerTypeAndSize(item.typeAndSizeCode, item.typeAndSize, item.id));
         },
@@ -41,7 +40,7 @@ export class ContainerTypeAndSizeListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadContainerTypesAndSizes(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadContainerTypesAndSizes(1, this.pageSize);  }
     onAdd(){
       this.router.navigate(['/container-type-and-size']);
     }
@@ -78,4 +77,4 @@ export class ContainerTypeAndSizeListComponent {
         }
       });
     }
-}
+}

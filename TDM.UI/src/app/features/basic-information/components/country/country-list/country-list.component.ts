@@ -14,7 +14,7 @@ export class CountryListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   countries: Country[] = [];
 
   /**
@@ -28,8 +28,7 @@ export class CountryListComponent {
   loadCountries(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('countries', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('countries', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.countries = res.data.items.map((item: any) => new Country(item.code, item.name, item.id));
       },
@@ -41,7 +40,7 @@ export class CountryListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadCountries(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadCountries(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/country']);
   }
@@ -78,4 +77,4 @@ export class CountryListComponent {
       }
     });
   }
-}
+}

@@ -13,6 +13,10 @@
             class="mr-2" 
             (onClick)="loadStores()" />
     </ng-template>
+    <ng-template pTemplate="right">
+        <input type="text" class="p-inputtext p-component" placeholder="Search" [(ngModel)]="search" (keyup.enter)="onSearch()" />
+        <p-button severity="secondary" label="Search" icon="pi pi-search" class="ml-2" (onClick)="onSearch()" />
+    </ng-template>
 
 </p-toolbar>
 <p-table [value]="stores" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"

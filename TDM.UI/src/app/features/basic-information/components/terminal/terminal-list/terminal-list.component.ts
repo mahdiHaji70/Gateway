@@ -14,7 +14,7 @@ export class TerminalListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   terminals: Terminal[] = [];
   /**
    *
@@ -27,8 +27,7 @@ export class TerminalListComponent {
   loadTerminals(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('Terminals', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('Terminals', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.terminals = res.data.items.map((item: any) => new Terminal(item.code, item.name, item.portCode, item.username, item.password, item.isActive, item.id));
       },
@@ -40,7 +39,7 @@ export class TerminalListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadTerminals(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadTerminals(1, this.pageSize);  }
   onAdd() {
     this.router.navigate(['/terminal']);
   }
@@ -77,4 +76,4 @@ export class TerminalListComponent {
       }
     });
   }
-}
+}

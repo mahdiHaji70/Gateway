@@ -14,7 +14,7 @@ export class TrafficListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   traffics: Traffic[] = [];
 
   /**
@@ -28,8 +28,7 @@ export class TrafficListComponent {
   loadTraffics(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('traffics', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('traffics', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.traffics = res.data.items.map((item: any) => new Traffic(item.code, item.name, item.id));
       },
@@ -41,7 +40,7 @@ export class TrafficListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadTraffics(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadTraffics(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/traffic']);
   }

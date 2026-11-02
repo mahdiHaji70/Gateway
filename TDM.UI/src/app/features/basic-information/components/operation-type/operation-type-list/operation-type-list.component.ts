@@ -15,6 +15,7 @@ export class OperationTypeListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
+  search = '';
 
 operationTypes: OperationType[] = [];
 
@@ -29,7 +30,7 @@ operationTypes: OperationType[] = [];
   loadOperationTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('OperationTypes', pageNumber, pageSize).subscribe({
+    this.basicInformationService.getAll('OperationTypes', pageNumber, pageSize, this.search).subscribe({
       next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.operationTypes = res.data.items.map((item: any) => new OperationType(item.code, item.name, item.id));
@@ -41,6 +42,10 @@ operationTypes: OperationType[] = [];
   onPageChange(event: any) {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadOperationTypes(pageNumber, event.rows);
+  }
+
+  onSearch() {
+    this.loadOperationTypes(1, this.pageSize);
   }
 
   onAdd(){

@@ -14,7 +14,7 @@ export class ContainerListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
 containers: ContainerDto[] = [];
 
   /**
@@ -28,8 +28,7 @@ containers: ContainerDto[] = [];
   loadContainers(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('Containers', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('Containers', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.containers = res.data.items.map((item: any) => new ContainerDto(item.no, item.containerTypeAndSizeId, item.containerTypeAndSizeCode,item.containerTypeAndSize, item.id));
       },
@@ -41,7 +40,7 @@ containers: ContainerDto[] = [];
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadContainers(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadContainers(1, this.pageSize);  }
   onAdd() {
     this.router.navigate(['/container']);
   }
@@ -78,4 +77,4 @@ containers: ContainerDto[] = [];
       }
     });
   }
-}
+}

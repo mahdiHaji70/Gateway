@@ -23,7 +23,7 @@ namespace TDM.Application.BasicInformation.UsersTerminal.Queries.GetUsersTermina
         GetUsersTerminalQuery request,
         CancellationToken cancellationToken)
         {
-            var usersTerminal = await _userTerminalRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var usersTerminal = await _userTerminalRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<UserTerminalDto>>(usersTerminal);
         }

@@ -33,6 +33,9 @@ namespace TDM.Infrastructure
             services.AddScoped<IOperationTypeRepository, OperationTypeRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
+            services.AddScoped<IContainerTypeAndSizeRepository, ContainerTypeAndSizeRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ITerminalRepository, TerminalRepository>();
             services.AddScoped<IUserTerminalRepository, UserTerminalRepository>();
             services.AddScoped<IDeclarationRepository, DeclarationRepository>();
             services.AddScoped<IDeclarationItemRepository, DeclarationItemRepository>();

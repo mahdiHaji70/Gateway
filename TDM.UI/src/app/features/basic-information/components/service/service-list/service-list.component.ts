@@ -14,6 +14,7 @@ export class ServiceListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
+  search = '';
 
   services: Service[] = [];
 
@@ -25,7 +26,7 @@ export class ServiceListComponent {
   loadServices(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('Services', pageNumber, pageSize).subscribe({
+    this.basicInformationService.getAll('Services', pageNumber, pageSize, this.search).subscribe({
       next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.services = res.data.items.map((item: any) => new Service(item.code, item.name, item.id));
@@ -37,6 +38,10 @@ export class ServiceListComponent {
   onPageChange(event: any) {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadServices(pageNumber, event.rows);
+  }
+
+  onSearch() {
+    this.loadServices(1, this.pageSize);
   }
 
   onAdd() { this.router.navigate(['/service']); }

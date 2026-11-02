@@ -14,7 +14,7 @@ export class PackageListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   packages: Package[] = [];
 
   /**
@@ -28,8 +28,7 @@ export class PackageListComponent {
   loadPackages(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('packages', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('packages', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.packages = res.data.items.map((item: any) => new Package(item.code, item.name, item.id));
       },
@@ -41,7 +40,7 @@ export class PackageListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadPackages(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadPackages(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/package']);
   }
@@ -78,4 +77,4 @@ export class PackageListComponent {
       }
     });
   }
-}
+}

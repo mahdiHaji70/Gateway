@@ -9,8 +9,13 @@ export class BasicInformationService {
 
   constructor(private apiService: ApiService) { }
 
-  getAll(path: string, pageNumber: number = 1, pageSize: number = 10): Observable<any>{
-    let _url = ApiEndpoints.BASE_URL + `/${path}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  getAll(path: string, pageNumber: number = 1, pageSize: number = 10, search: string = ''): Observable<any>{
+    let _url = ApiEndpoints.BASE_URL + `/${path}?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${encodeURIComponent(search)}`;
+    return this.apiService.get(_url);
+  }
+
+  getLookup(path: string, search: string = '', pageNumber: number = 1, pageSize: number = 20): Observable<any>{
+    let _url = ApiEndpoints.BASE_URL + `/${path}/lookup?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${encodeURIComponent(search)}`;
     return this.apiService.get(_url);
   }
 

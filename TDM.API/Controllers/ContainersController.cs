@@ -7,6 +7,7 @@ using TDM.Application.BasicInformation.Containers.Commands.RemoveContainer;
 using TDM.Application.BasicInformation.Containers.Commands.UpdateContainer;
 using TDM.Application.BasicInformation.Containers.Queries.GetContainerById;
 using TDM.Application.BasicInformation.Containers.Queries.GetContainers;
+using TDM.Application.BasicInformation.Containers.Queries.GetContainerLookup;
 
 
 namespace TDM.API.Controllers
@@ -32,12 +33,16 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetContainersQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetContainersQuery(pageNumber, pageSize, search));
 
             return Ok(ApiResponse.Success(result));
         }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup([FromQuery] string? search = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+            => Ok(ApiResponse.Success(await _mediator.Send(new GetContainerLookupQuery(search, pageNumber, pageSize))));
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateContainerCommand command, CancellationToken cancellationToken)

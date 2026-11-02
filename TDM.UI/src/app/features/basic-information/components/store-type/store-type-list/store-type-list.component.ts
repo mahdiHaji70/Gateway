@@ -14,7 +14,7 @@ export class StoreTypeListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
 storeTypes: StoreType[] = [];
 
   /**
@@ -28,8 +28,7 @@ storeTypes: StoreType[] = [];
   loadStoreTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('StoreTypes', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('StoreTypes', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.storeTypes = res.data.items.map((item: any) => new StoreType(item.name, item.id));
       },
@@ -41,7 +40,7 @@ storeTypes: StoreType[] = [];
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadStoreTypes(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadStoreTypes(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/store-type']);
   }
@@ -78,4 +77,4 @@ storeTypes: StoreType[] = [];
       }
     });
   }
-}
+}

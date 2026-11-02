@@ -14,7 +14,7 @@ export class CargoTypeListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   cargoTypes: CargoType[] = [];
 
   /**
@@ -28,8 +28,7 @@ export class CargoTypeListComponent {
   loadCargoTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('CargoTypes', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('CargoTypes', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.cargoTypes = res.data.items.map((item: any) => new CargoType(item.name, item.id));
       },
@@ -41,7 +40,7 @@ export class CargoTypeListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadCargoTypes(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadCargoTypes(1, this.pageSize);  }
   onAdd() {
     this.router.navigate(['/cargo-type']);
   }
@@ -78,4 +77,4 @@ export class CargoTypeListComponent {
       }
     });
   }
-}
+}

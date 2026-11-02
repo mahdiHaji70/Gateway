@@ -5,5 +5,6 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface ICityRepository : IRepository<City>
     {
+        Task<PagedResult<City>?> GetPagedAsync(int pageNumber, int pageSize, string? search);
     }
 }

@@ -27,7 +27,7 @@ namespace TDM.Application.BasicInformation.CargoTypes.Queries.GetCargoTypes
         GetCargoTypesQuery request,
         CancellationToken cancellationToken)
         {
-            var cargoTypes = await _cargoTypeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var cargoTypes = await _cargoTypeRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<CargoTypeDto>>(cargoTypes);
         }

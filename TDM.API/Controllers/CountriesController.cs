@@ -6,6 +6,7 @@ using TDM.Application.BasicInformation.Countries.Commands.CreateCountry;
 using TDM.Application.BasicInformation.Countries.Commands.RemoveCountry;
 using TDM.Application.BasicInformation.Countries.Commands.UpdateCountry;
 using TDM.Application.BasicInformation.Countries.Queries.GetCountries;
+using TDM.Application.BasicInformation.Countries.Queries.GetCountryLookup;
 using TDM.Application.BasicInformation.Countries.Queries.GetCountryById;
 
 
@@ -32,12 +33,16 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetCountriesQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetCountriesQuery(pageNumber, pageSize, search));
 
             return Ok(ApiResponse.Success(result));
         }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup([FromQuery] string? search = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+            => Ok(ApiResponse.Success(await _mediator.Send(new GetCountryLookupQuery(search, pageNumber, pageSize))));
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCountryCommand command, CancellationToken cancellationToken)

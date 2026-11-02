@@ -15,7 +15,7 @@ export class StoreListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
 stores: StoreFull[] = [];
 
   /**
@@ -29,8 +29,7 @@ stores: StoreFull[] = [];
     loadStores(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-      this.basicInformationService.getAll('Stores', pageNumber, pageSize).subscribe({
-        next: (res: any) => {
+    this.basicInformationService.getAll('Stores', pageNumber, pageSize, this.search).subscribe({        next: (res: any) => {
         this.totalRecords = res.data.totalCount;
           this.stores = res.data.items.map((item: any) => new StoreFull(item.storeTypeName, item.name!, item.id));
         },
@@ -42,7 +41,7 @@ stores: StoreFull[] = [];
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadStores(pageNumber, event.rows);
   }
-  
+  onSearch() {    this.loadStores(1, this.pageSize);  }  
     onAdd(){
       this.router.navigate(['/store']);
     }
@@ -79,4 +78,4 @@ stores: StoreFull[] = [];
         }
       });
     }
-}
+}

@@ -15,6 +15,7 @@ export class ContactListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
+  search = '';
 
   contacts: Contact[] = [];
 
@@ -29,7 +30,7 @@ export class ContactListComponent {
   loadContacts(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('companies', pageNumber, pageSize).subscribe({
+    this.basicInformationService.getAll('companies', pageNumber, pageSize, this.search).subscribe({
       next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.contacts = res.data.items.map((item: Contact) => new ContactList(contactTypesDropdown.find(
@@ -45,6 +46,10 @@ export class ContactListComponent {
   onPageChange(event: any) {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadContacts(pageNumber, event.rows);
+  }
+
+  onSearch() {
+    this.loadContacts(1, this.pageSize);
   }
 
   onAdd(){

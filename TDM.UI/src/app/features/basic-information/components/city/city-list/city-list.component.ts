@@ -14,7 +14,7 @@ export class CityListComponent {
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
-
+  search = '';
   cities: CityDto[] = [];
 
   /**
@@ -28,8 +28,7 @@ export class CityListComponent {
   loadCities(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('cities', pageNumber, pageSize).subscribe({
-      next: (res: any) => {
+    this.basicInformationService.getAll('cities', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.cities = res.data.items.map((item: any) => new CityDto(item.code, item.name, item.countryCode, item.countryName, item.countryId, item.id));
       },
@@ -41,7 +40,7 @@ export class CityListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadCities(pageNumber, event.rows);
   }
-
+  onSearch() {    this.loadCities(1, this.pageSize);  }
   onAdd() {
     this.router.navigate(['/city']);
   }
@@ -78,4 +77,4 @@ export class CityListComponent {
       }
     });
   }
-}
+}
