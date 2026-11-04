@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { ContainerType } from '../../models/container-type.model';
 import { ContainerSize } from '../../models/container-size.model';
@@ -53,6 +54,15 @@ export class ContainerComponent {
 
   loadContainerTypesAndSizes() {
     this.basicInformationService.getAll('ContainerTypesAndSizes').subscribe({
+      next: (res: any) => {
+        this.containerTypesAndSizes = res.data.items.map((item: any) => new ContainerTypeAndSize(item.typeAndSizeCode, item.typeAndSize, item.id));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onContainerTypeAndSizeFilterChanged(search: string) {
+    this.basicInformationService.getLookup('ContainerTypesAndSizes', search).subscribe({
       next: (res: any) => {
         this.containerTypesAndSizes = res.data.items.map((item: any) => new ContainerTypeAndSize(item.typeAndSizeCode, item.typeAndSize, item.id));
       },

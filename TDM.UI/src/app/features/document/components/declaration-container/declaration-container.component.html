@@ -4,6 +4,7 @@
 
             <div class="">
                 <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'"
+                    (filterChange)="onContainerFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 

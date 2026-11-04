@@ -34,6 +34,7 @@ export class DeclarationComponent {
 
   id?: any;
   contacts: DropdownOption[] = [];
+  contactReps: DropdownOption[] = [];
   traffics: DropdownOption[] = [];
   declarationItems: DeclarationItemFull[] = [];
   itemsPopupVisibility: boolean = false;
@@ -89,6 +90,7 @@ export class DeclarationComponent {
 
     });
     this.loadContacts();
+    this.loadContactReps();
     this.loadTraffics();
   }
 
@@ -101,8 +103,44 @@ export class DeclarationComponent {
     });
   }
 
+  onContactFilterChanged(event: any){
+    this.basicInformationService.getLookup('companies', event).subscribe({
+      next: (res: any) => {
+        this.contacts = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  loadContactReps() {
+    this.basicInformationService.getAll('companies').subscribe({
+      next: (res: any) => {
+        this.contactReps = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onContactRepFilterChanged(event: any){
+    this.basicInformationService.getLookup('companies', event).subscribe({
+      next: (res: any) => {
+        this.contactReps = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
   loadTraffics() {
     this.basicInformationService.getAll('traffics').subscribe({
+      next: (res: any) => {
+        this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onTrafficFilterChanged(search: string) {
+    this.basicInformationService.getLookup('traffics', search).subscribe({
       next: (res: any) => {
         this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },

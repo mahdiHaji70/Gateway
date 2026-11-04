@@ -135,9 +135,18 @@ namespace IntegratedIdentity.Controllers
         }
 
         [HttpGet("get_all_users")]
-        public async Task<IActionResult> GetAllUsersAsync()
+        public async Task<IActionResult> GetAllUsersAsync([FromQuery] string? search = null)
         {
-            var users = await _identityDbContext.User.ToListAsync();
+            var usersQuery = _identityDbContext.User.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                usersQuery = usersQuery.Where(x =>
+                    x.Name.Contains(searchTerm) ||
+                    x.NationalId.Contains(searchTerm));
+            }
+
+            var users = await usersQuery.ToListAsync();
 
             var mappedUsers = users.Select(x => new UserDto{
                 Id = x.Id,

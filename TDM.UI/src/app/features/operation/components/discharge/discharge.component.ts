@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
@@ -100,6 +100,15 @@ export class DischargeComponent {
 
   loadStores() {
     this.basicInformationService.getAll('Stores').subscribe({
+      next: (res: any) => {
+        this.stores = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onStoreFilterChanged(search: string) {
+    this.basicInformationService.getLookup('Stores', search).subscribe({
       next: (res: any) => {
         this.stores = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },

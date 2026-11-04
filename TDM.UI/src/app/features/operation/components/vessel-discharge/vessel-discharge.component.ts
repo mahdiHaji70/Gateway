@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -99,6 +99,16 @@ export class VesselDischargeComponent {
     });
   }
 
+  onStoreFilterChanged(search: string) {
+    this.basicInformationService.getLookup('Stores', search).subscribe({
+      next: (res: any) => {
+        this.stores = (res.data.items || []).map((item: any) =>
+          new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => showApiError(this.messageService, error)
+    });
+  }
+
   loadManifestItem(event: any) {
     if (!event?.id) return;
 
@@ -113,17 +123,24 @@ export class VesselDischargeComponent {
     });
   }
 
-  setContainerOptions() {
+  setContainerOptions(search = '') {
     const item = this.manifestItem;
-    const options = (item?.manifestContainers || []).map((container: ManifestContainer) =>
+    const containerOptions = (item?.manifestContainers || []).map((container: ManifestContainer) =>
       new DropdownOption(container.id,
         `${container.containerNo}${container.containerTypeAndSizeCode ? ` / ${container.containerTypeAndSizeCode}` : ''}`));
 
     if ((item?.manifestGoods || []).length > 0) {
-      options.unshift(new DropdownOption('', 'Manifest item goods'));
+      containerOptions.unshift(new DropdownOption('', 'Manifest item goods'));
     }
 
-    this.containers = options;
+    const searchTerm = search.trim().toLocaleLowerCase();
+    this.containers = searchTerm
+      ? containerOptions.filter(option => option.name.toLocaleLowerCase().includes(searchTerm))
+      : containerOptions;
+  }
+
+  onContainerFilterChanged(search: string) {
+    this.setContainerOptions(search);
   }
 
   loadForEdit(data: any) {

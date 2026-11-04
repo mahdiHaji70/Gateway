@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StoreTypes, storeTypesDropdown } from '../../../../shared/constants/store-types';
@@ -56,6 +56,15 @@ export class StoreComponent {
 
   loadStoreTypes() {
     this.basicInformationService.getAll('StoreTypes').subscribe({
+      next: (res: any) => {
+        this.storeTypes = res.data.items.map((item: any) => new StoreType(item.name, item.id));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onStoreTypeFilterChanged(search: string) {
+    this.basicInformationService.getLookup('StoreTypes', search).subscribe({
       next: (res: any) => {
         this.storeTypes = res.data.items.map((item: any) => new StoreType(item.name, item.id));
       },
