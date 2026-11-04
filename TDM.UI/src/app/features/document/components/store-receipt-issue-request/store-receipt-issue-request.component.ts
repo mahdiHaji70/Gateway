@@ -32,8 +32,8 @@ export class StoreReceiptIssueRequestComponent {
     this.loadDeclarations();
   }
 
-  loadDeclarations() {
-    this.declarationService.getDeclarations().subscribe({
+  loadDeclarations(search: string = '') {
+    this.declarationService.getLookup(search).subscribe({
       next: (res: any) => {
         this.declarations = res.data.items.map((item: any) => new DropdownOption(item.id, item.ipasDeclarationNo));
       },

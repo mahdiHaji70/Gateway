@@ -54,6 +54,7 @@ namespace TDM.Application.Common.Mappings
             CreateMap<UserTerminal, UserTerminalDto>();
 
             CreateMap<Declaration, DeclarationDto>();
+            CreateMap<Declaration, DeclarationLookupDto>();
 
             CreateMap<DeclarationItem, DeclarationItemDto>()
                 .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));

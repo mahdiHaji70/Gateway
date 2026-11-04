@@ -7,6 +7,7 @@ using TDM.Application.Doc.Declarations.Commands.RemoveDeclaration;
 using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
 using TDM.Application.Doc.Declarations.Commands.UpdateDeclaration;
 using TDM.Application.Doc.Declarations.Queries.GetDeclarationById;
+using TDM.Application.Doc.Declarations.Queries.GetDeclarationLookup;
 using TDM.Application.Doc.Declarations.Queries.GetDeclarations;
 
 
@@ -37,6 +38,16 @@ namespace TDM.API.Controllers
         {
             var result = await _mediator.Send(new GetDeclarationsQuery(pageNumber, pageSize));
 
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup(
+            [FromQuery] string? search = null,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 20)
+        {
+            var result = await _mediator.Send(new GetDeclarationLookupQuery(search, pageNumber, pageSize));
             return Ok(ApiResponse.Success(result));
         }
 

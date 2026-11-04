@@ -48,6 +48,34 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .Include(x => x.Traffic)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<PagedResult<Declaration>?> GetLookupAsync(string? search, int pageNumber, int pageSize)
+        {
+            var query = _dbSet
+                .AsNoTracking()
+                .Where(x => x.IpasDeclarationNo != null && x.IpasDeclarationNo != string.Empty);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                query = query.Where(x => x.IpasDeclarationNo!.Contains(searchTerm));
+            }
+
+            var totalCount = await query.CountAsync();
+            var items = await query
+                .OrderBy(x => x.IpasDeclarationNo)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Declaration>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+        }
    
        public bool ExistsByIpasDeclarationNo(string IpasDeclarationNo)
         {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -33,8 +33,8 @@ export class LandStoreReceiptIssueComponent {
     this.loadDeclarations();
   }
 
-  loadDeclarations() {
-    this.declarationService.getDeclarations().subscribe({
+  loadDeclarations(search: string = '') {
+    this.declarationService.getLookup(search).subscribe({
       next: (res: any) => {
         this.declarations = res.data.items.map((item: any) => new DropdownOption(item.id, item.ipasDeclarationNo));
       },
