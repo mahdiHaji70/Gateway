@@ -48,9 +48,9 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet("request-manifest-voyage-numbers/{terminalCode}")]
-        public async Task<IActionResult> GetManifestVoyageNumbers(string terminalCode)
+        public async Task<IActionResult> GetManifestVoyageNumbers(string terminalCode, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetVoyageNumbersQuery(terminalCode));
+            var result = await _mediator.Send(new GetVoyageNumbersQuery(terminalCode, search));
             return Ok(ApiResponse.Success(result));
         }
 

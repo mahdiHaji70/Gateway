@@ -34,8 +34,8 @@ export class ManifestComponent {
     this.loadVoyages();
   }
 
-  loadVoyages() {
-    this.manifestService.getVoyages().subscribe({
+  loadVoyages(search: string = '') {
+    this.manifestService.getVoyages(search).subscribe({
       next: (res: any) => {
         this.voyages = res.data.map((item: any) => new DropdownOption(item.manifestId, item.voyageNumber));
       },

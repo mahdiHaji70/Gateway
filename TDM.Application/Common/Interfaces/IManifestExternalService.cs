@@ -8,7 +8,7 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface IManifestExternalService
     {
-        Task<List<ManifestVoyageNumberDto>> GetManifestVoyageNumbers(string terminalCode, CancellationToken cancellationToken = default);
+        Task<List<ManifestVoyageNumberDto>> GetManifestVoyageNumbers(string terminalCode, string? search, CancellationToken cancellationToken = default);
         Task<ManifestDto> GetManifestById(Guid id, CancellationToken cancellationToken = default);
         Task<bool> SetManifestApproved(Guid id);
     }

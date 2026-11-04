@@ -23,11 +23,19 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .OrderByDescending(x => x.CreationDate).Select(x => x.CreationDate).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ManifestNoticeToApproveDto>> GetManifestsNoticeNoToApprove(string terminalCode)
+        public async Task<IEnumerable<ManifestNoticeToApproveDto>> GetManifestsNoticeNoToApprove(string terminalCode, string? search)
         {
-            return await _manifestDbSet
+            var query = _manifestDbSet
                .AsNoTracking()
-               .Where(x => x.TerminalCodeDischarge == terminalCode && !x.IsApproved)
+               .Where(x => x.TerminalCodeDischarge == terminalCode && !x.IsApproved);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                query = query.Where(x => x.NoticeNo.Contains(searchTerm));
+            }
+
+            return await query
                 .Select(x => new ManifestNoticeToApproveDto
                 {
                     Id = x.Id,

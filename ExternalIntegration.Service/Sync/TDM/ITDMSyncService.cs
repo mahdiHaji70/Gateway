@@ -20,7 +20,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         Task<Response<DateTime>> GetVoyagesLastDate();
         Task<Response<DateTime>> GetStoreReceiptsLastDate(string terminalCode);
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequestById(Guid id);
-        Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(string terminalCode);
+        Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(string terminalCode, string? search);
         Task<Response<ManifestDto>> GetManifestById(Guid id);
         Task<Response<bool>> ApproveManifestAsync(Guid id);
         Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChangesByTerminalCode(string terminalCode);

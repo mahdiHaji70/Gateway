@@ -17,9 +17,13 @@ export class ManifestService {
     return this.apiService.get(_url);
   }
 
-  getVoyages() {
+  getVoyages(search: string = '') {
     let terminalCode = this.localStorageService.getItem('terminalCode');
-    var _url = ApiEndpoints.Manifests + '/request-manifest-voyage-numbers' + `/${terminalCode}`
+    var _url = ApiEndpoints.Manifests + '/request-manifest-voyage-numbers' + `/${terminalCode}`;
+    const searchTerm = search.trim();
+    if (searchTerm) {
+      _url += `?search=${encodeURIComponent(searchTerm)}`;
+    }
     return this.apiService.get(_url);
   }
 
