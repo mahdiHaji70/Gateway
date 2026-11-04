@@ -146,9 +146,9 @@ namespace TDM.Infrastructure.Persistence.Repositories
             };            
         }
 
-        public async Task<List<ManifestItemLookupDto>> GetManifestItemsLookup(string terminalCode, CancellationToken cancellationToken = default)
+        public async Task<List<ManifestItemLookupDto>> GetManifestItemsLookup(string terminalCode, string? search, CancellationToken cancellationToken = default)
         {
-            return await _dbSet
+            var query = _dbSet
                 .AsNoTracking()
                 .Where(x => x.TerminalCode == terminalCode)
                 .SelectMany(x => x.ManifestItems.Select(item => new ManifestItemLookupDto
@@ -158,7 +158,17 @@ namespace TDM.Infrastructure.Persistence.Repositories
                     VoyageNo = x.VoyageNo,
                     ManifestNo = item.ManifestNo,
                     IpasItemId = item.IpasItemId
-                }))
+                }));
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                query = query.Where(x =>
+                    x.VoyageNo.Contains(searchTerm) ||
+                    x.ManifestNo.Contains(searchTerm));
+            }
+
+            return await query
                 .OrderBy(x => x.VoyageNo)
                 .ThenBy(x => x.ManifestNo)
                 .ToListAsync(cancellationToken);

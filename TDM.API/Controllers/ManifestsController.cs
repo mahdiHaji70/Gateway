@@ -32,9 +32,9 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet("items-lookup")]
-        public async Task<IActionResult> GetManifestItemsLookup()
+        public async Task<IActionResult> GetManifestItemsLookup([FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetManifestItemsLookupQuery());
+            var result = await _mediator.Send(new GetManifestItemsLookupQuery(search));
 
             return Ok(ApiResponse.Success(result));
         }

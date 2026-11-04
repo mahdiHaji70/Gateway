@@ -66,8 +66,8 @@ export class VesselDischargeComponent {
     });
   }
 
-  loadManifestItems() {
-    this.manifestService.getItemsLookup().subscribe({
+  loadManifestItems(search: string = '') {
+    this.manifestService.getItemsLookup(search).subscribe({
       next: (res: any) => {
         this.manifestItems = (res.data || []).map((item: any) =>
           new DropdownOption(item.id, `${item.voyageNo} / ${item.manifestNo}`));

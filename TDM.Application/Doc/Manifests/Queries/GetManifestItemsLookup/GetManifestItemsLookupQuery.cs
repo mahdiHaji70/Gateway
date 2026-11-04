@@ -6,5 +6,5 @@ using TDM.Application.Doc.Manifests.DTOs;
 
 namespace TDM.Application.Doc.Manifests.Queries.GetManifestItemsLookup
 {
-    public record GetManifestItemsLookupQuery() : IRequest<List<ManifestItemLookupDto>>;
+    public record GetManifestItemsLookupQuery(string? Search = null) : IRequest<List<ManifestItemLookupDto>>;
 }

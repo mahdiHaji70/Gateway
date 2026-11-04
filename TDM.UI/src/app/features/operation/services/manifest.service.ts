@@ -7,8 +7,12 @@ import { ApiEndpoints } from '../../../core/constants/api-endpoints';
 export class ManifestService {
   constructor(private apiService: ApiService) { }
 
-  getItemsLookup(): Observable<any> {
-    return this.apiService.get(ApiEndpoints.Manifest_Items_Lookup);
+  getItemsLookup(search: string = ''): Observable<any> {
+    const searchTerm = search.trim();
+    const url = searchTerm
+      ? `${ApiEndpoints.Manifest_Items_Lookup}?search=${encodeURIComponent(searchTerm)}`
+      : ApiEndpoints.Manifest_Items_Lookup;
+    return this.apiService.get(url);
   }
 
   getItemById(id: string): Observable<any> {
