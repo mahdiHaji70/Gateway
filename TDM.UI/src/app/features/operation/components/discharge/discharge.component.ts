@@ -3,7 +3,6 @@ import { showApiError } from '../../../../shared/services/api-error-handler.serv
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { DischargeService } from '../../services/discharge.service';
-import { DeclarationService } from '../../services/declaration.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicInformationService } from '../../../basic-information/services/basic-information.service';
@@ -54,17 +53,18 @@ export class DischargeComponent {
     private basicInformationService: BasicInformationService) {
   }
   ngOnInit() {
-    this.loadDeclarationItems();
     this.loadStores();
 
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
         this.dischargeService.getById(this.id!).subscribe((res: any) => {
-          this.loadGoodwayBills({name: res.data.ipasDeclarationNo});
+          const declarationOption = new DropdownOption(res.data.declarationItemId, res.data.ipasDeclarationNo);
+          this.loadDeclarationItems(res.data.ipasDeclarationNo);
+          this.loadGoodwayBills(declarationOption);
           
           this.form.setValue({
-            declarationItem: new DropdownOption(res.data.declarationItemId, res.data.ipasDeclarationNo),
+            declarationItem: declarationOption,
             store: new DropdownOption(res.data.storeId, res.data.storeName),
             goodwayBill: new DropdownOption(res.data.waybillId,
               `WayBiil No: ${res.data.waybillNo} , Vehicle Number: ${res.data.vehicleNumber}`),
@@ -84,17 +84,19 @@ export class DischargeComponent {
 
           });
         });
+      } else {
+        this.loadDeclarationItems();
       }
 
     });
   }
 
-  loadDeclarationItems() {
-    this.declarationItemService.getAll().subscribe({
+  loadDeclarationItems(search: string = '') {
+    this.declarationItemService.getLookup(search).subscribe({
       next: (res: any) => {
-        this.declarationItems = res.data.items.map((item: any) => new DropdownOption(item.id, item.ipasDeclarationNo));
+        this.declarationItems = (res.data.items || []).map((item: any) => new DropdownOption(item.id, item.ipasDeclarationNo));
       },
-      error: (error: any) => { }
+      error: (error: any) => showApiError(this.messageService, error)
     });
   }
 
@@ -117,6 +119,7 @@ export class DischargeComponent {
   }
 
   loadGoodwayBills(event: any) {
+    debugger
     this.dischargeService.getGoodwayBillsByDeclarationNo(event.name).subscribe({
       next: (res: any) => {
         this.goodwayBillsRaw = res.data;

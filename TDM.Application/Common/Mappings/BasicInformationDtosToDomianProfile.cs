@@ -58,6 +58,8 @@ namespace TDM.Application.Common.Mappings
 
             CreateMap<DeclarationItem, DeclarationItemDto>()
                 .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));
+            CreateMap<DeclarationItem, DeclarationItemLookupDto>()
+                .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));
 
             CreateMap<ManifestItem, ManifestItemDto>()
                 .ForMember(dest => dest.TrafficCode, opt => opt.MapFrom(src => src.Traffic.Code))

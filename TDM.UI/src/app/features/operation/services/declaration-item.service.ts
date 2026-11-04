@@ -19,6 +19,15 @@ export class DeclarationItemService {
     return this.apiService.get(_url);
   }
 
+  getLookup(search: string = '', pageNumber: number = 1, pageSize: number = 20): Observable<any> {
+    let _url = `${ApiEndpoints.Declaration_Items}/lookup?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    const searchTerm = search.trim();
+    if (searchTerm) {
+      _url += `&search=${encodeURIComponent(searchTerm)}`;
+    }
+    return this.apiService.get(_url);
+  }
+
   getById(id: string): Observable<any> {
     let _url = ApiEndpoints.Declaration_Items + `/${id}`;
     return this.apiService.get(_url);

@@ -49,6 +49,36 @@ namespace TDM.Infrastructure.Persistence.Repositories
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<PagedResult<DeclarationItem>?> GetLookupAsync(string? search, int pageNumber, int pageSize)
+        {
+            var query = _dbSet
+                .AsNoTracking()
+                .Include(x => x.Declaration)
+                .Where(x => x.Declaration.IpasDeclarationNo != null && x.Declaration.IpasDeclarationNo != string.Empty);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                query = query.Where(x => x.Declaration.IpasDeclarationNo!.Contains(searchTerm));
+            }
+
+            var totalCount = await query.CountAsync();
+            var items = await query
+                .OrderBy(x => x.Declaration.IpasDeclarationNo)
+                .ThenBy(x => x.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<DeclarationItem>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+        }
+
         public async Task<bool> ExistsByDeclarationId(Guid declarationId)
         {
             return await _dbSet.AnyAsync(x => x.DeclarationId == declarationId);
