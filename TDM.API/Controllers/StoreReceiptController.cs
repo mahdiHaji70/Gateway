@@ -51,10 +51,19 @@ namespace TDM.API.Controllers
         [HttpGet("storeReceipts")]
         public async Task<IActionResult> GetStoreReceipts(
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 10)
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null,
+            [FromQuery] DateTime? dateFrom = null,
+            [FromQuery] DateTime? dateTo = null,
+            [FromQuery] Guid? consigneeId = null,
+            [FromQuery] Guid? consigneeRepId = null,
+            [FromQuery] Guid? trafficId = null,
+            [FromQuery] Guid? cargoTypeId = null,
+            [FromQuery] string? arrivalTypeCode = null)
         {
             var result = await _mediator.Send(
-                new GetStoreReceiptsQuery(pageNumber, pageSize));
+                new GetStoreReceiptsQuery(pageNumber, pageSize, search, dateFrom, dateTo,
+                    consigneeId, consigneeRepId, trafficId, cargoTypeId, arrivalTypeCode));
 
             return Ok(ApiResponse.Success(result));
         }

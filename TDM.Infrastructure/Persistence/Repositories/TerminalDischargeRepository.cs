@@ -41,6 +41,38 @@ namespace TDM.Infrastructure.Persistence.Repositories
             };
         }
 
+        public async Task<PagedResult<TerminalDischarge>?> GetPagedFilteredAsync(
+            int pageNumber, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo,
+            Guid? declarationItemId, Guid? storeId)
+        {
+            IQueryable<TerminalDischarge> query = _dbSet.AsNoTracking()
+                .Include(x => x.Store)
+                .Include(x => x.DeclarationItem).ThenInclude(x => x.Declaration)
+                .Include(x => x.DeclarationItem).ThenInclude(x => x.CargoType);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(x => x.WayBillNo.Contains(term) || x.VehicleNumber.Contains(term) ||
+                    x.DeclarationItem.Declaration.IpasDeclarationNo!.Contains(term));
+            }
+            if (dateFrom.HasValue) query = query.Where(x => x.DischargeDate >= dateFrom.Value.Date);
+            if (dateTo.HasValue)
+            {
+                var endExclusive = dateTo.Value.Date.AddDays(1);
+                query = query.Where(x => x.DischargeDate < endExclusive);
+            }
+            if (declarationItemId.HasValue) query = query.Where(x => x.DeclarationItemId == declarationItemId.Value);
+            if (storeId.HasValue) query = query.Where(x => x.StoreId == storeId.Value);
+
+            var totalCount = await query.CountAsync();
+            var items = await query.OrderByDescending(x => x.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            return new PagedResult<TerminalDischarge>
+            { Items = items, TotalCount = totalCount, PageNumber = pageNumber, PageSize = pageSize };
+        }
+
 
         public async override Task<TerminalDischarge?> GetAsync(Guid id)
         {

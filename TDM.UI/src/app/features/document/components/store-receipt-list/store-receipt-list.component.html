@@ -3,10 +3,33 @@
         <p-button severity="success" label="Issue land side" icon="pi pi-plus" class="mr-2" (onClick)="onIssueLandSide()" />
         <p-button severity="success" label="Issue marine side" icon="pi pi-plus" class="mr-2" (onClick)="onIssueMarineSide()" />
         <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadStoreReceipts()" />
+        <p-button severity="secondary" [label]="showFilters ? 'Hide Filters' : 'Filters'"
+            [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'" (onClick)="toggleFilters()" />
     </ng-template>
 
 </p-toolbar>
-<p-table [value]="storeReceipts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+<div *ngIf="showFilters" class="group-box mb-3">
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
+            <small class="text-secondary">Search receipt number, voyage notice, or IPAS declaration number.</small>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'" (filterChange)="loadOptions('consignee', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeRepOptions" [formGroup]="filtersForm" [controlName]="'consigneeRep'" (filterChange)="loadOptions('consigneeRep', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="cargoTypeOptions" [formGroup]="filtersForm" [controlName]="'cargoType'" (filterChange)="loadOptions('cargoType', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="arrivalTypeOptions" [formGroup]="filtersForm" [controlName]="'arrivalTypeCode'"></app-drop-down></div>
+        <div class="col-12 flex justify-content-end gap-2">
+            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
+            <button pButton type="button" label="Apply Filters" icon="pi pi-filter" (click)="applyFilters()"></button>
+        </div>
+    </div>
+</div>
+<p-table [value]="storeReceipts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
+    [lazy]="true" [paginator]="true" [rows]="pageSize" [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 50]" (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
             <th>Number</th>

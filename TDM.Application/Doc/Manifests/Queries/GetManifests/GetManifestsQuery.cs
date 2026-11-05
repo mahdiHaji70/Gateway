@@ -6,6 +6,10 @@ using TDM.Application.Doc.Manifests.DTOs;
 
 namespace TDM.Application.Doc.Manifests.Queries.GetManifests
 {
-    public record GetManifestsQuery(int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<ManifestListDto>>;
+    public record GetManifestsQuery(
+        int PageNumber = 1, int PageSize = 10, string? Search = null,
+        DateTime? DateFrom = null, DateTime? DateTo = null,
+        Guid? TrafficId = null, Guid? ConsigneeId = null, Guid? CargoTypeId = null,
+        Guid? CommodityId = null, Guid? PackageId = null) : IRequest<PagedResult<ManifestListDto>>;
 
 }

@@ -23,7 +23,15 @@ namespace TDM.Application.Doc.Declarations.Queries.GetDeclarations
         GetDeclarationsQuery request,
         CancellationToken cancellationToken)
         {
-            var declarations = await _declarationRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var declarations = await _declarationRepository.GetPagedDeclarationsAsync(
+                request.PageNumber,
+                request.PageSize,
+                request.Search,
+                request.TrafficId,
+                request.ConsigneeId,
+                request.ConsigneeRepId,
+                request.DateFrom,
+                request.DateTo);
 
             return _mapper.Map<PagedResult<DeclarationDto>>(declarations);
         }

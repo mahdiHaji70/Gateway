@@ -12,9 +12,49 @@
             icon="pi pi-refresh" 
             class="mr-2" 
             (onClick)="loadDeclarations()" />
+            <p-button
+            severity="secondary"
+            [label]="showFilters ? 'Hide Filters' : 'Filters'"
+            [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'"
+            (onClick)="toggleFilters()" />
     </ng-template>
 
 </p-toolbar>
+<div *ngIf="showFilters" class="group-box mb-3">
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
+            <small class="text-secondary">Search by declaration number or IPAS declaration number.</small>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'"
+                (filterChange)="loadTrafficOptions($event)">
+            </app-drop-down>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'"
+                (filterChange)="loadCompanyOptions('consignee', $event)">
+            </app-drop-down>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-drop-down [options]="consigneeRepOptions" [formGroup]="filtersForm" [controlName]="'consigneeRep'"
+                (filterChange)="loadCompanyOptions('consigneeRep', $event)">
+            </app-drop-down>
+        </div>
+        <div class="col-12 flex justify-content-end gap-2">
+            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary"
+                (click)="clearFilters()"></button>
+            <button pButton type="button" label="Apply Filters" icon="pi pi-filter"
+                (click)="applyFilters()"></button>
+        </div>
+    </div>
+</div>
 <p-table
     [value]="declarations"
     styleClass="p-datatable-gridlines"

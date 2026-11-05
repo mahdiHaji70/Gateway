@@ -12,5 +12,14 @@ namespace TDM.Application.Common.Interfaces
         bool ExistsByIpasDeclarationNo(string IpasDeclarationNo);
         Task<Declaration?> GetByIpasDeclarationNoAsync(string ipasDeclarationNo);
         Task<PagedResult<Declaration>?> GetLookupAsync(string? search, int pageNumber, int pageSize);
+        Task<PagedResult<Declaration>?> GetPagedDeclarationsAsync(
+            int pageNumber,
+            int pageSize,
+            string? search,
+            Guid? trafficId,
+            Guid? consigneeId,
+            Guid? consigneeRepId,
+            DateTime? dateFrom,
+            DateTime? dateTo);
     }
 }

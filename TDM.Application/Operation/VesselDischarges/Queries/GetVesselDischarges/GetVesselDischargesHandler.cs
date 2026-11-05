@@ -27,7 +27,9 @@ namespace TDM.Application.Operation.VesselDischarges.Queries.GetGetVesselDischar
         GetVesselDischargesQuery request,
         CancellationToken cancellationToken)
         {
-            var vesselDischarges = await _vesselDischargeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var vesselDischarges = await _vesselDischargeRepository.GetPagedFilteredAsync(
+                request.PageNumber, request.PageSize, request.Search, request.DateFrom, request.DateTo,
+                request.ManifestItemId, request.StoreId, request.ContainerId);
 
             return _mapper.Map<PagedResult<VesselDischargeDto>>(vesselDischarges);
         }

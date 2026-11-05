@@ -3,9 +3,33 @@
         <p-button severity="success" label="New" icon="pi pi-plus" class="mr-2" (onClick)="onAdd()" />
         <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadDischarges()" />
         <p-button severity="info" label="Send To Ipas" icon="pi pi-send" class="mr-2" (onClick)="onSend()" />
+        <p-button severity="secondary" [label]="showFilters ? 'Hide Filters' : 'Filters'"
+            [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'" (onClick)="toggleFilters()" />
     </ng-template>
 
 </p-toolbar>
+<div *ngIf="showFilters" class="group-box mb-3">
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
+            <small class="text-secondary">Search declaration number, waybill, or vehicle.</small>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-drop-down [options]="declarationItems" [formGroup]="filtersForm" [controlName]="'declarationItem'"
+                (filterChange)="loadDeclarationItems($event)"></app-drop-down>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <app-drop-down [options]="stores" [formGroup]="filtersForm" [controlName]="'store'"
+                (filterChange)="loadStores($event)"></app-drop-down>
+        </div>
+        <div class="col-12 flex justify-content-end gap-2">
+            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
+            <button pButton type="button" label="Apply Filters" icon="pi pi-filter" (click)="applyFilters()"></button>
+        </div>
+    </div>
+</div>
 <p-table [value]="discharges" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
     [lazy]="true"
     [paginator]="true"

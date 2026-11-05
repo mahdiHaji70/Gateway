@@ -9,9 +9,34 @@ export class DeclarationService {
 
   constructor(private apiService: ApiService) { }
 
-  getDeclarations(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
-    let _url = ApiEndpoints.Declarations + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
-    return this.apiService.get(_url);
+  getDeclarations(
+    pageNumber: number = 1,
+    pageSize: number = 10,
+    filters?: {
+      search?: string;
+      trafficId?: string;
+      consigneeId?: string;
+      consigneeRepId?: string;
+      dateFrom?: Date | null;
+      dateTo?: Date | null;
+    }
+  ): Observable<any> {
+    const params: Record<string, string | number> = { pageNumber, pageSize };
+    const search = filters?.search?.trim();
+    if (search) params['search'] = search;
+    if (filters?.trafficId) params['trafficId'] = filters.trafficId;
+    if (filters?.consigneeId) params['consigneeId'] = filters.consigneeId;
+    if (filters?.consigneeRepId) params['consigneeRepId'] = filters.consigneeRepId;
+    if (filters?.dateFrom) params['dateFrom'] = this.formatDate(filters.dateFrom);
+    if (filters?.dateTo) params['dateTo'] = this.formatDate(filters.dateTo);
+    return this.apiService.get(ApiEndpoints.Declarations, params);
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   getLookup(search: string = '', pageNumber: number = 1, pageSize: number = 20): Observable<any> {

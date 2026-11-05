@@ -50,6 +50,7 @@ import { LoadingPermitComponent } from './components/loading-permit/loading-perm
 import { LoadingPermitService } from './services/loading-permit.service';
 import { VesselLoadingPermitComponent } from './components/vessel-loading-permit/vessel-loading-permit.component';
 import { VesselLoadingPermitService } from './services/vessel-loading-permit.service';
+import { BasicInformationService } from '../basic-information/services/basic-information.service';
 
 @NgModule({
   declarations: [    
@@ -94,6 +95,7 @@ import { VesselLoadingPermitService } from './services/vessel-loading-permit.ser
     AutoCompleteModule,
   ],
   providers: [
+    BasicInformationService,
     DeclarationService,
     DeclarationItemService,
     GateService,

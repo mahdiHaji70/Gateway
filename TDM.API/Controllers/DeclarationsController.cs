@@ -34,9 +34,18 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null,
+            [FromQuery] Guid? trafficId = null,
+            [FromQuery] Guid? consigneeId = null,
+            [FromQuery] Guid? consigneeRepId = null,
+            [FromQuery] DateTime? dateFrom = null,
+            [FromQuery] DateTime? dateTo = null)
         {
-            var result = await _mediator.Send(new GetDeclarationsQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetDeclarationsQuery(
+                pageNumber, pageSize, search, trafficId, consigneeId, consigneeRepId, dateFrom, dateTo));
 
             return Ok(ApiResponse.Success(result));
         }
