@@ -3,17 +3,16 @@ using MediatR;
 using TDM.Application.BasicInformation.Commodities.DTOs;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;
-using TDM.Domain.Entities;
 
 namespace TDM.Application.BasicInformation.Commodities.Queries.GetCommodities
 {
     public class GetCommoditiesQueryHandler : IRequestHandler<GetCommoditiesQuery, PagedResult<CommodityDto>>
     {
-        private readonly IRepository<Commodity> _commodityRepository;
+        private readonly ICommodityRepository _commodityRepository;
         private readonly IMapper _mapper;
 
         public GetCommoditiesQueryHandler(IMapper mapper,
-            IRepository<Commodity> commodityRepository)
+            ICommodityRepository commodityRepository)
         {
             _commodityRepository = commodityRepository;
             _mapper = mapper;
@@ -23,7 +22,7 @@ namespace TDM.Application.BasicInformation.Commodities.Queries.GetCommodities
         GetCommoditiesQuery request,
         CancellationToken cancellationToken)
         {
-            var commodities = await _commodityRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var commodities = await _commodityRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<CommodityDto>>(commodities);
         }

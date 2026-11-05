@@ -13,9 +13,19 @@
             class="mr-2" 
             (onClick)="loadStoreTypes()" />
     </ng-template>
+    <ng-template pTemplate="right">
+        <input type="text" class="p-inputtext p-component" placeholder="Search" [(ngModel)]="search" (keyup.enter)="onSearch()" />
+        <p-button severity="secondary" label="Search" icon="pi pi-search" class="ml-2" (onClick)="onSearch()" />
+    </ng-template>
 
 </p-toolbar>
-<p-table [value]="storeTypes" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="storeTypes" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
             <th>Name</th>

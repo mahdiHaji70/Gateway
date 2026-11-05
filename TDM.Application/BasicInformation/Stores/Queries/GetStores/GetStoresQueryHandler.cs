@@ -26,7 +26,7 @@ namespace TDM.Application.BasicInformation.Stores.Queries.GetStores
         GetStoresQuery request,
         CancellationToken cancellationToken)
         {
-            var Stores = await _storeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var Stores = await _storeRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<StoreDto>>(Stores);
         }

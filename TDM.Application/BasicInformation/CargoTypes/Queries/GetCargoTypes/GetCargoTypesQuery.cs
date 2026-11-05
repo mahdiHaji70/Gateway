@@ -8,5 +8,5 @@ using TDM.Application.Common.Models;
 
 namespace TDM.Application.BasicInformation.CargoTypes.Queries.GetCargoTypes
 {
-    public record GetCargoTypesQuery(int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<CargoTypeDto>>;
+    public record GetCargoTypesQuery(int PageNumber = 1, int PageSize = 10, string? Search = null) : IRequest<PagedResult<CargoTypeDto>>;
 }

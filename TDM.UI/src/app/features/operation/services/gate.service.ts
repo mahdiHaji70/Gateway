@@ -10,8 +10,8 @@ export class GateService {
 
   constructor(private apiService: ApiService) { }
 
-  getGates(): Observable<any> {
-    let _url = ApiEndpoints.Gate + '/GetAll';
+  getGates(pageNumber: number = 1, pageSize: number = 10): Observable<any> {
+    let _url = ApiEndpoints.Gate + '/GetAll' + `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.apiService.get(_url);
   }
 

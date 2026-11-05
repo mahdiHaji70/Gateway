@@ -26,3 +26,11 @@ a {
 .layout-wrapper {
     min-height: 100vh;
 }
+
+.p-inputtext,
+.p-dropdown,
+.p-autocomplete,
+.p-calendar,
+.p-inputnumber {
+    border-radius: 12px;
+}

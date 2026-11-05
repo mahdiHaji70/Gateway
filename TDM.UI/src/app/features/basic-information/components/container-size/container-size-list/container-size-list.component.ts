@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
   styleUrl: './container-size-list.component.scss'
 })
 export class ContainerSizeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   containerSizes: ContainerSize[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class ContainerSizeListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadContainerSizes();
-  }
-
-  loadContainerSizes(){
-    this.basicInformationService.getAll('ContainerSize').subscribe({
+  loadContainerSizes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('ContainerSize', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.containerSizes = res.data.map((item: any) => new ContainerSize(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadContainerSizes(pageNumber, event.rows);
   }
 
   onAdd(){

@@ -22,7 +22,7 @@ namespace TDM.Application.Doc.Manifests.Queries.GetVoyageNumbers
 
         public async Task<List<ManifestVoyageNumberDto>> Handle(GetVoyageNumbersQuery request, CancellationToken cancellationToken)
         {
-            return await _manifestExternalService.GetManifestVoyageNumbers(request.terminalCode);
+            return await _manifestExternalService.GetManifestVoyageNumbers(request.terminalCode, request.Search, cancellationToken);
         }
     }
 }

@@ -18,12 +18,42 @@ namespace TDM.Infrastructure.Persistence.Repositories
 
         public async override Task<PagedResult<Store>?> GetPagedAsync(int pageNumber, int pageSize)
         {
-            var query = _dbSet
+            IQueryable<Store> query = _dbSet
            .AsNoTracking()
            .Include(x => x.StoreType);
 
             var totalCount = await query.CountAsync();
 
+            var items = await query
+                .OrderByDescending(x => x.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Store>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+        }
+
+        public async Task<PagedResult<Store>?> GetPagedAsync(int pageNumber, int pageSize, string? search)
+        {
+            IQueryable<Store> query = _dbSet
+                .AsNoTracking()
+                .Include(x => x.StoreType);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                query = query.Where(x =>
+                    (x.Name != null && x.Name.Contains(searchTerm)) ||
+                    (x.Code != null && x.Code.Contains(searchTerm)));
+            }
+
+            var totalCount = await query.CountAsync();
             var items = await query
                 .OrderByDescending(x => x.CreatedAt)
                 .Skip((pageNumber - 1) * pageSize)

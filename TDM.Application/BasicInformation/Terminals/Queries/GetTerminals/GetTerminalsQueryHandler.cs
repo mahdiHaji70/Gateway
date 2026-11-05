@@ -3,17 +3,16 @@ using MediatR;
 using TDM.Application.BasicInformation.Terminals.DTOs;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;
-using TDM.Domain.Entities;
 
 namespace TDM.Application.BasicInformation.Terminals.Queries.GetTerminals
 {
     public class GetTerminalsQueryHandler : IRequestHandler<GetTerminalsQuery, PagedResult<TerminalDto>>
     {
-        private readonly IRepository<Terminal> _terminalRepository;
+        private readonly ITerminalRepository _terminalRepository;
         private readonly IMapper _mapper;
 
         public GetTerminalsQueryHandler(IMapper mapper,
-            IRepository<Terminal> terminalRepository)
+            ITerminalRepository terminalRepository)
         {
             _terminalRepository = terminalRepository;
             _mapper = mapper;
@@ -23,7 +22,7 @@ namespace TDM.Application.BasicInformation.Terminals.Queries.GetTerminals
         GetTerminalsQuery request,
         CancellationToken cancellationToken)
         {
-            var terminals = await _terminalRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var terminals = await _terminalRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<TerminalDto>>(terminals);
         }

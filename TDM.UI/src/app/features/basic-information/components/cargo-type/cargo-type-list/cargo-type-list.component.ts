@@ -11,6 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './cargo-type-list.component.scss'
 })
 export class CargoTypeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+  search = '';
   cargoTypes: CargoType[] = [];
 
   /**
@@ -21,20 +25,22 @@ export class CargoTypeListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadCargoTypes();
-  }
-
-  loadCargoTypes() {
-    this.basicInformationService.getAll('CargoTypes').subscribe({
-      next: (res: any) => {
+  loadCargoTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('CargoTypes', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.cargoTypes = res.data.items.map((item: any) => new CargoType(item.name, item.id));
       },
       error: (error: any) => { }
     });
   }
 
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadCargoTypes(pageNumber, event.rows);
+  }
+  onSearch() {    this.loadCargoTypes(1, this.pageSize);  }
   onAdd() {
     this.router.navigate(['/cargo-type']);
   }
@@ -71,4 +77,4 @@ export class CargoTypeListComponent {
       }
     });
   }
-}
+}

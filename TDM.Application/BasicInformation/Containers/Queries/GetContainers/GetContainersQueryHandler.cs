@@ -24,7 +24,7 @@ namespace TDM.Application.BasicInformation.Containers.Queries.GetContainers
         GetContainersQuery request,
         CancellationToken cancellationToken)
         {
-            var containers = await _containerRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var containers = await _containerRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<ContainerDto>>(containers);
         }

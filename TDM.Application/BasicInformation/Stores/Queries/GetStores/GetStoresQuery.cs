@@ -7,5 +7,5 @@ using TDM.Application.Common.Models;
 
 namespace TDM.Application.BasicInformation.Stores.Queries.GetStores
 {
-    public record GetStoresQuery(int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<StoreDto>>;
+    public record GetStoresQuery(int PageNumber = 1, int PageSize = 10, string? Search = null) : IRequest<PagedResult<StoreDto>>;
 }

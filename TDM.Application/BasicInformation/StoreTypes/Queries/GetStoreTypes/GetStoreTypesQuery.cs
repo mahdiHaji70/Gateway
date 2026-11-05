@@ -7,5 +7,5 @@ using TDM.Application.Common.Models;
 
 namespace TDM.Application.BasicInformation.StoreTypes.Queries.GetStoreTypes
 {
-    public record GetStoreTypesQuery(int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<StoreTypeDto>>;
+    public record GetStoreTypesQuery(int PageNumber = 1, int PageSize = 10, string? Search = null) : IRequest<PagedResult<StoreTypeDto>>;
 }

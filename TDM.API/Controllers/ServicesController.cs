@@ -7,6 +7,7 @@ using TDM.Application.BasicInformation.Services.Commands.RemoveService;
 using TDM.Application.BasicInformation.Services.Commands.UpdateService;
 using TDM.Application.BasicInformation.Services.Queries.GetServiceById;
 using TDM.Application.BasicInformation.Services.Queries.GetServices;
+using TDM.Application.BasicInformation.Services.Queries.GetServiceLookup;
 
 namespace TDM.API.Controllers
 {
@@ -30,11 +31,15 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetServicesQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetServicesQuery(pageNumber, pageSize, search));
             return Ok(ApiResponse.Success(result));
         }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup([FromQuery] string? search = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+            => Ok(ApiResponse.Success(await _mediator.Send(new GetServiceLookupQuery(search, pageNumber, pageSize))));
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateServiceCommand command, CancellationToken cancellationToken)

@@ -7,6 +7,7 @@ using TDM.Application.Doc.DeclarationItems.Commands.RemoveDeclarationItem;
 using TDM.Application.Doc.DeclarationItems.Commands.RequestIpasDeclarationItems;
 using TDM.Application.Doc.DeclarationItems.Commands.UpdateDeclarationItem;
 using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItemById;
+using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItemLookup;
 using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItems;
 using TDM.Application.Doc.DeclarationItems.Queries.GetDeclarationItemsByDeclarationId;
 using TDM.Application.Doc.Declarations.Commands.RequestIpasDeclarationId;
@@ -38,6 +39,17 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var result = await _mediator.Send(new GetDeclarationItemsQuery(pageNumber, pageSize));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup(
+            [FromQuery] string? search = null,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 20)
+        {
+            var result = await _mediator.Send(new GetDeclarationItemLookupQuery(search, pageNumber, pageSize));
 
             return Ok(ApiResponse.Success(result));
         }

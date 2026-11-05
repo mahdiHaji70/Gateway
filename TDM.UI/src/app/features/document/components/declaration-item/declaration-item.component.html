@@ -8,16 +8,19 @@
 
         <div class="">
             <app-drop-down [options]="commodities" [formGroup]="form" [controlName]="'commodity'"
+                (filterChange)="onCommodityFilterChanged($event)"
                 [required]="true"></app-drop-down>
         </div>
 
         <div class="">
             <app-drop-down [options]="packages" [formGroup]="form" [controlName]="'package'"
+                (filterChange)="onPackageFilterChanged($event)"
                 [required]="true"></app-drop-down>
         </div>
 
         <div class="">
             <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
+                (filterChange)="onTrafficFilterChanged($event)"
                 [required]="true"></app-drop-down>
         </div>
 

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { User } from '../../models/user.model';
 import { Terminal } from '../../models/terminal.model';
@@ -63,8 +64,26 @@ export class UserTerminalComponent {
     });
   }
 
+  onUserFilterChanged(search: string) {
+    this.userService.getAllUsers(search).subscribe({
+      next: (res: any) => {
+        this.users = res.mappedUsers.map((item: any) => new User(item.name, item.nationalId, item.id));
+      },
+      error: (error: any) => { }
+    });
+  }
+
   loadTerminals() {
     this.basicInformationService.getAll('Terminals').subscribe({
+      next: (res: any) => {
+        this.terminals = res.data.items.map((item: any) => new DropdownOption(item.id, item.name + `-  ${item.code}`,));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onTerminalFilterChanged(search: string) {
+    this.basicInformationService.getLookup('Terminals', search).subscribe({
       next: (res: any) => {
         this.terminals = res.data.items.map((item: any) => new DropdownOption(item.id, item.name + `-  ${item.code}`,));
       },

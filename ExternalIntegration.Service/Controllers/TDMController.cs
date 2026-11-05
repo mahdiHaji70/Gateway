@@ -107,9 +107,11 @@ namespace ExternalIntegration.Service.Controllers
         }
 
         [HttpGet("GetManifestsNoticeNoToApprove")]
-        public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove([FromQuery] string terminalCode)
+        public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(
+            [FromQuery] string terminalCode,
+            [FromQuery] string? search = null)
         {
-            return await _tdmSyncService.GetManifestsNoticeNoToApprove(terminalCode);
+            return await _tdmSyncService.GetManifestsNoticeNoToApprove(terminalCode, search);
         }
 
         [HttpGet("GetManifestById")]

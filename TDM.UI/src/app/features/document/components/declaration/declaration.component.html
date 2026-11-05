@@ -19,17 +19,18 @@
             </div>
 
             <div class="col-4">
-                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contact'"
+                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contact'" (filterChange)="onContactFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 
             <div class="col-4">
-                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contactRep'"
+                <app-drop-down [options]="contactReps" [formGroup]="form" [controlName]="'contactRep'" (filterChange)="onContactRepFilterChanged($event)"
                     [required]="false"></app-drop-down>
             </div>
 
             <div class="col-4">
                 <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
+                    (filterChange)="onTrafficFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 

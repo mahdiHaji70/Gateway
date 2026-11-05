@@ -19,12 +19,13 @@ namespace TDM.Infrastructure.Integrations.Client
             _requestExecutor = requestExecutor;
         }
 
-        public async Task<List<ManifestVoyageNumberDto>> GetManifestVoyageNumbers(string terminalCode, CancellationToken cancellationToken = default)
+        public async Task<List<ManifestVoyageNumberDto>> GetManifestVoyageNumbers(string terminalCode, string? search, CancellationToken cancellationToken = default)
         {
             var response = await _requestExecutor.GetAsync<List<ManifestVoyageNumberResponseDto>>("TDM", "GetManifestsNoticeNoToApprove",
              new
-             {                 
-                 TerminalCode = terminalCode
+             {
+                 TerminalCode = terminalCode,
+                 Search = search
              });
 
             ExternalResponseHelper.EnsureSuccess(response, "GetManifestsNoticeNoToApprove");
@@ -34,7 +35,6 @@ namespace TDM.Infrastructure.Integrations.Client
                 ManifestId = x.ManifestId,
                 VoyageNumber = x.VoyageNumber,
             }).ToList();
-
         }
 
         public async Task<ManifestDto> GetManifestById(Guid id, CancellationToken cancellationToken = default)

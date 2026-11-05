@@ -4,6 +4,6 @@ using TDM.Application.Common.Models;
 
 namespace TDM.Application.BasicInformation.Countries.Queries.GetCountries
 {
-    public record GetCountriesQuery(int PageNumber = 1, int PageSize = 10) : IRequest<PagedResult<CountryDto>>;
+    public record GetCountriesQuery(int PageNumber = 1, int PageSize = 10, string? Search = null) : IRequest<PagedResult<CountryDto>>;
 
 }

@@ -7,6 +7,7 @@ using TDM.Application.BasicInformation.StoreTypes.Commands.DeleteStoreType;
 using TDM.Application.BasicInformation.StoreTypes.Commands.UpdateStoreType;
 using TDM.Application.BasicInformation.StoreTypes.Queries.GetStoreTypeById;
 using TDM.Application.BasicInformation.StoreTypes.Queries.GetStoreTypes;
+using TDM.Application.BasicInformation.StoreTypes.Queries.GetStoreTypeLookup;
 
 namespace TDM.API.Controllers
 {
@@ -31,12 +32,16 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetStoreTypesQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetStoreTypesQuery(pageNumber, pageSize, search));
 
             return Ok(ApiResponse.Success(result));
         }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup([FromQuery] string? search = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+            => Ok(ApiResponse.Success(await _mediator.Send(new GetStoreTypeLookupQuery(search, pageNumber, pageSize))));
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStoreTypeCommand command, CancellationToken cancellationToken)

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { CargoTypes, cargoTypesDropdown } from '../../../../shared/constants/cargo-types';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -59,6 +59,15 @@ export class DeclarationItemComponent {
     });
   }
 
+  onCommodityFilterChanged(search: string) {
+    this.basicInformationService.getLookup('commodities', search).subscribe({
+      next: (res: any) => {
+        this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
   loadPackages() {
     this.basicInformationService.getAll('packages').subscribe({
       next: (res: any) => {
@@ -68,8 +77,26 @@ export class DeclarationItemComponent {
     });
   }
 
+  onPackageFilterChanged(search: string) {
+    this.basicInformationService.getLookup('packages', search).subscribe({
+      next: (res: any) => {
+        this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
   loadTraffics() {
     this.basicInformationService.getAll('traffics').subscribe({
+      next: (res: any) => {
+        this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onTrafficFilterChanged(search: string) {
+    this.basicInformationService.getLookup('traffics', search).subscribe({
       next: (res: any) => {
         this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },

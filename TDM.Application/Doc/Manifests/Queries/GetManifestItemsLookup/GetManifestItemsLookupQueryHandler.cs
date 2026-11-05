@@ -30,7 +30,7 @@ namespace TDM.Application.Doc.Manifests.Queries.GetManifestItemsLookup
             if (userTerminal == null)
                 throw new Exception("User is not connect to any terminal.");
 
-            return await _manifestRepository.GetManifestItemsLookup(userTerminal.Terminal.Code, cancellationToken);
+            return await _manifestRepository.GetManifestItemsLookup(userTerminal.Terminal.Code, request.Search, cancellationToken);
         }
     }
 }

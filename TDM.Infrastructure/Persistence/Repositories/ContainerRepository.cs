@@ -15,12 +15,43 @@ namespace TDM.Infrastructure.Persistence.Repositories
 
         public async override Task<PagedResult<Container>?> GetPagedAsync(int pageNumber, int pageSize)
         {
-            var query = _dbSet
+            IQueryable<Container> query = _dbSet
            .AsNoTracking()
            .Include(x => x.ContainerTypeAndSize);
 
             var totalCount = await query.CountAsync();
 
+            var items = await query
+                .OrderByDescending(x => x.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Container>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+        }
+
+        public async Task<PagedResult<Container>?> GetPagedAsync(int pageNumber, int pageSize, string? search)
+        {
+            IQueryable<Container> query = _dbSet
+                .AsNoTracking()
+                .Include(x => x.ContainerTypeAndSize);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchTerm = search.Trim();
+                query = query.Where(x =>
+                    (x.No != null && x.No.Contains(searchTerm)) ||
+                    (x.ContainerTypeAndSize.TypeAndSize != null && x.ContainerTypeAndSize.TypeAndSize.Contains(searchTerm)) ||
+                    (x.ContainerTypeAndSize.TypeAndSizeCode != null && x.ContainerTypeAndSize.TypeAndSizeCode.Contains(searchTerm)));
+            }
+
+            var totalCount = await query.CountAsync();
             var items = await query
                 .OrderByDescending(x => x.CreatedAt)
                 .Skip((pageNumber - 1) * pageSize)

@@ -37,6 +37,7 @@ import { LandStoreReceiptIssueComponent } from './components/land-store-receipt-
 import { MarineStoreReceiptIssueComponent } from './components/marine-store-receipt-issue/marine-store-receipt-issue.component';
 import { StoreReceiptListComponent } from './components/store-receipt-list/store-receipt-list.component';
 import { WarehouseAllocationComponent } from './components/warehouse-allocation/warehouse-allocation.component';
+import { BasicInformationService } from '../basic-information/services/basic-information.service';
 
 
 
@@ -77,6 +78,7 @@ import { WarehouseAllocationComponent } from './components/warehouse-allocation/
     TooltipModule
   ],
   providers: [DeclarationService,
+    BasicInformationService,
     DeclarationItemService,
     DeclarationContainerService,
     DeclarationContainerInfoService,

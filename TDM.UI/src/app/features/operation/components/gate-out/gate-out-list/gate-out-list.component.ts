@@ -12,6 +12,10 @@ import { GateFull } from '../../../models/gate-full.model';
   styleUrl: './gate-out-list.component.scss'
 })
 export class GateOutListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
 gates: GateFull[] = [];
 
   /**
@@ -23,14 +27,12 @@ gates: GateFull[] = [];
     private confirmationService: ConfirmationService,
   private gateService: GateService) {
   }
-
-  ngOnInit() {
-    this.loadGates();
-  }
-
-  loadGates(){
-    this.gateService.getGates().subscribe({
+  loadGates(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.gateService.getGates(pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.gates = res.data.map((item: GateFull) => new GateFull(item.declarationId, item.declarationNumber,
         item.vehicleId, item.vehicleName, item.enterDate, item.exitDate, item.containerId, item.containerNumber, item.id));
       },
@@ -38,6 +40,11 @@ gates: GateFull[] = [];
     });
   }
 
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadGates(pageNumber, event.rows);
+  }
   onAdd(){
     this.router.navigate(['/operation/gate-out']);
   }

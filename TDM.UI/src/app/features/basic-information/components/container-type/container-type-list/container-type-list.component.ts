@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
   styleUrl: './container-type-list.component.scss'
 })
 export class ContainerTypeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   containerTypes: ContainerType[] = [];
 
     /**
@@ -21,19 +25,22 @@ export class ContainerTypeListComponent {
       private messageService: MessageService,
       private confirmationService: ConfirmationService) {
     }
-  
-    ngOnInit() {
-      this.loadContainerTypes();
-    }
-  
-    loadContainerTypes(){
-      this.basicInformationService.getAll('ContainerType').subscribe({
+    loadContainerTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+      this.basicInformationService.getAll('ContainerType', pageNumber, pageSize).subscribe({
         next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
           this.containerTypes = res.data.map((item: any) => new ContainerType(item.code, item.name, item.id));
         },
         error: (error: any) => { }
       });
     }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadContainerTypes(pageNumber, event.rows);
+  }
 
     onAdd(){
       this.router.navigate(['/container-type']);

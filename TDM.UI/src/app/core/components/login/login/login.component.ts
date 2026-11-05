@@ -30,7 +30,7 @@ export class LoginComponent {
       && (this.password && this.password.trim().length > 0)) {
       this.authService.login(this.nationalId, this.password).subscribe({
         next: (res: any) => {
-          this.localStorageService.setItem('token', res.accessToken);
+          this.authService.storeTokens(res);
           this.authService.getCurrentTerminal().subscribe({
             next: (currentTerminalres: any) => {
               this.localStorageService.setItem('terminalId', currentTerminalres.data.terminalId);

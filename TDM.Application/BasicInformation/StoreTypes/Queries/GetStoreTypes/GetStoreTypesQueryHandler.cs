@@ -26,7 +26,7 @@ namespace TDM.Application.BasicInformation.StoreTypes.Queries.GetStoreTypes
         GetStoreTypesQuery request,
         CancellationToken cancellationToken)
         {
-            var storeTypes = await _storeTypeRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var storeTypes = await _storeTypeRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<StoreTypeDto>>(storeTypes);
         }

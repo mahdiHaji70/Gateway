@@ -11,6 +11,10 @@ import { Commodity } from '../../../models/commodity.model';
   styleUrl: './commodity-list.component.scss'
 })
 export class CommodityListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+  search = '';
   commodities: Commodity[] = [];
 
   /**
@@ -21,20 +25,22 @@ export class CommodityListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadCommodities();
-  }
-
-  loadCommodities(){
-    this.basicInformationService.getAll('commodities').subscribe({
-      next: (res: any) => {
+  loadCommodities(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('commodities', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.commodities = res.data.items.map((item: any) => new Commodity(item.name, item.hsCode, item.id));
       },
       error: (error: any) => { }
     });
   }
 
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadCommodities(pageNumber, event.rows);
+  }
+  onSearch() {    this.loadCommodities(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/commodity']);
   }
@@ -71,4 +77,4 @@ export class CommodityListComponent {
       }
     });
   }
-}
+}

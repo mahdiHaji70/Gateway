@@ -9,6 +9,9 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface ITerminalDischargeRepository : IRepository<TerminalDischarge>
     {
+        Task<PagedResult<TerminalDischarge>?> GetPagedFilteredAsync(
+            int pageNumber, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo,
+            Guid? declarationItemId, Guid? storeId);
         public Task<List<TerminalDischarge>?> GetByDeclarationIdAsync(Guid id);
         public Task<List<TerminalDischarge>> GetPendingIpasSubmissionByDeclarationIdAsync(Guid declarationId);
         public Task<PagedResult<TerminalDischarge>?> GetTerminalDischargesByDeclarationIdPagedAsync(

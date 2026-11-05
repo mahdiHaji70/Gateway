@@ -6,5 +6,5 @@ using TDM.Application.Doc.Manifests.DTOs;
 
 namespace TDM.Application.Doc.Manifests.Queries.GetVoyageNumbers
 {
-    public record GetVoyageNumbersQuery(string terminalCode) : IRequest<List<ManifestVoyageNumberDto>>;   
+    public record GetVoyageNumbersQuery(string terminalCode, string? Search = null) : IRequest<List<ManifestVoyageNumberDto>>;
 }

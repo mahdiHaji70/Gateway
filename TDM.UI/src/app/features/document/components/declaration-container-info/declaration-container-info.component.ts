@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
@@ -45,18 +45,36 @@ export class DeclarationContainerInfoComponent {
   }
 
   loadCommodities() {
-    this.basicInformationService.getAll('Commodity').subscribe({
+    this.basicInformationService.getAll('Commodities').subscribe({
       next: (res: any) => {
-        this.commodities = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onCommodityFilterChanged(search: string) {
+    this.basicInformationService.getLookup('Commodities', search).subscribe({
+      next: (res: any) => {
+        this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
   }
 
   loadPackages() {
-    this.basicInformationService.getAll('Package').subscribe({
+    this.basicInformationService.getAll('Packages').subscribe({
       next: (res: any) => {
-        this.packages = res.data.map((item: any) => new DropdownOption(item.id, item.name));
+        this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onPackageFilterChanged(search: string) {
+    this.basicInformationService.getLookup('Packages', search).subscribe({
+      next: (res: any) => {
+        this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });

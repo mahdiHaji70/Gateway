@@ -33,6 +33,7 @@ namespace TDM.Application.Common.Mappings
             CreateMap(typeof(PagedResult<>), typeof(PagedResult<>));
 
             CreateMap<Company, CompanyDto>();
+            CreateMap<Company, CompanyLookupDto>();
 
             CreateMap<Commodity, CommodityDto>();
 
@@ -53,8 +54,11 @@ namespace TDM.Application.Common.Mappings
             CreateMap<UserTerminal, UserTerminalDto>();
 
             CreateMap<Declaration, DeclarationDto>();
+            CreateMap<Declaration, DeclarationLookupDto>();
 
             CreateMap<DeclarationItem, DeclarationItemDto>()
+                .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));
+            CreateMap<DeclarationItem, DeclarationItemLookupDto>()
                 .ForMember(dest => dest.IpasDeclarationNo, opt => opt.MapFrom(src => src.Declaration.IpasDeclarationNo));
 
             CreateMap<ManifestItem, ManifestItemDto>()

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { StoreReceiptHead } from '../../models/store-receipt-head.model';
@@ -32,8 +32,8 @@ export class MarineStoreReceiptIssueComponent {
     this.loadManifestItems()
   }
 
-  loadManifestItems() {
-    this.manifestService.getItemsLookup().subscribe({
+  loadManifestItems(search: string = '') {
+    this.manifestService.getItemsLookup(search).subscribe({
       next: (res: any) => {
         this.manifestItems = (res.data || []).map((item: any) =>
           new DropdownOption(item.ipasItemId, `${item.voyageNo} / ${item.manifestNo}`));

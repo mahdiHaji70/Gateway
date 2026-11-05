@@ -11,6 +11,10 @@ import { Country } from '../../../models/country.model';
   styleUrl: './country-list.component.scss'
 })
 export class CountryListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+  search = '';
   countries: Country[] = [];
 
   /**
@@ -21,20 +25,22 @@ export class CountryListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadCountries();
-  }
-
-  loadCountries(){
-    this.basicInformationService.getAll('countries').subscribe({
-      next: (res: any) => {
+  loadCountries(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('countries', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.countries = res.data.items.map((item: any) => new Country(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
   }
 
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadCountries(pageNumber, event.rows);
+  }
+  onSearch() {    this.loadCountries(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/country']);
   }
@@ -71,4 +77,4 @@ export class CountryListComponent {
       }
     });
   }
-}
+}

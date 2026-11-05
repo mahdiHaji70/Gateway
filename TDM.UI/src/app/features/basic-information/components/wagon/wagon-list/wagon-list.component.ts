@@ -11,6 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './wagon-list.component.scss'
 })
 export class WagonListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   wagons: Wagon[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class WagonListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadWagons();
-  }
-
-  loadWagons() {
-    this.basicInformationService.getAll('Wagon').subscribe({
+  loadWagons(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('Wagon', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.wagons = res.data.map((item: any) => new Wagon(item.code, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadWagons(pageNumber, event.rows);
   }
 
   onAdd() {

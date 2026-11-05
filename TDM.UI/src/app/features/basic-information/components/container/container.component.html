@@ -1,6 +1,7 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <app-drop-down [options]="containerTypesAndSizes" [formGroup]="form" [controlName]="'containerTypeAndSize'"
+            (filterChange)="onContainerTypeAndSizeFilterChanged($event)"
             [required]="true" [optionLabel]="'typeAndSize'"></app-drop-down>
         <app-input [formGroup]="form" [controlName]="'containerNumber'" [required]="true"></app-input>
 

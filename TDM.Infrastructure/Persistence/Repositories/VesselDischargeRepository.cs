@@ -41,6 +41,40 @@ namespace TDM.Infrastructure.Persistence.Repositories
             };
         }
 
+        public async Task<PagedResult<VesselDischarge>?> GetPagedFilteredAsync(
+            int pageNumber, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo,
+            Guid? manifestItemId, Guid? storeId, Guid? containerId)
+        {
+            IQueryable<VesselDischarge> query = _dbSet.AsNoTracking()
+                .Include(x => x.Store)
+                .Include(x => x.ManifestItem)
+                .Include(x => x.ManifestContainer).ThenInclude(x => x!.Container);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(x => x.ManifestItem.ManifestItemNo.Contains(term) ||
+                    x.ManifestItem.ManifestNo.Contains(term) ||
+                    (x.ManifestContainer != null && x.ManifestContainer.Container.No.Contains(term)));
+            }
+            if (dateFrom.HasValue) query = query.Where(x => x.DischargeDate >= dateFrom.Value.Date);
+            if (dateTo.HasValue)
+            {
+                var endExclusive = dateTo.Value.Date.AddDays(1);
+                query = query.Where(x => x.DischargeDate < endExclusive);
+            }
+            if (manifestItemId.HasValue) query = query.Where(x => x.ManifestItemId == manifestItemId.Value);
+            if (storeId.HasValue) query = query.Where(x => x.StoreId == storeId.Value);
+            if (containerId.HasValue) query = query.Where(x => x.ManifestContainer != null && x.ManifestContainer.ContainerId == containerId.Value);
+
+            var totalCount = await query.CountAsync();
+            var items = await query.OrderByDescending(x => x.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            return new PagedResult<VesselDischarge>
+            { Items = items, TotalCount = totalCount, PageNumber = pageNumber, PageSize = pageSize };
+        }
+
 
         public async override Task<VesselDischarge?> GetAsync(Guid id)
         {

@@ -11,6 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './store-type-list.component.scss'
 })
 export class StoreTypeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+  search = '';
 storeTypes: StoreType[] = [];
 
   /**
@@ -21,20 +25,22 @@ storeTypes: StoreType[] = [];
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadStoreTypes();
-  }
-
-  loadStoreTypes(){
-    this.basicInformationService.getAll('StoreTypes').subscribe({
-      next: (res: any) => {
+  loadStoreTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('StoreTypes', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.storeTypes = res.data.items.map((item: any) => new StoreType(item.name, item.id));
       },
       error: (error: any) => { }
     });
   }
 
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadStoreTypes(pageNumber, event.rows);
+  }
+  onSearch() {    this.loadStoreTypes(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/store-type']);
   }
@@ -71,4 +77,4 @@ storeTypes: StoreType[] = [];
       }
     });
   }
-}
+}

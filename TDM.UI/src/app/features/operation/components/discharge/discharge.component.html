@@ -7,12 +7,14 @@
                 <div class="grid">
                     <div class="col-12 md:col-6 lg:col-4">
                         <app-drop-down [options]="declarationItems" [formGroup]="form" [controlName]="'declarationItem'"
-                            [required]="true" (change)="loadGoodwayBills($event)">
+                            (filterChange)="loadDeclarationItems($event)" [required]="true"
+                            (selectionChange)="loadGoodwayBills($event)">
                         </app-drop-down>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-4">
-                        <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'" [required]="true">
+                        <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'"
+                            (filterChange)="onStoreFilterChanged($event)" [required]="true">
                         </app-drop-down>
                     </div>
                 </div>
@@ -20,7 +22,7 @@
                 <div class="grid">
                     <div class="col-12">
                         <app-drop-down [options]="goodwayBills" [formGroup]="form" [controlName]="'goodwayBill'"
-                            [required]="true" (change)="setVehicleNumber($event)">
+                            [required]="true" (selectionChange)="setVehicleNumber($event)">
                         </app-drop-down>
                     </div>
                 </div>

@@ -31,14 +31,7 @@ export class ApiService {
   }
 
  private buildOptions(params?: any, customHeaders?: any) {
-    const token = localStorage.getItem('token');
-    
     let httpHeaders = new HttpHeaders();
-
-    // Add Authorization header if token exists
-    if (token) {
-      httpHeaders = httpHeaders.set('Authorization', `Bearer ${token}`);
-    }
 
     // Merge custom headers
     if (customHeaders) {

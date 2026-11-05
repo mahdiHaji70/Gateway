@@ -11,6 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './traffic-list.component.scss'
 })
 export class TrafficListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+  search = '';
   traffics: Traffic[] = [];
 
   /**
@@ -21,20 +25,22 @@ export class TrafficListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadTraffics();
-  }
-
-  loadTraffics(){
-    this.basicInformationService.getAll('traffics').subscribe({
-      next: (res: any) => {
+  loadTraffics(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('traffics', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.traffics = res.data.items.map((item: any) => new Traffic(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
   }
 
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadTraffics(pageNumber, event.rows);
+  }
+  onSearch() {    this.loadTraffics(1, this.pageSize);  }
   onAdd(){
     this.router.navigate(['/traffic']);
   }

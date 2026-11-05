@@ -2,6 +2,12 @@
 
 namespace TDM.Application.BasicInformation.Companies.DTOs
 {
+    public class CompanyLookupDto
+    {
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
+    }
+
     public class CompanyDto
     {
         public Guid Id { get; set; }

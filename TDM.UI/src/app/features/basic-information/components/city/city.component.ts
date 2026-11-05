@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { BasicInformationService } from '../../services/basic-information.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -53,6 +54,15 @@ export class CityComponent {
 
   loadCountries() {
     this.basicInformationService.getAll('countries').subscribe({
+      next: (res: any) => {
+        this.countries = res.data.items.map((item: any) => new Country(item.code, item.name, item.id));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onCountryFilterChanged(search: string) {
+    this.basicInformationService.getLookup('countries', search).subscribe({
       next: (res: any) => {
         this.countries = res.data.items.map((item: any) => new Country(item.code, item.name, item.id));
       },

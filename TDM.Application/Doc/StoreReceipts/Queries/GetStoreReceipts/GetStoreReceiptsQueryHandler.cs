@@ -22,7 +22,10 @@ namespace TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceipts
             GetStoreReceiptsQuery request,
             CancellationToken cancellationToken)
         {
-            var result = await _repository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var result = await _repository.GetPagedFilteredAsync(
+                request.PageNumber, request.PageSize, request.Search, request.DateFrom, request.DateTo,
+                request.ConsigneeId, request.ConsigneeRepId, request.TrafficId, request.CargoTypeId,
+                request.ArrivalTypeCode);
             return _mapper.Map<PagedResult<StoreReceiptHeadDto>>(result);
         }
     }

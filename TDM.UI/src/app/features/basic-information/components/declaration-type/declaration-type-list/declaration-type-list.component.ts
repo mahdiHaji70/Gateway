@@ -11,6 +11,10 @@ import { DeclarationType } from '../../../models/declaration-type.model';
   styleUrl: './declaration-type-list.component.scss'
 })
 export class DeclarationTypeListComponent {
+  totalRecords = 0;
+  pageSize = 10;
+  currentPage = 1;
+
   declarationTypes: DeclarationType[] = [];
 
   /**
@@ -21,18 +25,21 @@ export class DeclarationTypeListComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
-
-  ngOnInit() {
-    this.loadDeclarationTypes();
-  }
-
-  loadDeclarationTypes(){
-    this.basicInformationService.getAll('DeclarationType').subscribe({
+  loadDeclarationTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
+    this.currentPage = pageNumber;
+    this.pageSize = pageSize;
+    this.basicInformationService.getAll('DeclarationType', pageNumber, pageSize).subscribe({
       next: (res: any) => {
+        this.totalRecords = res.data.totalCount;
         this.declarationTypes = res.data.map((item: any) => new DeclarationType(item.code, item.name, item.id));
       },
       error: (error: any) => { }
     });
+  }
+
+  onPageChange(event: any) {
+    const pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.loadDeclarationTypes(pageNumber, event.rows);
   }
 
   onAdd(){

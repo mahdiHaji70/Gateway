@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { DropdownOption } from '../../../../shared/models/drop-down-option-model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -51,10 +51,20 @@ export class DeclarationContainerComponent {
   }
 
   loadContainers() {
-    this.basicInformationService.getAll('Container').subscribe({
+    this.basicInformationService.getAll('Containers').subscribe({
       next: (res: any) => {
-        this.containers = res.data.map((item: any) => new DropdownOption(item.id, item.containerNumber));
-        this.rawContainers = res.data;
+        this.rawContainers = res.data.items;
+        this.containers = this.rawContainers.map((item: any) => new DropdownOption(item.id, item.no));
+      },
+      error: (error: any) => { }
+    });
+  }
+
+  onContainerFilterChanged(search: string) {
+    this.basicInformationService.getLookup('Containers', search).subscribe({
+      next: (res: any) => {
+        this.rawContainers = res.data.items;
+        this.containers = this.rawContainers.map((item: any) => new DropdownOption(item.id, item.no));
       },
       error: (error: any) => { }
     });

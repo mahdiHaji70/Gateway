@@ -1,8 +1,10 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <app-drop-down [options]="users" [formGroup]="form" [controlName]="'user'"
+            (filterChange)="onUserFilterChanged($event)"
             [required]="true"></app-drop-down>
         <app-drop-down [options]="terminals" [formGroup]="form" [controlName]="'terminal'"
+            (filterChange)="onTerminalFilterChanged($event)"
             [required]="true"></app-drop-down>
         <div>
             <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"

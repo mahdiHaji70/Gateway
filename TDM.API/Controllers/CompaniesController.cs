@@ -7,6 +7,7 @@ using TDM.Application.BasicInformation.Companies.Commands.RemoveCompany;
 using TDM.Application.BasicInformation.Companies.Commands.UpdateCompany;
 using TDM.Application.BasicInformation.Companies.Queries.GetCompanies;
 using TDM.Application.BasicInformation.Companies.Queries.GetCompanyById;
+using TDM.Application.BasicInformation.Companies.Queries.GetCompanyLookup;
 
 namespace TDM.API.Controllers
 {
@@ -31,9 +32,17 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetCompaniesQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetCompaniesQuery(pageNumber, pageSize, search));
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup([FromQuery] string? search = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+        {
+            var result = await _mediator.Send(new GetCompanyLookupQuery(search, pageNumber, pageSize));
 
             return Ok(ApiResponse.Success(result));
         }

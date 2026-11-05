@@ -24,17 +24,23 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetList(
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null, [FromQuery] DateTime? dateFrom = null, [FromQuery] DateTime? dateTo = null,
+            [FromQuery] Guid? trafficId = null, [FromQuery] Guid? consigneeId = null,
+            [FromQuery] Guid? cargoTypeId = null, [FromQuery] Guid? commodityId = null, [FromQuery] Guid? packageId = null)
         {
-            var result = await _mediator.Send(new GetManifestsQuery(pageNumber, pageSize));
+            var result = await _mediator.Send(new GetManifestsQuery(
+                pageNumber, pageSize, search, dateFrom, dateTo, trafficId, consigneeId,
+                cargoTypeId, commodityId, packageId));
 
             return Ok(ApiResponse.Success(result));
         }
 
         [HttpGet("items-lookup")]
-        public async Task<IActionResult> GetManifestItemsLookup()
+        public async Task<IActionResult> GetManifestItemsLookup([FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetManifestItemsLookupQuery());
+            var result = await _mediator.Send(new GetManifestItemsLookupQuery(search));
 
             return Ok(ApiResponse.Success(result));
         }
@@ -48,9 +54,9 @@ namespace TDM.API.Controllers
         }
 
         [HttpGet("request-manifest-voyage-numbers/{terminalCode}")]
-        public async Task<IActionResult> GetManifestVoyageNumbers(string terminalCode)
+        public async Task<IActionResult> GetManifestVoyageNumbers(string terminalCode, [FromQuery] string? search = null)
         {
-            var result = await _mediator.Send(new GetVoyageNumbersQuery(terminalCode));
+            var result = await _mediator.Send(new GetVoyageNumbersQuery(terminalCode, search));
             return Ok(ApiResponse.Success(result));
         }
 

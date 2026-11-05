@@ -9,9 +9,18 @@ export class DischargeService {
 
   constructor(private apiService: ApiService) { }
 
-  getDischarges(): Observable<any> {
-    let _url = ApiEndpoints.Terminal_Discharges;
-    return this.apiService.get(_url);
+  getDischarges(pageNumber: number = 1, pageSize: number = 10, filters?: any): Observable<any> {
+    const params: any = { pageNumber, pageSize };
+    if (filters?.search) params.search = filters.search;
+    if (filters?.dateFrom) params.dateFrom = this.formatDate(filters.dateFrom);
+    if (filters?.dateTo) params.dateTo = this.formatDate(filters.dateTo);
+    if (filters?.declarationItemId) params.declarationItemId = filters.declarationItemId;
+    if (filters?.storeId) params.storeId = filters.storeId;
+    return this.apiService.get(ApiEndpoints.Terminal_Discharges, params);
+  }
+
+  private formatDate(date: Date): string {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
   }
 
   getById(id: string): Observable<any> {

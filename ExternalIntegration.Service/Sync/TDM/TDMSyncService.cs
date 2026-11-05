@@ -178,13 +178,11 @@ namespace ExternalIntegration.Service.Sync.TDM
             return Response<IEnumerable<IssueRequestDto>>.Success(_mapper.Map<IEnumerable<IssueRequestDto>>(result));
         }
 
-        public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(string terminalCode)
+        public async Task<Response<IEnumerable<ManifestNoticeToApproveDto>>> GetManifestsNoticeNoToApprove(string terminalCode, string? search)
         {
-            var manifestsToApprove = await _manifestRepository.GetManifestsNoticeNoToApprove(terminalCode);
-            if (manifestsToApprove == null && manifestsToApprove!.Count() == 0)
-                return Response<IEnumerable<ManifestNoticeToApproveDto>>.Error("No data found");
-
-            return Response<IEnumerable<ManifestNoticeToApproveDto>>.Success(manifestsToApprove);
+            var manifestsToApprove = await _manifestRepository.GetManifestsNoticeNoToApprove(terminalCode, search);
+            return Response<IEnumerable<ManifestNoticeToApproveDto>>.Success(
+                manifestsToApprove ?? Enumerable.Empty<ManifestNoticeToApproveDto>());
         }
 
         public async Task<Response<ManifestDto>> GetManifestById(Guid id)

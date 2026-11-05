@@ -5,7 +5,13 @@
     </ng-template>
 
 </p-toolbar>
-<p-table [value]="weighBridges" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="weighBridges" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
             <th>Declaration</th>

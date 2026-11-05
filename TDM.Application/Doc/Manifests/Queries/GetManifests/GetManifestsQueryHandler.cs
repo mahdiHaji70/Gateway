@@ -34,7 +34,10 @@ namespace TDM.Application.Doc.Manifests.Queries.GetManifests
             if (userTerminal == null)
                 throw new Exception("User is not connect to any terminal.");
 
-            var manifests = await _manifestRepository.GetPagedManifests(request.PageNumber, request.PageSize, userTerminal.Terminal.Code);
+            var manifests = await _manifestRepository.GetPagedManifests(
+                request.PageNumber, request.PageSize, userTerminal.Terminal.Code,
+                request.Search, request.DateFrom, request.DateTo, request.TrafficId,
+                request.ConsigneeId, request.CargoTypeId, request.CommodityId, request.PackageId);
 
             return manifests;
         }

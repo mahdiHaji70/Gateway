@@ -9,11 +9,11 @@ namespace TDM.Application.BasicInformation.Companies.Queries.GetCompanies
 {
     public class GetCompaniesQueryHandler : IRequestHandler<GetCompaniesQuery, PagedResult<CompanyDto>>
     {
-        private readonly IRepository<Company> _companyRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
 
         public GetCompaniesQueryHandler(IMapper mapper, 
-            IRepository<Company> companyRepository)
+            ICompanyRepository companyRepository)
         {
             _companyRepository = companyRepository;
             _mapper = mapper;
@@ -23,7 +23,7 @@ namespace TDM.Application.BasicInformation.Companies.Queries.GetCompanies
         GetCompaniesQuery request,
         CancellationToken cancellationToken)
         {
-            var companies = await _companyRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var companies = await _companyRepository.GetPagedAsync(request.PageNumber, request.PageSize, request.Search);
 
             return _mapper.Map<PagedResult<CompanyDto>>(companies);            
         }
