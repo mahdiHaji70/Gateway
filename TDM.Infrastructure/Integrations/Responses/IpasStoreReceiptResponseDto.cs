@@ -50,6 +50,7 @@ namespace TDM.Infrastructure.Integrations.Responses
         public bool? IsActive { get; set; }
         public string customsProcedureCode { get; set; }
         public Guid? RequestId { get; set; }
+        public string? VoyageNoticeNo { get; set; }
 
         public List<StoreReceiptGeneralCargoResponseDto> GeneralCargoList { get; set; }
         public List<StoreReceiptBulkResponseDto> BulkList { get; set; }

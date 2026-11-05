@@ -159,6 +159,15 @@ namespace ExternalIntegration.Service.Sync.TDM
                 return Response<DateTime>.Error("No data found");
             return Response<DateTime>.Success(lastDate);
         }
+        public async Task<Response<IssueRequestDto>> GetIssueRequestByRequestId(Guid requestId, CancellationToken cancellationToken = default)
+        {
+            var issueRequest = await _issueRequestRepository.GetByRequestIdAsync(requestId, cancellationToken);
+            if (issueRequest == null)
+                return Response<IssueRequestDto>.Error("Issue request not found.");
+
+            return Response<IssueRequestDto>.Success(_mapper.Map<IssueRequestDto>(issueRequest));
+        }
+
         public async Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequestById(Guid id)
         {
             var result = await _issueRequestRepository.GetByIdNoAsync(id);

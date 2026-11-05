@@ -167,7 +167,7 @@ namespace TDM.Domain.Entities
             TrafficId = trafficId;
             StoreReceiptStateId = storeReceiptStateId;
             RequestId = requestId;
-            VoyageNoticeNo = voyageNoticeNo;
+            VoyageNoticeNo = voyageNoticeNo ?? string.Empty;
             ArrivalTypeId = arrivalTypeId;
             DeclarationId = declarationId;
             ManifestItemId = manifestItemId;
@@ -211,9 +211,6 @@ namespace TDM.Domain.Entities
 
             if (storeReceiptStateId == Guid.Empty)
                 throw new DomainValidationException("Store receipt state is required.");
-
-            if (string.IsNullOrWhiteSpace(voyageNoticeNo))
-                throw new DomainValidationException("Voyage notice number is required.");
 
            // if (arrivalTypeId == Guid.Empty)
              //   throw new DomainValidationException("Arrival type is required.");

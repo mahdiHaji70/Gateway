@@ -153,8 +153,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
                        .Include(x => x.DeclarationItem.Declaration)
                        .Include(x => x.DeclarationItem.Commodity)
                        .Include(x => x.DeclarationItem.Package)
-                       .Where(x => x.DeclarationItem.Declaration.IpasDeclarationNo == ipasDeclarationNo
-                                && x.IpasTerminalDischargeId == null)
+                       .Where(x => x.DeclarationItem.Declaration.IpasDeclarationNo == ipasDeclarationNo)
                        .ToListAsync();
         }
 

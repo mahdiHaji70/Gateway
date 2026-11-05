@@ -5,6 +5,7 @@ using System.Text;
 using TDM.Application.Doc.Manifests.Commands.CreateManifest;
 using TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt;
 using TDM.Application.Doc.StoreReceiptGoods.Commands.CreateStoreReceiptGood;
+using TDM.Domain.Enums;
 
 namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 {
@@ -55,13 +56,14 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                     || !string.IsNullOrWhiteSpace(x.ArrivalTypeName))
                 .WithMessage("Arrival type id, code or name is required.");
 
-            RuleFor(x => x.VoyageNoticeNo)
-                .NotEmpty()
-                .WithMessage("Voyage notice number is required.");
-
             RuleFor(x => x.FirstDischargeDate)
                 .NotNull()
                 .WithMessage("First discharge date is required.");
+
+            RuleFor(x => x.DeclarationId)
+                .Must(id => id.HasValue && id.Value != Guid.Empty)
+                .When(x => x.ArrivalTypeCode == "1")
+                .WithMessage("Declaration id is required when arrival type code is '1'.");
 
             RuleFor(x => x)
             .Must(x => x.DeclarationId.HasValue || x.ManifestItemId.HasValue)
@@ -73,7 +75,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .WithMessage("Provide either DeclarationId or ManifestItemId, but not both.");
 
             RuleForEach(x => x.StoreReceiptGoods)
-                   .SetValidator(new CreateStoreReceiptGoodCommandValidator());
+                   .SetValidator(x => new CreateStoreReceiptGoodCommandValidator(x.CargoTypeId == CargoTypes.Bulk));
             RuleForEach(x => x.StoreReceiptContainers)
                .SetValidator(new CreateStoreReceiptContainerCommandValidator());
 
@@ -82,7 +84,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
     }
     public class CreateStoreReceiptGoodCommandValidator : AbstractValidator<CreateStoreReceiptGoodCommand>
     {
-        public CreateStoreReceiptGoodCommandValidator()
+        public CreateStoreReceiptGoodCommandValidator(bool isBulk = false)
         {
             RuleFor(x => x)
                 .Must(x => x.CommodityId != Guid.Empty || !string.IsNullOrWhiteSpace(x.HsCode))
@@ -94,7 +96,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 
             RuleFor(x => x.PackNB)
                 .GreaterThan(0)
+                .When(_ => !isBulk)
                 .WithMessage("Package quantity must be greater than zero.");
+
+            RuleFor(x => x.PackNB)
+                .GreaterThanOrEqualTo(0)
+                .When(_ => isBulk)
+                .WithMessage("Package quantity cannot be negative.");
 
             RuleFor(x => x.GrossWeight)
                 .GreaterThanOrEqualTo(0)
@@ -105,8 +113,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                 .WithMessage("Net weight cannot be negative.");
 
             RuleFor(x => x.Volume)
-                .GreaterThan(0)
-                .WithMessage("Volume must be greater than zero.");
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("Volume cannot be negative.");
 
         }
     }

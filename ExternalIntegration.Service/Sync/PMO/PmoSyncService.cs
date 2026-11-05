@@ -230,9 +230,9 @@ namespace ExternalIntegration.Service.Sync.PMO
         {
             var syncMappingRequestDto = _mapper.Map<IssueRequestConfirmationRequestDto>(dto);
             var clientResult = await _client.IssueRequestConfirmation(syncMappingRequestDto);
-            if (clientResult.Status != ResponseStatuses.Error)
+            if (clientResult.Status == ResponseStatuses.Success)
             {
-                _issueRequestRepository.UpdateIssueRequestApprovalAsync(dto.RequestId, dto.IsApproved);
+                await _issueRequestRepository.UpdateIssueRequestApprovalAsync(dto.RequestId, dto.IsApproved);
                 await _unitOfWork.SaveChangesAsync();
             }
 

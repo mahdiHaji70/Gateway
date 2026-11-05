@@ -9,6 +9,7 @@ namespace TDM.Infrastructure.Integrations.Responses
     {
         public Guid Id { get; set; }
         public Guid RequestId { get; set; }
+        public bool IsApproved { get; set; }
         public string StorageAgreementNo { get; set; }
         public string Port { get; set; }
         public string PortCode { get; set; }

@@ -10,7 +10,8 @@ namespace ExternalIntegration.Service.Application.Abstractions
 
         Task<DateTime> GetLastDateAsync(string terminalCode);
         Task<List<IssueRequest>> GetByStorageAgreementNoAsync(string storageAgreementNo);
-        void UpdateIssueRequestApprovalAsync(Guid requestId, bool isApproved);
+        Task UpdateIssueRequestApprovalAsync(Guid requestId, bool isApproved);
+        Task<IssueRequest?> GetByRequestIdAsync(Guid requestId, CancellationToken cancellationToken = default);
         Task<List<IssueRequest>> GetByIdNoAsync(Guid id);
 
     }

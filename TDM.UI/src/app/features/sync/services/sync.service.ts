@@ -41,7 +41,7 @@ export class SyncService {
   getStoreReceipts() {
     var terminalcode = this.localStorageService.getItem('terminalCode');
     var portcode = this.localStorageService.getItem('portCode');
-    let _url = ApiEndpoints.Store_Receipt;
+    let _url = ApiEndpoints.Store_Receipts;
     return this.apiService.get(_url, { TerminalCode: terminalcode, PortCode: portcode, PageIndex: 0, PageSize: 100 });
   }
 

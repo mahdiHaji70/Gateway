@@ -27,6 +27,8 @@ namespace TDM.Application.Operation.TerminalDischarges.Commands.DeleteTerminalDi
             if (terminalDischarge == null)
                 throw new Exception("TerminalDischarge not found");
 
+            terminalDischarge.EnsureCanDelete();
+
             _terminalDischargeRepository.Delete(terminalDischarge);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
