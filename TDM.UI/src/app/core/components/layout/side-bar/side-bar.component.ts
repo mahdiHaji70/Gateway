@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MenuItem } from 'primeng/api';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { MenuItems } from '../../../constants/menu-items';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -13,11 +14,11 @@ import { MenuItems } from '../../../constants/menu-items';
     trigger('expandCollapse', [
       transition(':enter', [
         style({ height: '0', opacity: 0, visibility: 'hidden' }),
-        animate('500ms ease-out', style({ height: '*', opacity: 1, visibility: 'visible' }))
+        animate('180ms ease-out', style({ height: '*', opacity: 1, visibility: 'visible' }))
       ]),
       transition(':leave', [
         style({ height: '*', opacity: 1, visibility: 'visible' }),
-        animate('500ms ease-in', style({ height: '0', opacity: 0, visibility: 'hidden' }))
+        animate('150ms ease-in', style({ height: '0', opacity: 0, visibility: 'hidden' }))
       ])
     ])
   ]
@@ -28,8 +29,10 @@ export class SideBarComponent {
   /**
    *
    */
-  constructor(public router: Router,
-    private localStorageService: LocalStorageService
+  constructor(
+    private router: Router,
+    private localStorageService: LocalStorageService,
+    private layoutService: LayoutService
   ) {
     this.parentStates = [];
     this.menuItems = MenuItems;
@@ -39,22 +42,43 @@ export class SideBarComponent {
 
 
 
-  toggleParent(index: number) {
+  toggleParent(index: number): void {
     this.parentStates[index] = !this.parentStates[index];
   }
 
   isParentOpen(index: number): boolean {
-    return this.parentStates[index];
+    return this.parentStates[index] ?? false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.username = this.localStorageService.getItem('username');
-
-
-
   }
 
-  onItemClick(path: string) {
-    this.router.navigate([path]).then().catch();
+  closeMenu(): void {
+    this.layoutService.closeMobileMenu();
+  }
+
+  onItemClick(path?: string): void {
+    if (!path) {
+      return;
+    }
+
+    void this.router.navigate([path]).catch(() => undefined);
+    this.closeMenu();
+  }
+
+  isRouteActive(path?: string): boolean {
+    if (!path) {
+      return false;
+    }
+
+    const currentPath = this.router.url.split(/[?#]/, 1)[0];
+    const targetPath = `/${path}`;
+    return currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
+  }
+
+  goToDashboard(): void {
+    void this.router.navigate(['/']).catch(() => undefined);
+    this.closeMenu();
   }
 }

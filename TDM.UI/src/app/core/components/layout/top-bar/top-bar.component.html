@@ -1,13 +1,26 @@
 <div class="layout-topbar">
-    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-        <i class="pi pi-bars"></i>
+    <button
+        #menubutton
+        type="button"
+        class="p-link layout-menu-button layout-topbar-button"
+        aria-label="Toggle navigation menu"
+        aria-controls="primary-navigation"
+        [attr.aria-expanded]="layoutService.menuIsOpen"
+        (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars" aria-hidden="true"></i>
     </button>
-    <a class="layout-topbar-logo" routerLink="">
-        <!-- <img src="assets/images/logo.png"  alt="logo"> -->
-    </a> 
+    <a class="layout-topbar-logo" routerLink="/" aria-label="TDM dashboard">
+        <span>TDM</span>
+    </a>
 
-    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
-        <i class="pi pi-ellipsis-v"></i>
+    <button
+        #topbarmenubutton
+        type="button"
+        class="p-link layout-topbar-menu-button layout-topbar-button"
+        aria-label="Toggle account menu"
+        [attr.aria-expanded]="layoutService.state.profileSidebarVisible"
+        (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v" aria-hidden="true"></i>
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">

@@ -1,10 +1,9 @@
 @media screen and (min-width: 1960px) {
-    .layout-main, .landing-wrapper {
-        //width: 1504px;
+    .layout-main,
+    .landing-wrapper {
         margin-left: auto !important;
         margin-right: auto !important;
     }
-
 }
 
 @media (min-width: 992px) {
@@ -16,18 +15,15 @@
             }
 
             .layout-sidebar {
-                transform: translateX(-100%);
-                left: 0;
                 top: 0;
                 height: 100vh;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
+                height: 100dvh;
+                border-radius: 0 $borderRadius $borderRadius 0;
+                transform: translateX(calc(-100% - 2rem));
             }
 
-            &.layout-overlay-active {
-                .layout-sidebar {
-                    transform: translateX(0);
-                }
+            &.layout-overlay-active .layout-sidebar {
+                transform: translateX(0);
             }
         }
 
@@ -38,8 +34,7 @@
 
             &.layout-static-inactive {
                 .layout-sidebar {
-                    transform: translateX(-100%);
-                    left: 0;
+                    transform: translateX(calc(-100% - 2rem));
                 }
 
                 .layout-main-container {
@@ -63,27 +58,34 @@
     .layout-wrapper {
         .layout-main-container {
             margin-left: 0;
-            padding-left: 2rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
         }
 
         .layout-sidebar {
-            transform: translateX(-100%);
-            left: 0;
             top: 0;
+            left: 0;
+            width: min(20rem, calc(100vw - 3rem));
             height: 100vh;
+            height: 100dvh;
+            padding: 0.75rem 1rem;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+            transform: translateX(-105%);
         }
 
         .layout-mask {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             z-index: 998;
             width: 100%;
             height: 100%;
-            background-color: var(--maskbg);
+            padding: 0;
+            border: 0;
+            background: rgb(11 25 42 / 42%);
+            cursor: default;
+            animation: fadein $transitionDuration;
         }
 
         &.layout-mobile-active {
@@ -93,8 +95,21 @@
 
             .layout-mask {
                 display: block;
-                animation: fadein $transitionDuration;
             }
         }
+    }
+}
+
+@media (max-width: 575px) {
+    .layout-wrapper .layout-main-container {
+        padding: 6.25rem 0.75rem 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .layout-sidebar,
+    .layout-mask {
+        animation: none !important;
+        transition: none !important;
     }
 }

@@ -37,23 +37,26 @@ export class LayoutService {
 
 
   onMenuToggle() {
-    if (this.isOverlay()) {
-      this.state.overlayMenuActive = !this.state.overlayMenuActive;
-      if (this.state.overlayMenuActive) {
-        this.overlayOpen.next(null);
-      }
-    }
     if (this.isDesktop()) {
-      this.state.staticMenuDesktopInactive =
-        !this.state.staticMenuDesktopInactive;
+      if (this.isOverlay()) {
+        this.state.overlayMenuActive = !this.state.overlayMenuActive;
+        if (this.state.overlayMenuActive) {
+          this.overlayOpen.next(null);
+        }
+      } else {
+        this.state.staticMenuDesktopInactive = !this.state.staticMenuDesktopInactive;
+      }
     } else {
-      this.state.staticMenuMobileActive =
-        !this.state.staticMenuMobileActive;
-
+      this.state.staticMenuMobileActive = !this.state.staticMenuMobileActive;
       if (this.state.staticMenuMobileActive) {
         this.overlayOpen.next(null);
       }
     }
+  }
+
+  closeMobileMenu() {
+    this.state.staticMenuMobileActive = false;
+    this.state.overlayMenuActive = false;
   }
 
 
@@ -64,8 +67,18 @@ export class LayoutService {
     }
   }
 
+  get menuIsOpen(): boolean {
+    if (this.isDesktop()) {
+      return this.isOverlay()
+        ? this.state.overlayMenuActive
+        : !this.state.staticMenuDesktopInactive;
+    }
+
+    return this.state.staticMenuMobileActive;
+  }
+
   isDesktop() {
-    return window.innerWidth > 991;
+    return typeof window === 'undefined' || window.innerWidth > 991;
   }
   isOverlay() {
     return this.config().menuMode === 'overlay';
