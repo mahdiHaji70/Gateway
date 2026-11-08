@@ -1,13 +1,13 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <app-drop-down [options]="users" [formGroup]="form" [controlName]="'user'"
+        <app-drop-down [options]="users" [formGroup]="form" [controlName]="'user'" [labelKey]="'fields.user'"
             (filterChange)="onUserFilterChanged($event)"
             [required]="true"></app-drop-down>
-        <app-drop-down [options]="terminals" [formGroup]="form" [controlName]="'terminal'"
+        <app-drop-down [options]="terminals" [formGroup]="form" [controlName]="'terminal'" [labelKey]="'fields.terminal'"
             (filterChange)="onTerminalFilterChanged($event)"
             [required]="true"></app-drop-down>
         <div>
-            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+            <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                 [disabled]="form.invalid"></button>
         </div>
     </form>

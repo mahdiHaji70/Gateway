@@ -1,15 +1,15 @@
-<p-card header="Gateway Sync Integrations" class="sync-dashboard">
+<p-card [header]="'sync.title' | translate" class="sync-dashboard">
     @for (syncButton of syncButtons; track $index) {
     <!-- Integration Row 1 -->
     <div class="sync-row">
         <div class="sync-info">
-            <span class="sync-label">{{ syncButton.name }}</span>
+            <span class="sync-label">{{ ('sync.integration.' + syncButton.api) | translate }}</span>
             <span class="sync-status"><p-tag [severity]="syncButton.severity"
-                    [value]="syncButton.severity == 'success' ? 'Synced' : syncButton.severity == 'warning' ? 'waiting' : 'Failed'"></p-tag></span>
+                    [value]="syncButton.severity == 'success' ? ('sync.synced' | translate) : syncButton.severity == 'warning' ? ('sync.waiting' | translate) : ('sync.failed' | translate)"></p-tag></span>
             <span class="sync-status"><p-tag [severity]="syncButton.severity"
-                    [value]="syncButton.lastDate"></p-tag></span>
+                    [value]="syncLastDateLabel(syncButton)"></p-tag></span>
         </div>
-        <p-button icon="pi pi-refresh" [label]="syncButton.styleClass != 'p-button-danger' ? 'Sync' : 'Retry'"
+        <p-button icon="pi pi-refresh" [label]="syncButton.styleClass != 'p-button-danger' ? ('sync.sync' | translate) : ('sync.retry' | translate)"
             [styleClass]="syncButton.styleClass" [loading]="syncButton.loading" [disabled]="syncButton.loading"
             (onClick)="onSync(syncButton)">
         </p-button>

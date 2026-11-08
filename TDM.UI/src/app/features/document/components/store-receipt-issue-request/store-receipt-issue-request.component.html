@@ -3,7 +3,7 @@
         <form [formGroup]="form" ngNativeValidate>
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
-                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'"
+                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'" [labelKey]="'fields.declaration'"
                         (filterChange)="loadDeclarations($event)"
                         [required]="true" (selectionChange)="loadIssueRequests($event)">
                     </app-drop-down>
@@ -13,14 +13,14 @@
         <p-table [value]="storeReceiptIssueRequests" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Owner</th>
-                    <th>Owner Rep</th>
-                    <th>Date</th>
-                    <th>HS code</th>
-                    <th>Description</th>
-                    <th>PackNb</th>
-                    <th>Weight</th>
-                    <th>Actions</th>
+                    <th>{{ 'fields.owner' | translate }}</th>
+                    <th>{{ 'fields.ownerRep' | translate }}</th>
+                    <th>{{ 'fields.date' | translate }}</th>
+                    <th>{{ 'fields.hsCode' | translate }}</th>
+                    <th>{{ 'fields.description' | translate }}</th>
+                    <th>{{ 'fields.packNb' | translate }}</th>
+                    <th>{{ 'fields.weight' | translate }}</th>
+                    <th>{{ 'common.actions' | translate }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-issueRequest>

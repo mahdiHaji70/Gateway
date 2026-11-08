@@ -11,6 +11,7 @@ export class InputComponent {
   @Input() formGroup!: FormGroup;
   @Input() controlName: string = '';
   @Input() required: boolean = false;
+  @Input() labelKey?: string;
   label?: string;
   /**
    *

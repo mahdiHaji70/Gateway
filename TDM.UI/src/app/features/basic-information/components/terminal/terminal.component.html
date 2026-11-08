@@ -1,13 +1,13 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <app-input [formGroup]="form" [controlName]="'code'" [required]="true"></app-input>
-        <app-input [formGroup]="form" [controlName]="'name'" [required]="true"></app-input>
-        <app-input [formGroup]="form" [controlName]="'portCode'" [required]="true"></app-input>
-        <app-input [formGroup]="form" [controlName]="'username'" [required]="true"></app-input>
-        <app-input [formGroup]="form" [controlName]="'password'" [required]="true"></app-input>
-        <app-checkbox [formGroup]="form" [controlName]="'isActive'" [required]="true"></app-checkbox>
+        <app-input [formGroup]="form" [controlName]="'code'" [labelKey]="'fields.code'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'name'" [labelKey]="'fields.name'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'portCode'" [labelKey]="'fields.portCode'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'username'" [labelKey]="'fields.username'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'password'" [labelKey]="'fields.password'" [required]="true"></app-input>
+        <app-checkbox [formGroup]="form" [controlName]="'isActive'" [labelKey]="'fields.isActive'" [required]="true"></app-checkbox>
         <div>
-            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+            <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                 [disabled]="form.invalid"></button>
         </div>
     </form>

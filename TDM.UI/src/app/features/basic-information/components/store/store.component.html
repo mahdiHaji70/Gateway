@@ -1,11 +1,11 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <app-drop-down [options]="storeTypes" [formGroup]="form" [controlName]="'storeType'"
+        <app-drop-down [options]="storeTypes" [formGroup]="form" [controlName]="'storeType'" [labelKey]="'fields.storeType'"
             (filterChange)="onStoreTypeFilterChanged($event)"
             [required]="true"></app-drop-down>       
-        <app-input [formGroup]="form" [controlName]="'storeName'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'storeName'" [labelKey]="'fields.storeName'" [required]="true"></app-input>
         <div>
-            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+            <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                 [disabled]="form.invalid"></button>
         </div>
     </form>

@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import { I18nModule } from '../../core/i18n/i18n.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ToastModule } from 'primeng/toast';
   ],
   imports: [
     CommonModule,
+    I18nModule,
     SyncRoutingModule,
     ButtonModule, 
     CardModule,

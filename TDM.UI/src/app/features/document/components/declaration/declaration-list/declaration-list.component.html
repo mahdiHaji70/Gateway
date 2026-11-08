@@ -1,20 +1,19 @@
-<p-toolbar styleClass="mb-4 gap-2">
+<div class="declaration-list-page">
+<p-toolbar styleClass="mb-4 declaration-list-toolbar">
     <ng-template pTemplate="left">
         <p-button 
             severity="success" 
-            label="New" 
+            [label]="'common.new' | translate"
             icon="pi pi-plus" 
-            class="mr-2" 
             (onClick)="onAdd()" />
             <p-button 
             severity="info" 
-            label="Refresh" 
+            [label]="'common.refresh' | translate"
             icon="pi pi-refresh" 
-            class="mr-2" 
             (onClick)="loadDeclarations()" />
             <p-button
             severity="secondary"
-            [label]="showFilters ? 'Hide Filters' : 'Filters'"
+            [label]="(showFilters ? 'common.hideFilters' : 'common.filters') | translate"
             [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'"
             (onClick)="toggleFilters()" />
     </ng-template>
@@ -23,34 +22,37 @@
 <div *ngIf="showFilters" class="group-box mb-3">
     <div class="grid p-fluid">
         <div class="col-12 md:col-6 lg:col-4">
-            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
-            <small class="text-secondary">Search by declaration number or IPAS declaration number.</small>
+            <app-input [formGroup]="filtersForm" [controlName]="'search'" [labelKey]="'common.search'"></app-input>
+            <small class="text-secondary">{{ 'declaration.searchHint' | translate }}</small>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender>
+            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-en-calender>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender>
+            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-en-calender>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
             <app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'"
+                [labelKey]="'fields.traffic'"
                 (filterChange)="loadTrafficOptions($event)">
             </app-drop-down>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
             <app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'"
+                [labelKey]="'fields.consignee'"
                 (filterChange)="loadCompanyOptions('consignee', $event)">
             </app-drop-down>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
             <app-drop-down [options]="consigneeRepOptions" [formGroup]="filtersForm" [controlName]="'consigneeRep'"
+                [labelKey]="'fields.consigneeRep'"
                 (filterChange)="loadCompanyOptions('consigneeRep', $event)">
             </app-drop-down>
         </div>
         <div class="col-12 flex justify-content-end gap-2">
-            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary"
+            <button pButton type="button" [label]="'common.clear' | translate" icon="pi pi-times" severity="secondary"
                 (click)="clearFilters()"></button>
-            <button pButton type="button" label="Apply Filters" icon="pi pi-filter"
+            <button pButton type="button" [label]="'common.applyFilters' | translate" icon="pi pi-filter"
                 (click)="applyFilters()"></button>
         </div>
     </div>
@@ -67,13 +69,13 @@
     (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th>Number</th>
-            <th>Date</th>
-            <th>Traffic</th>
-            <th>Contact</th>
-            <th>Contact Rep</th>
-            <th>Ipas Declaration No</th>          
-            <th>Actions</th>
+            <th>{{ 'fields.number' | translate }}</th>
+            <th>{{ 'fields.date' | translate }}</th>
+            <th>{{ 'fields.traffic' | translate }}</th>
+            <th>{{ 'fields.contact' | translate }}</th>
+            <th>{{ 'fields.contactRep' | translate }}</th>
+            <th>{{ 'declaration.ipasNumber' | translate }}</th>
+            <th>{{ 'common.actions' | translate }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-declaration>
@@ -86,7 +88,18 @@
             <td>{{ declaration.ipasDeclarationNo }}</td>
             <td>
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    [attr.aria-label]="'common.update' | translate"
                     (click)="onEdit(declaration.id)">
+                </button>
+                <button pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text"
+                    [pTooltip]="'declaration.sendToIpas' | translate" tooltipPosition="top"
+                    [attr.aria-label]="'declaration.sendToIpas' | translate"
+                    (click)="sendDeclarationToIpas(declaration.id)">
+                </button>
+                <button pButton pRipple type="button" icon="pi pi-cloud-download" class="p-button-rounded p-button-text"
+                    [pTooltip]="'declaration.getItems' | translate" tooltipPosition="top"
+                    [attr.aria-label]="'declaration.getItems' | translate"
+                    (click)="getItemsFromIpas(declaration.id)">
                 </button>
                 <!-- <button pButton pRipple type="button" icon="pi pi-times"
                     class="p-button-rounded p-button-text p-button-danger" (click)="onDelete($event,declaration.id)">
@@ -96,3 +109,4 @@
     </ng-template>
 </p-table>
 <p-toast />
+</div>

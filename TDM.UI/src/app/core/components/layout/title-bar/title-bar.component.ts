@@ -2,8 +2,9 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
-import { MenuItems } from '../../../constants/menu-items';
+import { MenuItems, MenuLabelKeys } from '../../../constants/menu-items';
 import { RouteItems } from '../../../constants/route-items';
+import { LanguageService } from '../../../services/language.service';
 
 interface TitleRoute {
   label?: string;
@@ -18,9 +19,14 @@ interface TitleRoute {
 })
 export class TitleBarComponent implements OnInit, OnDestroy {
   title?: string;
+  titleTranslationKey?: string;
   private routerSub?: Subscription;
 
-  constructor(private router: Router, private location: Location) {}
+  constructor(
+    private router: Router,
+    private location: Location,
+    readonly languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
     this.updateTitle(this.router.url);
@@ -40,6 +46,7 @@ export class TitleBarComponent implements OnInit, OnDestroy {
   private updateTitle(url: string): void {
     const path = normalizePath(url);
     this.title = path ? findTitle(path) : 'Dashboard';
+    this.titleTranslationKey = this.title ? MenuLabelKeys[this.title] : undefined;
   }
 }
 

@@ -1,0 +1,14 @@
+:host ::ng-deep .declaration-list-toolbar .p-toolbar-group-start {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+:host ::ng-deep .declaration-list-page .p-button .p-button-icon-left {
+  margin-right: 0;
+  margin-inline-end: 0.5rem;
+}
+
+:host ::ng-deep .declaration-list-page p-calendar {
+  direction: ltr;
+}

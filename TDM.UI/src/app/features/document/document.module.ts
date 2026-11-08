@@ -38,6 +38,7 @@ import { MarineStoreReceiptIssueComponent } from './components/marine-store-rece
 import { StoreReceiptListComponent } from './components/store-receipt-list/store-receipt-list.component';
 import { WarehouseAllocationComponent } from './components/warehouse-allocation/warehouse-allocation.component';
 import { BasicInformationService } from '../basic-information/services/basic-information.service';
+import { I18nModule } from '../../core/i18n/i18n.module';
 
 
 
@@ -75,7 +76,8 @@ import { BasicInformationService } from '../basic-information/services/basic-inf
     TagModule,
     CardModule,
     BadgeModule,
-    TooltipModule
+    TooltipModule,
+    I18nModule
   ],
   providers: [DeclarationService,
     BasicInformationService,

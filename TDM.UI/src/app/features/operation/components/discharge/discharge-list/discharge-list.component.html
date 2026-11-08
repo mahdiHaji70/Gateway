@@ -1,9 +1,9 @@
-<p-toolbar styleClass="mb-4 gap-2">
+<p-toolbar styleClass="mb-4 menu-list-toolbar">
     <ng-template pTemplate="left">
-        <p-button severity="success" label="New" icon="pi pi-plus" class="mr-2" (onClick)="onAdd()" />
-        <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadDischarges()" />
-        <p-button severity="info" label="Send To Ipas" icon="pi pi-send" class="mr-2" (onClick)="onSend()" />
-        <p-button severity="secondary" [label]="showFilters ? 'Hide Filters' : 'Filters'"
+        <p-button severity="success" [label]="'common.new' | translate" icon="pi pi-plus" class="mr-2" (onClick)="onAdd()" />
+        <p-button severity="info" [label]="'common.refresh' | translate" icon="pi pi-refresh" class="mr-2" (onClick)="loadDischarges()" />
+        <p-button severity="info" [label]="'discharge.sendToIpas' | translate" icon="pi pi-send" class="mr-2" (onClick)="onSend()" />
+        <p-button severity="secondary" [label]="(showFilters ? 'common.hideFilters' : 'common.filters') | translate"
             [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'" (onClick)="toggleFilters()" />
     </ng-template>
 
@@ -11,22 +11,22 @@
 <div *ngIf="showFilters" class="group-box mb-3">
     <div class="grid p-fluid">
         <div class="col-12 md:col-6 lg:col-4">
-            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
-            <small class="text-secondary">Search declaration number, waybill, or vehicle.</small>
+            <app-input [formGroup]="filtersForm" [controlName]="'search'" [labelKey]="'fields.search'"></app-input>
+            <small class="text-secondary">{{ 'discharge.searchHint' | translate }}</small>
         </div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-en-calender></div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-drop-down [options]="declarationItems" [formGroup]="filtersForm" [controlName]="'declarationItem'"
+            <app-drop-down [options]="declarationItems" [formGroup]="filtersForm" [controlName]="'declarationItem'" [labelKey]="'fields.declarationItem'"
                 (filterChange)="loadDeclarationItems($event)"></app-drop-down>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-drop-down [options]="stores" [formGroup]="filtersForm" [controlName]="'store'"
+            <app-drop-down [options]="stores" [formGroup]="filtersForm" [controlName]="'store'" [labelKey]="'fields.store'"
                 (filterChange)="loadStores($event)"></app-drop-down>
         </div>
         <div class="col-12 flex justify-content-end gap-2">
-            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
-            <button pButton type="button" label="Apply Filters" icon="pi pi-filter" (click)="applyFilters()"></button>
+            <button pButton type="button" [label]="'common.clear' | translate" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
+            <button pButton type="button" [label]="'common.applyFilters' | translate" icon="pi pi-filter" (click)="applyFilters()"></button>
         </div>
     </div>
 </div>
@@ -39,14 +39,14 @@
     (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th>Declaration</th>
-            <th>Vehicle</th>
-            <th>Store</th>
-            <th>Way Bill No</th>
-            <th>Pack Number</th>
-            <th>Weight</th>
-            <th>Date</th>
-            <th>Actions</th>
+            <th>{{ 'fields.declaration' | translate }}</th>
+            <th>{{ 'fields.vehicle' | translate }}</th>
+            <th>{{ 'fields.store' | translate }}</th>
+            <th>{{ 'fields.wayBillNo' | translate }}</th>
+            <th>{{ 'fields.packNumber' | translate }}</th>
+            <th>{{ 'fields.weight' | translate }}</th>
+            <th>{{ 'fields.date' | translate }}</th>
+            <th>{{ 'common.actions' | translate }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-discharge>

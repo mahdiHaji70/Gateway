@@ -21,6 +21,7 @@ import { DeclarationContainerInfoComponent } from '../declaration-container-info
 import { formatUTCDate } from '../../../../shared/utils/format-date';
 import { DeclarationContainerFull } from '../../models/declaration-container-full.model';
 import { DeclarationContainerInfoFull } from '../../models/declaration-container-info-full.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-declaration',
@@ -63,6 +64,7 @@ export class DeclarationComponent {
     private declarationItemService: DeclarationItemService,
     private route: ActivatedRoute,
     private localStorageService: LocalStorageService,
+    private translate: TranslateService,
   ) {
   }
 
@@ -225,7 +227,10 @@ export class DeclarationComponent {
 
     const terminalCode = this.localStorageService.getItem('terminalCode');
     if (!terminalCode?.trim()) {
-      this.messageService.add({ severity: 'error', summary: 'Terminal code is missing. Please sign in again.' });
+      this.messageService.add({
+        severity: 'error',
+        summary: this.translate.instant('declaration.missingTerminal') as string
+      });
       return;
     }
 

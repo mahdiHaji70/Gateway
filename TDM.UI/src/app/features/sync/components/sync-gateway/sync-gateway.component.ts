@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { SyncService } from '../../services/sync.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 type TagSeverity = 'success' | 'secondary' | 'info' | 'warning' | 'danger' | 'contrast';
 
@@ -12,7 +14,8 @@ interface SyncButton {
   api: string;
   loading: boolean;
   severity: TagSeverity;
-  lastDate?: string;
+  lastDate?: Date;
+  lastDateStatus?: 'notSynced' | 'notSyncedForTerminal';
 }
 
 @Component({
@@ -71,8 +74,23 @@ export class SyncGatewayComponent {
    *
    */
   constructor(private syncService: SyncService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translate: TranslateService
   ) { }
+
+  syncLastDateLabel(syncButton: SyncButton): string {
+    if (syncButton.lastDateStatus) {
+      return this.translate.instant(`sync.${syncButton.lastDateStatus}`) as string;
+    }
+
+    if (!syncButton.lastDate) {
+      return '';
+    }
+
+    const date = syncButton.lastDate;
+    const formattedDate = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('/');
+    return this.translate.instant('sync.lastDate', { date: formattedDate }) as string;
+  }
 
   ngOnInit() {
     this.getDischargePermitLastDate();
@@ -111,10 +129,13 @@ export class SyncGatewayComponent {
   getDischargePermitLastDate() {
     this.syncService.getDischargePermitsLastDate().subscribe({
       next: (res: any) => {
-        if (res.status == 1)
-          this.syncButtons[0].lastDate = 'Last date: ' +  new Date(res.data).toDateString();
-        else
-          this.syncButtons[0].lastDate = 'Not synced yet for your current terminal';
+        if (res.status == 1) {
+          this.syncButtons[0].lastDate = new Date(res.data);
+          this.syncButtons[0].lastDateStatus = undefined;
+        } else {
+          this.syncButtons[0].lastDate = undefined;
+          this.syncButtons[0].lastDateStatus = 'notSyncedForTerminal';
+        }
       },
       error: (error: any) => { }
     });
@@ -123,10 +144,13 @@ export class SyncGatewayComponent {
   getGoodwayBillsLastDate() {
     this.syncService.getGoodwayBillsLastDate().subscribe({
       next: (res: any) => {
-        if (res.status == 1)
-          this.syncButtons[1].lastDate = new Date(res.data).toDateString();
-        else
-          this.syncButtons[1].lastDate = 'Not synced yet for your current terminal';
+        if (res.status == 1) {
+          this.syncButtons[1].lastDate = new Date(res.data);
+          this.syncButtons[1].lastDateStatus = undefined;
+        } else {
+          this.syncButtons[1].lastDate = undefined;
+          this.syncButtons[1].lastDateStatus = 'notSyncedForTerminal';
+        }
       },
       error: (error: any) => { }
     });
@@ -135,10 +159,13 @@ export class SyncGatewayComponent {
   getIssueRequestsLastDate() {
     this.syncService.getIssueRequestsLastDate().subscribe({
       next: (res: any) => {
-        if (res.status == 1)
-          this.syncButtons[2].lastDate = new Date(res.data).toDateString();
-        else
-          this.syncButtons[2].lastDate = 'Not synced yet for your current terminal';
+        if (res.status == 1) {
+          this.syncButtons[2].lastDate = new Date(res.data);
+          this.syncButtons[2].lastDateStatus = undefined;
+        } else {
+          this.syncButtons[2].lastDate = undefined;
+          this.syncButtons[2].lastDateStatus = 'notSyncedForTerminal';
+        }
       },
       error: (error: any) => { }
     });
@@ -147,10 +174,13 @@ export class SyncGatewayComponent {
   getVoyagesLastDate() {
     this.syncService.getVoyagesLastDate().subscribe({
       next: (res: any) => {
-        if (res.status == 1)
-          this.syncButtons[3].lastDate = new Date(res.data).toDateString();
-        else
-          this.syncButtons[3].lastDate = 'Not synced yet';
+        if (res.status == 1) {
+          this.syncButtons[3].lastDate = new Date(res.data);
+          this.syncButtons[3].lastDateStatus = undefined;
+        } else {
+          this.syncButtons[3].lastDate = undefined;
+          this.syncButtons[3].lastDateStatus = 'notSynced';
+        }
       },
       error: (error: any) => { }
     });
@@ -159,10 +189,13 @@ export class SyncGatewayComponent {
   getStoreReceiptsLastDate() {
     this.syncService.getStoreReceiptsLastDate().subscribe({
       next: (res: any) => {
-        if (res.status == 1)
-          this.syncButtons[4].lastDate = new Date(res.data).toDateString();
-        else
-          this.syncButtons[4].lastDate = 'Not synced yet for your current terminal';
+        if (res.status == 1) {
+          this.syncButtons[4].lastDate = new Date(res.data);
+          this.syncButtons[4].lastDateStatus = undefined;
+        } else {
+          this.syncButtons[4].lastDate = undefined;
+          this.syncButtons[4].lastDateStatus = 'notSyncedForTerminal';
+        }
       },
       error: (error: any) => { }
     });
@@ -256,7 +289,11 @@ export class SyncGatewayComponent {
   handleSuccess(syncButton: SyncButton) {
     syncButton.severity = 'success';
     syncButton.styleClass = 'p-button-success';
-    this.messageService.add({ severity: 'info', summary: 'Operation successfully done.', detail: 'Done' });
+    this.messageService.add({
+      severity: 'info',
+      summary: this.translate.instant('sync.operationCompleted') as string,
+      detail: this.translate.instant('sync.done') as string
+    });
   }
 
   handleError(error: any, syncButton: SyncButton) {

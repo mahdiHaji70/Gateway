@@ -15,6 +15,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { DeclarationTypeComponent } from './components/declaration-type/declaration-type.component';
 import { DeclarationTypeListComponent } from './components/declaration-type/declaration-type-list/declaration-type-list.component';
 import { BasicInformationRoutingModule } from './basic-information-routing.module';
+import { I18nModule } from '../../core/i18n/i18n.module';
 import { TerminalComponent } from './components/terminal/terminal.component';
 import { TerminalListComponent } from './components/terminal/terminal-list/terminal-list.component';
 import { CountryComponent } from './components/country/country.component';
@@ -110,6 +111,7 @@ import { UserService } from './services/user.service';
     ButtonModule,
     ToastModule,
     SharedModule,
+    I18nModule,
     TableModule,
     ConfirmDialogModule,
     ToolbarModule

@@ -1,9 +1,9 @@
-<p-toolbar styleClass="mb-4 gap-2">
+<p-toolbar styleClass="mb-4 menu-list-toolbar">
     <ng-template pTemplate="left">
-        <p-button severity="success" label="Issue land side" icon="pi pi-plus" class="mr-2" (onClick)="onIssueLandSide()" />
-        <p-button severity="success" label="Issue marine side" icon="pi pi-plus" class="mr-2" (onClick)="onIssueMarineSide()" />
-        <p-button severity="info" label="Refresh" icon="pi pi-refresh" class="mr-2" (onClick)="loadStoreReceipts()" />
-        <p-button severity="secondary" [label]="showFilters ? 'Hide Filters' : 'Filters'"
+        <p-button severity="success" [label]="'storeReceipt.issueLand' | translate" icon="pi pi-plus" class="mr-2" (onClick)="onIssueLandSide()" />
+        <p-button severity="success" [label]="'storeReceipt.issueMarine' | translate" icon="pi pi-plus" class="mr-2" (onClick)="onIssueMarineSide()" />
+        <p-button severity="info" [label]="'common.refresh' | translate" icon="pi pi-refresh" class="mr-2" (onClick)="loadStoreReceipts()" />
+        <p-button severity="secondary" [label]="(showFilters ? 'common.hideFilters' : 'common.filters') | translate"
             [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'" (onClick)="toggleFilters()" />
     </ng-template>
 
@@ -11,19 +11,19 @@
 <div *ngIf="showFilters" class="group-box mb-3">
     <div class="grid p-fluid">
         <div class="col-12 md:col-6 lg:col-4">
-            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
-            <small class="text-secondary">Search receipt number, voyage notice, or IPAS declaration number.</small>
+            <app-input [formGroup]="filtersForm" [controlName]="'search'" [labelKey]="'fields.search'"></app-input>
+            <small class="text-secondary">{{ 'storeReceipt.searchHint' | translate }}</small>
         </div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'" (filterChange)="loadOptions('consignee', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeRepOptions" [formGroup]="filtersForm" [controlName]="'consigneeRep'" (filterChange)="loadOptions('consigneeRep', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="cargoTypeOptions" [formGroup]="filtersForm" [controlName]="'cargoType'" (filterChange)="loadOptions('cargoType', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="arrivalTypeOptions" [formGroup]="filtersForm" [controlName]="'arrivalTypeCode'"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'" [labelKey]="'fields.consignee'" (filterChange)="loadOptions('consignee', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeRepOptions" [formGroup]="filtersForm" [controlName]="'consigneeRep'" [labelKey]="'fields.consigneeRep'" (filterChange)="loadOptions('consigneeRep', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" [labelKey]="'fields.traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="cargoTypeOptions" [formGroup]="filtersForm" [controlName]="'cargoType'" [labelKey]="'fields.cargoType'" (filterChange)="loadOptions('cargoType', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="arrivalTypeOptions" [formGroup]="filtersForm" [controlName]="'arrivalTypeCode'" [labelKey]="'fields.arrivalTypeCode'"></app-drop-down></div>
         <div class="col-12 flex justify-content-end gap-2">
-            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
-            <button pButton type="button" label="Apply Filters" icon="pi pi-filter" (click)="applyFilters()"></button>
+            <button pButton type="button" [label]="'common.clear' | translate" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
+            <button pButton type="button" [label]="'common.applyFilters' | translate" icon="pi pi-filter" (click)="applyFilters()"></button>
         </div>
     </div>
 </div>
@@ -32,15 +32,15 @@
     [rowsPerPageOptions]="[10, 20, 50]" (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th>Number</th>
-            <th>Date</th>
-            <th>Consignee Name</th>
-            <th>Consignee Rep Name</th>
-            <th>Cargo Type Name</th>
-            <th>First Discharge Date</th>
-            <th>Traffic Name</th>
-            <th>Arrival Type Name</th>
-            <th>Actions</th>
+            <th>{{ 'fields.number' | translate }}</th>
+            <th>{{ 'fields.date' | translate }}</th>
+            <th>{{ 'fields.consigneeName' | translate }}</th>
+            <th>{{ 'fields.consigneeRepName' | translate }}</th>
+            <th>{{ 'fields.cargoTypeName' | translate }}</th>
+            <th>{{ 'fields.firstDischargeDate' | translate }}</th>
+            <th>{{ 'fields.trafficName' | translate }}</th>
+            <th>{{ 'fields.arrivalTypeName' | translate }}</th>
+            <th>{{ 'common.actions' | translate }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-storeReceipt>

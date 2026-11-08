@@ -4,53 +4,53 @@
             <div class="col-7">
             </div>
             <div class="col-6">
-                <app-drop-down [options]="contactTypes" [formGroup]="form" [controlName]="'contactType'"
+                <app-drop-down [options]="contactTypes" [formGroup]="form" [controlName]="'contactType'" [labelKey]="'fields.contactType'"
                     [required]="true"></app-drop-down>
             </div>
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'name'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'name'" [labelKey]="'fields.name'" [required]="true"></app-input>
             </div>
 
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'nationalId'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'nationalId'" [labelKey]="'fields.nationalId'" [required]="true"></app-input>
             </div>
 
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'registerNumber'" [required]="false"></app-input>
+                <app-input [formGroup]="form" [controlName]="'registerNumber'" [labelKey]="'fields.registerNumber'" [required]="false"></app-input>
             </div>
 
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'economicCode'" [required]="false"></app-input>
+                <app-input [formGroup]="form" [controlName]="'economicCode'" [labelKey]="'fields.economicCode'" [required]="false"></app-input>
             </div>
 
             <div class="col-6">
-                <app-en-calender [formGroup]="form" [controlName]="'registerDate'"
+                <app-en-calender [formGroup]="form" [controlName]="'registerDate'" [labelKey]="'fields.registerDate'"
                     [required]="true"></app-en-calender>
             </div>
 
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'registerPlace'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'registerPlace'" [labelKey]="'fields.registerPlace'" [required]="true"></app-input>
 
             </div>
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'postCode'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'postCode'" [labelKey]="'fields.postCode'" [required]="true"></app-input>
             </div>
 
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'mobile'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'mobile'" [labelKey]="'fields.mobile'" [required]="true"></app-input>
             </div>
 
             <div class="col-6">
-                <app-input [formGroup]="form" [controlName]="'phone'" [required]="false"></app-input>
+                <app-input [formGroup]="form" [controlName]="'phone'" [labelKey]="'fields.phone'" [required]="false"></app-input>
             </div>
 
             <div class="col-12">
-                <app-input [formGroup]="form" [controlName]="'address'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'address'" [labelKey]="'fields.address'" [required]="true"></app-input>
             </div>
             
 
             <div class="col-12">
-                <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                     [disabled]="form.invalid"></button>
             </div>
         </div>

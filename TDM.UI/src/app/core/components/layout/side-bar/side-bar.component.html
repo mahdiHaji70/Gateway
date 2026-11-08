@@ -3,14 +3,14 @@
     <div class="user-profile">
       <img class="user-avatar" src="assets/images/user-avatar.png" alt="" />
       <div class="user-details">
-        <span class="welcome-label">Welcome</span>
-        <strong class="username">{{ username || 'User' }}</strong>
+        <span class="welcome-label">{{ 'menu.welcome' | translate }}</span>
+        <strong class="username">{{ username || ('menu.user' | translate) }}</strong>
       </div>
     </div>
 
     <button type="button" class="sidebar-action dashboard-action" (click)="goToDashboard()">
       <img src="assets/images/dashboard.png" alt="" />
-      <span>Dashboard</span>
+      <span>{{ 'menu.dashboard' | translate }}</span>
     </button>
 
     <nav aria-label="Main navigation">
@@ -26,7 +26,7 @@
               <span class="menu-item-label">
                 <img *ngIf="parent.url" class="icon-image" [src]="parent.url" alt="" />
                 <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon || 'pi pi-question'"></i>
-                <span>{{ parent.label }}</span>
+                <span>{{ menuLabelKey(parent.label) | translate }}</span>
               </span>
               <i class="pi" [ngClass]="isParentOpen(i) ? 'pi-angle-down' : 'pi-angle-right'" aria-hidden="true"></i>
             </button>
@@ -39,7 +39,7 @@
                   [class.is-active]="isRouteActive(child['path'])"
                   (click)="onItemClick(child['path'])">
                   <i class="pi pi-circle-fill submenu-bullet" aria-hidden="true"></i>
-                  <span class="layout-menuitem-text">{{ child.label }}</span>
+                  <span class="layout-menuitem-text">{{ menuLabelKey(child.label) | translate }}</span>
                 </button>
               </li>
             </ul>
@@ -54,7 +54,7 @@
               <span class="menu-item-label">
                 <img *ngIf="parent.url" class="icon-image" [src]="parent.url" alt="" />
                 <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon || 'pi pi-question'"></i>
-                <span>{{ parent.label }}</span>
+                <span>{{ menuLabelKey(parent.label) | translate }}</span>
               </span>
             </button>
           </ng-template>
@@ -65,6 +65,6 @@
 
   <button type="button" class="sidebar-action support-action" (click)="goToDashboard()">
     <img src="assets/images/support.png" alt="" />
-    <span>Support</span>
+    <span>{{ 'menu.support' | translate }}</span>
   </button>
 </div>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-import { MenuItems } from '../../../constants/menu-items';
+import { MenuItems, MenuLabelKeys } from '../../../constants/menu-items';
 import { LayoutService } from '../../../services/layout.service';
 
 @Component({
@@ -48,6 +48,10 @@ export class SideBarComponent {
 
   isParentOpen(index: number): boolean {
     return this.parentStates[index] ?? false;
+  }
+
+  menuLabelKey(label?: string): string {
+    return label ? MenuLabelKeys[label] ?? label : '';
   }
 
   ngOnInit(): void {

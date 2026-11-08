@@ -12,6 +12,7 @@ export class EnCalenderComponent {
   @Input() controlName: string = '';
   @Input() required: boolean = false;
   @Input() showTime: boolean = false;
+  @Input() labelKey?: string;
   label?: string;
 
     /**

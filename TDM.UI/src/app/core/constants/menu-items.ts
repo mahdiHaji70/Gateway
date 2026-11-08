@@ -1,3 +1,32 @@
+export const MenuLabelKeys: Record<string, string> = {
+    Dashboard: 'menu.dashboard',
+    'Sync With Ipas': 'menu.syncWithIpas',
+    Operation: 'menu.operation',
+    Discharge: 'menu.discharge',
+    'Vessel Discharge': 'menu.vesselDischarge',
+    Document: 'menu.document',
+    Manifest: 'menu.manifest',
+    Declaration: 'menu.declaration',
+    'Issue Request': 'menu.issueRequest',
+    'Store Receipts': 'menu.storeReceipts',
+    'Basic Information': 'menu.basicInformation',
+    Commodity: 'menu.commodity',
+    Package: 'menu.package',
+    Contact: 'menu.contact',
+    Country: 'menu.country',
+    City: 'menu.city',
+    Traffic: 'menu.traffic',
+    'Container Type And Size': 'menu.containerTypeAndSize',
+    Container: 'menu.container',
+    'Store Type': 'menu.storeType',
+    Store: 'menu.store',
+    'Cargo Type': 'menu.cargoType',
+    Terminal: 'menu.terminal',
+    'User Terminal': 'menu.userTerminal',
+    'Operation Type': 'menu.operationType',
+    Service: 'menu.service'
+};
+
 export const MenuItems = [
     {
         label: 'Sync With Ipas',

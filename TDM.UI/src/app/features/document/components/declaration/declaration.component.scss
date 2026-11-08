@@ -4,3 +4,12 @@
     border-radius: 25px;
     border: 2px solid #0151A44D;
 }
+
+:host ::ng-deep .declaration-page .p-button .p-button-icon-left {
+    margin-right: 0;
+    margin-inline-end: 0.5rem;
+}
+
+:host ::ng-deep .declaration-page p-calendar {
+    direction: ltr;
+}

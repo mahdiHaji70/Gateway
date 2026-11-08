@@ -1,9 +1,9 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <app-input [formGroup]="form" [controlName]="'typeAndSizeCode'" [required]="true"></app-input>
-        <app-input [formGroup]="form" [controlName]="'typeAndSize'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'typeAndSizeCode'" [labelKey]="'fields.typeAndSizeCode'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'typeAndSize'" [labelKey]="'fields.typeAndSize'" [required]="true"></app-input>
         <div>
-            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+            <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                 [disabled]="form.invalid"></button>
         </div>
     </form>

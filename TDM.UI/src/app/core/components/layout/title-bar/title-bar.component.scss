@@ -15,4 +15,9 @@
         font-size: 1.25rem;
         cursor: pointer;
     }
+
+    &.is-rtl i {
+        float: left;
+        transform: scaleX(-1);
+    }
 }

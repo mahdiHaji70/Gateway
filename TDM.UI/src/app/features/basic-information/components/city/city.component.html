@@ -1,12 +1,12 @@
 <div class="col-4 group-box">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <app-drop-down [options]="countries" [formGroup]="form" [controlName]="'country'"
+        <app-drop-down [options]="countries" [formGroup]="form" [controlName]="'country'" [labelKey]="'fields.country'"
             (filterChange)="onCountryFilterChanged($event)"
             [required]="true"></app-drop-down>
-        <app-input [formGroup]="form" [controlName]="'code'" [required]="true"></app-input>
-        <app-input [formGroup]="form" [controlName]="'name'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'code'" [labelKey]="'fields.code'" [required]="true"></app-input>
+        <app-input [formGroup]="form" [controlName]="'name'" [labelKey]="'fields.name'" [required]="true"></app-input>
         <div>
-            <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+            <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                 [disabled]="form.invalid"></button>
         </div>
     </form>

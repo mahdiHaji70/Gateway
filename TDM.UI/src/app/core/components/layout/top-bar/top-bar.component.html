@@ -24,21 +24,22 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <!-- <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </button> -->
+        <button
+            type="button"
+            class="p-link layout-topbar-button language-toggle"
+            [attr.aria-label]="(languageService.currentLanguage() === 'en' ? 'language.switchToPersian' : 'language.switchToEnglish') | translate"
+            [attr.aria-pressed]="languageService.currentLanguage() === 'fa'"
+            (click)="toggleLanguage()">
+            <i class="pi pi-globe" aria-hidden="true"></i>
+            <span>{{ languageService.currentLanguage() === 'en' ? 'فارسی' : 'English' }}</span>
+        </button>
         <button class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
-            <span>Profile</span>
+            <span>{{ 'topbar.profile' | translate }}</span>
         </button>
         <button class="p-link layout-topbar-button" (click)="signOut()">
             <i class="pi pi-sign-out"></i>
-            <span>Sign out</span>
+            <span>{{ 'topbar.signOut' | translate }}</span>
         </button>
-        <!-- <button class="p-link layout-topbar-button" (click)="goBack()">
-            <i class="pi pi-arrow-right"></i>
-            <span>Back</span>
-        </button> -->
     </div>
 </div>
