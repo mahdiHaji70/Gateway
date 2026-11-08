@@ -1,18 +1,18 @@
 .title-bar {
     border-radius: 12px;
     background-color: white;
-    padding: 1rem;
-    margin-bottom: 2rem;
+    padding: 0.75rem 0.9rem;
+    margin-bottom: 0.75rem;
 
     span {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: bold;
     }
 
     i {
         float: right;
         color: #0151A4;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         cursor: pointer;
     }
 }

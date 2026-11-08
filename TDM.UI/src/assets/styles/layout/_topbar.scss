@@ -8,7 +8,7 @@ body {
 
 .layout-topbar {
     position: fixed;
-    height: 5rem;
+    height: 4.25rem;
     z-index: 997;
     left: 0;
     top: 0;
@@ -132,7 +132,7 @@ body {
             border-radius: 12px;
             padding: 1rem;
             right: max(1rem, env(safe-area-inset-right));
-            top: 5rem;
+            top: 4.25rem;
             min-width: 15rem;
             display: none;
             -webkit-animation: scalein 0.15s linear;
