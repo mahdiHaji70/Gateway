@@ -65,6 +65,33 @@ html[dir='rtl'] table td {
   text-align: right;
 }
 
+html[dir='rtl'] .p-dropdown.p-dropdown-clearable .p-dropdown-label {
+  padding-right: 0.75rem;
+  padding-left: 1.75rem;
+}
+
+html[dir='rtl'] .p-dropdown .p-dropdown-clear-icon {
+  right: auto;
+  left: 3rem;
+}
+
+html[dir='rtl'] app-login .p-password > [data-pc-section='showIcon'],
+html[dir='rtl'] app-login .p-password > [data-pc-section='hideIcon'] {
+  position: absolute;
+  top: 50%;
+  right: auto;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  margin-top: -0.5rem;
+}
+
+html[dir='rtl'] app-login .p-password .p-password-input {
+  padding-left: 2.75rem !important;
+}
+
 @media (min-width: 992px) {
   html[dir='rtl'] .layout-main-container {
     padding-right: 3.5rem;

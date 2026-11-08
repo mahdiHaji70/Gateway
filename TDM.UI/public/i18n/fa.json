@@ -6,6 +6,15 @@
     "switchToPersian": "تغییر زبان به فارسی",
     "switchToEnglish": "تغییر زبان به انگلیسی"
   },
+  "login": {
+    "welcome": "خوش آمدید",
+    "subtitle": "برای ادامه وارد حساب کاربری خود شوید",
+    "nationalId": "شناسه ملی",
+    "password": "رمز عبور",
+    "signIn": "ورود",
+    "authenticationFailed": "خطا در ورود",
+    "fillCredentials": "لطفاً شناسه ملی و رمز عبور معتبر را وارد کنید."
+  },
   "topbar": {
     "profile": "پروفایل",
     "signOut": "خروج"

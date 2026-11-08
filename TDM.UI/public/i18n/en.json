@@ -6,6 +6,15 @@
     "switchToPersian": "Switch language to Persian",
     "switchToEnglish": "Switch language to English"
   },
+  "login": {
+    "welcome": "Welcome!",
+    "subtitle": "Sign in to continue",
+    "nationalId": "National ID",
+    "password": "Password",
+    "signIn": "Sign in",
+    "authenticationFailed": "Authentication failed",
+    "fillCredentials": "Enter a valid national ID and password."
+  },
   "topbar": {
     "profile": "Profile",
     "signOut": "Sign out"

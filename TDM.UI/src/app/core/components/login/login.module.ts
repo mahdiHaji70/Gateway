@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { LoginComponent } from './login/login.component';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { I18nModule } from '../../i18n/i18n.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -24,7 +25,8 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     FormsModule,
     PasswordModule,
-    ToastModule
+    ToastModule,
+    I18nModule
   ],
   providers: [
     AuthGuard,

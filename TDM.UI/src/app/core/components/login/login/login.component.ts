@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,9 @@ export class LoginComponent {
   constructor(private localStorageService: LocalStorageService,
     private messageService: MessageService,
     private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private translate: TranslateService,
+    public languageService: LanguageService) {
   }
 
   submit() {
@@ -50,6 +54,10 @@ export class LoginComponent {
       });
     }
     else
-      this.messageService.add({ severity: 'error', summary: 'Authentication Failed', detail: 'Fill national Id and password correctly' });
+      this.messageService.add({
+        severity: 'error',
+        summary: this.translate.instant('login.authenticationFailed'),
+        detail: this.translate.instant('login.fillCredentials')
+      });
   }
 }
