@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
 import { showApiError } from '../../../../../shared/services/api-error-handler.service';
+import { TranslateService } from '@ngx-translate/core';
 import { UserTerminalFull } from '../../../models/user-terminal-full.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
@@ -11,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './user-terminal-list.component.scss'
 })
 export class UserTerminalListComponent {
+  private readonly translate = inject(TranslateService);
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
@@ -28,7 +31,8 @@ export class UserTerminalListComponent {
   loadUserTerminals(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('UsersTerminal', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+    this.basicInformationService.getAll('UsersTerminal', pageNumber, pageSize, this.search).subscribe({
+      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.userTerminals = res.data.items.map((item: any) => new UserTerminalFull(item.userNationalId, item.terminalId, item.terminalName, item.terminalCode, item.id));
       },
@@ -40,7 +44,11 @@ export class UserTerminalListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadUserTerminals(pageNumber, event.rows);
   }
-  onSearch() {    this.loadUserTerminals(1, this.pageSize);  }
+
+  onSearch() {
+    this.loadUserTerminals(1, this.pageSize);
+  }
+
   onAdd() {
     this.router.navigate(['/user-terminal']);
   }
@@ -52,18 +60,20 @@ export class UserTerminalListComponent {
   onDelete(event: any, id: any) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
+      message: this.translate.instant('common.deleteConfirm') as string,
+      header: this.translate.instant('common.deleteConfirmation') as string,
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: "p-button-danger p-button-text",
       rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptLabel: this.translate.instant('common.yes') as string,
+      rejectLabel: this.translate.instant('common.no') as string,
       acceptIcon: "none",
       rejectIcon: "none",
 
       accept: () => {
         this.basicInformationService.removeBasicInformation('UsersTerminal', id).subscribe({
           next: (res: any) => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+            this.messageService.add({ severity: 'info', summary: this.translate.instant('common.confirmed') as string, detail: this.translate.instant('common.recordDeleted') as string });
             this.loadUserTerminals();
           },
           error: (error: any) => {
@@ -77,4 +87,4 @@ export class UserTerminalListComponent {
       }
     });
   }
-}
+}

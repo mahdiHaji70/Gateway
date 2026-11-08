@@ -3,7 +3,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
-                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'"
+                    <app-drop-down [options]="declarations" [formGroup]="form" [controlName]="'declaration'" [labelKey]="'fields.declaration'"
                         (filterChange)="loadDeclarations($event)"
                         [required]="true" (selectionChange)="loadDischarges($event)">
                     </app-drop-down>
@@ -13,13 +13,13 @@
                 [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Vehicle</th>
-                        <th>Store</th>
-                        <th>Way Bill No</th>
-                        <th>Pack Number</th>
-                        <th>Weight</th>
-                        <th>Date</th>
-                        <th>Is Send</th>
+                        <th>{{ 'fields.vehicle' | translate }}</th>
+                        <th>{{ 'fields.store' | translate }}</th>
+                        <th>{{ 'fields.wayBillNo' | translate }}</th>
+                        <th>{{ 'fields.packNumber' | translate }}</th>
+                        <th>{{ 'fields.weight' | translate }}</th>
+                        <th>{{ 'fields.date' | translate }}</th>
+                        <th>{{ 'fields.isSend' | translate }}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-discharge>
@@ -50,7 +50,7 @@
             </p-table>
 
             <div class="col-12 md:col-6 lg:col-4 flex justify-self-center mt-3" style="justify-self: center;">
-                <button pButton type="submit" label="Send" icon="pi pi-send" [disabled]="form.invalid">
+                <button pButton type="submit" [label]="'common.send' | translate" icon="pi pi-send" [disabled]="form.invalid">
                 </button>
             </div>
         </form>

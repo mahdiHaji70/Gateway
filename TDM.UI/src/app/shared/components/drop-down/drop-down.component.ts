@@ -12,6 +12,8 @@ export class DropDownComponent {
   @Input() controlName: string = '';
   @Input() options?: any[];
   @Input() required: boolean = false;
+  @Input() labelKey?: string;
+  @Input() optionTranslationPrefix?: string;
   @Input() optionLabel: string = 'name';
   @Output() selectionChange = new EventEmitter<any>();
   @Output() filterChange = new EventEmitter<string>();

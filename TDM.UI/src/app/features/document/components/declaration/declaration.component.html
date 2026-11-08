@@ -1,51 +1,52 @@
-<div>
+<div class="declaration-page">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
         <div class="p-fluid p-formgrid grid col-12 group-box">
 
             <div class="col-4">
-                <app-input [formGroup]="form" [controlName]="'number'" [required]="true"></app-input>
+                <app-input [formGroup]="form" [controlName]="'number'" [labelKey]="'fields.number'" [required]="true"></app-input>
             </div>
 
             <div class="col-4">
-                <app-en-calender [formGroup]="form" [controlName]="'date'" [required]="true"></app-en-calender>
+                <app-calender [formGroup]="form" [controlName]="'date'" [labelKey]="'fields.date'" [required]="true"></app-calender>
             </div>
 
             <div class="col-4">
-                <app-en-calender [formGroup]="form" [controlName]="'startDate'" [required]="true"></app-en-calender>
+                <app-calender [formGroup]="form" [controlName]="'startDate'" [labelKey]="'fields.startDate'" [required]="true"></app-calender>
             </div>
 
             <div class="col-4">
-                <app-en-calender [formGroup]="form" [controlName]="'endDate'" [required]="true"></app-en-calender>
+                <app-calender [formGroup]="form" [controlName]="'endDate'" [labelKey]="'fields.endDate'" [required]="true"></app-calender>
             </div>
 
             <div class="col-4">
-                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contact'" (filterChange)="onContactFilterChanged($event)"
+                <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contact'" [labelKey]="'fields.contact'" (filterChange)="onContactFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 
             <div class="col-4">
-                <app-drop-down [options]="contactReps" [formGroup]="form" [controlName]="'contactRep'" (filterChange)="onContactRepFilterChanged($event)"
+                <app-drop-down [options]="contactReps" [formGroup]="form" [controlName]="'contactRep'" [labelKey]="'fields.contactRep'" (filterChange)="onContactRepFilterChanged($event)"
                     [required]="false"></app-drop-down>
             </div>
 
             <div class="col-4">
                 <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
+                    [labelKey]="'fields.traffic'"
                     (filterChange)="onTrafficFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 
             <div class="col-4">
-                <app-input [formGroup]="form" [controlName]="'description'" [required]="false"></app-input>
+                <app-input [formGroup]="form" [controlName]="'description'" [labelKey]="'fields.description'" [required]="false"></app-input>
             </div>
 
             <div class="col-2 mt-4">
-                <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
+                <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate" icon="fa-plus"
                     [disabled]="form.invalid"></button>
             </div>
 
             @if (id != undefined || id != null) {
             <div class="col-2 mt-4">
-                <button pButton type="button" class="px-2" (click)="sendDeclarationToIpas(id)" label="Send To Ipas"
+                <button pButton type="button" class="px-2" (click)="sendDeclarationToIpas(id)" [label]="'declaration.sendToIpas' | translate"
                     icon="fa-plus" [disabled]="form.invalid"></button>
             </div>
             }
@@ -56,7 +57,7 @@
 
     <div class="group-box w-full">
         <div class="w-4 mb-2">
-            <p-button severity="info" label="Get Declaration Items" icon="pi pi-cloud-download" class="mr-2"
+            <p-button severity="info" [label]="'declaration.getItems' | translate" icon="pi pi-cloud-download" class="mr-2"
                 (onClick)="getItemsFromIpas(id)" [disabled]="id == undefined" />
         </div>
 
@@ -65,10 +66,10 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 5rem"></th>
-                    <th>Commodity</th>
-                    <th>Package</th>
-                    <th>Pack Number</th>
-                    <th>Weight</th>
+                    <th>{{ 'common.commodity' | translate }}</th>
+                    <th>{{ 'common.package' | translate }}</th>
+                    <th>{{ 'common.packNumber' | translate }}</th>
+                    <th>{{ 'common.weight' | translate }}</th>
                     <!-- <th>Actions</th> -->
                 </tr>
             </ng-template>
@@ -107,8 +108,8 @@
                                 <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 5rem"></th>
-                    <th>Container Number</th>
-                    <th>Type</th>
+                    <th>{{ 'declaration.containerNumber' | translate }}</th>
+                    <th>{{ 'common.type' | translate }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-container let-expanded="expanded">
@@ -130,10 +131,10 @@
                             <p-table [value]="container.declarationContainerInfos">
                                 <ng-template pTemplate="header">
                 <tr>
-                    <th>Commodity</th>
-                    <th>Package</th>
-                    <th>Pack Number</th>
-                    <th>Weight</th>
+                    <th>{{ 'common.commodity' | translate }}</th>
+                    <th>{{ 'common.package' | translate }}</th>
+                    <th>{{ 'common.packNumber' | translate }}</th>
+                    <th>{{ 'common.weight' | translate }}</th>
 
                 </tr>
             </ng-template>
@@ -163,14 +164,14 @@
 </div>
 <p-toast></p-toast>
 
-<p-dialog header="Add Item" [modal]="true" [(visible)]="itemsPopupVisibility"
+<p-dialog [header]="'declaration.addItem' | translate" [modal]="true" [(visible)]="itemsPopupVisibility"
     [style]="{ width: '30rem', 'min-height': '30rem' }" (onHide)="loadDeclarationItems()">
     <app-declaration-item #declaration_item [declarationId]="id"
         (successfulOperation)="declarationItemAddedEvent($event)">
     </app-declaration-item>
 </p-dialog>
 
-<p-dialog header="Add Container" [modal]="true" [(visible)]="containerPopupVisibility"
+<p-dialog [header]="'declaration.addContainer' | translate" [modal]="true" [(visible)]="containerPopupVisibility"
     [style]="{ width: '30rem', 'min-height': '30rem' }">
     <!-- <app-declaration-container #declaration_container (showConainerInfoEvent)="showContainerInfoPopup($event)">
     </app-declaration-container> -->

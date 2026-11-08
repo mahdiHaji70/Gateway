@@ -4,14 +4,14 @@
         <div class="p-fluid p-formgrid grid">
             <div class="col-12 md:col-6 lg:col-4">
                 <form [formGroup]="form" ngNativeValidate>
-                    <app-drop-down [options]="voyages" [formGroup]="form" [controlName]="'voyage'"
+                    <app-drop-down [options]="voyages" [formGroup]="form" [controlName]="'voyage'" [labelKey]="'fields.voyage'"
                         (filterChange)="loadVoyages($event)" [required]="true"
                         (selectionChange)="loadManifest($event)">
                     </app-drop-down>
                 </form>
             </div>
             <div class="col-offset-1 col-2 mt-4">
-                <p-button severity="info" label="Save Manifest" icon="pi pi-cloud-download" class="mr-2"
+                <p-button severity="info" [label]="'manifest.save' | translate" icon="pi pi-cloud-download" class="mr-2"
                     [disabled]="!form.controls.voyage.value" (onClick)="SaveManifest()" />
 
 
@@ -20,11 +20,11 @@
 
         <!-- Manifest & Vessel Header -->
         <div class="col-12" *ngIf="manifest">
-            <p-panel header="Manifest & Vessel Information" [toggleable]="true">
+            <p-panel [header]="'manifest.panelTitle' | translate" [toggleable]="true">
                 <div class="grid p-fluid">
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Manifest Reg. No</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.registrationNo' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.manifestRegistrationNumber || '-'
                                 }}</span>
                         </div>
@@ -32,28 +32,28 @@
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Serial No</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.serialNo' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.serialNo || '-' }}</span>
                         </div>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Voyage No</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.voyageNo' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.voyageNo || '-' }}</span>
                         </div>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Notice No</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.noticeNo' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.noticeNo || '-' }}</span>
                         </div>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Vessel Name</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.vesselName' | translate }}</label>
                             <span class="text-color font-medium text-base">
                                 <i class="pi pi-compass mr-1 text-primary"></i>{{ manifest.vesselName || '-' }}
                             </span>
@@ -62,14 +62,14 @@
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">IMO Number</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.imo' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.imo || '-' }}</span>
                         </div>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">ETA</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.eta' | translate }}</label>
                             <span class="text-color font-medium text-base">
                                 <i class="pi pi-calendar mr-1 text-primary"></i>
                                 {{ manifest.eta ? (manifest.eta | date:'yyyy/MM/dd HH:mm') : '-' }}
@@ -79,7 +79,7 @@
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">ETD</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.etd' | translate }}</label>
                             <span class="text-color font-medium text-base">
                                 <i class="pi pi-calendar mr-1 text-primary"></i>
                                 {{ manifest.etd ? (manifest.etd | date:'yyyy/MM/dd HH:mm') : '-' }}
@@ -89,21 +89,21 @@
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Shipping Line</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.shippingLine' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.shipLine || '-' }}</span>
                         </div>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Shipping Agent</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.shipAgent' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.shipAgent || '-' }}</span>
                         </div>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Agent National ID</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.agentNationalId' | translate }}</label>
                             <span class="text-color font-medium text-base">{{ manifest.shipAgentNationalId || '-'
                                 }}</span>
                         </div>
@@ -111,9 +111,9 @@
 
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="field-item">
-                            <label class="text-secondary block font-semibold text-xs mb-1">Terminal Code</label>
+                            <label class="text-secondary block font-semibold text-xs mb-1">{{ 'fields.terminalCode' | translate }}</label>
                             <span class="text-color font-medium text-base">
-                                <p-tag [value]="manifest.terminalCode || 'N/A'" severity="info"></p-tag>
+                                <p-tag [value]="manifest.terminalCode || ('common.notAvailable' | translate)" severity="info"></p-tag>
                             </span>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
 
         <!-- Manifest Items Table -->
         <div class="col-12 mt-3" *ngIf="manifest?.manifestItems?.length">
-            <p-card header="Manifest Items">
+            <p-card [header]="'manifest.items' | translate">
                 <p-table #dt [value]="manifest.manifestItems" dataKey="manifestItemNo"
                     [expandedRowKeys]="expandedRowKeys"
                     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
@@ -133,14 +133,14 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 3.5rem;">#</th>
-                            <th>Manifest No</th>
-                            <th>Manifest Item No</th>
-                            <th>Consignee</th>
-                            <th>Consignor</th>
-                            <th>Traffic</th>
-                            <th>Cargo Type</th>
-                            <th class="text-center" style="width: 8rem;">Goods</th>
-                            <th class="text-center" style="width: 8rem;">Containers</th>
+                            <th>{{ 'fields.manifestNo' | translate }}</th>
+                            <th>{{ 'fields.manifestItemNo' | translate }}</th>
+                            <th>{{ 'fields.consignee' | translate }}</th>
+                            <th>{{ 'fields.consignor' | translate }}</th>
+                            <th>{{ 'fields.traffic' | translate }}</th>
+                            <th>{{ 'fields.cargoType' | translate }}</th>
+                            <th class="text-center" style="width: 8rem;">{{ 'fields.goods' | translate }}</th>
+                            <th class="text-center" style="width: 8rem;">{{ 'fields.containers' | translate }}</th>
                         </tr>
                     </ng-template>
 
@@ -205,7 +205,7 @@
                                         <div class="flex justify-content-between align-items-center mb-2">
                                             <h6 class="m-0 font-bold text-900">
                                                 <i class="pi pi-box mr-2 text-success"></i>
-                                                Manifest Goods (Item #{{ item.manifestItemNo }})
+                                                {{ 'manifest.goodsForItem' | translate: { item: item.manifestItemNo } }}
                                             </h6>
                                             <button pButton icon="pi pi-times"
                                                 class="p-button-text p-button-sm p-button-rounded"
@@ -217,14 +217,14 @@
                                             [tableStyle]="{ 'min-width': '45rem' }">
                                             <ng-template pTemplate="header">
                         <tr>
-                            <th>HS Code</th>
-                            <th>Commodity</th>
-                            <th>Package</th>
-                            <th>Brand</th>
-                            <th class="text-right">Pack Qty</th>
-                            <th class="text-right">Gross Wt (kg)</th>
-                            <th class="text-right">Net Wt (kg)</th>
-                            <th class="text-right">Volume (m³)</th>
+                            <th>{{ 'fields.hsCode' | translate }}</th>
+                            <th>{{ 'fields.commodity' | translate }}</th>
+                            <th>{{ 'fields.package' | translate }}</th>
+                            <th>{{ 'fields.brand' | translate }}</th>
+                            <th class="text-right">{{ 'fields.packQty' | translate }}</th>
+                            <th class="text-right">{{ 'fields.grossWeightKg' | translate }}</th>
+                            <th class="text-right">{{ 'fields.netWeightKg' | translate }}</th>
+                            <th class="text-right">{{ 'fields.volumeM3' | translate }}</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-good>
@@ -242,7 +242,7 @@
                     <ng-template pTemplate="emptymessage">
                         <tr>
                             <td colspan="9" class="text-center p-3 text-secondary">
-                                No goods registered for this manifest item.
+                                {{ 'manifest.noGoods' | translate }}
                             </td>
                         </tr>
                     </ng-template>
@@ -254,7 +254,7 @@
             <div class="flex justify-content-between align-items-center mb-2">
                 <h6 class="m-0 font-bold text-900">
                     <i class="pi pi-server mr-2 text-warning"></i>
-                    Manifest Containers (Item #{{ item.manifestItemNo }})
+                    {{ 'manifest.containersForItem' | translate: { item: item.manifestItemNo } }}
                 </h6>
                 <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-rounded"
                     (click)="closeExpansion(item.manifestItemNo)"></button>
@@ -265,13 +265,13 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3.5rem;"></th>
-                        <th>Container No</th>
-                        <th>Type & Size</th>
-                        <th>Seal No</th>
-                        <th>Dangerous Code</th>
-                        <th>Classification</th>
-                        <th>Ignition Temp</th>
-                        <th class="text-center">Goods Count</th>
+                        <th>{{ 'fields.containerNumber' | translate }}</th>
+                        <th>{{ 'fields.typeAndSize' | translate }}</th>
+                        <th>{{ 'fields.sealNo' | translate }}</th>
+                        <th>{{ 'fields.dangerousCode' | translate }}</th>
+                        <th>{{ 'fields.classification' | translate }}</th>
+                        <th>{{ 'fields.ignitionTemperature' | translate }}</th>
+                        <th class="text-center">{{ 'fields.goodsCount' | translate }}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-container let-cExpanded="expanded">
@@ -312,12 +312,12 @@
                                     styleClass="p-datatable-sm p-datatable-gridlines">
                                     <ng-template pTemplate="header">
                     <tr>
-                        <th>HS Code</th>
-                        <th>Commodity</th>
-                        <th>Package</th>
-                        <th class="text-right">Pack Qty</th>
-                        <th class="text-right">Gross Wt (kg)</th>
-                        <th class="text-right">Net Wt (kg)</th>
+                        <th>{{ 'fields.hsCode' | translate }}</th>
+                        <th>{{ 'fields.commodity' | translate }}</th>
+                        <th>{{ 'fields.package' | translate }}</th>
+                        <th class="text-right">{{ 'fields.packQty' | translate }}</th>
+                        <th class="text-right">{{ 'fields.grossWeightKg' | translate }}</th>
+                        <th class="text-right">{{ 'fields.netWeightKg' | translate }}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-cg>

@@ -1,50 +1,70 @@
 <div class="sidebar-container">
+  <div class="sidebar-scroll-area">
     <div class="user-profile">
-      <img class="user-avatar" src="assets/images/user-avatar.png" alt="User Avatar" />
-      <div>
-        <span class="text-lg">Welcome, </span>
-        <strong class="text-lg">{{ username }}</strong>
+      <img class="user-avatar" src="assets/images/user-avatar.png" alt="" />
+      <div class="user-details">
+        <span class="welcome-label">{{ 'menu.welcome' | translate }}</span>
+        <strong class="username">{{ username || ('menu.user' | translate) }}</strong>
       </div>
     </div>
-  
-    <div class="main-button w-full">
-      <p-button [style]="{ 'background-color': '#0151A4', width: '100%', border: 'none' }" (onClick)="router.navigate(['/'])">
-        <img class="main-button-image" src="assets/images/dashboard.png" alt="Dashboard Icon" />
-        <span class="text-lg">Dashboard</span>
-      </p-button>
-    </div>
-  
-    <ul class="layout-menu">
-      <ng-container *ngFor="let parent of menuItems; let i = index">
-        <li class="layout-menuitem">
-          <div class="layout-menuitem-root-text" (click)="toggleParent(i)">
-            <div (click)="onItemClick(parent['path'])">
-              <img *ngIf="parent.url" class="icon-image" [src]="parent.url" alt="Icon" />
-              <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon ? parent.icon : 'pi pi-question'"></i>
-              {{ parent.label }}
-            </div>
-            @if(parent.items){
-            <i class="pi" [ngClass]="{ 'pi-angle-down': isParentOpen(i), 'pi-angle-up': !isParentOpen(i) }"></i>
-            }
-          </div>
-  
-          <ul *ngIf="isParentOpen(i)" [@expandCollapse]>
-            <li *ngFor="let child of parent.items">
-              <a class="layout-menuitem-link" tabindex="0" pRipple (click)="onItemClick(child['path'])">
-                <i class="layout-menuitem-icon pi pi-circle-fill" style="font-size: 0.5rem; color: #444;"></i>
-                <span class="layout-menuitem-text">{{ child.label }}</span>
-              </a>
-            </li>
-          </ul>
+
+    <button type="button" class="sidebar-action dashboard-action" (click)="goToDashboard()">
+      <img src="assets/images/dashboard.png" alt="" />
+      <span>{{ 'menu.dashboard' | translate }}</span>
+    </button>
+
+    <nav aria-label="Main navigation">
+      <ul class="layout-menu">
+        <li class="layout-menuitem" *ngFor="let parent of menuItems; let i = index">
+          <ng-container *ngIf="parent.items?.length; else directLink">
+            <button
+              type="button"
+              class="menu-group-toggle"
+              [attr.aria-expanded]="isParentOpen(i)"
+              [attr.aria-controls]="'menu-group-' + i"
+              (click)="toggleParent(i)">
+              <span class="menu-item-label">
+                <img *ngIf="parent.url" class="icon-image" [src]="parent.url" alt="" />
+                <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon || 'pi pi-question'"></i>
+                <span>{{ menuLabelKey(parent.label) | translate }}</span>
+              </span>
+              <i class="pi" [ngClass]="isParentOpen(i) ? 'pi-angle-down' : 'pi-angle-right'" aria-hidden="true"></i>
+            </button>
+
+            <ul *ngIf="isParentOpen(i)" class="submenu" [id]="'menu-group-' + i" [@expandCollapse]>
+              <li *ngFor="let child of parent.items">
+                <button
+                  type="button"
+                  class="layout-menuitem-link"
+                  [class.is-active]="isRouteActive(child['path'])"
+                  (click)="onItemClick(child['path'])">
+                  <i class="pi pi-circle-fill submenu-bullet" aria-hidden="true"></i>
+                  <span class="layout-menuitem-text">{{ menuLabelKey(child.label) | translate }}</span>
+                </button>
+              </li>
+            </ul>
+          </ng-container>
+
+          <ng-template #directLink>
+            <button
+              type="button"
+              class="menu-group-toggle direct-menu-link"
+              [class.is-active]="isRouteActive(parent['path'])"
+              (click)="onItemClick(parent['path'])">
+              <span class="menu-item-label">
+                <img *ngIf="parent.url" class="icon-image" [src]="parent.url" alt="" />
+                <i *ngIf="!parent.url" class="layout-menuitem-icon" [ngClass]="parent.icon || 'pi pi-question'"></i>
+                <span>{{ menuLabelKey(parent.label) | translate }}</span>
+              </span>
+            </button>
+          </ng-template>
         </li>
-      </ng-container>
-    </ul>
-  
-    <div class="main-button support-button" style="margin-bottom: 1rem;">
-      <p-button [style]="{ 'background-color': '#0151A4', width: '100%', border: 'none' }" (onClick)="router.navigate(['/'])">
-        <img class="main-button-image" src="assets/images/support.png" alt="Support Icon" />
-        <span class="text-lg">Support</span>
-      </p-button>
-    </div>
+      </ul>
+    </nav>
   </div>
-  
+
+  <button type="button" class="sidebar-action support-action" (click)="goToDashboard()">
+    <img src="assets/images/support.png" alt="" />
+    <span>{{ 'menu.support' | translate }}</span>
+  </button>
+</div>

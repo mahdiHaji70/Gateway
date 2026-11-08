@@ -11,6 +11,7 @@ export class CheckboxComponent {
   @Input() formGroup!: FormGroup;
   @Input() controlName: string = '';
   @Input() required: boolean = false;
+  @Input() labelKey?: string;
   @Output() change = new EventEmitter<boolean>();
   label?: string;
   /**

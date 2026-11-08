@@ -1,18 +1,18 @@
-<p-toolbar styleClass="mb-4 gap-2">
+<p-toolbar styleClass="mb-4 menu-list-toolbar">
     <ng-template pTemplate="left">
         <p-button 
             severity="success" 
-            label="Fetch Manifests" 
+            [label]="'manifest.fetch' | translate"
             icon="pi pi-cloud-download" 
             class="mr-2" 
             (onClick)="onFetchingManifests()" />
             <p-button 
             severity="info" 
-            label="Refresh" 
+            [label]="'common.refresh' | translate"
             icon="pi pi-refresh" 
             class="mr-2" 
             (onClick)="loadManifests()" />
-            <p-button severity="secondary" [label]="showFilters ? 'Hide Filters' : 'Filters'"
+            <p-button severity="secondary" [label]="(showFilters ? 'common.hideFilters' : 'common.filters') | translate"
                 [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'" (onClick)="toggleFilters()" />
     </ng-template>
 
@@ -20,22 +20,22 @@
 <div *ngIf="showFilters" class="group-box mb-3">
     <div class="grid p-fluid">
         <div class="col-12 md:col-6 lg:col-4">
-            <app-input [formGroup]="filtersForm" [controlName]="'search'"></app-input>
-            <small class="text-secondary">Search registration, voyage, notice, vessel, or manifest number.</small>
+            <app-input [formGroup]="filtersForm" [controlName]="'search'" [labelKey]="'fields.search'"></app-input>
+            <small class="text-secondary">{{ 'manifest.searchHint' | translate }}</small>
         </div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-calender></div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'"></app-en-calender>
-            <small class="text-secondary">Date range uses manifest ETA.</small>
+            <app-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-calender>
+            <small class="text-secondary">{{ 'manifest.etaRangeHint' | translate }}</small>
         </div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'" (filterChange)="loadOptions('consignee', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="cargoTypeOptions" [formGroup]="filtersForm" [controlName]="'cargoType'" (filterChange)="loadOptions('cargoType', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="commodityOptions" [formGroup]="filtersForm" [controlName]="'commodity'" (filterChange)="loadOptions('commodity', $event)"></app-drop-down></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="packageOptions" [formGroup]="filtersForm" [controlName]="'package'" (filterChange)="loadOptions('package', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" [labelKey]="'fields.traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'" [labelKey]="'fields.consignee'" (filterChange)="loadOptions('consignee', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="cargoTypeOptions" [formGroup]="filtersForm" [controlName]="'cargoType'" [labelKey]="'fields.cargoType'" (filterChange)="loadOptions('cargoType', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="commodityOptions" [formGroup]="filtersForm" [controlName]="'commodity'" [labelKey]="'fields.commodity'" (filterChange)="loadOptions('commodity', $event)"></app-drop-down></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="packageOptions" [formGroup]="filtersForm" [controlName]="'package'" [labelKey]="'fields.package'" (filterChange)="loadOptions('package', $event)"></app-drop-down></div>
         <div class="col-12 flex justify-content-end gap-2">
-            <button pButton type="button" label="Clear" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
-            <button pButton type="button" label="Apply Filters" icon="pi pi-filter" (click)="applyFilters()"></button>
+            <button pButton type="button" [label]="'common.clear' | translate" icon="pi pi-times" severity="secondary" (click)="clearFilters()"></button>
+            <button pButton type="button" [label]="'common.applyFilters' | translate" icon="pi pi-filter" (click)="applyFilters()"></button>
         </div>
     </div>
 </div>
@@ -48,22 +48,22 @@
     (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th>Registration No</th>
-            <th>Voyage No</th>
-            <th>Notice No</th>
-            <th>Ship Agent</th>
-            <th>Vessel Name</th>
-            <th>IMO</th>
-            <th>Manifest No</th>
-            <th>Traffic Name</th>
-            <th>Consignee Name</th>
-            <th>Cargo Type</th>
-            <th>HS Code</th>
-            <th>Commodity</th>
-            <th>Package</th>
-            <th>Pack Nb</th>
-            <th>Gross Weight</th>
-            <th>Container</th>
+            <th>{{ 'fields.registrationNo' | translate }}</th>
+            <th>{{ 'fields.voyageNo' | translate }}</th>
+            <th>{{ 'fields.noticeNo' | translate }}</th>
+            <th>{{ 'fields.shipAgent' | translate }}</th>
+            <th>{{ 'fields.vesselName' | translate }}</th>
+            <th>{{ 'fields.imo' | translate }}</th>
+            <th>{{ 'fields.manifestNo' | translate }}</th>
+            <th>{{ 'fields.trafficName' | translate }}</th>
+            <th>{{ 'fields.consigneeName' | translate }}</th>
+            <th>{{ 'fields.cargoType' | translate }}</th>
+            <th>{{ 'fields.hsCode' | translate }}</th>
+            <th>{{ 'fields.commodity' | translate }}</th>
+            <th>{{ 'fields.package' | translate }}</th>
+            <th>{{ 'fields.packNb' | translate }}</th>
+            <th>{{ 'fields.grossWeight' | translate }}</th>
+            <th>{{ 'fields.container' | translate }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-manifest>

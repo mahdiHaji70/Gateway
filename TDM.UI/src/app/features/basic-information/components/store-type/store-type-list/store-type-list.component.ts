@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
 import { showApiError } from '../../../../../shared/services/api-error-handler.service';
+import { TranslateService } from '@ngx-translate/core';
 import { StoreType } from '../../../models/store-type.model';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
@@ -11,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrl: './store-type-list.component.scss'
 })
 export class StoreTypeListComponent {
+  private readonly translate = inject(TranslateService);
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
@@ -28,7 +31,8 @@ storeTypes: StoreType[] = [];
   loadStoreTypes(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('StoreTypes', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+    this.basicInformationService.getAll('StoreTypes', pageNumber, pageSize, this.search).subscribe({
+      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.storeTypes = res.data.items.map((item: any) => new StoreType(item.name, item.id));
       },
@@ -40,7 +44,11 @@ storeTypes: StoreType[] = [];
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadStoreTypes(pageNumber, event.rows);
   }
-  onSearch() {    this.loadStoreTypes(1, this.pageSize);  }
+
+  onSearch() {
+    this.loadStoreTypes(1, this.pageSize);
+  }
+
   onAdd(){
     this.router.navigate(['/store-type']);
   }
@@ -52,18 +60,20 @@ storeTypes: StoreType[] = [];
   onDelete(event: any, id: any) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
+      message: this.translate.instant('common.deleteConfirm') as string,
+      header: this.translate.instant('common.deleteConfirmation') as string,
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: "p-button-danger p-button-text",
       rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptLabel: this.translate.instant('common.yes') as string,
+      rejectLabel: this.translate.instant('common.no') as string,
       acceptIcon: "none",
       rejectIcon: "none",
 
       accept: () => {
         this.basicInformationService.removeBasicInformation('StoreTypes', id).subscribe({
           next: (res: any) => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+            this.messageService.add({ severity: 'info', summary: this.translate.instant('common.confirmed') as string, detail: this.translate.instant('common.recordDeleted') as string });
             this.loadStoreTypes();
           },
           error: (error: any) => {
@@ -77,4 +87,4 @@ storeTypes: StoreType[] = [];
       }
     });
   }
-}
+}

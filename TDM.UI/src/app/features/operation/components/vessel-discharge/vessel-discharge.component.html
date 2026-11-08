@@ -3,17 +3,17 @@
         <div class="col-12 group-box">
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
-                    <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'manifestItem'"
+                    <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'manifestItem'" [labelKey]="'fields.manifestItem'"
                         (filterChange)="loadManifestItems($event)"
                         [required]="true" (selectionChange)="loadManifestItem($event)"></app-drop-down>
                 </div>
                 <div class="col-12 md:col-6 lg:col-4">
-                    <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'"
+                    <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'" [labelKey]="'fields.container'"
                         (filterChange)="onContainerFilterChanged($event)"
                         [required]="false" (selectionChange)="onContainerChange($event)"></app-drop-down>
                 </div>
                 <div class="col-12 md:col-6 lg:col-4">
-                    <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'"
+                    <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'" [labelKey]="'fields.store'"
                         (filterChange)="onStoreFilterChanged($event)"
                         [required]="true"></app-drop-down>
                 </div>
@@ -21,14 +21,14 @@
 
             @if (manifestItem) {
             <div class="summary-box">
-                <span><strong>Item:</strong> {{ manifestItem.manifestItemNo }}</span>
-                <span><strong>Manifest:</strong> {{ manifestItem.manifestNo }}</span>
-                <span><strong>Goods:</strong> {{ manifestItem.manifestGoods.length || 0 }}</span>
-                <span><strong>Containers:</strong> {{ manifestItem.manifestContainers.length || 0 }}</span>
+                <span><strong>{{ 'fields.manifestItem' | translate }}:</strong> {{ manifestItem.manifestItemNo }}</span>
+                <span><strong>{{ 'fields.manifest' | translate }}:</strong> {{ manifestItem.manifestNo }}</span>
+                <span><strong>{{ 'fields.goods' | translate }}:</strong> {{ manifestItem.manifestGoods.length || 0 }}</span>
+                <span><strong>{{ 'fields.containers' | translate }}:</strong> {{ manifestItem.manifestContainers.length || 0 }}</span>
             </div>
             @if (cargoSummary.length > 0) {
             <div class="cargo-summary">
-                <strong>Cargo summary:</strong>
+                <strong>{{ 'fields.cargoSummary' | translate }}:</strong>
                 @for (summary of cargoSummary; track summary) {
                     <span>{{ summary }}</span>
                 }
@@ -38,39 +38,39 @@
 
             <div class="grid">
                 <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                    <app-en-calender [formGroup]="form" [controlName]="'dischargeDate'" [required]="true" [showTime]="true"></app-en-calender>
+                    <app-calender [formGroup]="form" [controlName]="'dischargeDate'" [labelKey]="'fields.dischargeDate'" [required]="true" [showTime]="true"></app-calender>
                 </div>
                 <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                    <app-input-number [formGroup]="form" [controlName]="'packNumber'" [required]="true"></app-input-number>
+                    <app-input-number [formGroup]="form" [controlName]="'packNumber'" [labelKey]="'fields.packNumber'" [required]="true"></app-input-number>
                 </div>
                 <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                    <app-input-number [formGroup]="form" [controlName]="'weight'" [required]="true"></app-input-number>
+                    <app-input-number [formGroup]="form" [controlName]="'weight'" [labelKey]="'fields.weight'" [required]="true"></app-input-number>
                 </div>
                 <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                    <app-input-number [formGroup]="form" [controlName]="'volume'" [required]="false"></app-input-number>
+                    <app-input-number [formGroup]="form" [controlName]="'volume'" [labelKey]="'fields.volume'" [required]="false"></app-input-number>
                 </div>
             </div>
             <div class="grid">
                 <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                    <app-input-number [formGroup]="form" [controlName]="'unitWeight'" [required]="false"></app-input-number>
+                    <app-input-number [formGroup]="form" [controlName]="'unitWeight'" [labelKey]="'fields.unitWeight'" [required]="false"></app-input-number>
                 </div>
             </div>
             <div class="grid">
-                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isNonePalletized'"></app-checkbox></div>
-                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isDamaged'"></app-checkbox></div>
-                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isVoluminous'"></app-checkbox></div>
-                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isDangerous'" (change)="clearDangerousFields($event)"></app-checkbox></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isNonePalletized'" [labelKey]="'fields.isNonePalletized'"></app-checkbox></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isDamaged'" [labelKey]="'fields.isDamaged'"></app-checkbox></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isVoluminous'" [labelKey]="'fields.isVoluminous'"></app-checkbox></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-2"><app-checkbox [formGroup]="form" [controlName]="'isDangerous'" [labelKey]="'fields.isDangerous'" (change)="clearDangerousFields($event)"></app-checkbox></div>
             </div>
             @if (form.get('isDangerous')?.value) {
             <div class="grid">
-                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input [formGroup]="form" [controlName]="'dangerousCode'" [required]="false"></app-input></div>
-                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input [formGroup]="form" [controlName]="'classification'" [required]="false"></app-input></div>
-                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input-number [formGroup]="form" [controlName]="'ignitionTemperature'" [required]="false"></app-input-number></div>
-                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input [formGroup]="form" [controlName]="'ignitionTemperatureUnit'" [required]="false"></app-input></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input [formGroup]="form" [controlName]="'dangerousCode'" [labelKey]="'fields.dangerousCode'" [required]="false"></app-input></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input [formGroup]="form" [controlName]="'classification'" [labelKey]="'fields.classification'" [required]="false"></app-input></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input-number [formGroup]="form" [controlName]="'ignitionTemperature'" [labelKey]="'fields.ignitionTemperature'" [required]="false"></app-input-number></div>
+                <div class="col-12 sm:col-6 md:col-4 lg:col-3"><app-input [formGroup]="form" [controlName]="'ignitionTemperatureUnit'" [labelKey]="'fields.ignitionTemperatureUnit'" [required]="false"></app-input></div>
             </div>
             }
             <div class="col-12 md:col-6 lg:col-4 flex justify-self-center mt-3">
-                <button pButton type="submit" [label]="id ? 'Update' : 'Add'" icon="fa-plus" [disabled]="form.invalid"></button>
+                <button pButton type="submit" [label]="(id ? 'common.update' : 'common.add') | translate" icon="fa-plus" [disabled]="form.invalid"></button>
             </div>
         </div>
     </div>

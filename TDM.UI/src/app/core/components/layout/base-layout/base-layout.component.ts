@@ -11,7 +11,7 @@ export class BaseLayoutComponent {
   /**
    *
    */
-  constructor(private layoutService: LayoutService) {
+  constructor(public layoutService: LayoutService) {
 
   }
 

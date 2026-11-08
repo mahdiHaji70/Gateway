@@ -1,19 +1,25 @@
 <div class="field" [formGroup]="formGroup">
-    <label [for]="controlName">{{ label }}</label>
+    <label [for]="controlName">{{ labelKey ? (labelKey | translate) : label }}</label>
     <p-dropdown [options]="options" [formControlName]="controlName" [optionLabel]="optionLabel" [filter]="true"
-        [showClear]="true" [placeholder]="'Select a ' + label" [required]="required"
+        [showClear]="true" [placeholder]="labelKey ? ('common.selectPlaceholder' | translate: { label: (labelKey | translate) }) : ('Select a ' + label)" [required]="required"
         (onChange)="onChange($event)">
         <ng-template pTemplate="filter" let-options="options">
             <div class="flex gap-1">
                 <div class="p-inputgroup" (click)="$event.stopPropagation()">
-                    <input type="text" pInputText placeholder="Filter" [(ngModel)]="filterValue"
+                    <input type="text" pInputText [placeholder]="labelKey ? ('common.filter' | translate) : 'Filter'" [(ngModel)]="filterValue"
                         [ngModelOptions]="{ standalone: true }"
                         (keyup)="customFilterFunction($event, options)" />
                 </div>
                 <button pButton icon="pi pi-times" (click)="resetFunction(options)" severity="secondary"></button>
             </div>
         </ng-template>
+        <ng-template pTemplate="item" let-option>
+            {{ optionTranslationPrefix ? ((optionTranslationPrefix + '.' + option[optionLabel]) | translate) : option[optionLabel] }}
+        </ng-template>
+        <ng-template pTemplate="selectedItem" let-option>
+            {{ option ? (optionTranslationPrefix ? ((optionTranslationPrefix + '.' + option[optionLabel]) | translate) : option[optionLabel]) : '' }}
+        </ng-template>
     </p-dropdown>
     <div *ngIf="formGroup.controls[controlName]?.invalid && formGroup.controls[controlName]?.touched"
-        class="text-red-500 text-sm font-medium m-1">{{label + ' is required'}}</div>
+        class="text-red-500 text-sm font-medium m-1">{{ labelKey ? ('validation.required' | translate: { field: (labelKey | translate) }) : (label + ' is required') }}</div>
 </div>

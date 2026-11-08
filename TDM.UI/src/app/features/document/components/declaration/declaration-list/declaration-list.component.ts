@@ -7,6 +7,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownOption } from '../../../../../shared/models/drop-down-option-model';
 import { BasicInformationService } from '../../../../basic-information/services/basic-information.service';
 import { showApiError } from '../../../../../shared/services/api-error-handler.service';
+import { DeclarationItemService } from '../../../services/declaration-item.service';
 
 @Component({
   selector: 'app-declaration-list',
@@ -38,6 +39,7 @@ export class DeclarationListComponent {
   constructor(private router: Router,
     private messageService: MessageService,
     private declarationService: DeclarationService,
+    private declarationItemService: DeclarationItemService,
     private basicInformationService: BasicInformationService) {
   }
 
@@ -122,5 +124,22 @@ export class DeclarationListComponent {
 
   onEdit(id: any) {
     this.router.navigate(['/document/declaration', id]);
+  }
+
+  sendDeclarationToIpas(id: string) {
+    this.declarationService.requestIpasDeclarationId(id).subscribe({
+      next: (res: any) => {
+        this.messageService.add({ severity: 'success', summary: res.message });
+        this.loadDeclarations();
+      },
+      error: (error: any) => showApiError(this.messageService, error)
+    });
+  }
+
+  getItemsFromIpas(id: string) {
+    this.declarationItemService.requestIpasDeclarationItems(id).subscribe({
+      next: (res: any) => this.messageService.add({ severity: 'success', summary: res.message }),
+      error: (error: any) => showApiError(this.messageService, error)
+    });
   }
 }

@@ -1,14 +1,14 @@
-<p-toolbar styleClass="mb-4 gap-2">
+<p-toolbar styleClass="mb-4 basic-information-list-toolbar">
     <ng-template pTemplate="left">
         <p-button 
             severity="success" 
-            label="New" 
+            [label]="'common.new' | translate"
             icon="pi pi-plus" 
             class="mr-2" 
             (onClick)="onAdd()" />
             <p-button 
             severity="info" 
-            label="Refresh" 
+            [label]="'common.refresh' | translate"
             icon="pi pi-refresh" 
             class="mr-2" 
             (onClick)="loadContacts()" />
@@ -17,12 +17,12 @@
         <input
             type="text"
             class="p-inputtext p-component"
-            placeholder="Search companies"
+            [placeholder]="'common.search' | translate"
             [(ngModel)]="search"
             (keyup.enter)="onSearch()" />
         <p-button
             severity="secondary"
-            label="Search"
+            [label]="'common.search' | translate"
             icon="pi pi-search"
             class="ml-2"
             (onClick)="onSearch()" />
@@ -38,18 +38,18 @@
     (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th>Contact Type</th>
-            <th>Name</th>
-            <th>National Id</th>
-            <th>Register Number</th>
-            <th>Economic Code</th>
-            <th>Register Date</th>
-            <th>Register Place</th>
-            <th>Post Code</th>
-            <th>Mobile</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Actions</th>
+            <th>{{ 'fields.contactType' | translate }}</th>
+            <th>{{ 'fields.name' | translate }}</th>
+            <th>{{ 'fields.nationalId' | translate }}</th>
+            <th>{{ 'fields.registerNumber' | translate }}</th>
+            <th>{{ 'fields.economicCode' | translate }}</th>
+            <th>{{ 'fields.registerDate' | translate }}</th>
+            <th>{{ 'fields.registerPlace' | translate }}</th>
+            <th>{{ 'fields.postCode' | translate }}</th>
+            <th>{{ 'fields.mobile' | translate }}</th>
+            <th>{{ 'fields.phone' | translate }}</th>
+            <th>{{ 'fields.address' | translate }}</th>
+            <th>{{ 'common.actions' | translate }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-contact>

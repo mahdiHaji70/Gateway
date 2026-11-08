@@ -6,14 +6,14 @@
                 <!-- First Row -->
                 <div class="grid">
                     <div class="col-12 md:col-6 lg:col-4">
-                        <app-drop-down [options]="declarationItems" [formGroup]="form" [controlName]="'declarationItem'"
+                        <app-drop-down [options]="declarationItems" [formGroup]="form" [controlName]="'declarationItem'" [labelKey]="'fields.declarationItem'"
                             (filterChange)="loadDeclarationItems($event)" [required]="true"
                             (selectionChange)="loadGoodwayBills($event)">
                         </app-drop-down>
                     </div>
 
                     <div class="col-12 md:col-6 lg:col-4">
-                        <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'"
+                        <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'" [labelKey]="'fields.store'"
                             (filterChange)="onStoreFilterChanged($event)" [required]="true">
                         </app-drop-down>
                     </div>
@@ -21,7 +21,7 @@
 
                 <div class="grid">
                     <div class="col-12">
-                        <app-drop-down [options]="goodwayBills" [formGroup]="form" [controlName]="'goodwayBill'"
+                        <app-drop-down [options]="goodwayBills" [formGroup]="form" [controlName]="'goodwayBill'" [labelKey]="'fields.goodwayBill'"
                             [required]="true" (selectionChange)="setVehicleNumber($event)">
                         </app-drop-down>
                     </div>
@@ -29,68 +29,68 @@
                 <!-- Second Row -->
                 <div class="grid">
                     <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                        <app-en-calender [formGroup]="form" [controlName]="'dischargeDate'" [required]="true"
+                        <app-calender [formGroup]="form" [controlName]="'dischargeDate'" [labelKey]="'fields.dischargeDate'" [required]="true"
                             [showTime]="true">
-                        </app-en-calender>
+                        </app-calender>
                     </div>
 
                     <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                        <app-input [formGroup]="form" [controlName]="'vehicleNumber'" [required]="true">
+                        <app-input [formGroup]="form" [controlName]="'vehicleNumber'" [labelKey]="'fields.vehicleNumber'" [required]="true">
                         </app-input>
                     </div>
 
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-input-number [formGroup]="form" [controlName]="'packNumber'" [required]="true">
+                        <app-input-number [formGroup]="form" [controlName]="'packNumber'" [labelKey]="'fields.packNumber'" [required]="true">
                         </app-input-number>
                     </div>
 
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-input-number [formGroup]="form" [controlName]="'weight'" [required]="true">
+                        <app-input-number [formGroup]="form" [controlName]="'weight'" [labelKey]="'fields.weight'" [required]="true">
                         </app-input-number>
                     </div>
 
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-input-number [formGroup]="form" [controlName]="'volume'" [required]="false">
+                        <app-input-number [formGroup]="form" [controlName]="'volume'" [labelKey]="'fields.volume'" [required]="false">
                         </app-input-number>
                     </div>
                 </div>
                 <div class="grid">
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isNonePalletized'"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isNonePalletized'" [labelKey]="'fields.isNonePalletized'"></app-checkbox>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isDamaged'"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isDamaged'" [labelKey]="'fields.isDamaged'"></app-checkbox>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isVoluminous'" ></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isVoluminous'" [labelKey]="'fields.isVoluminous'" ></app-checkbox>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-2">
-                        <app-checkbox [formGroup]="form" [controlName]="'isDangerous'" (change)="clearDangerousFields($event)"></app-checkbox>
+                        <app-checkbox [formGroup]="form" [controlName]="'isDangerous'" [labelKey]="'fields.isDangerous'" (change)="clearDangerousFields($event)"></app-checkbox>
                     </div>
                 </div>
                 @if(form.get('isDangerous')?.value){
                 <div class="grid">
                     <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                        <app-input [formGroup]="form" [controlName]="'dangerousCode'" [required]="false">
+                        <app-input [formGroup]="form" [controlName]="'dangerousCode'" [labelKey]="'fields.dangerousCode'" [required]="false">
                         </app-input>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                        <app-input [formGroup]="form" [controlName]="'classification'" [required]="false">
+                        <app-input [formGroup]="form" [controlName]="'classification'" [labelKey]="'fields.classification'" [required]="false">
                         </app-input>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                        <app-input [formGroup]="form" [controlName]="'ignitionTemperature'" [required]="false">
+                        <app-input [formGroup]="form" [controlName]="'ignitionTemperature'" [labelKey]="'fields.ignitionTemperature'" [required]="false">
                         </app-input>
                     </div>
                     <div class="col-12 sm:col-6 md:col-4 lg:col-3">
-                        <app-input [formGroup]="form" [controlName]="'ignitionTemperatureUnit'" [required]="false">
+                        <app-input [formGroup]="form" [controlName]="'ignitionTemperatureUnit'" [labelKey]="'fields.ignitionTemperatureUnit'" [required]="false">
                         </app-input>
                     </div>
                 </div>
                 }
 
                 <div class="col-12 md:col-6 lg:col-4 flex justify-self-center mt-3">
-                    <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'"
+                    <button pButton type="submit" [label]="(id != undefined || id != null ? 'common.update' : 'common.add') | translate"
                         icon="fa-plus" [disabled]="form.invalid">
                     </button>
                 </div>

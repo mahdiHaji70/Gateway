@@ -11,8 +11,8 @@
             <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'"
                 [required]="false"></app-drop-down>
 
-            <app-en-calender [formGroup]="form" [controlName]="'enterDate'" [required]="true"
-                [showTime]="true"></app-en-calender>
+            <app-calender [formGroup]="form" [controlName]="'enterDate'" [required]="true"
+                [showTime]="true"></app-calender>
 
             <div>
                 <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"

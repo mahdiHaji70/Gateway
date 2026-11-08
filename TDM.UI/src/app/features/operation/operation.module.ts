@@ -51,6 +51,7 @@ import { LoadingPermitService } from './services/loading-permit.service';
 import { VesselLoadingPermitComponent } from './components/vessel-loading-permit/vessel-loading-permit.component';
 import { VesselLoadingPermitService } from './services/vessel-loading-permit.service';
 import { BasicInformationService } from '../basic-information/services/basic-information.service';
+import { I18nModule } from '../../core/i18n/i18n.module';
 
 @NgModule({
   declarations: [    
@@ -81,6 +82,7 @@ import { BasicInformationService } from '../basic-information/services/basic-inf
   ],
   imports: [
     CommonModule,
+    I18nModule,
     OperationRoutingModule,
     ReactiveFormsModule,
     FormsModule,

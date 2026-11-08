@@ -10,6 +10,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { ButtonModule } from 'primeng/button';
 import { TitleBarComponent } from './title-bar/title-bar.component';
+import { I18nModule } from '../../i18n/i18n.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TitleBarComponent } from './title-bar/title-bar.component';
     CommonModule,
     RouterModule,
     PanelMenuModule,
-    ButtonModule
+    ButtonModule,
+    I18nModule
   ],
   exports: [
     FooterComponent,

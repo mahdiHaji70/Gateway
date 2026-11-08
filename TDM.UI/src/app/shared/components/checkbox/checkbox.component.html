@@ -1,4 +1,5 @@
-<div class="field" [formGroup]="formGroup">
-    <p-checkbox [formGroup]="formGroup" [formControlName]="controlName" [binary]="true" 
-    [inputId]="'1'" [label]="label" (onChange)="onChange($event)"/>
+<div class="field checkbox-field" [formGroup]="formGroup">
+    <p-checkbox [formGroup]="formGroup" [formControlName]="controlName" [binary]="true"
+        [inputId]="controlName" (onChange)="onChange($event)" />
+    <label [for]="controlName">{{ labelKey ? (labelKey | translate) : label }}</label>
 </div>

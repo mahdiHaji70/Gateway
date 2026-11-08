@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
 import { showApiError } from '../../../../../shared/services/api-error-handler.service';
+import { TranslateService } from '@ngx-translate/core';
 import { BasicInformationService } from '../../../services/basic-information.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Package } from '../../../models/package.model'; 
+import { Package } from '../../../models/package.model';
 
 @Component({
   selector: 'app-package-list',
@@ -11,6 +13,7 @@ import { Package } from '../../../models/package.model';
   styleUrl: './package-list.component.scss'
 })
 export class PackageListComponent {
+  private readonly translate = inject(TranslateService);
   totalRecords = 0;
   pageSize = 10;
   currentPage = 1;
@@ -28,7 +31,8 @@ export class PackageListComponent {
   loadPackages(pageNumber: number = this.currentPage, pageSize: number = this.pageSize) {
     this.currentPage = pageNumber;
     this.pageSize = pageSize;
-    this.basicInformationService.getAll('packages', pageNumber, pageSize, this.search).subscribe({      next: (res: any) => {
+    this.basicInformationService.getAll('packages', pageNumber, pageSize, this.search).subscribe({
+      next: (res: any) => {
         this.totalRecords = res.data.totalCount;
         this.packages = res.data.items.map((item: any) => new Package(item.code, item.name, item.id));
       },
@@ -40,7 +44,11 @@ export class PackageListComponent {
     const pageNumber = Math.floor(event.first / event.rows) + 1;
     this.loadPackages(pageNumber, event.rows);
   }
-  onSearch() {    this.loadPackages(1, this.pageSize);  }
+
+  onSearch() {
+    this.loadPackages(1, this.pageSize);
+  }
+
   onAdd(){
     this.router.navigate(['/package']);
   }
@@ -52,18 +60,20 @@ export class PackageListComponent {
   onDelete(event: any, id: any) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
+      message: this.translate.instant('common.deleteConfirm') as string,
+      header: this.translate.instant('common.deleteConfirmation') as string,
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: "p-button-danger p-button-text",
       rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptLabel: this.translate.instant('common.yes') as string,
+      rejectLabel: this.translate.instant('common.no') as string,
       acceptIcon: "none",
       rejectIcon: "none",
 
       accept: () => {
         this.basicInformationService.removeBasicInformation('packages', id).subscribe({
           next: (res: any) => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+            this.messageService.add({ severity: 'info', summary: this.translate.instant('common.confirmed') as string, detail: this.translate.instant('common.recordDeleted') as string });
             this.loadPackages();
           },
           error: (error: any) => {
@@ -77,4 +87,4 @@ export class PackageListComponent {
       }
     });
   }
-}
+}
