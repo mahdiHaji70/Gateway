@@ -14,8 +14,8 @@
             <app-input [formGroup]="filtersForm" [controlName]="'search'" [labelKey]="'fields.search'"></app-input>
             <small class="text-secondary">{{ 'storeReceipt.searchHint' | translate }}</small>
         </div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-en-calender></div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-calender></div>
         <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeOptions" [formGroup]="filtersForm" [controlName]="'consignee'" [labelKey]="'fields.consignee'" (filterChange)="loadOptions('consignee', $event)"></app-drop-down></div>
         <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="consigneeRepOptions" [formGroup]="filtersForm" [controlName]="'consigneeRep'" [labelKey]="'fields.consigneeRep'" (filterChange)="loadOptions('consigneeRep', $event)"></app-drop-down></div>
         <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" [labelKey]="'fields.traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>

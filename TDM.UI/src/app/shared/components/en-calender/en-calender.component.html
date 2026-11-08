@@ -1,7 +1,18 @@
-<div class="field" [formGroup]="formGroup">
+<div class="field">
     <label [for]="controlName">{{ labelKey ? (labelKey | translate) : label }}</label>
-    <p-calendar [formControlName]="controlName" [showIcon]="true" [showOnFocus]="false" dateFormat="yy/mm/dd"
-        [required]="required" inputId="buttondisplay" [showTime]="showTime" />
+    @if (languageService.currentLanguage() === 'fa') {
+        <qeydar-date-picker
+            [formControl]="control"
+            [calendarType]="'jalali'"
+            [valueFormat]="'date'"
+            [format]="showTime ? 'yyyy/MM/dd' : 'yyyy/MM/dd'"
+            [rtl]="true"
+            [required]="required"
+            [showToday]="true" />
+    } @else {
+        <p-calendar [formControl]="control" [showIcon]="true" [showOnFocus]="false" dateFormat="yy/mm/dd"
+            [required]="required" [inputId]="controlName" [showTime]="showTime" />
+    }
     <div *ngIf="formGroup.controls[controlName]?.invalid && formGroup.controls[controlName]?.touched"
         class="text-red-500 text-sm font-medium m-1">{{ labelKey ? ('validation.required' | translate: { field: (labelKey | translate) }) : (label + ' is required') }}</div>
 

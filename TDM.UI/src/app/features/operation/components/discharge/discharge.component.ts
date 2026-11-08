@@ -118,8 +118,7 @@ export class DischargeComponent {
     });
   }
 
-  loadGoodwayBills(event: any) {
-    debugger
+  loadGoodwayBills(event: any) {    
     this.dischargeService.getGoodwayBillsByDeclarationNo(event.name).subscribe({
       next: (res: any) => {
         this.goodwayBillsRaw = res.data;
@@ -141,7 +140,7 @@ export class DischargeComponent {
     if (!this.form.valid) {
       return;
     }
-
+debugger
     var selectedGoodwayBill = this.goodwayBillsRaw.filter(item => item.waybillId == this.form.get('goodwayBill')?.value!.id!)[0];
 
     const discharge: Discharge = new Discharge(

@@ -23,9 +23,9 @@
             <app-input [formGroup]="filtersForm" [controlName]="'search'" [labelKey]="'fields.search'"></app-input>
             <small class="text-secondary">{{ 'manifest.searchHint' | translate }}</small>
         </div>
-        <div class="col-12 md:col-6 lg:col-4"><app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-en-calender></div>
+        <div class="col-12 md:col-6 lg:col-4"><app-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-calender></div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-en-calender>
+            <app-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-calender>
             <small class="text-secondary">{{ 'manifest.etaRangeHint' | translate }}</small>
         </div>
         <div class="col-12 md:col-6 lg:col-4"><app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'" [labelKey]="'fields.traffic'" (filterChange)="loadOptions('traffic', $event)"></app-drop-down></div>

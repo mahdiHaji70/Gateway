@@ -14,6 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { I18nModule } from '../core/i18n/i18n.module';
+import { QeydarDatePickerModule } from '@qeydar/datepicker';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { I18nModule } from '../core/i18n/i18n.module';
     TableModule,
     InputNumberModule,
     CheckboxModule,
-    I18nModule
+    I18nModule,
+    QeydarDatePickerModule
   ],
   exports: [InputComponent, DropDownComponent, EnCalenderComponent, InputNumberComponent, CheckboxComponent]
 })

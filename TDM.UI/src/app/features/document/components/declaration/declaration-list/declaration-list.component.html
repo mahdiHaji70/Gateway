@@ -26,10 +26,10 @@
             <small class="text-secondary">{{ 'declaration.searchHint' | translate }}</small>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-en-calender>
+            <app-calender [formGroup]="filtersForm" [controlName]="'dateFrom'" [labelKey]="'fields.dateFrom'"></app-calender>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
-            <app-en-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-en-calender>
+            <app-calender [formGroup]="filtersForm" [controlName]="'dateTo'" [labelKey]="'fields.dateTo'"></app-calender>
         </div>
         <div class="col-12 md:col-6 lg:col-4">
             <app-drop-down [options]="trafficOptions" [formGroup]="filtersForm" [controlName]="'traffic'"

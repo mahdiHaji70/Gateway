@@ -12,11 +12,11 @@
 
             <app-input-number [formGroup]="form" [controlName]="'tareWeight'" [required]="true"></app-input-number>
 
-            <app-en-calender [formGroup]="form" [controlName]="'startDate'" [required]="true"
-                [showTime]="true"></app-en-calender>
+            <app-calender [formGroup]="form" [controlName]="'startDate'" [required]="true"
+                [showTime]="true"></app-calender>
 
-            <app-en-calender [formGroup]="form" [controlName]="'endDate'" [required]="true"
-                [showTime]="true"></app-en-calender>
+            <app-calender [formGroup]="form" [controlName]="'endDate'" [required]="true"
+                [showTime]="true"></app-calender>
 
             <div>
                 <button pButton type="submit" [label]="id != undefined || id != null ? 'Update' : 'Add'" icon="fa-plus"
