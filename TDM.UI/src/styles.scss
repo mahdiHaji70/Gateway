@@ -9,25 +9,3 @@
 @import "assets/styles/layout/rtl.scss";
 //@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-qeydar-date-picker.qeydar-datepicker {
-    display: block;
-    width: 100% !important;
-    max-width: none !important;
-    font-family: var(--font-family);
-}
-
-qeydar-date-picker.qeydar-datepicker .date-picker-wrapper,
-qeydar-date-picker.qeydar-datepicker .input-container {
-    width: 100% !important;
-    max-width: none !important;
-}
-
-qeydar-date-picker.qeydar-datepicker .input-container input {
-    box-sizing: border-box;
-    width: 100% !important;
-    max-width: none !important;
-    min-height: 2.75rem;
-    padding: 0.625rem 0.75rem;
-    border-radius: 12px;
-    font-family: var(--font-family);
-}

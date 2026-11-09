@@ -11,6 +11,32 @@
     flex: 1 1 auto;
 }
 
+.layout-main-container .p-datatable .p-datatable-tbody > tr:nth-child(odd) > td {
+    background-color: #e9f3ff;
+}
+
+.layout-main-container qeydar-date-picker.qeydar-datepicker {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    font-family: var(--font-family);
+}
+
+.layout-main-container qeydar-date-picker.qeydar-datepicker .date-picker-wrapper,
+.layout-main-container qeydar-date-picker.qeydar-datepicker .input-container {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.layout-main-container qeydar-date-picker.qeydar-datepicker .input-container input {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 2.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 12px;
+    font-family: var(--font-family);
+}
 
 .layout-card {
     background-color: #E7EEF6 !important;
