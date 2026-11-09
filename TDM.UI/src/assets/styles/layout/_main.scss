@@ -54,6 +54,10 @@ a {
 .menu-list-toolbar .p-toolbar-group-start,
 .menu-list-toolbar .p-toolbar-group-right,
 .menu-list-toolbar .p-toolbar-group-end,
+.declaration-list-toolbar .p-toolbar-group-left,
+.declaration-list-toolbar .p-toolbar-group-start,
+.declaration-list-toolbar .p-toolbar-group-right,
+.declaration-list-toolbar .p-toolbar-group-end,
 .basic-information-list-toolbar .p-toolbar-group-left,
 .basic-information-list-toolbar .p-toolbar-group-start,
 .basic-information-list-toolbar .p-toolbar-group-right,
@@ -75,6 +79,10 @@ a {
     margin-inline-end: 0.5rem;
 }
 
+.menu-list-toolbar .p-toolbar-group-right input,
+.menu-list-toolbar .p-toolbar-group-end input,
+.declaration-list-toolbar .p-toolbar-group-right input,
+.declaration-list-toolbar .p-toolbar-group-end input,
 .basic-information-list-toolbar .p-toolbar-group-right input,
 .basic-information-list-toolbar .p-toolbar-group-end input {
     box-sizing: border-box;
