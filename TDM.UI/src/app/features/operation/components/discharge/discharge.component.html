@@ -22,7 +22,7 @@
                 <div class="grid">
                     <div class="col-12">
                         <app-drop-down [options]="goodwayBills" [formGroup]="form" [controlName]="'goodwayBill'" [labelKey]="'fields.goodwayBill'"
-                            [required]="true" (selectionChange)="setVehicleNumber($event)" (clearEvent)="onGoodwayBillClear()">
+                            [required]="true" (selectionChange)="updateFormFromGoodwayBill($event)" (clearEvent)="onGoodwayBillClear()">
                         </app-drop-down>
                     </div>
                 </div>

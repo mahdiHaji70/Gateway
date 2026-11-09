@@ -125,17 +125,17 @@ export class DischargeComponent {
     if (!event?.name) {
       this.goodwayBillsRaw = [];
       this.goodwayBills = [];
-      this.form.patchValue({ goodwayBill: undefined, vehicleNumber: '' });
+      this.form.patchValue({ goodwayBill: undefined, vehicleNumber: '', packNumber: 0, weight: 0, volume: 0 });
       return;
     }
 
     if (this.form.controls.declarationItem.value?.id
       && this.form.controls.declarationItem.value.id !== event.id) {
-      this.form.patchValue({ goodwayBill: undefined, vehicleNumber: '' });
+      this.form.patchValue({ goodwayBill: undefined, vehicleNumber: '', packNumber: 0, weight: 0, volume: 0 });
     }
 
     this.dischargeService.getGoodwayBillsByDeclarationNo(event.name).subscribe({
-      next: (res: any) => {
+      next: (res: any) => {        
         this.goodwayBillsRaw = res.data;
         this.goodwayBills = res.data.map((item: any) => new DropdownOption(item.waybillId,
           `WayBiil No: ${item.waybillNo} , Vehicle Number: ${item.vehicleNumber}`));
@@ -149,14 +149,20 @@ export class DischargeComponent {
     if (declaration) this.loadGoodwayBills(declaration);
   }
 
-  setVehicleNumber(event: any){
+  updateFormFromGoodwayBill(event: any){
     if (!event?.id) {
-      this.form.patchValue({ vehicleNumber: '' });
+      this.form.patchValue({ vehicleNumber: '', packNumber: 0, weight: 0, volume: 0 });
       return;
     }
-    var selectedGoodwayBill = this.goodwayBillsRaw.filter(item => item.waybillId == event.id)[0];
+
+    const selectedGoodwayBill = this.goodwayBillsRaw.find(item => item.waybillId == event.id);
+    if (!selectedGoodwayBill) return;
+
     this.form.patchValue({
-      vehicleNumber : selectedGoodwayBill.vehicleNumber
+      vehicleNumber: selectedGoodwayBill.vehicleNumber,
+      packNumber: selectedGoodwayBill.packNB,
+      weight: selectedGoodwayBill.packNB * selectedGoodwayBill.weight,
+      volume: selectedGoodwayBill.volume
     });
   }
 
@@ -164,7 +170,7 @@ export class DischargeComponent {
     if (!this.form.valid) {
       return;
     }
-debugger
+    
     var selectedGoodwayBill = this.goodwayBillsRaw.filter(item => item.waybillId == this.form.get('goodwayBill')?.value!.id!)[0];
 
     const discharge: Discharge = new Discharge(
