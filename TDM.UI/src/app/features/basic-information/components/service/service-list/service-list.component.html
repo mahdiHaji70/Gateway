@@ -8,7 +8,7 @@
         <p-button severity="secondary" [label]="'common.search' | translate" icon="pi pi-search" class="ml-2" (onClick)="onSearch()" />
     </ng-template>
 </p-toolbar>
-<p-table [value]="services" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
+<p-table [value]="services" styleClass="p-datatable-gridlines"
     [lazy]="true"
     [paginator]="true"
     [rows]="pageSize"

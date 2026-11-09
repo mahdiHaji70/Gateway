@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { ButtonModule } from 'primeng/button';
 import { TitleBarComponent } from './title-bar/title-bar.component';
 import { I18nModule } from '../../i18n/i18n.module';
+import { TableCellOverflowTooltipComponent } from '../../../shared/components/table-cell-overflow-tooltip/table-cell-overflow-tooltip.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { I18nModule } from '../../i18n/i18n.module';
     RouterModule,
     PanelMenuModule,
     ButtonModule,
-    I18nModule
+    I18nModule,
+    TableCellOverflowTooltipComponent
   ],
   exports: [
     FooterComponent,

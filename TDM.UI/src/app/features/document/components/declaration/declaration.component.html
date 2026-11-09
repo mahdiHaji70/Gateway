@@ -64,8 +64,7 @@
                 (onClick)="getItemsFromIpas(id)" [disabled]="id == undefined" />
         </div>
 
-        <p-table [value]="declarationItems" dataKey="id" styleClass="p-datatable-gridlines"
-            [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table [value]="declarationItems" dataKey="id" styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 5rem"></th>

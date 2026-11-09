@@ -15,6 +15,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { I18nModule } from '../core/i18n/i18n.module';
 import { QeydarDatePickerModule } from '@qeydar/datepicker';
+import { TableCellOverflowTooltipComponent } from './components/table-cell-overflow-tooltip/table-cell-overflow-tooltip.component';
 
 
 @NgModule({
@@ -39,8 +40,9 @@ import { QeydarDatePickerModule } from '@qeydar/datepicker';
     InputNumberModule,
     CheckboxModule,
     I18nModule,
-    QeydarDatePickerModule
+    QeydarDatePickerModule,
+    TableCellOverflowTooltipComponent
   ],
-  exports: [InputComponent, DropDownComponent, EnCalenderComponent, InputNumberComponent, CheckboxComponent]
+  exports: [InputComponent, DropDownComponent, EnCalenderComponent, InputNumberComponent, CheckboxComponent, TableCellOverflowTooltipComponent]
 })
 export class SharedModule { }

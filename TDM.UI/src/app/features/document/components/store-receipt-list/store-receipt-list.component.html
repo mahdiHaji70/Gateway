@@ -33,7 +33,7 @@
         </div>
     </div>
 </div>
-<p-table [value]="storeReceipts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }"
+<p-table [value]="storeReceipts" styleClass="p-datatable-gridlines"
     [lazy]="true" [paginator]="true" [rows]="pageSize" [totalRecords]="totalRecords"
     [rowsPerPageOptions]="[10, 20, 50]" (onLazyLoad)="onPageChange($event)">
     <ng-template pTemplate="header">
