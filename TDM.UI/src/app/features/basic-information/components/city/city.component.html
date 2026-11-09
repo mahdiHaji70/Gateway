@@ -2,6 +2,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <app-drop-down [options]="countries" [formGroup]="form" [controlName]="'country'" [labelKey]="'fields.country'"
             (filterChange)="onCountryFilterChanged($event)"
+            (clearEvent)="onCountryFilterChanged($event)"
             [required]="true"></app-drop-down>
         <app-input [formGroup]="form" [controlName]="'code'" [labelKey]="'fields.code'" [required]="true"></app-input>
         <app-input [formGroup]="form" [controlName]="'name'" [labelKey]="'fields.name'" [required]="true"></app-input>

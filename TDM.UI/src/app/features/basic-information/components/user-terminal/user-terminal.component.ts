@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { showApiError } from '../../../../shared/services/api-error-handler.service';
 import { User } from '../../models/user.model';
-import { Terminal } from '../../models/terminal.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BasicInformationService } from '../../services/basic-information.service';
 import { MessageService } from 'primeng/api';
@@ -19,7 +18,7 @@ import { DropdownOption } from '../../../../shared/models/drop-down-option-model
 export class UserTerminalComponent {
   id?: any;
   users: User[] = [];
-  terminals: Terminal[] = [];
+  terminals: DropdownOption[] = [];
 
   form = new FormGroup({
     user: new FormControl<User | undefined>(undefined),
@@ -37,21 +36,25 @@ export class UserTerminalComponent {
   }
 
   ngOnInit() {
-    this.loadUsers();
-    this.loadTerminals();
-
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
         this.basicInformationService.getById('UsersTerminal', this.id).subscribe((res: any) => {
-          //this.form.patchValue(res.data);
-          this.form.setValue({
-            user: this.users.filter(x => x.nationalId === res.data.userNationalId)[0],
-            terminal: new DropdownOption(res.data.terminalId, res.data.terminalName + `-  ${res.data.terminalCode}`),
+          const terminal = new DropdownOption(res.data.terminalId, res.data.terminalName + `-  ${res.data.terminalCode}`);
+          this.userService.getAllUsers(res.data.userNationalId).subscribe((usersRes: any) => {
+            const user = (usersRes.mappedUsers || [])
+              .map((item: any) => new User(item.name, item.nationalId, item.id))
+              .find((item: User) => item.nationalId === res.data.userNationalId);
+
+            this.form.setValue({ user, terminal });
+            this.users = user ? [user] : [];
+            this.terminals = [terminal];
           });
         });
+      } else {
+        this.loadUsers();
+        this.loadTerminals();
       }
-
     });
   }
 

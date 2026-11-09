@@ -2,7 +2,7 @@
     <label [for]="controlName">{{ labelKey ? (labelKey | translate) : label }}</label>
     <p-dropdown [options]="options" [formControlName]="controlName" [optionLabel]="optionLabel" [filter]="true"
         [showClear]="true" [placeholder]="labelKey ? ('common.selectPlaceholder' | translate: { label: (labelKey | translate) }) : ('Select a ' + label)" [required]="required"
-        (onChange)="onChange($event)">
+        (onChange)="onChange($event)" (onClear)="onClear()">
         <ng-template pTemplate="filter" let-options="options">
             <div class="flex gap-1">
                 <div class="p-inputgroup" (click)="$event.stopPropagation()">

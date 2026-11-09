@@ -17,6 +17,7 @@ export class DropDownComponent {
   @Input() optionLabel: string = 'name';
   @Output() selectionChange = new EventEmitter<any>();
   @Output() filterChange = new EventEmitter<string>();
+  @Output() clearEvent = new EventEmitter<string>();
 
   label?: string;
   selectedOption: any;
@@ -34,7 +35,7 @@ export class DropDownComponent {
   selectOption(item: any) {
   }
 
-  onChange(event: any) { 
+  onChange(event: any) {
     const value = event?.value ?? event?.target?.value;
     this.selectionChange.emit(value);
   }
@@ -48,5 +49,9 @@ export class DropDownComponent {
     this.filterValue = '';
     options?.reset?.();
     this.filterChange.emit('');
+  }
+
+  onClear() {
+    this.clearEvent.emit(this.filterValue);
   }
 }

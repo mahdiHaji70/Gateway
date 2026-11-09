@@ -34,8 +34,6 @@ export class StoreComponent {
   }
 
   ngOnInit() {
-    this.loadStoreTypes();
-
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
@@ -48,9 +46,11 @@ export class StoreComponent {
             //area: res.data.area,
             //isOwner: res.data.isOwner,
           });
+          this.storeTypes = [this.form.controls.storeType.value!];
         });
+      } else {
+        this.loadStoreTypes();
       }
-
     });
   }
 

@@ -53,21 +53,20 @@ export class DischargeComponent {
     private basicInformationService: BasicInformationService) {
   }
   ngOnInit() {
-    this.loadStores();
-
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
         this.dischargeService.getById(this.id!).subscribe((res: any) => {
           const declarationOption = new DropdownOption(res.data.declarationItemId, res.data.ipasDeclarationNo);
-          this.loadDeclarationItems(res.data.ipasDeclarationNo);
+          const storeOption = new DropdownOption(res.data.storeId, res.data.storeName);
+          const goodwayBillOption = new DropdownOption(res.data.waybillId,
+            `WayBiil No: ${res.data.waybillNo} , Vehicle Number: ${res.data.vehicleNumber}`);
           this.loadGoodwayBills(declarationOption);
           
           this.form.setValue({
             declarationItem: declarationOption,
-            store: new DropdownOption(res.data.storeId, res.data.storeName),
-            goodwayBill: new DropdownOption(res.data.waybillId,
-              `WayBiil No: ${res.data.waybillNo} , Vehicle Number: ${res.data.vehicleNumber}`),
+            store: storeOption,
+            goodwayBill: goodwayBillOption,
             vehicleNumber: res.data.vehicleNumber,
             dischargeDate: new Date(res.data.dischargeDate),
             packNumber: res.data.packNB,
@@ -83,8 +82,12 @@ export class DischargeComponent {
             ignitionTemperatureUnit: res.data.ignitionTemperatureUnit,
 
           });
+          this.declarationItems = [declarationOption];
+          this.stores = [storeOption];
+          this.goodwayBills = [goodwayBillOption];
         });
       } else {
+        this.loadStores();
         this.loadDeclarationItems();
       }
 
@@ -118,7 +121,19 @@ export class DischargeComponent {
     });
   }
 
-  loadGoodwayBills(event: any) {    
+  loadGoodwayBills(event: any) {
+    if (!event?.name) {
+      this.goodwayBillsRaw = [];
+      this.goodwayBills = [];
+      this.form.patchValue({ goodwayBill: undefined, vehicleNumber: '' });
+      return;
+    }
+
+    if (this.form.controls.declarationItem.value?.id
+      && this.form.controls.declarationItem.value.id !== event.id) {
+      this.form.patchValue({ goodwayBill: undefined, vehicleNumber: '' });
+    }
+
     this.dischargeService.getGoodwayBillsByDeclarationNo(event.name).subscribe({
       next: (res: any) => {
         this.goodwayBillsRaw = res.data;
@@ -129,7 +144,16 @@ export class DischargeComponent {
     });
   }
 
+  onGoodwayBillClear() {
+    const declaration = this.form.controls.declarationItem.value;
+    if (declaration) this.loadGoodwayBills(declaration);
+  }
+
   setVehicleNumber(event: any){
+    if (!event?.id) {
+      this.form.patchValue({ vehicleNumber: '' });
+      return;
+    }
     var selectedGoodwayBill = this.goodwayBillsRaw.filter(item => item.waybillId == event.id)[0];
     this.form.patchValue({
       vehicleNumber : selectedGoodwayBill.vehicleNumber

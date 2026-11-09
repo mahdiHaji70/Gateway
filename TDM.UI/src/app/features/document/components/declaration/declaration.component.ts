@@ -86,14 +86,21 @@ export class DeclarationComponent {
               : null,
             description: data.description,
           });
+
+          this.contacts = [this.form.controls.contact.value!];
+          this.contactReps = this.form.controls.contactRep.value
+            ? [this.form.controls.contactRep.value]
+            : [];
+          this.traffics = [this.form.controls.traffic.value!];
         });
         this.loadDeclarationItems();
+      } else {
+        this.id = undefined;
+        this.loadContacts();
+        this.loadContactReps();
+        this.loadTraffics();
       }
-
     });
-    this.loadContacts();
-    this.loadContactReps();
-    this.loadTraffics();
   }
 
   loadContacts() {

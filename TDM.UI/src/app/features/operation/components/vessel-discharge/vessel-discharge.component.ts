@@ -54,14 +54,14 @@ export class VesselDischargeComponent {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.loadManifestItems();
-    this.loadStores();
-
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
         this.pendingEditId = params.id;
         this.loadEditById();
+      } else {
+        this.loadManifestItems();
+        this.loadStores();
       }
     });
   }
@@ -78,7 +78,7 @@ export class VesselDischargeComponent {
   }
 
   private loadEditById() {
-    if (!this.pendingEditId || this.manifestItems.length === 0) return;
+    if (!this.pendingEditId) return;
 
     const editId = this.pendingEditId;
     this.pendingEditId = undefined;
@@ -144,35 +144,37 @@ export class VesselDischargeComponent {
   }
 
   loadForEdit(data: any) {
-    const itemOption = this.manifestItems.find(x => x.id === data.manifestItemId);
-    if (itemOption) {
-      this.form.patchValue({ manifestItem: itemOption });
-      this.manifestService.getItemById(data.manifestItemId).subscribe({
-        next: (res: any) => {
-          this.manifestItem = res.data;
-          this.setContainerOptions();
-          const container = this.containers.find(x => x.id === data.manifestContainerId);
-          this.form.patchValue({
-            container,
-            store: new DropdownOption(data.storeId, data.storeName),
-            dischargeDate: new Date(data.dischargeDate),
-            packNumber: data.packNB,
-            weight: data.weight,
-            volume: data.volume,
-            unitWeight: data.unitWeight,
-            isNonePalletized: data.isNonPalletized,
-            isDamaged: data.isDamaged,
-            isVoluminous: data.isVoluminous,
-            isDangerous: data.isDangerous,
-            dangerousCode: data.dangerousCode,
-            classification: data.classification,
-            ignitionTemperature: data.ignitionTemperature,
-            ignitionTemperatureUnit: data.ignitionTemperatureUnit
-          });
-        },
-        error: (error: any) => showApiError(this.messageService, error)
-      });
-    }
+    this.manifestService.getItemById(data.manifestItemId).subscribe({
+      next: (res: any) => {
+        this.manifestItem = res.data;
+        const itemOption = new DropdownOption(res.data.id || data.manifestItemId,
+          `${res.data.manifestItemNo} / ${res.data.manifestNo}`);
+        const storeOption = new DropdownOption(data.storeId, data.storeName);
+        this.manifestItems = [itemOption];
+        this.stores = [storeOption];
+        this.setContainerOptions();
+        const container = this.containers.find(x => x.id === data.manifestContainerId);
+        this.form.patchValue({
+          manifestItem: itemOption,
+          container,
+          store: storeOption,
+          dischargeDate: new Date(data.dischargeDate),
+          packNumber: data.packNB,
+          weight: data.weight,
+          volume: data.volume,
+          unitWeight: data.unitWeight,
+          isNonePalletized: data.isNonPalletized,
+          isDamaged: data.isDamaged,
+          isVoluminous: data.isVoluminous,
+          isDangerous: data.isDangerous,
+          dangerousCode: data.dangerousCode,
+          classification: data.classification,
+          ignitionTemperature: data.ignitionTemperature,
+          ignitionTemperatureUnit: data.ignitionTemperatureUnit
+        });
+      },
+      error: (error: any) => showApiError(this.messageService, error)
+    });
   }
 
   onContainerChange(event: any) {

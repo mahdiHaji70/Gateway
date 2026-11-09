@@ -20,11 +20,13 @@
 
             <div class="col-4">
                 <app-drop-down [options]="contacts" [formGroup]="form" [controlName]="'contact'" [labelKey]="'fields.contact'" (filterChange)="onContactFilterChanged($event)"
+                    (clearEvent)="onContactFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 
             <div class="col-4">
                 <app-drop-down [options]="contactReps" [formGroup]="form" [controlName]="'contactRep'" [labelKey]="'fields.contactRep'" (filterChange)="onContactRepFilterChanged($event)"
+                    (clearEvent)="onContactRepFilterChanged($event)"
                     [required]="false"></app-drop-down>
             </div>
 
@@ -32,6 +34,7 @@
                 <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
                     [labelKey]="'fields.traffic'"
                     (filterChange)="onTrafficFilterChanged($event)"
+                    (clearEvent)="onTrafficFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 

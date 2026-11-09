@@ -11,6 +11,7 @@
             <app-drop-down [options]="commodities" [formGroup]="form" [controlName]="'commodity'"
                 [labelKey]="'fields.commodity'"
                 (filterChange)="onCommodityFilterChanged($event)"
+                (clearEvent)="onCommodityFilterChanged($event)"
                 [required]="true"></app-drop-down>
         </div>
 
@@ -18,6 +19,7 @@
             <app-drop-down [options]="packages" [formGroup]="form" [controlName]="'package'"
                 [labelKey]="'fields.package'"
                 (filterChange)="onPackageFilterChanged($event)"
+                (clearEvent)="onPackageFilterChanged($event)"
                 [required]="true"></app-drop-down>
         </div>
 
@@ -25,6 +27,7 @@
             <app-drop-down [options]="traffics" [formGroup]="form" [controlName]="'traffic'"
                 [labelKey]="'fields.traffic'"
                 (filterChange)="onTrafficFilterChanged($event)"
+                (clearEvent)="onTrafficFilterChanged($event)"
                 [required]="true"></app-drop-down>
         </div>
 

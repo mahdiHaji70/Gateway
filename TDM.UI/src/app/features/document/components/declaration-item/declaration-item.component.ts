@@ -53,7 +53,7 @@ export class DeclarationItemComponent {
   loadCommodities() {
     this.basicInformationService.getAll('commodities').subscribe({
       next: (res: any) => {
-        this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+        if (!this.id) this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -71,7 +71,7 @@ export class DeclarationItemComponent {
   loadPackages() {
     this.basicInformationService.getAll('packages').subscribe({
       next: (res: any) => {
-        this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+        if (!this.id) this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -89,7 +89,7 @@ export class DeclarationItemComponent {
   loadTraffics() {
     this.basicInformationService.getAll('traffics').subscribe({
       next: (res: any) => {
-        this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+        if (!this.id) this.traffics = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -119,10 +119,14 @@ export class DeclarationItemComponent {
         volume: data.volume,
         shipMark: data.shipMark
       });
+      this.commodities = [this.form.controls.commodity.value!];
+      this.packages = [this.form.controls.package.value!];
+      this.traffics = [this.form.controls.traffic.value!];
     });
   }
 
   resetForm(){
+    this.id = undefined;
     this.form.reset({
       cargoType: undefined,
       commodity: undefined,
@@ -133,7 +137,9 @@ export class DeclarationItemComponent {
       volume: 0,
       shipMark: undefined
     });
-    this.id = undefined;
+    this.loadCommodities();
+    this.loadPackages();
+    this.loadTraffics();
   }
 
   onSubmit() {
