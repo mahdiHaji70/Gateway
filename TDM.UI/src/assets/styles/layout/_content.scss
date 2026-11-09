@@ -15,6 +15,15 @@
     background-color: #e9f3ff;
 }
 
+.layout-main-container .layout-card .p-datatable .p-datatable-thead > tr > th,
+.layout-main-container .layout-card .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+}
+
+.layout-main-container .layout-card .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.25rem 0.75rem;
+}
+
 .layout-main-container qeydar-date-picker.qeydar-datepicker {
     display: block;
     width: 100% !important;

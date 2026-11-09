@@ -48,7 +48,11 @@
     "terminal": "Terminal",
     "userTerminal": "User Terminal",
     "operationType": "Operation Type",
-    "service": "Service"
+    "service": "Service",
+    "sendDischarge": "Send Discharge",
+    "vesselLoadingPermit": "Vessel loading permit",
+    "warehouseAllocation": "Warehouse allocation",
+    "loadingPermit": "Loading permit"
   },
   "common": {
     "new": "New",
@@ -63,6 +67,7 @@
     "add": "Add",
     "update": "Update",
     "actions": "Actions",
+    "createdSuccessfully": "Created successfully",
     "type": "Type",
     "commodity": "Commodity",
     "package": "Package",
@@ -252,6 +257,10 @@
   "storeReceipt": {
     "issueLand": "Issue land side",
     "issueMarine": "Issue marine side",
+    "landIssueTitle": "Issue land side store receipt",
+    "marineIssueTitle": "Issue marine side store receipt",
+    "ipasNo": "IPAS No",
+    "issueReceipt": "Issue store receipt",
     "searchHint": "Search receipt number, voyage notice, or IPAS declaration number."
   },
   "sync": {

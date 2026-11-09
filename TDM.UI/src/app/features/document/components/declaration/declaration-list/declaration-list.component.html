@@ -91,12 +91,12 @@
                     [attr.aria-label]="'common.update' | translate"
                     (click)="onEdit(declaration.id)">
                 </button>
-                <button pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text"
+                <button pButton pRipple type="button" icon="pi pi-send" severity="contrast" class="p-button-rounded p-button-text"
                     [pTooltip]="'declaration.sendToIpas' | translate" tooltipPosition="top"
                     [attr.aria-label]="'declaration.sendToIpas' | translate"
                     (click)="sendDeclarationToIpas(declaration.id)">
                 </button>
-                <button pButton pRipple type="button" icon="pi pi-cloud-download" class="p-button-rounded p-button-text"
+                <button pButton pRipple type="button" icon="pi pi-cloud-download" severity="contrast" class="p-button-rounded p-button-text"
                     [pTooltip]="'declaration.getItems' | translate" tooltipPosition="top"
                     [attr.aria-label]="'declaration.getItems' | translate"
                     (click)="getItemsFromIpas(declaration.id)">

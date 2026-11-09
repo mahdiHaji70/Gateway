@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
@@ -9,6 +8,7 @@ import { LanguageService } from '../../../services/language.service';
 interface TitleRoute {
   label?: string;
   path?: string;
+  translationKey?: string;
   items?: TitleRoute[];
 }
 
@@ -21,18 +21,33 @@ export class TitleBarComponent implements OnInit, OnDestroy {
   title?: string;
   titleTranslationKey?: string;
   private routerSub?: Subscription;
+  private currentRoute = '/';
+  private routeHistory: string[] = [];
+  private navigatingBack = false;
 
   constructor(
     private router: Router,
-    private location: Location,
     readonly languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
+    this.currentRoute = safeInAppRoute(this.router.url) ?? '/';
     this.updateTitle(this.router.url);
     this.routerSub = this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(event => this.updateTitle(event.urlAfterRedirects));
+      .subscribe(event => {
+        const nextRoute = safeInAppRoute(event.urlAfterRedirects);
+        if (nextRoute && nextRoute !== this.currentRoute) {
+          if (this.navigatingBack) {
+            this.routeHistory.pop();
+            this.navigatingBack = false;
+          } else {
+            this.routeHistory.push(this.currentRoute);
+          }
+          this.currentRoute = nextRoute;
+        }
+        this.updateTitle(event.urlAfterRedirects);
+      });
   }
 
   ngOnDestroy(): void {
@@ -40,22 +55,44 @@ export class TitleBarComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    this.location.back();
+    const previousRoute = this.routeHistory[this.routeHistory.length - 1];
+    const targetRoute = previousRoute ?? '/';
+    if (targetRoute === this.currentRoute) return;
+
+    this.navigatingBack = true;
+    void this.router.navigateByUrl(targetRoute)
+      .then(navigated => {
+        if (!navigated) this.navigatingBack = false;
+      })
+      .catch(() => {
+        this.navigatingBack = false;
+      });
   }
 
   private updateTitle(url: string): void {
     const path = normalizePath(url);
-    this.title = path ? findTitle(path) : 'Dashboard';
-    this.titleTranslationKey = this.title ? MenuLabelKeys[this.title] : undefined;
+    const title = path ? findTitle(path) : { label: 'Dashboard' };
+    this.title = title.label;
+    this.titleTranslationKey = title.translationKey ?? (title.label ? MenuLabelKeys[title.label] : undefined);
   }
 }
 
-function findTitle(targetPath: string): string {
+function safeInAppRoute(url: string): string | undefined {
+  const path = url.split(/[?#]/, 1)[0];
+  if (!path.startsWith('/') || path.startsWith('//')) return undefined;
+
+  const normalizedPath = path.replace(/\/+$/, '') || '/';
+  if (normalizedPath === '/login' || normalizedPath.startsWith('/login/')) return undefined;
+
+  return normalizedPath;
+}
+
+function findTitle(targetPath: string): { label: string; translationKey?: string } {
   const routes = flattenMenuItems(MenuItems as TitleRoute[]).concat(RouteItems as TitleRoute[]);
 
   const directMatch = routes.find(route => route.path && pathsMatch(route.path, targetPath));
   if (directMatch?.label) {
-    return directMatch.label;
+    return { label: directMatch.label, translationKey: directMatch.translationKey };
   }
 
   // List menu paths also identify their related create and edit screens.
@@ -68,7 +105,11 @@ function findTitle(targetPath: string): string {
     return pathsMatch(formPath, targetPath);
   });
 
-  return formMatch?.label ?? titleFromPath(targetPath);
+  if (formMatch?.label) {
+    return { label: formMatch.label, translationKey: formMatch.translationKey };
+  }
+
+  return { label: titleFromPath(targetPath) };
 }
 
 function flattenMenuItems(items: TitleRoute[]): TitleRoute[] {
