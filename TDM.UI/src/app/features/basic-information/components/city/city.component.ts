@@ -33,8 +33,6 @@ export class CityComponent {
   }
 
   ngOnInit() {
-    this.loadCountries();
-
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
@@ -45,11 +43,12 @@ export class CityComponent {
             name: res.data.name,
             country: new Country(res.data.countryCode, res.data.countryName, res.data.countryId)
           });
+          this.countries = [this.form.controls.country.value!];
         });
+      } else {
+        this.loadCountries();
       }
-
     });
-
   }
 
   loadCountries() {

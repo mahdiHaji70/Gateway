@@ -11,6 +11,65 @@
     flex: 1 1 auto;
 }
 
+.p-datatable .p-datatable-wrapper {
+    overflow-x: auto;
+}
+
+.p-datatable .p-datatable-table {
+    width: max-content;
+    min-width: 100%;
+    table-layout: auto;
+}
+
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td {
+    max-width: 16rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.layout-main-container .p-datatable .p-datatable-tbody > tr:nth-child(odd) > td {
+    background-color: #e9f3ff;
+}
+
+.layout-main-container .layout-card .p-datatable .p-datatable-thead > tr > th,
+.layout-main-container .layout-card .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+}
+
+.layout-main-container .layout-card .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.6rem 0.75rem;
+}
+
+.layout-main-container .layout-card .p-datatable .p-datatable-tbody > tr > td .p-button.p-button-rounded.p-button-text {
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0.25rem;
+}
+
+.layout-main-container qeydar-date-picker.qeydar-datepicker {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    font-family: var(--font-family);
+}
+
+.layout-main-container qeydar-date-picker.qeydar-datepicker .date-picker-wrapper,
+.layout-main-container qeydar-date-picker.qeydar-datepicker .input-container {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.layout-main-container qeydar-date-picker.qeydar-datepicker .input-container input {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 2.4rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 12px;
+    font-family: var(--font-family);
+}
 
 .layout-card {
     background-color: #E7EEF6 !important;

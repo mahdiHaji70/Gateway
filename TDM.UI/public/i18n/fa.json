@@ -32,7 +32,7 @@
     "manifest": "مانیفست",
     "declaration": "اظهارنامه",
     "issueRequest": "درخواست صدور",
-    "storeReceipts": "رسیدهای انبار",
+    "storeReceipts": "قبض انبار",
     "basicInformation": "اطلاعات پایه",
     "commodity": "کالا",
     "package": "بسته‌بندی",
@@ -48,11 +48,15 @@
     "terminal": "پایانه",
     "userTerminal": "پایانه کاربر",
     "operationType": "نوع عملیات",
-    "service": "خدمات"
+    "service": "خدمات",
+    "sendDischarge": "ارسال تخلیه",
+    "vesselLoadingPermit": "مجوز بارگیری کشتی",
+    "warehouseAllocation": "اعلام انبار",
+    "loadingPermit": "مجوز بارگیری"
   },
   "common": {
     "new": "جدید",
-    "refresh": "تازه‌سازی",
+    "refresh": "به‌روزرسانی",
     "filters": "فیلترها",
     "hideFilters": "بستن فیلترها",
     "search": "جستجو",
@@ -63,6 +67,7 @@
     "add": "افزودن",
     "update": "به‌روزرسانی",
     "actions": "عملیات",
+    "createdSuccessfully": "با موفقیت ایجاد شد",
     "type": "نوع",
     "commodity": "کالا",
     "package": "بسته‌بندی",
@@ -252,6 +257,10 @@
   "storeReceipt": {
     "issueLand": "صدور سمت خشکی",
     "issueMarine": "صدور سمت دریایی",
+    "landIssueTitle": "صدور قبض انبار خشکی",
+    "marineIssueTitle": "صدور قبض انبار دریایی",
+    "ipasNo": "شماره آیپس",
+    "issueReceipt": "صدور قبض انبار",
     "searchHint": "جستجو بر اساس شماره رسید، اعلامیه سفر یا شماره اظهارنامه آیپس."
   },
   "sync": {

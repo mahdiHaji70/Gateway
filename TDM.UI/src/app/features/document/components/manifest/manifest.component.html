@@ -126,8 +126,7 @@
             <p-card [header]="'manifest.items' | translate">
                 <p-table #dt [value]="manifest.manifestItems" dataKey="manifestItemNo"
                     [expandedRowKeys]="expandedRowKeys"
-                    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
-                    [tableStyle]="{ 'min-width': '60rem' }" [paginator]="true" [rows]="10"
+                    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped" [paginator]="true" [rows]="10"
                     [rowsPerPageOptions]="[10, 20, 50]">
 
                     <ng-template pTemplate="header">
@@ -213,8 +212,7 @@
                                         </div>
 
                                         <p-table [value]="item.manifestGoods || []"
-                                            styleClass="p-datatable-sm p-datatable-gridlines"
-                                            [tableStyle]="{ 'min-width': '45rem' }">
+                                            styleClass="p-datatable-sm p-datatable-gridlines">
                                             <ng-template pTemplate="header">
                         <tr>
                             <th>{{ 'fields.hsCode' | translate }}</th>
@@ -261,7 +259,7 @@
             </div>
 
             <p-table [value]="item.manifestContainers || []" dataKey="containerId"
-                styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                styleClass="p-datatable-sm p-datatable-gridlines">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3.5rem;"></th>

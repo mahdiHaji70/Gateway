@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { StoreReceiptService } from '../../services/store-receipt.service';
 import { ManifestService } from '../../services/manifest.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-marine-store-receipt-issue',
@@ -17,7 +18,7 @@ export class MarineStoreReceiptIssueComponent {
   storeReceipts: StoreReceiptHead[] = [];
 
   form = new FormGroup({
-    declaration: new FormControl<DropdownOption | undefined>(undefined),
+    voyage: new FormControl<DropdownOption | undefined>(undefined),
   });
 
   /**
@@ -25,7 +26,8 @@ export class MarineStoreReceiptIssueComponent {
    */
   constructor(private manifestService: ManifestService,
     private messageService: MessageService,
-    private storeReceiptService: StoreReceiptService) {
+    private storeReceiptService: StoreReceiptService,
+    private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class MarineStoreReceiptIssueComponent {
       next: (res: any) => {
         this.storeReceipts = [];
         this.loadManifestItems();
-        this.messageService.add({ severity: 'success', summary: `Successfully created` });
+        this.messageService.add({ severity: 'success', summary: this.translate.instant('common.createdSuccessfully') });
       },
       error: (error: any) => showApiError(this.messageService, error)
     });

@@ -15,6 +15,12 @@
             <p-button severity="secondary" [label]="(showFilters ? 'common.hideFilters' : 'common.filters') | translate"
                 [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'" (onClick)="toggleFilters()" />
     </ng-template>
+    <ng-template pTemplate="right">
+        <input type="text" class="p-inputtext p-component" [formControl]="filtersForm.controls.search"
+            [placeholder]="'common.search' | translate" (keyup.enter)="applyFilters()" />
+        <p-button severity="secondary" [label]="'common.search' | translate" icon="pi pi-search"
+            (onClick)="applyFilters()" />
+    </ng-template>
 
 </p-toolbar>
 <div *ngIf="showFilters" class="group-box mb-3">
@@ -39,7 +45,7 @@
         </div>
     </div>
 </div>
-<p-table [value]="manifests" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '80rem' }"
+<p-table [value]="manifests" styleClass="p-datatable-gridlines"
     [lazy]="true"
     [paginator]="true"
     [rows]="pageSize"

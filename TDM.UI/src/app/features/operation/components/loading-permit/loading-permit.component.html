@@ -1,4 +1,4 @@
-﻿<div class="p-fluid p-formgrid grid">
+<div class="p-fluid p-formgrid grid">
   <div class="col-12 group-box">
     <p-toolbar styleClass="mb-4 gap-2">
       <ng-template pTemplate="left">
@@ -6,8 +6,7 @@
       </ng-template>
     </p-toolbar>
 
-    <p-table [value]="loadingPermit ? [loadingPermit] : []" styleClass="p-datatable-gridlines"
-      [tableStyle]="{ 'min-width': '60rem' }">
+    <p-table [value]="loadingPermit ? [loadingPermit] : []" styleClass="p-datatable-gridlines">
       <ng-template pTemplate="header">
         <tr>
           <th>Terminal</th>

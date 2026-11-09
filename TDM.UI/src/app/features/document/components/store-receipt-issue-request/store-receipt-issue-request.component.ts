@@ -52,6 +52,11 @@ export class StoreReceiptIssueRequestComponent {
     });
   }
 
+  refreshIssueRequests() {
+    const declaration = this.form.controls.declaration.value;
+    if (declaration) this.loadIssueRequests(declaration);
+  }
+
   onConfirmRequest(requestId: string, isApproved: boolean) {
     this.requestConfirmationService.confirmRequest(requestId, isApproved).subscribe({
       next: (res: any) => {

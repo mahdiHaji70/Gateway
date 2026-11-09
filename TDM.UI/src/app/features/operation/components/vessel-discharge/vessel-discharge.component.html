@@ -4,17 +4,17 @@
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
                     <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'manifestItem'" [labelKey]="'fields.manifestItem'"
-                        (filterChange)="loadManifestItems($event)"
+                        (filterChange)="loadManifestItems($event)" (clearEvent)="loadManifestItems($event)"
                         [required]="true" (selectionChange)="loadManifestItem($event)"></app-drop-down>
                 </div>
                 <div class="col-12 md:col-6 lg:col-4">
                     <app-drop-down [options]="containers" [formGroup]="form" [controlName]="'container'" [labelKey]="'fields.container'"
-                        (filterChange)="onContainerFilterChanged($event)"
+                        (filterChange)="onContainerFilterChanged($event)" (clearEvent)="onContainerFilterChanged($event)"
                         [required]="false" (selectionChange)="onContainerChange($event)"></app-drop-down>
                 </div>
                 <div class="col-12 md:col-6 lg:col-4">
                     <app-drop-down [options]="stores" [formGroup]="form" [controlName]="'store'" [labelKey]="'fields.store'"
-                        (filterChange)="onStoreFilterChanged($event)"
+                        (filterChange)="onStoreFilterChanged($event)" (clearEvent)="onStoreFilterChanged($event)"
                         [required]="true"></app-drop-down>
                 </div>
             </div>

@@ -34,8 +34,6 @@ export class ContainerComponent {
   }
 
   ngOnInit() {
-    this.loadContainerTypesAndSizes();
-
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
@@ -45,11 +43,12 @@ export class ContainerComponent {
             containerNumber: res.data.no,
             containerTypeAndSize: new ContainerTypeAndSize(res.data.containerTypeAndSizeCode, res.data.containerTypeAndSize, res.data.containerTypeAndSizeId)
           });
+          this.containerTypesAndSizes = [this.form.controls.containerTypeAndSize.value!];
         });
+      } else {
+        this.loadContainerTypesAndSizes();
       }
-
     });
-
   }
 
   loadContainerTypesAndSizes() {

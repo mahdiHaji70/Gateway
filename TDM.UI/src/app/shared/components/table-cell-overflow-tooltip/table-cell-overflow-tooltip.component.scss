@@ -1,0 +1,17 @@
+.table-cell-overflow-tooltip {
+    position: fixed;
+    z-index: 1200;
+    max-width: min(32rem, calc(100vw - 1rem));
+    max-height: 60vh;
+    overflow: auto;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--surface-300);
+    border-radius: 0.5rem;
+    background: var(--surface-0);
+    color: var(--text-color);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+    line-height: 1.6;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+}

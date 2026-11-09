@@ -2,6 +2,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <app-drop-down [options]="storeTypes" [formGroup]="form" [controlName]="'storeType'" [labelKey]="'fields.storeType'"
             (filterChange)="onStoreTypeFilterChanged($event)"
+            (clearEvent)="onStoreTypeFilterChanged($event)"
             [required]="true"></app-drop-down>       
         <app-input [formGroup]="form" [controlName]="'storeName'" [labelKey]="'fields.storeName'" [required]="true"></app-input>
         <div>

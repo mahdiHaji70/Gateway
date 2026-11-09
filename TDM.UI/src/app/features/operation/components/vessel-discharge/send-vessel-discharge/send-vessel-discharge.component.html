@@ -4,7 +4,7 @@
       <div class="grid"><div class="col-12 md:col-6 lg:col-4">
         <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'manifestItem'" [labelKey]="'fields.manifestItem'" [required]="true" (filterChange)="loadManifestItems($event)" (selectionChange)="loadDischarges($event)"></app-drop-down>
       </div></div>
-      <p-table [value]="discharges" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '60rem' }">
+      <p-table [value]="discharges" styleClass="p-datatable-gridlines">
         <ng-template pTemplate="header"><tr><th>{{ 'fields.manifest' | translate }}</th><th>{{ 'fields.container' | translate }}</th><th>{{ 'fields.store' | translate }}</th><th>{{ 'fields.packNumber' | translate }}</th><th>{{ 'fields.weight' | translate }}</th><th>{{ 'fields.date' | translate }}</th><th>{{ 'fields.dangerous' | translate }}</th><th>{{ 'fields.sent' | translate }}</th></tr></ng-template>
         <ng-template pTemplate="body" let-discharge>
           <tr><td>{{ discharge.manifestNo }}</td><td>{{ discharge.containerNo || 'X' }}</td><td>{{ discharge.storeName }}</td><td>{{ discharge.packNB }}</td><td>{{ discharge.weight }}</td><td>{{ discharge.dischargeDate | date:'short' }}</td><td>{{ discharge.isDangerous ? 'Yes' : 'No' }}</td><td>{{ discharge.isSend ? 'Yes' : 'No' }}</td></tr>

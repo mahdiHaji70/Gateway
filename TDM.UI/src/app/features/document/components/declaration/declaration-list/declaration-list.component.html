@@ -17,6 +17,12 @@
             [icon]="showFilters ? 'pi pi-filter-slash' : 'pi pi-filter'"
             (onClick)="toggleFilters()" />
     </ng-template>
+    <ng-template pTemplate="right">
+        <input type="text" class="p-inputtext p-component" [formControl]="filtersForm.controls.search"
+            [placeholder]="'common.search' | translate" (keyup.enter)="applyFilters()" />
+        <p-button severity="secondary" [label]="'common.search' | translate" icon="pi pi-search"
+            (onClick)="applyFilters()" />
+    </ng-template>
 
 </p-toolbar>
 <div *ngIf="showFilters" class="group-box mb-3">
@@ -60,7 +66,6 @@
 <p-table
     [value]="declarations"
     styleClass="p-datatable-gridlines"
-    [tableStyle]="{ 'min-width': '50rem' }"
     [lazy]="true"
     [paginator]="true"
     [rows]="pageSize"
@@ -91,12 +96,12 @@
                     [attr.aria-label]="'common.update' | translate"
                     (click)="onEdit(declaration.id)">
                 </button>
-                <button pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text"
+                <button pButton pRipple type="button" icon="pi pi-send" severity="contrast" class="p-button-rounded p-button-text"
                     [pTooltip]="'declaration.sendToIpas' | translate" tooltipPosition="top"
                     [attr.aria-label]="'declaration.sendToIpas' | translate"
                     (click)="sendDeclarationToIpas(declaration.id)">
                 </button>
-                <button pButton pRipple type="button" icon="pi pi-cloud-download" class="p-button-rounded p-button-text"
+                <button pButton pRipple type="button" icon="pi pi-cloud-download" severity="contrast" class="p-button-rounded p-button-text"
                     [pTooltip]="'declaration.getItems' | translate" tooltipPosition="top"
                     [attr.aria-label]="'declaration.getItems' | translate"
                     (click)="getItemsFromIpas(declaration.id)">

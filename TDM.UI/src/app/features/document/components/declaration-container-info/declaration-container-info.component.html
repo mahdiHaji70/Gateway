@@ -5,12 +5,14 @@
             <div class="">
                 <app-drop-down [options]="commodities" [formGroup]="form" [controlName]="'commodity'"
                     (filterChange)="onCommodityFilterChanged($event)"
+                    (clearEvent)="onCommodityFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 
             <div class="">
                 <app-drop-down [options]="packages" [formGroup]="form" [controlName]="'package'"
                     (filterChange)="onPackageFilterChanged($event)"
+                    (clearEvent)="onPackageFilterChanged($event)"
                     [required]="true"></app-drop-down>
             </div>
 
@@ -34,8 +36,7 @@
     </form>
 
     <div class="mt-4">
-        <p-table [value]="declarationContainerInfos" styleClass="p-datatable-gridlines"
-            [tableStyle]="{ 'min-width': '5rem' }">
+        <p-table [value]="declarationContainerInfos" styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Commodity</th>

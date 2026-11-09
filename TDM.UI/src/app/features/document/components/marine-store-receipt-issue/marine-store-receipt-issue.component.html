@@ -3,23 +3,23 @@
         <form [formGroup]="form" ngNativeValidate>
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
-                    <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'declaration'"
+                    <app-drop-down [options]="manifestItems" [formGroup]="form" [controlName]="'voyage'" [labelKey]="'fields.voyage'"
                         (filterChange)="loadManifestItems($event)"
                         [required]="true" (selectionChange)="loadStoreReceipts($event)">
                     </app-drop-down>
                 </div>
             </div>
         </form>
-        <p-table [value]="storeReceipts" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table [value]="storeReceipts" styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>IPAS No</th>
-                    <th>Consignee</th>
-                    <th>Consignee Rep</th>
-                    <th>Traffic</th>
-                    <th>Goods</th>
-                    <th>Containers</th>
-                    <th>Actions</th>
+                    <th>{{ 'storeReceipt.ipasNo' | translate }}</th>
+                    <th>{{ 'fields.consigneeName' | translate }}</th>
+                    <th>{{ 'fields.consigneeRepName' | translate }}</th>
+                    <th>{{ 'fields.trafficName' | translate }}</th>
+                    <th>{{ 'fields.goods' | translate }}</th>
+                    <th>{{ 'fields.containers' | translate }}</th>
+                    <th>{{ 'common.actions' | translate }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-storeReceipt>
@@ -33,6 +33,8 @@
                     <td>
                         <button pButton pRipple type="button" icon="pi pi-check"
                             class="p-button-rounded p-button-text p-button-success"
+                            [pTooltip]="'storeReceipt.issueReceipt' | translate"
+                            [attr.aria-label]="'storeReceipt.issueReceipt' | translate"
                             (click)="createStoreReceipt(storeReceipt)">
                         </button>                        
                     </td>

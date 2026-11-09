@@ -8,9 +8,14 @@
                         [required]="true" (selectionChange)="loadIssueRequests($event)">
                     </app-drop-down>
                 </div>
+                <div class="col-12 md:col-2 lg:col-1 flex align-items-end mb-3">
+                    <button pButton pRipple type="button" [label]="'common.refresh' | translate" icon="pi pi-refresh"
+                        class="p-button-info" (click)="refreshIssueRequests()">
+                    </button>
+                </div>
             </div>
         </form>
-        <p-table [value]="storeReceiptIssueRequests" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table [value]="storeReceiptIssueRequests" styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header">
                 <tr>
                     <th>{{ 'fields.owner' | translate }}</th>

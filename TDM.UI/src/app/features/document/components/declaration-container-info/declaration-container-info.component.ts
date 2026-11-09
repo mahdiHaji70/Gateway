@@ -47,7 +47,7 @@ export class DeclarationContainerInfoComponent {
   loadCommodities() {
     this.basicInformationService.getAll('Commodities').subscribe({
       next: (res: any) => {
-        this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+        if (!this.id) this.commodities = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -65,7 +65,7 @@ export class DeclarationContainerInfoComponent {
   loadPackages() {
     this.basicInformationService.getAll('Packages').subscribe({
       next: (res: any) => {
-        this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
+        if (!this.id) this.packages = res.data.items.map((item: any) => new DropdownOption(item.id, item.name));
       },
       error: (error: any) => { }
     });
@@ -93,16 +93,20 @@ export class DeclarationContainerInfoComponent {
       weight: declarationContainerInfo.weight,
     });
     this.id = declarationContainerInfo.id;
+    this.commodities = [this.form.controls.commodity.value!];
+    this.packages = [this.form.controls.package.value!];
   }
 
   resetForm() {
+    this.id = undefined;
     this.form.reset({
       commodity: undefined,
       package: undefined,
       packNumber: 0,
       weight: 0,
     });
-    this.id = undefined;
+    this.loadCommodities();
+    this.loadPackages();
   }
 
   loadDeclarationContainerInfos() {
