@@ -10,7 +10,7 @@
                         [ngModelOptions]="{ standalone: true }"
                         (keyup)="customFilterFunction($event, options)" />
                 </div>
-                <button pButton icon="pi pi-times" (click)="resetFunction(options)" severity="secondary"></button>
+                <button pButton type="button" icon="pi pi-times" (click)="resetFunction(options)" severity="secondary"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="item" let-option>
