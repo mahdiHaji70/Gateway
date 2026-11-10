@@ -8,6 +8,7 @@ namespace TDM.Application.Common.Interfaces
 {
     public interface IStoreReceiptHeadRepository:IRepository<StoreReceiptHead>
     {
+        Task<bool> ExistsByIpasStoreReceiptNoAsync(string ipasStoreReceiptNo, CancellationToken cancellationToken = default);
         Task<PagedResult<StoreReceiptHead>?> GetPagedFilteredAsync(
             int pageNumber, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo,
             Guid? consigneeId, Guid? consigneeRepId, Guid? trafficId, Guid? cargoTypeId, string? arrivalTypeCode);

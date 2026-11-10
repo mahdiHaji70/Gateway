@@ -8,13 +8,13 @@ using TDM.Application.Doc.StoreReceipts.DTOs;
 
 namespace TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo
 {
-    public class GetStoreReceiptByStorageAgreementNoQueryHandlet : IRequestHandler<GetStoreReceiptByStorageAgreementNoQuery, IEnumerable<StoreReceiptHeadDto>>
+    public class GetStoreReceiptByStorageAgreementNoQueryHandler : IRequestHandler<GetStoreReceiptByStorageAgreementNoQuery, IEnumerable<StoreReceiptHeadDto>>
     {
         private readonly IMapper _mapper;
         private readonly IDeclarationRepository _declarationRepository;
         private readonly IStoreReceiptExternalService _storeReceiptExternalService;
 
-        public GetStoreReceiptByStorageAgreementNoQueryHandlet(IMapper mapper,
+        public GetStoreReceiptByStorageAgreementNoQueryHandler(IMapper mapper,
            IDeclarationRepository declarationRepository,
            IStoreReceiptExternalService storeReceiptExternalService)
         {
@@ -32,8 +32,13 @@ namespace TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgre
 
             var ipasStoreReceipts =
                 await _storeReceiptExternalService.GetStoreReceipts(request.ipasDeclarationNo, cancellationToken);
+            
+            foreach (var storeReceipt in ipasStoreReceipts)
+            {
+                storeReceipt.DeclarationId = declaration.Id;
+            }
 
-            return _mapper.Map<List<StoreReceiptHeadDto>>(ipasStoreReceipts);
+            return ipasStoreReceipts;
         }
 
     }

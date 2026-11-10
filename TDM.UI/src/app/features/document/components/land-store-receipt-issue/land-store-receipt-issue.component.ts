@@ -52,6 +52,7 @@ export class LandStoreReceiptIssueComponent {
   }
 
   createStoreReceipt(storeReceipt: StoreReceiptHead) {
+    storeReceipt.arrivalTypeCode = '0';
     this.storeReceiptService.createStoreReceipt(storeReceipt).subscribe({
       next: (res: any) => {
         this.storeReceipts = [];

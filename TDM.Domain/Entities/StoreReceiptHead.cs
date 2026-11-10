@@ -22,7 +22,7 @@ namespace TDM.Domain.Entities
         public Company ConsigneeRep { get; private set; }
         public Guid CargoTypeId { get; private set; }
         public CargoType CargoType { get; private set; }
-        public DateTime? FirstDischargeDate { get; private set; }
+        public DateTime FirstDischargeDate { get; private set; }
         public string CreatorName { get; private set; }
         public Guid TrafficId { get; private set; }
         public Traffic Traffic { get; private set; }
@@ -57,7 +57,7 @@ namespace TDM.Domain.Entities
             Guid consigneeId,
             Guid consigneeRepId,
             Guid cargoTypeId,
-            DateTime? firstDischargeDate,
+            DateTime firstDischargeDate,
             string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,
@@ -93,7 +93,7 @@ namespace TDM.Domain.Entities
             Guid consigneeId,
             Guid consigneeRepId,
             Guid cargoTypeId,
-            DateTime? firstDischargeDate,
+            DateTime firstDischargeDate,
             string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,
@@ -130,7 +130,7 @@ namespace TDM.Domain.Entities
             Guid consigneeId,
             Guid consigneeRepId,
             Guid cargoTypeId,
-            DateTime? firstDischargeDate,
+            DateTime firstDischargeDate,
             string creatorName,
             Guid trafficId,
             Guid storeReceiptStateId,

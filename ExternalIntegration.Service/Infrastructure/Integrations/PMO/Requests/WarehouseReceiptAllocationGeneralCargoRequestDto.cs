@@ -1,8 +1,12 @@
+using ExternalIntegration.Service.Sync.DTOs;
+
 namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
 {
     public class WarehouseReceiptAllocationGeneralCargoRequestDto
     {
         public DateTime OperationDate { get; set; }
+        public DateTime FirstTerminalDischargeDate { get; set; }
+        public DateTime FirstPortDischargeDate { get; set; }
         public string StorageAreaCode { get; set; } = string.Empty;
         public WarehouseReceiptAllocationCargoDetailsRequestDto GeneralCargo { get; set; } = new();
     }
@@ -12,6 +16,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
         public string HsCode { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string BrandName { get; set; } = string.Empty;
+        public bool NoBrandName { get; set; }
         public string PackageTypeCode { get; set; } = string.Empty;
         public decimal PackageQuantity { get; set; }
         public decimal GrossWeight { get; set; }
@@ -24,5 +29,8 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
         public decimal Length { get; set; }
         public bool IsVoluminous { get; set; }
         public bool? IsHeavy { get; set; }
+        public bool DangerousNotNoticed { get; set; }
+        public WarehouseReceiptAllocationDangerousSpecificationDto DangerousSpecification { get; set; }
+        public string Remark { get; set; }
     }
 }

@@ -24,19 +24,6 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation
         {
             var receipt = await _repository.GetForAllocationAsync(request.StoreReceiptId)
                 ?? throw new KeyNotFoundException("Store receipt was not found.");
-            if (receipt.RequestId.HasValue)
-            {
-                var terminalDischarges = await _terminalDischargeRepository
-                    .GetByIssueRequestIdAsync(receipt.RequestId.Value);
-
-                var allocationByDischarges = SendIpasStoreAllocationRequestMapper.Map(
-                    receipt,
-                    terminalDischarges);
-
-                return await _externalService.SendIpasStoreAllocation(
-                    allocationByDischarges,
-                    cancellationToken);
-            }
 
             var allocation = SendIpasStoreAllocationRequestMapper.Map(receipt);
             return await _externalService.SendIpasStoreAllocation(allocation, cancellationToken);
