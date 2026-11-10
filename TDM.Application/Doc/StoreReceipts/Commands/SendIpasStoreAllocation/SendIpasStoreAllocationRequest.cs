@@ -14,6 +14,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation
     {
         public string CargoType { get; set; }
         public DateTime OperationDate { get; set; }
+        public DateTime FirstDischargeDate { get; set; }
         public string StorageAreaCode { get; set; }
         public string HsCode { get; set; }
         public string Description { get; set; }
@@ -28,10 +29,16 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation
         public bool IsDangerous { get; set; }
         public bool IsVoluminous { get; set; }
         public bool? IsHeavy { get; set; }
+        public string DangerousCode { get; set; }
+        public string Classification { get; set; }
+        public decimal IgnitionTemperature { get; set; }
+        public string IgnitionTemperatureUnit { get; set; }
+
     }
     public class SendIpasStoreAllocationContainerRequest
     {
         public DateTime OperationDate { get; set; }
+        public DateTime FirstDischargeDate { get; set; }
         public string StorageAreaCode { get; set; }
         public string ContainerNo { get; set; }
         public int Quantity { get; set; }

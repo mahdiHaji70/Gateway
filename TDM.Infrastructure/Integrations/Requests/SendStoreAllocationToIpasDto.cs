@@ -12,6 +12,8 @@ namespace TDM.Infrastructure.Integrations.Requests
     public class StoreAllocationGeneralCargoDto
     {
         public DateTime OperationDate { get; set; }
+        public DateTime FirstTerminalDischargeDate { get; set; }
+        public DateTime FirstPortDischargeDate { get; set; }
         public string StorageAreaCode { get; set; }
         public StoreAllocationGeneralCargoGoodDto GeneralCargo { get; set; }
     }
@@ -33,11 +35,17 @@ namespace TDM.Infrastructure.Integrations.Requests
         public decimal Length { get; set; }
         public bool IsVoluminous { get; set; }
         public bool? IsHeavy { get; set; }
+        public bool DangerousNotNoticed { get; set; }
+        public StoreAllocationDangerousSpecificationDto DangerousSpecification { get; set; }
+        public string Remark { get; set; }
+
     }
 
     public class StoreAllocationBulkDto
     {
         public DateTime OperationDate { get; set; }
+        public DateTime FirstTerminalDischargeDate { get; set; }
+        public DateTime FirstPortDischargeDate { get; set; }
         public string StorageAreaCode { get; set; }
         public StoreAllocationBulkGoodDto Bulk { get; set; }
     }
@@ -49,13 +57,26 @@ namespace TDM.Infrastructure.Integrations.Requests
         public decimal Weight { get; set; }
         public decimal Volume { get; set; }
         public bool IsDangerous { get; set; }
+        public bool DangerousNotNoticed { get; set; }
+        public StoreAllocationDangerousSpecificationDto DangerousSpecification { get; set; }
+        public string Remark { get; set; }
     }
 
     public class StoreAllocationContainerDto
     {
         public DateTime OperationDate { get; set; }
+        public DateTime FirstTerminalDischargeDate { get; set; }
+        public DateTime FirstPortDischargeDate { get; set; }
         public string StorageAreaCode { get; set; }
         public string ContainerNo { get; set; }
         public int Quantity { get; set; }
+    }
+
+    public class StoreAllocationDangerousSpecificationDto
+    {
+        public string DangerousCode { get; set; }
+        public string Classification { get; set; }
+        public decimal IgnitionTemperature { get; set; }
+        public string IgnitionTemperatureUnit { get; set; }
     }
 }
