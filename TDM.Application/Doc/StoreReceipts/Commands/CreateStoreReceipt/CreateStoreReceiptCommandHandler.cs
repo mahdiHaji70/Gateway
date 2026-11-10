@@ -5,6 +5,7 @@ using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt;
 using TDM.Domain.Entities;
+using TDM.Domain.Enums;
 using TDM.Domain.Exceptions;
 using System.Linq;
 using TDM.Application.Common.Exceptions;
@@ -204,20 +205,25 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
             IReadOnlyDictionary<string, Guid> storeReceiptContainerIdsByContainerNo,
             CancellationToken cancellationToken)
         {
-            if (request.ArrivalTypeCode != "0" && request.ArrivalTypeCode != "1")
+            var landSideCode = ((int)ArrivalTypeCode.LandSide).ToString();
+            var marineSideCode = ((int)ArrivalTypeCode.MarineSide).ToString();
+
+            if (request.ArrivalTypeCode != landSideCode && request.ArrivalTypeCode != marineSideCode)
                 return;
 
+            var operationTypeCode = OperationTypeCode.PRT.ToString();
             var operationType = (await _operationTypeRepository.GetAllAsync())
-                ?.FirstOrDefault(x => string.Equals(x.Code, "PRT", StringComparison.OrdinalIgnoreCase));
+                ?.FirstOrDefault(x => string.Equals(x.Code, operationTypeCode, StringComparison.OrdinalIgnoreCase));
             if (operationType == null)
-                throw new NotFoundException("Operation type with code 'PRT'");
+                throw new NotFoundException($"Operation type with code '{operationTypeCode}'");
 
+            var serviceCode = ServiceCode.DIS.ToString();
             var service = (await _serviceRepository.GetAllAsync())
-                ?.FirstOrDefault(x => string.Equals(x.Code, "DIS", StringComparison.OrdinalIgnoreCase));
+                ?.FirstOrDefault(x => string.Equals(x.Code, serviceCode, StringComparison.OrdinalIgnoreCase));
             if (service == null)
-                throw new NotFoundException("Service with code 'DIS'");
+                throw new NotFoundException($"Service with code '{serviceCode}'");
 
-            if (request.ArrivalTypeCode == "0")
+            if (request.ArrivalTypeCode == landSideCode)
             {
                 if (!request.DeclarationId.HasValue)
                     throw new InvalidOperationException("Declaration id is required for terminal store receipts.");
