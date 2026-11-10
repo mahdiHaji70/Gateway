@@ -23,6 +23,7 @@ namespace TDM.Infrastructure.Integrations.Requests
         public string HsCode { get; set; }
         public string Description { get; set; }
         public string BrandName { get; set; }
+        public bool NoBrandName { get; set; }
         public string PackageTypeCode { get; set; }
         public decimal PackageQuantity { get; set; }
         public decimal GrossWeight { get; set; }

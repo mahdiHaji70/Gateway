@@ -5,6 +5,7 @@ using System.Text;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipt.Command.CreateStoreReceipt;
 using TDM.Domain.Entities;
+using TDM.Domain.Exceptions;
 using System.Linq;
 using TDM.Application.Common.Exceptions;
 
@@ -13,7 +14,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 
     public class CreateStoreReceiptCommandHandler : IRequestHandler<CreateStoreReceiptCommand, Guid>
     {
-        private readonly IRepository<StoreReceiptHead> _storeReceiptHeadRepository;
+        private readonly IStoreReceiptHeadRepository _storeReceiptHeadRepository;
         private readonly IRepository<StoreReceiptGood> _storeReceiptGoodRepository;
         private readonly IRepository<StoreReceiptContainer> _storeReceiptContainerRepository;
         private readonly ICompanyRepository _companyRepository;
@@ -31,7 +32,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         private readonly IUnitOfWork _unitOfWork;
 
         public CreateStoreReceiptCommandHandler(IUnitOfWork unitOfWork
-            , IRepository<StoreReceiptHead> storeReceiptHeadRepository
+            , IStoreReceiptHeadRepository storeReceiptHeadRepository
             , IRepository<StoreReceiptGood> storeReceiptGoodRepository
             , IRepository<StoreReceiptContainer> storeReceiptContainerRepository
             , ICompanyRepository companyRepository
@@ -65,6 +66,14 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 
         public async Task<Guid> Handle(CreateStoreReceiptCommand request, CancellationToken cancellationToken)
         {
+            if (await _storeReceiptHeadRepository.ExistsByIpasStoreReceiptNoAsync(
+                    request.IPASStoreReceiptNo,
+                    cancellationToken))
+            {
+                throw new DomainValidationException(
+                    $"Store receipt with IPAS number '{request.IPASStoreReceiptNo}' has already been inserted.");
+            }
+
             var consigneeId = await ResolveCompanyIdAsync(request.ConsigneeId, request.ConsigneeNationalId, "consignee", cancellationToken);
             var consigneeRepId = await ResolveCompanyIdAsync(request.ConsigneeRepId, request.ConsigneeRepNationalId, "consignee representative", cancellationToken);
             var trafficId = await ResolveTrafficIdAsync(request.TrafficId, request.TrafficCode, cancellationToken);

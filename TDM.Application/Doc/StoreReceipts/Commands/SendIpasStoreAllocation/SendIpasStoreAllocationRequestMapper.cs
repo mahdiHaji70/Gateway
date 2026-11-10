@@ -35,6 +35,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation
                     IsDangerous = good.IsDangerous,
                     IsVoluminous = good.IsVoluminous,
                     IsHeavy = good.IsHeavy,
+                    FirstDischargeDate = receipt.FirstDischargeDate,
                     DangerousCode = good.DangerousCode,
                     Classification = good.Classification,
                     IgnitionTemperature = good.IgnitionTemperature,

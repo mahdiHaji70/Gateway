@@ -16,6 +16,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests
         public string HsCode { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string BrandName { get; set; } = string.Empty;
+        public bool NoBrandName { get; set; }
         public string PackageTypeCode { get; set; } = string.Empty;
         public decimal PackageQuantity { get; set; }
         public decimal GrossWeight { get; set; }

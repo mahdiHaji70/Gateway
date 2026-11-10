@@ -17,7 +17,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
         public Guid ConsigneeRepId { get; set; }
         public string ConsigneeRepNationalId { get; set; }
         public Guid CargoTypeId { get; set; }
-        public DateTime? FirstDischargeDate { get; set; }
+        public DateTime FirstDischargeDate { get; set; }
         public string CreatorName { get; set; }
         public Guid TrafficId { get; set; }
         public string TrafficCode { get; set; }

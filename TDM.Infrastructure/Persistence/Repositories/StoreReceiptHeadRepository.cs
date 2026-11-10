@@ -15,6 +15,15 @@ namespace TDM.Infrastructure.Persistence.Repositories
 
         }
 
+        public async Task<bool> ExistsByIpasStoreReceiptNoAsync(
+            string ipasStoreReceiptNo,
+            CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.AnyAsync(
+                x => x.IPASStoreReceiptNo == ipasStoreReceiptNo,
+                cancellationToken);
+        }
+
 
         public async override Task<PagedResult<StoreReceiptHead>?> GetPagedAsync(int pageNumber, int pageSize)
         {
