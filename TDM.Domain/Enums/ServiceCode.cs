@@ -2,6 +2,7 @@ namespace TDM.Domain.Enums
 {
     public enum ServiceCode
     {
-        DIS
+        DIS,
+        STRG
     }
 }

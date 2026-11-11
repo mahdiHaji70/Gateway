@@ -12,6 +12,9 @@ namespace TDM.Domain.Entities
         public Guid StoreReceiptHeadId { get; private set; }
         public StoreReceiptHead StoreReceiptHead { get; private set; }
 
+        public Guid? WarehouseExitDocumentId { get; private set; }
+        public WarehouseExitDocument? WarehouseExitDocument { get; private set; }
+
         public Guid? StoreReceiptContainerId { get; private set; }
         public StoreReceiptContainer StoreReceiptContainer { get; private set; }
 

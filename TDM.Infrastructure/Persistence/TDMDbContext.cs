@@ -33,6 +33,7 @@ namespace TDM.Infrastructure.Persistence
         public DbSet<StoreReceiptContainer> StoreReceiptContainers => Set<StoreReceiptContainer>();
         public DbSet<StoreReceiptContainerGood> StoreReceiptContainerGoods => Set<StoreReceiptContainerGood>();
         public DbSet<StoreReceiptOperation> StoreReceiptOperations => Set<StoreReceiptOperation>();
+        public DbSet<WarehouseExitDocument> WarehouseExitDocuments => Set<WarehouseExitDocument>();
         public DbSet<StoreReceiptState> StoreReceiptStates => Set<StoreReceiptState>();
         public DbSet<ArrivalType> ArrivalTypes => Set<ArrivalType>();
 
