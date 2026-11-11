@@ -508,6 +508,25 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
 
         }
 
+        public async Task<Response<IEnumerable<VesselLoadingListResponseDto>>> GetVesselLoadingLists(PmoDateRangeDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.VesselLoadingList)
+                .WithParameters(new List<Parameter>
+                {
+                    new() { ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
+                    new() { ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                    new() { ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                    new() { ParameterName = nameof(dto.PortCode), ParameterValue = dto.PortCode }
+                })
+                .Build();
+
+            return await _requestExecutor.PostAsync<IEnumerable<VesselLoadingListResponseDto>>(
+                request,
+                dto.TerminalCode);
+        }
+
         public async Task<Response<IEnumerable<LoadingPermitResponseDto>>> GetLoadingPermits(PmoDateRangeWithPagingDto dto)
         {
             var request = new PmoRequestBuilder()

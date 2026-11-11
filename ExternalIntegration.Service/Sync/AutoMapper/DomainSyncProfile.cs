@@ -68,6 +68,13 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
              .ReverseMap()
              .ForMember(dest => dest.ChangeLogs, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<ManifestChangeLogDto>(src.ChangeLogs)));
 
+            CreateMap<VesselLoadingList, VesselLoadingListDto>()
+                .ForMember(dest => dest.Voyage, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<VesselLoadingListVoyageDto>(src.Voyage)))
+                .ForMember(dest => dest.Permits, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingListPermitDto>>(src.Permits)))
+                .ReverseMap()
+                .ForMember(dest => dest.Voyage, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Voyage)))
+                .ForMember(dest => dest.Permits, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Permits)));
+
             CreateMap<VesselLoadingPermit, VesselLoadingPermitDto>()
             .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitBulkDto>>(src.BulkList)))
             .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitGeneralCargoDto>>(src.GeneralCargoList)))

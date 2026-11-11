@@ -28,5 +28,7 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<IEnumerable<LoadingPermitResponseDto>>> GetLoadingPermits(PmoDateRangeWithPagingDto dto);
         Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationRequestDto dto);
         Task<Response<bool>> ConfirmVesselLoadingPermit(VesselLoadingPermitConfirmationRequestDto dto);
+        Task<Response<IEnumerable<VesselLoadingListResponseDto>>> GetVesselLoadingLists(PmoDateRangeDto dto);
+
     }
 }

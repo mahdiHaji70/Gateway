@@ -116,6 +116,12 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.GetVesselLoadingPermits(dto);
         }
 
+        [HttpGet("GetVesselLoadingLists")]
+        public async Task<Response<IEnumerable<VesselLoadingListDto>>> GetVesselLoadingLists([FromQuery] DateRangeDto dto)
+        {
+            return await _pmoSyncService.GetVesselLoadingLists(dto);
+        }
+
         [HttpGet("GetLoadingPermits")]
         public async Task<Response<IEnumerable<LoadingPermitDto>>> GetLoadingPermits([FromQuery] DateRangeWithPagingDto dto)
         {
