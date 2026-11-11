@@ -131,6 +131,11 @@ namespace TDM.Domain.Entities
                 unitWeight);
         }
 
+        public void AttachToWarehouseExitDocument(WarehouseExitDocument warehouseExitDocument)
+        {
+            WarehouseExitDocument = warehouseExitDocument;
+        }
+
         private void SetProperty(
             Guid? parentId,
             Guid storeReceiptHeadId,

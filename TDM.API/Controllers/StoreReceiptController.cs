@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt;
+using TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByStorageAgreementNo;
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
 using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceipts;
@@ -45,6 +46,15 @@ namespace TDM.API.Controllers
         public async Task<IActionResult> CreateStoreReceipt(CreateStoreReceiptCommand command)
         {
             var result = await _mediator.Send(command);
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpPost("warehouse-exit")]
+        public async Task<IActionResult> CreateWarehouseExitDocument(
+            CreateWarehouseExitDocumentCommand command,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
             return Ok(ApiResponse.Success(result));
         }
 
