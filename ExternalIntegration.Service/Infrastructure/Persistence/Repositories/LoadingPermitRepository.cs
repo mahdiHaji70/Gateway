@@ -27,7 +27,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         {
             return await _loadingPermitDbSet
                 .AsNoTracking()
-                .Where(x => x.WarehouseReceiptId == warehouseReceiptId)
+                .Where(x => x.WarehouseReceiptId == warehouseReceiptId && x.IsApproved == false)
                 .OrderByDescending(x => x.ExpirationDate)
                 .FirstOrDefaultAsync();
         }

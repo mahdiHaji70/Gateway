@@ -53,6 +53,7 @@ namespace TDM.Infrastructure
             services.AddScoped<IStoreReceiptGoodRepository, StoreReceiptGoodRepository>();
 
             services.AddScoped<IStoreReceiptOperationRepository, StoreReceiptOperationRepository>();
+            services.AddScoped<IDocumentSerialCounterRepository, DocumentSerialCounterRepository>();
             services.AddScoped<IStoreReceiptContainerRepository, StoreReceiptContainerRepository>();
             services.AddScoped<IStoreReceiptContainerGoodRepository, StoreReceiptContainerGoodRepository>();
             services.AddScoped<IStoreReceiptExternalService, StoreReceiptExternalService>();

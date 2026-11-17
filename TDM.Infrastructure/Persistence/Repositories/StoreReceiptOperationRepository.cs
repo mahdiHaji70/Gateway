@@ -14,6 +14,7 @@ namespace TDM.Infrastructure.Persistence.Repositories
 
         public async Task<StoreReceiptOperation?> GetEarliestDischargeOperationAsync(
             Guid storeReceiptId,
+            string terminalCode,
             CancellationToken cancellationToken = default)
         {
             var operationTypeCode = OperationTypeCode.PRT.ToString();
@@ -21,7 +22,9 @@ namespace TDM.Infrastructure.Persistence.Repositories
 
             return await _dbSet
                 .AsNoTracking()
+                .Include(x => x.StoreReceiptHead)
                 .Where(x => x.StoreReceiptHeadId == storeReceiptId
+                    && x.StoreReceiptHead.TerminalCode == terminalCode
                     && x.OperationType.Code == operationTypeCode
                     && x.Service.Code == serviceCode)
                 .OrderBy(x => x.Date)

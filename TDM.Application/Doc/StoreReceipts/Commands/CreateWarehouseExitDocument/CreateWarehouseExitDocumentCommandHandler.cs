@@ -1,4 +1,5 @@
 using MediatR;
+using System.Globalization;
 using TDM.Application.Common.Exceptions;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
@@ -10,6 +11,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
         : IRequestHandler<CreateWarehouseExitDocumentCommand, Guid>
     {
         private readonly IStoreReceiptOperationRepository _storeReceiptOperationRepository;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IUserTerminalRepository _userTerminalRepository;
+        private readonly IDocumentSerialCounterRepository _serialCounterRepository;
         private readonly IOperationTypeRepository _operationTypeRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly IRepository<WarehouseExitDocument> _warehouseExitDocumentRepository;
@@ -17,12 +21,18 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
 
         public CreateWarehouseExitDocumentCommandHandler(
             IStoreReceiptOperationRepository storeReceiptOperationRepository,
+            ICurrentUserService currentUserService,
+            IUserTerminalRepository userTerminalRepository,
+            IDocumentSerialCounterRepository serialCounterRepository,
             IOperationTypeRepository operationTypeRepository,
             IServiceRepository serviceRepository,
             IRepository<WarehouseExitDocument> warehouseExitDocumentRepository,
             IUnitOfWork unitOfWork)
         {
             _storeReceiptOperationRepository = storeReceiptOperationRepository;
+            _currentUserService = currentUserService;
+            _userTerminalRepository = userTerminalRepository;
+            _serialCounterRepository = serialCounterRepository;
             _operationTypeRepository = operationTypeRepository;
             _serviceRepository = serviceRepository;
             _warehouseExitDocumentRepository = warehouseExitDocumentRepository;
@@ -33,11 +43,27 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
             CreateWarehouseExitDocumentCommand request,
             CancellationToken cancellationToken)
         {
+            if (string.IsNullOrWhiteSpace(_currentUserService.NationalId))
+                throw new UnauthorizedAccessException("The authenticated user has no national ID.");
+
+            var userTerminal = await _userTerminalRepository.GetByNationalId(_currentUserService.NationalId);
+            if (userTerminal?.Terminal == null || string.IsNullOrWhiteSpace(userTerminal.Terminal.Code))
+                throw new NotFoundException("Terminal assigned to current user");
+
+            var authorizedTerminalCode = userTerminal.Terminal.Code.Trim();
+            if (authorizedTerminalCode.Length != 3 || authorizedTerminalCode.Any(character => !char.IsDigit(character)))
+                throw new InvalidOperationException("The current user's terminal code must contain exactly three digits.");
+
             var parentDischarge = await _storeReceiptOperationRepository
-                .GetEarliestDischargeOperationAsync(request.StoreReceiptId, cancellationToken);
+                .GetEarliestDischargeOperationAsync(
+                    request.StoreReceiptId,
+                    authorizedTerminalCode,
+                    cancellationToken);
 
             if (parentDischarge == null)
                 throw new NotFoundException($"Discharge operation for store receipt '{request.StoreReceiptId}'");
+
+            var terminalCode = parentDischarge.StoreReceiptHead.TerminalCode.Trim();
 
             var operationTypeCode = OperationTypeCode.EFS.ToString();
             var operationType = (await _operationTypeRepository.GetByCodesAsync(
@@ -51,9 +77,20 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
             if (service == null)
                 throw new NotFoundException($"Service with code '{serviceCode}'");
 
+            var jalaliYear = new PersianCalendar().GetYear(request.Date);
+            const DocumentSerialType serialType = DocumentSerialType.WarehouseExit;
+            var serialPrefix = DocumentSerialTypeCode.ToCode(serialType);
+
+            var counter = await _serialCounterRepository.GetNextCounterAsync(
+                serialType,
+                terminalCode,
+                jalaliYear,
+                cancellationToken);
+            var serial = $"{serialPrefix}{terminalCode}{jalaliYear:D4}{counter.ToString(CultureInfo.InvariantCulture)}";
+
             var warehouseExitDocument = new WarehouseExitDocument
             {
-                Serial = Guid.NewGuid().ToString("N"),
+                Serial = serial,
                 VehicleNumber = request.VehicleNumber.Trim(),
                 IssueDate = request.Date,
                 LoadingPermitId = request.LoadingPermitId

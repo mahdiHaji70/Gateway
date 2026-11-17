@@ -6,6 +6,7 @@ namespace TDM.Application.Common.Interfaces
     {
         Task<StoreReceiptOperation?> GetEarliestDischargeOperationAsync(
             Guid storeReceiptId,
+            string terminalCode,
             CancellationToken cancellationToken = default);
     }
 }

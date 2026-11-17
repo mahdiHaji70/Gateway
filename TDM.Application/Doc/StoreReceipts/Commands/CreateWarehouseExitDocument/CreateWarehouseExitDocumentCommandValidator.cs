@@ -10,7 +10,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
                 .NotEmpty();
 
             RuleFor(x => x.PackNb)
-                .GreaterThan(0);
+                .GreaterThanOrEqualTo(0);
 
             RuleFor(x => x.Weight)
                 .GreaterThan(0);
