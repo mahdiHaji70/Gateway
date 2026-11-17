@@ -7,6 +7,7 @@ namespace ExternalIntegration.Service.Application.Abstractions
     {
         Task<DateTime> GetLastDateAsync(string terminalCode);
         Task<LoadingPermit?> GetByWarehouseReceiptIdAsync(Guid warehouseReceiptId);
+        Task<List<LoadingPermit>> GetApprovedByWarehouseReceiptIdAsync(Guid warehouseReceiptId);
         Task<List<LoadingPermit>> FilterUnpersistedAsync(
             IEnumerable<LoadingPermit> entities);
         void UpdateLoadingPermitApprovedAsync(Guid permitId, bool isApproved);

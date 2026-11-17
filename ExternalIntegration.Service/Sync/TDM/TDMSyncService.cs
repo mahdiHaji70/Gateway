@@ -120,6 +120,20 @@ namespace ExternalIntegration.Service.Sync.TDM
             return Response<LoadingPermitDto>.Success(_mapper.Map<LoadingPermitDto>(result));
         }
 
+        public async Task<Response<IEnumerable<VesselLoadingPermitDto>>> GetApprovedVesselLoadingPermits(Guid warehouseReceiptId)
+        {
+            var permits = await _vesselLoadingPermitRepository.GetApprovedByWarehouseReceiptIdAsync(warehouseReceiptId);
+            return Response<IEnumerable<VesselLoadingPermitDto>>.Success(
+                _mapper.Map<IEnumerable<VesselLoadingPermitDto>>(permits));
+        }
+
+        public async Task<Response<IEnumerable<LoadingPermitDto>>> GetApprovedLoadingPermits(Guid warehouseReceiptId)
+        {
+            var permits = await _loadingPermitRepository.GetApprovedByWarehouseReceiptIdAsync(warehouseReceiptId);
+            return Response<IEnumerable<LoadingPermitDto>>.Success(
+                _mapper.Map<IEnumerable<LoadingPermitDto>>(permits));
+        }
+
         public async Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode)
         {
             var lastDate = await _dischargePermitRepository.GetLastDateAsync(terminalCode);

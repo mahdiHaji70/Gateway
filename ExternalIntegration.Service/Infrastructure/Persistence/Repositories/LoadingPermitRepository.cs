@@ -32,6 +32,19 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<List<LoadingPermit>> GetApprovedByWarehouseReceiptIdAsync(Guid warehouseReceiptId)
+        {
+            return await _loadingPermitDbSet
+                .AsNoTracking()
+                .Where(permit => permit.WarehouseReceiptId == warehouseReceiptId
+                    && permit.IsApproved
+                    && !_loadingPermitDbSet.Any(newerPermit => newerPermit.Id == permit.Id
+                        && newerPermit.IsApproved
+                        && newerPermit.ExpirationDate > permit.ExpirationDate))
+                .OrderByDescending(permit => permit.ExpirationDate)
+                .ToListAsync();
+        }
+
         public override Task<List<LoadingPermit>> FilterUnpersistedAsync<TId>(
             IEnumerable<LoadingPermit> entities,
             Func<LoadingPermit, TId> idSelector,
