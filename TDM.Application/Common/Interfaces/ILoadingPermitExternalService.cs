@@ -8,6 +8,10 @@ namespace TDM.Application.Common.Interfaces
             Guid warehouseReceiptId,
             CancellationToken cancellationToken = default);
 
+        Task<IEnumerable<LoadingPermitDto>> GetApprovedLoadingPermits(
+            Guid warehouseReceiptId,
+            CancellationToken cancellationToken = default);
+
         Task<bool> ConfirmLoadingPermit(
             Guid permitId,
             string terminalCode,

@@ -29,6 +29,22 @@ namespace TDM.Infrastructure.Integrations.Client
             return LoadingPermitMapper.Map(response.Data!);
         }
 
+        public async Task<IEnumerable<LoadingPermitDto>> GetApprovedLoadingPermits(
+            Guid warehouseReceiptId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<List<LoadingPermitResponseDto>>(
+                "TDM",
+                "GetApprovedLoadingPermits",
+                new { warehouseReceiptId },
+                cancellationToken);
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetApprovedLoadingPermits");
+            return (response.Data ?? new List<LoadingPermitResponseDto>())
+                .Select(LoadingPermitMapper.Map)
+                .ToList();
+        }
+
         public async Task<bool> ConfirmLoadingPermit(
             Guid permitId,
             string terminalCode,
