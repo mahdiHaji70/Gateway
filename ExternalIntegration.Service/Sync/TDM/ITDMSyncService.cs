@@ -29,5 +29,6 @@ namespace ExternalIntegration.Service.Sync.TDM
         Task<Response<LoadingPermitDto>> GetLoadingPermitRequest(Guid warehouseReceiptId);
         Task<Response<IEnumerable<VesselLoadingPermitDto>>> GetApprovedVesselLoadingPermits(Guid warehouseReceiptId);
         Task<Response<IEnumerable<LoadingPermitDto>>> GetApprovedLoadingPermits(Guid warehouseReceiptId);
+        Task<Response<VesselLoadingListDto>> GetVesselLoadingListByPermitId(Guid permitId, CancellationToken cancellationToken = default);
     }
 }

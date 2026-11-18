@@ -17,6 +17,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         private readonly IManifestRepository _manifestRepository;
         private readonly IManifestChangeRepository _manifestChangeRepository;
         private readonly IVesselLoadingPermitRepository _vesselLoadingPermitRepository;
+        private readonly IVesselLoadingListRepository _vesselLoadingListRepository;
         private readonly ILoadingPermitRepository _loadingPermitRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -29,7 +30,8 @@ namespace ExternalIntegration.Service.Sync.TDM
             , IManifestRepository manifestRepository
             , IManifestChangeRepository manifestChangeRepository
             , IVesselLoadingPermitRepository vesselLoadingPermitRepository
-            , ILoadingPermitRepository loadingPermitRepository)
+            , ILoadingPermitRepository loadingPermitRepository
+            , IVesselLoadingListRepository vesselLoadingListRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -42,6 +44,7 @@ namespace ExternalIntegration.Service.Sync.TDM
             _manifestChangeRepository = manifestChangeRepository;
             _vesselLoadingPermitRepository = vesselLoadingPermitRepository;
             _loadingPermitRepository = loadingPermitRepository;
+            _vesselLoadingListRepository = vesselLoadingListRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBillByStorageAgreementId(Guid storageAgreementId, string terminalCode)
         {
@@ -132,6 +135,20 @@ namespace ExternalIntegration.Service.Sync.TDM
             var permits = await _loadingPermitRepository.GetApprovedByWarehouseReceiptIdAsync(warehouseReceiptId);
             return Response<IEnumerable<LoadingPermitDto>>.Success(
                 _mapper.Map<IEnumerable<LoadingPermitDto>>(permits));
+        }
+
+        public async Task<Response<VesselLoadingListDto>> GetVesselLoadingListByPermitId(
+            Guid permitId,
+            CancellationToken cancellationToken = default)
+        {
+            var loadingList = await _vesselLoadingListRepository.GetByPermitIdAsync(
+                permitId,
+                cancellationToken);
+
+            if (loadingList == null)
+                return Response<VesselLoadingListDto>.Error($"Vessel loading list for permit '{permitId}' was not found.");
+
+            return Response<VesselLoadingListDto>.Success(_mapper.Map<VesselLoadingListDto>(loadingList));
         }
 
         public async Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode)
