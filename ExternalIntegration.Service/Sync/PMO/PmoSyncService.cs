@@ -396,6 +396,14 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
+        public async Task<Response<Guid>> SendVesselLoading(VesselLoadingDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<VesselLoadingRequestDto>(dto);
+            var clientResult = await _client.SendVesselLoading(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<Guid>>(clientResult);
+            return syncMappingDto;
+        }
+
         public async Task<Response<Guid>> SendTallySubmission(TallySubmissionDto dto)
         {
             var syncMappingRequestDto = _mapper.Map<TallySubmissionRequestDto>(dto);
