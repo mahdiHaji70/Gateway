@@ -412,6 +412,33 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
+        public async Task<Response<DeliveryResponseDto>> SendDelivery(DeliveryRequestDto model)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.Deliveries)
+                .WithParameters(new List<Parameter>
+                {
+                    new Parameter { ParameterName = nameof(model.LoadingPermitId), ParameterValue = model.LoadingPermitId },
+                    new Parameter { ParameterName = nameof(model.TerminalCode), ParameterValue = model.TerminalCode },
+                    new Parameter { ParameterName = nameof(model.Date), ParameterValue = model.Date.ToString("yyyy-MM-ddTHH:mm:ss") },
+                    new Parameter { ParameterName = nameof(model.VehicleTypeId), ParameterValue = model.VehicleTypeId },
+                    new Parameter { ParameterName = nameof(model.VehicleNo), ParameterValue = model.VehicleNo },
+                    new Parameter { ParameterName = nameof(model.LoadingStart), ParameterValue = model.LoadingStart.ToString("yyyy-MM-ddTHH:mm:ss") },
+                    new Parameter { ParameterName = nameof(model.LoadingFinish), ParameterValue = model.LoadingFinish.ToString("yyyy-MM-ddTHH:mm:ss") },
+                    new Parameter { ParameterName = nameof(model.Remark), ParameterValue = model.Remark! },
+                    new Parameter { ParameterName = nameof(model.StorageAreaCode), ParameterValue = model.StorageAreaCode },
+                    new Parameter { ParameterName = nameof(model.FirstPortDischargeDate), ParameterValue = model.FirstPortDischargeDate.ToString("yyyy-MM-ddTHH:mm:ss") },
+                    new Parameter { ParameterName = nameof(model.FirstTerminalDischargeDate), ParameterValue = model.FirstTerminalDischargeDate.ToString("yyyy-MM-ddTHH:mm:ss") },
+                    new Parameter { ParameterName = nameof(model.GeneralCargoList), ParameterValue = JsonConvert.SerializeObject(model.GeneralCargoList) },
+                    new Parameter { ParameterName = nameof(model.BulkList), ParameterValue = JsonConvert.SerializeObject(model.BulkList) },
+                    new Parameter { ParameterName = nameof(model.ContainerList), ParameterValue = JsonConvert.SerializeObject(model.ContainerList) }
+                }).Build();
+
+            var response = await _requestExecutor.PostAsync<DeliveryResponseDto>(request, model.TerminalCode);
+            return response;
+        }
+
         public async Task<Response<Guid>> SendVesselDischarge(VesselDischargeRequestDto model)
         {
             var request = new PmoRequestBuilder()
