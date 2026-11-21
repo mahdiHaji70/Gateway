@@ -134,6 +134,11 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<ManifestChangeResponseDto, ManifestChangeDto>();
             CreateMap<ManifestChangeLogResponseDto, ManifestChangeLogDto>();
 
+            CreateMap<TallySubmissionDto, TallySubmissionRequestDto>();
+            CreateMap<GeneralCargoTallySubmissionDto, GeneralCargoTallySubmissionRequestDto>();
+            CreateMap<BulkTallySubmissionDto, BulkTallySubmissionRequestDto>();
+            CreateMap<DangerousSpecificationTallySubmissionDto, DangerousSpecificationTallySubmissionRequestDto>();
+
             CreateMap<DeliveryDto, DeliveryRequestDto>();
             CreateMap<GeneralCargoDeliveryDto, GeneralCargoDeliveryRequestDto>();
             CreateMap<BulkDeliveryDto, BulkDeliveryRequestDto>();
