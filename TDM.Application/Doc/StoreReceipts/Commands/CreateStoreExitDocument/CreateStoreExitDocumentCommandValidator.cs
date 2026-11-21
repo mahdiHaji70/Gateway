@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
+namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
 {
-    public class CreateWarehouseExitDocumentCommandValidator : AbstractValidator<CreateWarehouseExitDocumentCommand>
+    public class CreateStoreExitDocumentCommandValidator : AbstractValidator<CreateStoreExitDocumentCommand>
     {
-        public CreateWarehouseExitDocumentCommandValidator()
+        public CreateStoreExitDocumentCommandValidator()
         {
             RuleFor(x => x.StoreReceiptId)
                 .NotEmpty();

@@ -2,20 +2,20 @@ namespace TDM.Domain.Enums
 {
     public enum DocumentSerialType
     {
-        WarehouseExit
+        StoreExit
     }
 
     public static class DocumentSerialTypeCode
     {
         public static string ToCode(DocumentSerialType serialType) => serialType switch
         {
-            DocumentSerialType.WarehouseExit => "WHE",
+            DocumentSerialType.StoreExit => "SE",
             _ => throw new ArgumentOutOfRangeException(nameof(serialType), serialType, null)
         };
 
         public static DocumentSerialType FromCode(string code) => code switch
         {
-            "WHE" => DocumentSerialType.WarehouseExit,
+            "SE" => DocumentSerialType.StoreExit,
             _ => throw new ArgumentOutOfRangeException(nameof(code), code, null)
         };
     }

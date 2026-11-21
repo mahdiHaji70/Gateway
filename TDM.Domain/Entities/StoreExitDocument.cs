@@ -4,7 +4,7 @@ using TDM.Domain.Common;
 
 namespace TDM.Domain.Entities
 {
-    public class WarehouseExitDocument : BaseEntity
+    public class StoreExitDocument : BaseEntity
     {
         private readonly List<StoreReceiptOperation> _storeReceiptOperations = [];
 

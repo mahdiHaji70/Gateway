@@ -5,10 +5,10 @@ using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 using TDM.Domain.Enums;
 
-namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
+namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
 {
-    public class CreateWarehouseExitDocumentCommandHandler
-        : IRequestHandler<CreateWarehouseExitDocumentCommand, Guid>
+    public class CreateStoreExitDocumentCommandHandler
+        : IRequestHandler<CreateStoreExitDocumentCommand, Guid>
     {
         private readonly IStoreReceiptOperationRepository _storeReceiptOperationRepository;
         private readonly ICurrentUserService _currentUserService;
@@ -16,17 +16,17 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
         private readonly IDocumentSerialCounterRepository _serialCounterRepository;
         private readonly IOperationTypeRepository _operationTypeRepository;
         private readonly IServiceRepository _serviceRepository;
-        private readonly IRepository<WarehouseExitDocument> _warehouseExitDocumentRepository;
+        private readonly IRepository<StoreExitDocument> _storeExitDocumentRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateWarehouseExitDocumentCommandHandler(
+        public CreateStoreExitDocumentCommandHandler(
             IStoreReceiptOperationRepository storeReceiptOperationRepository,
             ICurrentUserService currentUserService,
             IUserTerminalRepository userTerminalRepository,
             IDocumentSerialCounterRepository serialCounterRepository,
             IOperationTypeRepository operationTypeRepository,
             IServiceRepository serviceRepository,
-            IRepository<WarehouseExitDocument> warehouseExitDocumentRepository,
+            IRepository<StoreExitDocument> storeExitDocumentRepository,
             IUnitOfWork unitOfWork)
         {
             _storeReceiptOperationRepository = storeReceiptOperationRepository;
@@ -35,12 +35,12 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
             _serialCounterRepository = serialCounterRepository;
             _operationTypeRepository = operationTypeRepository;
             _serviceRepository = serviceRepository;
-            _warehouseExitDocumentRepository = warehouseExitDocumentRepository;
+            _storeExitDocumentRepository = storeExitDocumentRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<Guid> Handle(
-            CreateWarehouseExitDocumentCommand request,
+            CreateStoreExitDocumentCommand request,
             CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(_currentUserService.NationalId))
@@ -78,7 +78,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
                 throw new NotFoundException($"Service with code '{serviceCode}'");
 
             var jalaliYear = new PersianCalendar().GetYear(request.Date);
-            const DocumentSerialType serialType = DocumentSerialType.WarehouseExit;
+            const DocumentSerialType serialType = DocumentSerialType.StoreExit;
             var serialPrefix = DocumentSerialTypeCode.ToCode(serialType);
 
             var counter = await _serialCounterRepository.GetNextCounterAsync(
@@ -88,7 +88,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
                 cancellationToken);
             var serial = $"{serialPrefix}{terminalCode}{jalaliYear:D4}{counter.ToString(CultureInfo.InvariantCulture)}";
 
-            var warehouseExitDocument = new WarehouseExitDocument
+            var storeExitDocument = new StoreExitDocument
             {
                 Serial = serial,
                 VehicleNumber = request.VehicleNumber.Trim(),
@@ -116,13 +116,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
                 ignitionTemperature: 0,
                 ignitionTemperatureUnit: string.Empty,
                 unitWeight: 0);
-            operation.AttachToWarehouseExitDocument(warehouseExitDocument);
+            operation.AttachToStoreExitDocument(storeExitDocument);
 
-            await _warehouseExitDocumentRepository.InsertAsync(warehouseExitDocument);
+            await _storeExitDocumentRepository.InsertAsync(storeExitDocument);
             await _storeReceiptOperationRepository.InsertAsync(operation);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return warehouseExitDocument.Id;
+            return storeExitDocument.Id;
         }
     }
 }
