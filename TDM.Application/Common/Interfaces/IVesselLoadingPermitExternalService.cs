@@ -12,6 +12,10 @@ namespace TDM.Application.Common.Interfaces
             Guid warehouseReceiptId,
             CancellationToken cancellationToken = default);
 
+        Task<VesselLoadingListDto> GetVesselLoadingListByPermitId(
+            Guid permitId,
+            CancellationToken cancellationToken = default);
+
         Task<bool> ConfirmVesselLoadingPermit(
             Guid id,
             string terminalCode,

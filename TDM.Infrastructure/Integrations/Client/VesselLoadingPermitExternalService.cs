@@ -49,6 +49,20 @@ namespace TDM.Infrastructure.Integrations.Client
                 .ToList();
         }
 
+        public async Task<VesselLoadingListDto> GetVesselLoadingListByPermitId(
+            Guid permitId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<VesselLoadingListResponseDto>(
+                "TDM",
+                "GetVesselLoadingListByPermitId",
+                new { permitId },
+                cancellationToken);
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetVesselLoadingListByPermitId");
+            return VesselLoadingListMapper.Map(response.Data!);
+        }
+
         public async Task<bool> ConfirmVesselLoadingPermit(
             Guid id,
             string terminalCode,
