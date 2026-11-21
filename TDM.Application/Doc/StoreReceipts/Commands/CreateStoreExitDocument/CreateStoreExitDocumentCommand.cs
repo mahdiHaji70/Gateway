@@ -1,8 +1,8 @@
 using MediatR;
 
-namespace TDM.Application.Doc.StoreReceipts.Commands.CreateWarehouseExitDocument
+namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
 {
-    public class CreateWarehouseExitDocumentCommand : IRequest<Guid>
+    public class CreateStoreExitDocumentCommand : IRequest<Guid>
     {
         public Guid StoreReceiptId { get; set; }
         public long PackNb { get; set; }

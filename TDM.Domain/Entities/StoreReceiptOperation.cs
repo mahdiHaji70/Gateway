@@ -12,8 +12,8 @@ namespace TDM.Domain.Entities
         public Guid StoreReceiptHeadId { get; private set; }
         public StoreReceiptHead StoreReceiptHead { get; private set; }
 
-        public Guid? WarehouseExitDocumentId { get; private set; }
-        public WarehouseExitDocument? WarehouseExitDocument { get; private set; }
+        public Guid? StoreExitDocumentId { get; private set; }
+        public StoreExitDocument? StoreExitDocument { get; private set; }
 
         public Guid? StoreReceiptContainerId { get; private set; }
         public StoreReceiptContainer StoreReceiptContainer { get; private set; }
@@ -131,9 +131,9 @@ namespace TDM.Domain.Entities
                 unitWeight);
         }
 
-        public void AttachToWarehouseExitDocument(WarehouseExitDocument warehouseExitDocument)
+        public void AttachToStoreExitDocument(StoreExitDocument storeExitDocument)
         {
-            WarehouseExitDocument = warehouseExitDocument;
+            StoreExitDocument = storeExitDocument;
         }
 
         private void SetProperty(

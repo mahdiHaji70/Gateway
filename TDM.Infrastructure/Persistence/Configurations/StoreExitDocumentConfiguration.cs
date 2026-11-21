@@ -4,11 +4,11 @@ using TDM.Domain.Entities;
 
 namespace TDM.Infrastructure.Persistence.Configurations
 {
-    public class WarehouseExitDocumentConfiguration : IEntityTypeConfiguration<WarehouseExitDocument>
+    public class StoreExitDocumentConfiguration : IEntityTypeConfiguration<StoreExitDocument>
     {
-        public void Configure(EntityTypeBuilder<WarehouseExitDocument> builder)
+        public void Configure(EntityTypeBuilder<StoreExitDocument> builder)
         {
-            builder.ToTable("WarehouseExitDocuments", schema: "doc");
+            builder.ToTable("StoreExitDocuments", schema: "doc");
 
             builder.HasKey(x => x.Id);
 

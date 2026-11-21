@@ -17,9 +17,9 @@ namespace TDM.Infrastructure.Persistence.Configurations
                 .HasForeignKey(x => x.StoreReceiptHeadId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.WarehouseExitDocument)
+            builder.HasOne(x => x.StoreExitDocument)
                 .WithMany(x => x.StoreReceiptOperations)
-                .HasForeignKey(x => x.WarehouseExitDocumentId)
+                .HasForeignKey(x => x.StoreExitDocumentId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
