@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.Doc.LoadingPermits.Commands.ConfirmLoadingPermit;
+using TDM.Application.Doc.LoadingPermits.Queries.GetApprovedLoadingPermitsByStoreReceiptId;
 using TDM.Application.Doc.LoadingPermits.Queries.GetLoadingPermitByStoreReceiptId;
 
 namespace TDM.API.Controllers
@@ -26,6 +27,18 @@ namespace TDM.API.Controllers
         {
             var result = await _mediator.Send(
                 new GetLoadingPermitByStoreReceiptIdQuery(storeReceiptId),
+                cancellationToken);
+
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpGet("approved/by-store-receipt/{storeReceiptId:guid}")]
+        public async Task<IActionResult> GetApprovedByStoreReceiptId(
+            Guid storeReceiptId,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(
+                new GetApprovedLoadingPermitsByStoreReceiptIdQuery(storeReceiptId),
                 cancellationToken);
 
             return Ok(ApiResponse.Success(result));

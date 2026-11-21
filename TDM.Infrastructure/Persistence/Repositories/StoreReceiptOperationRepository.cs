@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Common.Models;
 using TDM.Domain.Entities;
+using TDM.Domain.Enums;
 
 namespace TDM.Infrastructure.Persistence.Repositories
 {
@@ -9,6 +10,26 @@ namespace TDM.Infrastructure.Persistence.Repositories
     {
         public StoreReceiptOperationRepository(TDMDbContext context) : base(context)
         {
+        }
+
+        public async Task<StoreReceiptOperation?> GetEarliestDischargeOperationAsync(
+            Guid storeReceiptId,
+            string terminalCode,
+            CancellationToken cancellationToken = default)
+        {
+            var operationTypeCode = OperationTypeCode.PRT.ToString();
+            var serviceCode = ServiceCode.DIS.ToString();
+
+            return await _dbSet
+                .AsNoTracking()
+                .Include(x => x.StoreReceiptHead)
+                .Where(x => x.StoreReceiptHeadId == storeReceiptId
+                    && x.StoreReceiptHead.TerminalCode == terminalCode
+                    && x.OperationType.Code == operationTypeCode
+                    && x.Service.Code == serviceCode)
+                .OrderBy(x => x.Date)
+                .ThenBy(x => x.Id)
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
         public async override Task<PagedResult<StoreReceiptOperation>?> GetPagedAsync(int pageNumber, int pageSize)

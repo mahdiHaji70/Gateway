@@ -12,6 +12,9 @@ namespace TDM.Domain.Entities
         public Guid StoreReceiptHeadId { get; private set; }
         public StoreReceiptHead StoreReceiptHead { get; private set; }
 
+        public Guid? WarehouseExitDocumentId { get; private set; }
+        public WarehouseExitDocument? WarehouseExitDocument { get; private set; }
+
         public Guid? StoreReceiptContainerId { get; private set; }
         public StoreReceiptContainer StoreReceiptContainer { get; private set; }
 
@@ -126,6 +129,11 @@ namespace TDM.Domain.Entities
                 ignitionTemperature,
                 ignitionTemperatureUnit,
                 unitWeight);
+        }
+
+        public void AttachToWarehouseExitDocument(WarehouseExitDocument warehouseExitDocument)
+        {
+            WarehouseExitDocument = warehouseExitDocument;
         }
 
         private void SetProperty(

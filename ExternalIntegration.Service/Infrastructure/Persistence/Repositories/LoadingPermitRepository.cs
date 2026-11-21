@@ -27,9 +27,22 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Repositories
         {
             return await _loadingPermitDbSet
                 .AsNoTracking()
-                .Where(x => x.WarehouseReceiptId == warehouseReceiptId)
+                .Where(x => x.WarehouseReceiptId == warehouseReceiptId && x.IsApproved == false)
                 .OrderByDescending(x => x.ExpirationDate)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<LoadingPermit>> GetApprovedByWarehouseReceiptIdAsync(Guid warehouseReceiptId)
+        {
+            return await _loadingPermitDbSet
+                .AsNoTracking()
+                .Where(permit => permit.WarehouseReceiptId == warehouseReceiptId
+                    && permit.IsApproved
+                    && !_loadingPermitDbSet.Any(newerPermit => newerPermit.Id == permit.Id
+                        && newerPermit.IsApproved
+                        && newerPermit.ExpirationDate > permit.ExpirationDate))
+                .OrderByDescending(permit => permit.ExpirationDate)
+                .ToListAsync();
         }
 
         public override Task<List<LoadingPermit>> FilterUnpersistedAsync<TId>(

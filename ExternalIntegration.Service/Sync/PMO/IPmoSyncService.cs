@@ -25,6 +25,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<ManifestDto>> GetManifestById(Guid id, string terminalCode);
         Task<Response<Guid>> SendVesselDischarge(VesselDischargeDto dto);
         Task<Response<IEnumerable<VesselLoadingPermitDto>>> GetVesselLoadingPermits(DateRangeWithInboxDto dto);        
+        Task<Response<IEnumerable<VesselLoadingListDto>>> GetVesselLoadingLists(DateRangeDto dto);
         Task<Response<IEnumerable<LoadingPermitDto>>> GetLoadingPermits(DateRangeWithPagingDto dto);
         Task<Response<bool>> ConfirmLoadingPermit(LoadingPermitConfirmationDto dto);
         Task<Response<bool>> ConfirmVesselLoadingPermit(VesselLoadingPermitConfirmationDto dto);

@@ -24,6 +24,7 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IManifestRepository _manifestRepository;
         private readonly IManifestChangeRepository _manifestChangeRepository;
         private readonly IVesselLoadingPermitRepository _vesselLoadingPermitRepository;
+        private readonly IRepository<VesselLoadingList> _vesselLoadingListRepository;
         private readonly ILoadingPermitRepository _loadingPermitRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -38,6 +39,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             , IManifestRepository manifestRepository
             , IManifestChangeRepository manifestChangeRepository
             , IVesselLoadingPermitRepository vesselLoadingPermitRepository
+            , IRepository<VesselLoadingList> vesselLoadingListRepository
             , ILoadingPermitRepository loadingPermitRepository)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -52,6 +54,7 @@ namespace ExternalIntegration.Service.Sync.PMO
             _manifestRepository = manifestRepository;
             _manifestChangeRepository = manifestChangeRepository;
             _vesselLoadingPermitRepository = vesselLoadingPermitRepository;
+            _vesselLoadingListRepository = vesselLoadingListRepository;
             _loadingPermitRepository = loadingPermitRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
@@ -429,6 +432,36 @@ namespace ExternalIntegration.Service.Sync.PMO
                 _mapper.Map<IEnumerable<VesselLoadingPermit>>(syncMappingDto!.Data));
 
             await _vesselLoadingPermitRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+
+            return syncMappingDto;
+        }
+
+        public async Task<Response<IEnumerable<VesselLoadingListDto>>> GetVesselLoadingLists(DateRangeDto dto)
+        {
+            var now = DateTime.Now;
+            var pmoDateDto = new PmoDateRangeDto(
+                dto.TerminalCode,
+                dto.FromDate ?? now,
+                dto.ToDate ?? now.AddDays(1),
+                dto.PortCode);
+
+            var clientResult = await _client.GetVesselLoadingLists(pmoDateDto);
+            var syncMappingDto = _mapper.Map<Response<IEnumerable<VesselLoadingListDto>>>(clientResult);
+
+            if (syncMappingDto?.Data == null)
+                return syncMappingDto;
+
+            var entities = _mapper.Map<List<VesselLoadingList>>(syncMappingDto.Data);
+            foreach (var entity in entities)
+                entity.TerminalCode = dto.TerminalCode;
+
+            var newData = await _vesselLoadingListRepository.FilterUnpersistedAsync(
+                entities,
+                entity => entity.Id,
+                entity => entity.Id);
+
+            await _vesselLoadingListRepository.InsertBulkAsync(newData);
             await _unitOfWork.SaveChangesAsync();
 
             return syncMappingDto;

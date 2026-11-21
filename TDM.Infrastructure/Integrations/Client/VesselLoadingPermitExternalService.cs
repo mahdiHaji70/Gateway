@@ -33,6 +33,36 @@ namespace TDM.Infrastructure.Integrations.Client
             return VesselLoadingPermitMapper.Map(response.Data!);
         }
 
+        public async Task<IEnumerable<VesselLoadingPermitDto>> GetApprovedVesselLoadingPermits(
+            Guid warehouseReceiptId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<List<VesselLoadingPermitResponseDto>>(
+                "TDM",
+                "GetApprovedVesselLoadingPermits",
+                new { warehouseReceiptId },
+                cancellationToken);
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetApprovedVesselLoadingPermits");
+            return (response.Data ?? new List<VesselLoadingPermitResponseDto>())
+                .Select(VesselLoadingPermitMapper.Map)
+                .ToList();
+        }
+
+        public async Task<VesselLoadingListDto> GetVesselLoadingListByPermitId(
+            Guid permitId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _requestExecutor.GetAsync<VesselLoadingListResponseDto>(
+                "TDM",
+                "GetVesselLoadingListByPermitId",
+                new { permitId },
+                cancellationToken);
+
+            ExternalResponseHelper.EnsureSuccess(response, "GetVesselLoadingListByPermitId");
+            return VesselLoadingListMapper.Map(response.Data!);
+        }
+
         public async Task<bool> ConfirmVesselLoadingPermit(
             Guid id,
             string terminalCode,

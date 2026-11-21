@@ -464,7 +464,7 @@ namespace ExternalIntegration.Service.Migrations
 
             modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.LoadingPermit", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("InternalId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -506,6 +506,15 @@ namespace ExternalIntegration.Service.Migrations
                     b.Property<string>("GoodClassificationName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsApproved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsApproved");
 
                     b.Property<string>("OwnerIdNumber")
                         .IsRequired()
@@ -551,8 +560,9 @@ namespace ExternalIntegration.Service.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SerialNo")
-                        .HasColumnType("int");
+                    b.Property<string>("SerialNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -612,7 +622,10 @@ namespace ExternalIntegration.Service.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("InternalId");
+
+                    b.HasIndex("Id", "ExpirationDate")
+                        .IsUnique();
 
                     b.ToTable("LoadingPermits", (string)null);
                 });
@@ -746,6 +759,9 @@ namespace ExternalIntegration.Service.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("ArrivalType")
+                        .HasColumnType("int");
+
                     b.Property<string>("BulkList")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -781,12 +797,18 @@ namespace ExternalIntegration.Service.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("FirstDischargeDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GeneralCargoList")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("GoodClassification")
+                        .HasColumnType("int");
 
                     b.Property<string>("GoodClassificationName")
                         .IsRequired()
@@ -810,6 +832,9 @@ namespace ExternalIntegration.Service.Migrations
 
                     b.Property<int>("ItemCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("LocalNo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("No")
                         .IsRequired()
@@ -912,9 +937,30 @@ namespace ExternalIntegration.Service.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TrackingId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VoyageNoticeNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("StoreReceipts", (string)null);
+                });
+
+            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.StoreReceiptManifestItem", b =>
+                {
+                    b.Property<Guid>("StoreReceiptId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BillOfLadingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("StoreReceiptId", "BillOfLadingId");
+
+                    b.HasIndex("BillOfLadingId", "StoreReceiptId");
+
+                    b.ToTable("StoreReceiptManifestItems", (string)null);
                 });
 
             modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.Terminal", b =>
@@ -955,6 +1001,218 @@ namespace ExternalIntegration.Service.Migrations
                         .IsUnique();
 
                     b.ToTable("Terminals", (string)null);
+                });
+
+            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.VesselLoadingList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Permits")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Port")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PortCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TerminalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Voyage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VesselLoadingLists", (string)null);
+                });
+
+            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.VesselLoadingPermit", b =>
+                {
+                    b.Property<Guid>("InternalId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BulkList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CargoUnitiziseTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContainerList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GeneralCargoList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GoodClassification")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GoodClassificationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsApproved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsApproved");
+
+                    b.Property<DateTime?>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OwnerIdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerRepIdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerRepName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OwnerRepType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OwnerType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Party")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PartyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PartyIdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Port")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PortId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SerialNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StateName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("TaskIsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TaskOwnerRoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskOwnerRoleNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TaskRegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TaskRemark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskStage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskStageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Terminal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TerminalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TerminalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("WarehouseReceiptId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("WarehouseReceiptNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Workflow")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("InternalId");
+
+                    b.HasIndex("Id", "ExpirationDate")
+                        .IsUnique();
+
+                    b.ToTable("VesselLoadingPermits", (string)null);
                 });
 
             modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.Voyage", b =>
@@ -1087,6 +1345,22 @@ namespace ExternalIntegration.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Logging", "PMOLogs");
+                });
+
+            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.StoreReceiptManifestItem", b =>
+                {
+                    b.HasOne("ExternalIntegration.Service.Domain.Entities.StoreReceipt", "StoreReceipt")
+                        .WithMany("ManifestItemLinks")
+                        .HasForeignKey("StoreReceiptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreReceipt");
+                });
+
+            modelBuilder.Entity("ExternalIntegration.Service.Domain.Entities.StoreReceipt", b =>
+                {
+                    b.Navigation("ManifestItemLinks");
                 });
 #pragma warning restore 612, 618
         }

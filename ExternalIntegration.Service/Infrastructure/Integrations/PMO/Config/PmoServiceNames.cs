@@ -35,6 +35,7 @@
         public string Consolidaterequests { get; init; } = default!;
         public string WReceiptsAllocation { get; init; } = default!;
         public string VesselLoadings { get; init; } = default!;
+        public string VesselLoadingList { get; init; } = default!;
         public string ThroughTransports { get; init; } = default!;
         public string GetVoyages { get; init; } = default!;
         public string GetVoyagesByNoticeN { get; init; } = default!;

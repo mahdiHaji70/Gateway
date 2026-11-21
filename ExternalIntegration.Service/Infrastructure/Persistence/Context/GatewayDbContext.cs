@@ -20,6 +20,7 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<StoreReceiptManifestItem> StoreReceiptManifestItems => Set<StoreReceiptManifestItem>();
         public DbSet<PMOLog> IntegrationLogs => Set<PMOLog>();
         public DbSet<Manifest> Manifests => Set<Manifest>();
+        public DbSet<VesselLoadingList> VesselLoadingLists => Set<VesselLoadingList>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GatewayDbContext).Assembly);
