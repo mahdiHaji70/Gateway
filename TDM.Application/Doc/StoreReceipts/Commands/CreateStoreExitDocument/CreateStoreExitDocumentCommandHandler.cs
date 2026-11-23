@@ -115,7 +115,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
                 classification: string.Empty,
                 ignitionTemperature: 0,
                 ignitionTemperatureUnit: string.Empty,
-                unitWeight: 0);
+                unitWeight: 0,
+                storeReceiptGoodId: parentDischarge.StoreReceiptGoodId);
             operation.AttachToStoreExitDocument(storeExitDocument);
 
             await _storeExitDocumentRepository.InsertAsync(storeExitDocument);
