@@ -12,6 +12,12 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.HasOne(x => x.Voyage)
+                .WithMany()
+                .HasForeignKey(x => x.VoyageId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(x => x.Serial)
                 .HasMaxLength(64)
                 .IsRequired();

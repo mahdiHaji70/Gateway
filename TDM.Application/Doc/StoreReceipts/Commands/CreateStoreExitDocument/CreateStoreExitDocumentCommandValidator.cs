@@ -22,6 +22,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
             RuleFor(x => x.LoadingPermitId)
                 .NotEmpty();
 
+            RuleFor(x => x.VoyageId)
+                .NotEmpty().When(x => x.VoyageId.HasValue);
+
             RuleFor(x => x.Date)
                 .NotEmpty();
         }

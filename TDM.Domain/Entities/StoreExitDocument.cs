@@ -12,6 +12,8 @@ namespace TDM.Domain.Entities
         public string VehicleNumber { get; set; }
         public DateTime IssueDate { get; set; }
         public Guid? LoadingPermitId { get; set; }
+        public Guid? VoyageId { get; set; }
+        public Voyage? Voyage { get; set; }
 
         public Guid? IpasDeliveryId { get; set; }
         public int? IpasDeliverySerialNo { get; set; }
