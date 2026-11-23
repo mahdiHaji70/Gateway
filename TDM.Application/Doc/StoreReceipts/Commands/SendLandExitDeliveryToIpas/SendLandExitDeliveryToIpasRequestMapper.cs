@@ -5,13 +5,13 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas
 {
     public static class SendLandExitDeliveryToIpasRequestMapper
     {
-        public static SendLandExitDeliveryToIpasCommandRequest Map(StoreExitDocument document)
+        public static SendLandExitDeliveryToIpasRequest Map(StoreExitDocument document)
         {
             var operations = document.StoreReceiptOperations.ToList();
             var firstOperation = operations[0];
             var receipt = firstOperation.StoreReceiptHead;
 
-            var request = new SendLandExitDeliveryToIpasCommandRequest
+            var request = new SendLandExitDeliveryToIpasRequest
             {
                 StoreExitDocumentId = document.Id,
                 LoadingPermitId = document.LoadingPermitId.Value,

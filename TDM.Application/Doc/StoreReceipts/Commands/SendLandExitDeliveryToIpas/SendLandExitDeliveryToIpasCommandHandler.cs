@@ -6,7 +6,7 @@ using TDM.Domain.Enums;
 namespace TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas
 {
     public class SendLandExitDeliveryToIpasCommandHandler
-        : IRequestHandler<SendLandExitDeliveryToIpasCommand, SendLandExitDeliveryToIpasCommandResponse>
+        : IRequestHandler<SendLandExitDeliveryToIpasCommand, SendLandExitDeliveryToIpasResponse>
     {
         private readonly IStoreExitDocumentRepository _repository;
         private readonly IStoreReceiptExternalService _externalService;
@@ -22,7 +22,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<SendLandExitDeliveryToIpasCommandResponse> Handle(
+        public async Task<SendLandExitDeliveryToIpasResponse> Handle(
             SendLandExitDeliveryToIpasCommand request, CancellationToken cancellationToken)
         {
             var document = await _repository.GetForLandDeliveryAsync(request.StoreExitDocumentId, cancellationToken)

@@ -6,9 +6,9 @@ namespace TDM.Infrastructure.Integrations.Mapper
 {
     public class SendLandExitDeliveryToIpasMapper
     {
-        public static SendLandExitDeliveryToIpasCommandResponse Map(SendLandExitDeliveryResultDto response, Guid storeExitDocumentId)
+        public static SendLandExitDeliveryToIpasResponse Map(SendLandExitDeliveryResultDto response, Guid storeExitDocumentId)
         {
-            return new SendLandExitDeliveryToIpasCommandResponse
+            return new SendLandExitDeliveryToIpasResponse
             {
                 StoreExitDocumentId = storeExitDocumentId,
                 IpasDeliveryId = response.Id,
@@ -17,7 +17,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
             };
         }
 
-        public static SendLandExitDeliveryToIpasDto Map(SendLandExitDeliveryToIpasCommandRequest request)
+        public static SendLandExitDeliveryToIpasDto Map(SendLandExitDeliveryToIpasRequest request)
         {
             return new SendLandExitDeliveryToIpasDto
             {
