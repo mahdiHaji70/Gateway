@@ -9,6 +9,7 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
         public decimal Weight { get; set; }
         public string VehicleNumber { get; set; } = string.Empty;
         public Guid LoadingPermitId { get; set; }
+        public Guid? VoyageId { get; set; }
         public DateTime Date { get; set; }
     }
 }

@@ -93,7 +93,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreExitDocument
                 Serial = serial,
                 VehicleNumber = request.VehicleNumber.Trim(),
                 IssueDate = request.Date,
-                LoadingPermitId = request.LoadingPermitId
+                LoadingPermitId = request.LoadingPermitId,
+                VoyageId = request.VoyageId
             };
 
             var operation = new StoreReceiptOperation(
