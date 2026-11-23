@@ -235,6 +235,9 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
 
                 foreach (var discharge in discharges)
                 {
+                    var good = receipt.StoreReceiptGoods.Single();
+                    await _storeReceiptGoodRepository.InsertAsync(good);
+
                     receipt.AddOperation(
                         parentId: null,
                         storeReceiptContainerId: null,
@@ -253,7 +256,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                         classification: discharge.Classification,
                         ignitionTemperature: discharge.IgnitionTemperature,
                         ignitionTemperatureUnit: discharge.IgnitionTemperatureUnit,
-                        unitWeight: 0);
+                        unitWeight: 0,
+                        storeReceiptGoodId: good.Id);
                 }
 
                 return;
@@ -276,6 +280,17 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                     storeReceiptContainerId = generatedContainerId;
                 }
 
+                Guid? storeReceiptGoodId = null;
+                if (!discharge.ManifestContainerId.HasValue)
+                {
+                    if (receipt.StoreReceiptGoods.Count != 1)
+                        throw new DomainValidationException("The vessel discharge must identify exactly one receipt good.");
+
+                    var good = receipt.StoreReceiptGoods.Single();
+                    await _storeReceiptGoodRepository.InsertAsync(good);
+                    storeReceiptGoodId = good.Id;
+                }
+
                 receipt.AddOperation(
                     parentId: null,
                     storeReceiptContainerId: storeReceiptContainerId,
@@ -294,7 +309,8 @@ namespace TDM.Application.Doc.StoreReceipts.Commands.CreateStoreReceipt
                     classification: discharge.Classification,
                     ignitionTemperature: discharge.IgnitionTemperature ?? 0,
                     ignitionTemperatureUnit: discharge.IgnitionTemperatureUnit,
-                    unitWeight: discharge.UnitWeight);
+                    unitWeight: discharge.UnitWeight,
+                    storeReceiptGoodId: storeReceiptGoodId);
             }
         }
 

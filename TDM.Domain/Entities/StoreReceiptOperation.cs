@@ -12,6 +12,9 @@ namespace TDM.Domain.Entities
         public Guid StoreReceiptHeadId { get; private set; }
         public StoreReceiptHead StoreReceiptHead { get; private set; }
 
+        public Guid? StoreReceiptGoodId { get; private set; }
+        public StoreReceiptGood? StoreReceiptGood { get; private set; }
+
         public Guid? StoreExitDocumentId { get; private set; }
         public StoreExitDocument? StoreExitDocument { get; private set; }
 
@@ -64,7 +67,8 @@ namespace TDM.Domain.Entities
             string classification,
             decimal ignitionTemperature,
             string ignitionTemperatureUnit,
-            decimal unitWeight)
+            decimal unitWeight,
+            Guid? storeReceiptGoodId = null)
         {
             SetProperty(
                 parentId,
@@ -85,7 +89,8 @@ namespace TDM.Domain.Entities
                 classification,
                 ignitionTemperature,
                 ignitionTemperatureUnit,
-                unitWeight);
+                unitWeight,
+                storeReceiptGoodId);
         }
 
         public void Update(
@@ -107,7 +112,8 @@ namespace TDM.Domain.Entities
             string classification,
             decimal ignitionTemperature,
             string ignitionTemperatureUnit,
-            decimal unitWeight)
+            decimal unitWeight,
+            Guid? storeReceiptGoodId = null)
         {
             SetProperty(
                 parentId,
@@ -128,7 +134,8 @@ namespace TDM.Domain.Entities
                 classification,
                 ignitionTemperature,
                 ignitionTemperatureUnit,
-                unitWeight);
+                unitWeight,
+                storeReceiptGoodId);
         }
 
         public void AttachToStoreExitDocument(StoreExitDocument storeExitDocument)
@@ -155,7 +162,8 @@ namespace TDM.Domain.Entities
             string classification,
             decimal ignitionTemperature,
             string ignitionTemperatureUnit,
-            decimal unitWeight)
+            decimal unitWeight,
+            Guid? storeReceiptGoodId = null)
         {
             Validate(
                 parentId,
@@ -170,10 +178,12 @@ namespace TDM.Domain.Entities
                 volume,
                 ignitionTemperature,
                 ignitionTemperatureUnit,
-                unitWeight);
+                unitWeight,
+                storeReceiptGoodId);
 
             ParentId = parentId;
             StoreReceiptHeadId = storeReceiptHeadId;
+            StoreReceiptGoodId = storeReceiptGoodId;
             StoreReceiptContainerId = storeReceiptContainerId;
             OperationTypeId = operationTypeId;
             ServiceId = serviceId;
@@ -206,10 +216,14 @@ namespace TDM.Domain.Entities
             decimal volume,
             decimal ignitionTemperature,
             string ignitionTemperatureUnit,
-            decimal unitWeight)
+            decimal unitWeight,
+            Guid? storeReceiptGoodId = null)
         {
             //if (storeReceiptHeadId == Guid.Empty)
             //    throw new DomainValidationException("Store receipt head is required.");
+
+            if (storeReceiptGoodId == Guid.Empty)
+                throw new DomainValidationException("Store receipt good ID cannot be empty.");
 
             if (operationTypeId == Guid.Empty)
                 throw new DomainValidationException("Operation type is required.");

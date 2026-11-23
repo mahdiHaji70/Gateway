@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TDM.Domain.Common;
 
@@ -12,6 +12,9 @@ namespace TDM.Domain.Entities
         public string VehicleNumber { get; set; }
         public DateTime IssueDate { get; set; }
         public Guid? LoadingPermitId { get; set; }
+
+        public Guid? IpasDeliveryId { get; set; }
+        public int? IpasDeliverySerialNo { get; set; }
 
         public IReadOnlyCollection<StoreReceiptOperation> StoreReceiptOperations => _storeReceiptOperations.AsReadOnly();
     }

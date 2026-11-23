@@ -50,6 +50,7 @@ namespace TDM.Infrastructure
             services.AddScoped<IWeightBridgeRepository, WeightBridgeRepository>();
             services.AddScoped<IIssueRequestStoreReceiptExternalService, IssueRequestStoreReceiptExternalService>();
             services.AddScoped<IStoreReceiptHeadRepository, StoreReceiptHeadRepository>();
+            services.AddScoped<IStoreExitDocumentRepository, StoreExitDocumentRepository>();
             services.AddScoped<IStoreReceiptGoodRepository, StoreReceiptGoodRepository>();
 
             services.AddScoped<IStoreReceiptOperationRepository, StoreReceiptOperationRepository>();

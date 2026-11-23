@@ -308,7 +308,8 @@ namespace TDM.Domain.Entities
             string classification,
             decimal ignitionTemperature,
             string ignitionTemperatureUnit,
-            decimal unitWeight)
+            decimal unitWeight,
+            Guid? storeReceiptGoodId = null)
         {
             var operation = new StoreReceiptOperation(
                 parentId,
@@ -329,7 +330,8 @@ namespace TDM.Domain.Entities
                 classification,
                 ignitionTemperature,
                 ignitionTemperatureUnit,
-                unitWeight);
+                unitWeight,
+                storeReceiptGoodId);
 
             _storeReceiptOperations.Add(operation);
 
