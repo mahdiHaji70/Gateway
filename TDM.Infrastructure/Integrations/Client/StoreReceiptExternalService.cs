@@ -1,4 +1,4 @@
-using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
+﻿using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
 using TDM.Application.Doc.StoreReceipts.DTOs;
@@ -70,10 +70,7 @@ namespace TDM.Infrastructure.Integrations.Client
                 return result;
             }
 
-            result.IpasDeliveryId = response.Data.Id;
-            result.IpasDeliverySerialNo = response.Data.SerialNo;
-            result.IsSent = true;
-            return result;
+            return SendLandExitDeliveryToIpasMapper.Map(response.Data, request.StoreExitDocumentId);
         }
 
         public async Task<SendIpasStoreAllocationResponse> SendIpasStoreAllocation(

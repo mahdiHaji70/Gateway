@@ -1,10 +1,22 @@
 using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using TDM.Infrastructure.Integrations.Requests;
+using TDM.Infrastructure.Integrations.Responses;
 
 namespace TDM.Infrastructure.Integrations.Mapper
 {
     public class SendLandExitDeliveryToIpasMapper
     {
+        public static SendLandExitDeliveryToIpasCommandResponse Map(SendLandExitDeliveryResultDto response, Guid storeExitDocumentId)
+        {
+            return new SendLandExitDeliveryToIpasCommandResponse
+            {
+                StoreExitDocumentId = storeExitDocumentId,
+                IpasDeliveryId = response.Id,
+                IpasDeliverySerialNo = response.SerialNo,
+                IsSent = true
+            };
+        }
+
         public static SendLandExitDeliveryToIpasDto Map(SendLandExitDeliveryToIpasCommandRequest request)
         {
             return new SendLandExitDeliveryToIpasDto
