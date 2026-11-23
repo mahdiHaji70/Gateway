@@ -1,6 +1,6 @@
 namespace TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas
 {
-    public class SendLandExitDeliveryToIpasCommandResponse
+    public class SendLandExitDeliveryToIpasResponse
     {
         public Guid StoreExitDocumentId { get; set; }
         public Guid? IpasDeliveryId { get; set; }

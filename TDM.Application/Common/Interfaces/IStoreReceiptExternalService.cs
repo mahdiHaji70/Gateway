@@ -1,4 +1,5 @@
-﻿using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
+﻿using TDM.Application.Doc.StoreReceipts.Commands.SendSeaExitDeliveryToIpas;
+using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,8 +16,11 @@ namespace TDM.Application.Common.Interfaces
        Task<List<StoreReceiptHeadDto>> GetStoreReceiptByBillOfLadingId(
            Guid billOfLadingId,
            CancellationToken cancellationToken = default);
-       Task<SendLandExitDeliveryToIpasCommandResponse> SendLandExitDeliveryToIpas(
-           SendLandExitDeliveryToIpasCommandRequest request,
+       Task<SendSeaExitDeliveryToIpasResponse> SendSeaExitDeliveryToIpas(
+           SendSeaExitDeliveryToIpasRequest request,
+           CancellationToken cancellationToken = default);
+       Task<SendLandExitDeliveryToIpasResponse> SendLandExitDeliveryToIpas(
+           SendLandExitDeliveryToIpasRequest request,
            CancellationToken cancellationToken = default);
        Task<SendIpasStoreAllocationResponse> SendIpasStoreAllocation(SendIpasStoreAllocationRequest request, CancellationToken cancellationToken = default);
         }

@@ -1,4 +1,5 @@
-﻿using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
+﻿using TDM.Application.Doc.StoreReceipts.Commands.SendSeaExitDeliveryToIpas;
+using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
 using TDM.Application.Doc.StoreReceipts.DTOs;
@@ -50,8 +51,31 @@ namespace TDM.Infrastructure.Integrations.Client
             return receipts;
         }
 
-        public async Task<SendLandExitDeliveryToIpasCommandResponse> SendLandExitDeliveryToIpas(
-            SendLandExitDeliveryToIpasCommandRequest request,
+        public async Task<SendSeaExitDeliveryToIpasResponse> SendSeaExitDeliveryToIpas(
+            SendSeaExitDeliveryToIpasRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var dto = SendSeaExitDeliveryToIpasMapper.Map(request);
+
+            var response = await _requestExecutor.PostAsync<Guid>(
+                "PMO", "SendTallySubmission", dto, cancellationToken);
+
+            var result = new SendSeaExitDeliveryToIpasResponse
+            {
+                StoreExitDocumentId = request.StoreExitDocumentId
+            };
+
+            if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Sea Exit Delivery", out var errorMessage))
+            {
+                result.ErrorMessage = errorMessage;
+                return result;
+            }
+
+            return SendSeaExitDeliveryToIpasMapper.Map(response.Data, request.StoreExitDocumentId);
+        }
+
+        public async Task<SendLandExitDeliveryToIpasResponse> SendLandExitDeliveryToIpas(
+            SendLandExitDeliveryToIpasRequest request,
             CancellationToken cancellationToken = default)
         {
             var dto = SendLandExitDeliveryToIpasMapper.Map(request);
@@ -59,7 +83,7 @@ namespace TDM.Infrastructure.Integrations.Client
             var response = await _requestExecutor.PostAsync<SendLandExitDeliveryResultDto>(
                 "PMO", "SendDelivery", dto, cancellationToken);
 
-            var result = new SendLandExitDeliveryToIpasCommandResponse
+            var result = new SendLandExitDeliveryToIpasResponse
             {
                 StoreExitDocumentId = request.StoreExitDocumentId
             };
