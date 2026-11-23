@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MediatR;
 
 namespace TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas
 {
-    internal class SendLandExitDeliveryToIpasCommand
-    {
-    }
+    public record SendLandExitDeliveryToIpasCommand(Guid StoreExitDocumentId)
+        : IRequest<SendLandExitDeliveryToIpasCommandResponse>;
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
@@ -87,6 +88,15 @@ namespace TDM.API.Controllers
                 new GetStoreReceiptWarehousesQuery(storeReceiptId),
                 cancellationToken);
 
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpPost("send-land-exit-delivery-to-ipas/{storeExitDocumentId:guid}")]
+        public async Task<IActionResult> SendLandExitDeliveryToIpas(Guid storeExitDocumentId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(
+                new SendLandExitDeliveryToIpasCommand(storeExitDocumentId),
+                cancellationToken);
             return Ok(ApiResponse.Success(result));
         }
 

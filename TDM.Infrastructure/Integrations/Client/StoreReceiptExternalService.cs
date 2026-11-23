@@ -1,3 +1,4 @@
+using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
 using TDM.Application.Doc.StoreReceipts.DTOs;
@@ -47,6 +48,32 @@ namespace TDM.Infrastructure.Integrations.Client
             }
 
             return receipts;
+        }
+
+        public async Task<SendLandExitDeliveryToIpasCommandResponse> SendLandExitDeliveryToIpas(
+            SendLandExitDeliveryToIpasCommandRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var dto = SendLandExitDeliveryToIpasMapper.Map(request);
+
+            var response = await _requestExecutor.PostAsync<SendLandExitDeliveryResultDto>(
+                "PMO", "SendDelivery", dto, cancellationToken);
+
+            var result = new SendLandExitDeliveryToIpasCommandResponse
+            {
+                StoreExitDocumentId = request.StoreExitDocumentId
+            };
+           
+            if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Land Exit Delivery", out var errorMessage))
+            {
+                result.ErrorMessage = errorMessage;
+                return result;
+            }
+
+            result.IpasDeliveryId = response.Data.Id;
+            result.IpasDeliverySerialNo = response.Data.SerialNo;
+            result.IsSent = true;
+            return result;
         }
 
         public async Task<SendIpasStoreAllocationResponse> SendIpasStoreAllocation(

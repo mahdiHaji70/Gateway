@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using FluentValidation;
 
 namespace TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas
 {
-    internal class SendLandExitDeliveryToIpasCommandValidator
+    public class SendLandExitDeliveryToIpasCommandValidator : AbstractValidator<SendLandExitDeliveryToIpasCommand>
     {
+        public SendLandExitDeliveryToIpasCommandValidator()
+        {
+            RuleFor(x => x.StoreExitDocumentId).NotEmpty();
+        }
     }
 }
