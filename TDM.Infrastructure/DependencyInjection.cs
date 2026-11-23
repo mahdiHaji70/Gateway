@@ -30,6 +30,7 @@ namespace TDM.Infrastructure
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IPackageRepository, PackageRepository>();
             services.AddScoped<ITrafficRepository, TrafficRepository>();
+            services.AddScoped<IVoyageRepository, VoyageRepository>();
             services.AddScoped<IOperationTypeRepository, OperationTypeRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
