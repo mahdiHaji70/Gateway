@@ -1,3 +1,4 @@
+using TDM.Application.Doc.Voyages.DTOs;
 using AutoMapper;
 using TDM.Application.BasicInformation.CargoTypes.DTOs;
 using TDM.Application.BasicInformation.Cities.DTOs;
@@ -38,6 +39,7 @@ namespace TDM.Application.Common.Mappings
             CreateMap<Commodity, CommodityDto>();
 
             CreateMap<Traffic, TrafficDto>();
+            CreateMap<Voyage, VoyageDto>();
 
             CreateMap<OperationType, OperationTypeDto>();
 
