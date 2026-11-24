@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TDM.API.Common.Models;
 using TDM.Application.Doc.Voyages.Commands.CreateVoyage;
-using TDM.Application.Doc.Voyages.Commands.RemoveVoyage;
+using TDM.Application.Doc.Voyages.Commands.DeleteVoyage;
 using TDM.Application.Doc.Voyages.Commands.UpdateVoyage;
 using TDM.Application.Doc.Voyages.Queries.GetVoyageById;
 using TDM.Application.Doc.Voyages.Queries.GetVoyages;

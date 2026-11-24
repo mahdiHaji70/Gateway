@@ -2,7 +2,7 @@ using MediatR;
 using TDM.Application.Common.Interfaces;
 using TDM.Domain.Entities;
 
-namespace TDM.Application.Doc.Voyages.Commands.RemoveVoyage
+namespace TDM.Application.Doc.Voyages.Commands.DeleteVoyage
 {
     public class DeleteVoyageCommandHandler : IRequestHandler<DeleteVoyageCommand, bool>
     {
