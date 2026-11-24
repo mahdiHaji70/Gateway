@@ -39,7 +39,7 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
 
             CreateMap<Voyage, VoyageDto>()
-            .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VoyageVesselDataDto>>(src.VesselData)));
+            .ForMember(dest => dest.VesselData, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<VoyageVesselDataDto>(src.VesselData)));
 
             CreateMap<StoreReceipt, StoreReceiptDto>()
              .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<StoreReceiptBulkDto>>(src.BulkList)))
