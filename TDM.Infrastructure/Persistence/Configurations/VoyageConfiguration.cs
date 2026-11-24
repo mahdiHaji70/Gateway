@@ -12,6 +12,9 @@ namespace TDM.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.NoticeDate).HasColumnType("datetime2(7)");
+            builder.HasIndex(x => x.IpasVoyageId).IsUnique().HasFilter("[IpasVoyageId] IS NOT NULL");
+
             builder.Property(x => x.VoyageNo).HasMaxLength(50).IsUnicode().IsRequired();
             builder.Property(x => x.NoticeNo).HasMaxLength(50).IsUnicode().IsRequired();
             builder.Property(x => x.ETA).HasColumnType("datetime2(7)").IsRequired();

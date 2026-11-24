@@ -14,6 +14,22 @@ namespace TDM.Domain.Entities
         public string VesselName { get; private set; } = null!;
         public string Imo { get; private set; } = null!;
 
+        public Guid? IpasVoyageId { get; private set; }
+        public DateTime? NoticeDate { get; private set; }
+
+        private Voyage() { }
+
+        public void SetIpasVoyage(Guid ipasVoyageId, DateTime noticeDate)
+        {
+            if (ipasVoyageId == Guid.Empty)
+                throw new DomainValidationException("IPAS voyage ID is required.");
+            if (noticeDate == default)
+                throw new DomainValidationException("Notice date is required.");
+
+            IpasVoyageId = ipasVoyageId;
+            NoticeDate = noticeDate;
+        }
+
         public Voyage(string voyageNo, string noticeNo, DateTime eta, DateTime etd,
             string shipLine, string shipAgent, string vesselName, string imo)
             => SetProperty(voyageNo, noticeNo, eta, etd, shipLine, shipAgent, vesselName, imo);
