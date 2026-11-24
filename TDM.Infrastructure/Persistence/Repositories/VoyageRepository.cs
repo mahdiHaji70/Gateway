@@ -9,6 +9,19 @@ namespace TDM.Infrastructure.Persistence.Repositories
     {
         public VoyageRepository(TDMDbContext context) : base(context) { }
 
+        public async Task<DateTime> GetLastNoticeDateAsync(CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.MaxAsync(x => x.NoticeDate, cancellationToken) ?? DateTime.MinValue;
+        }
+
+        public async Task<List<Voyage>> GetByIpasIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+        {
+            var voyageIds = ids.Distinct().ToList();
+            return await _dbSet
+                .Where(x => x.IpasVoyageId.HasValue && voyageIds.Contains(x.IpasVoyageId.Value))
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<PagedResult<Voyage>?> GetPagedAsync(int pageNumber, int pageSize, string? search)
         {
             var query = _dbSet.AsNoTracking();
