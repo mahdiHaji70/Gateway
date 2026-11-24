@@ -14,6 +14,7 @@ namespace TDM.Infrastructure.Integrations.Mapper
                     ? null
                     : new VesselLoadingListVoyageDto
                     {
+                        IpasVoyageId = source.Voyage.Id,
                         VoyageNo = source.Voyage.VoyageNo,
                         NoticeNo = source.Voyage.NoticeNo,
                         VesselData = source.Voyage.VesselData == null

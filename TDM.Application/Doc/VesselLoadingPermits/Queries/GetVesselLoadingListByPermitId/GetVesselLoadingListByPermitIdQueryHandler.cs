@@ -8,20 +8,35 @@ namespace TDM.Application.Doc.VesselLoadingPermits.Queries.GetVesselLoadingListB
         : IRequestHandler<GetVesselLoadingListByPermitIdQuery, VesselLoadingListDto>
     {
         private readonly IVesselLoadingPermitExternalService _externalService;
+        private readonly IVoyageRepository _voyageRepository;
 
         public GetVesselLoadingListByPermitIdQueryHandler(
-            IVesselLoadingPermitExternalService externalService)
+            IVesselLoadingPermitExternalService externalService,
+            IVoyageRepository voyageRepository)
         {
             _externalService = externalService;
+            _voyageRepository = voyageRepository;
         }
 
-        public Task<VesselLoadingListDto> Handle(
+        public async Task<VesselLoadingListDto> Handle(
             GetVesselLoadingListByPermitIdQuery request,
             CancellationToken cancellationToken)
         {
-            return _externalService.GetVesselLoadingListByPermitId(
+            var result = await _externalService.GetVesselLoadingListByPermitId(
                 request.PermitId,
                 cancellationToken);
+
+            if (result.Voyage == null || result.Voyage.IpasVoyageId == Guid.Empty)
+                throw new Exception("The vessel loading list has no valid voyage ID.");
+
+            var voyages = await _voyageRepository.GetByIpasIdsAsync(
+                new[] { result.Voyage.IpasVoyageId }, cancellationToken);
+            var voyage = voyages.SingleOrDefault();
+            if (voyage == null)
+                throw new Exception("Voyage was not found in TDM. Synchronize voyages before requesting the vessel loading list.");
+
+            result.VoyageId = voyage.Id;
+            return result;
         }
     }
 }

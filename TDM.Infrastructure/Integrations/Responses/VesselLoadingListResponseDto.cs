@@ -8,6 +8,7 @@ namespace TDM.Infrastructure.Integrations.Responses
 
     public class VesselLoadingListVoyageResponseDto
     {
+        public Guid Id { get; set; }
         public string? VoyageNo { get; set; }
         public string? NoticeNo { get; set; }
         public VesselLoadingListVesselDataResponseDto? VesselData { get; set; }
