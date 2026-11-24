@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace TDM.Application.Doc.Voyages.Commands.RemoveVoyage
+namespace TDM.Application.Doc.Voyages.Commands.DeleteVoyage
 {
     public class DeleteVoyageCommand : IRequest<bool>
     {

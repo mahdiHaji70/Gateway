@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace TDM.Application.Doc.Voyages.Commands.RemoveVoyage
+namespace TDM.Application.Doc.Voyages.Commands.DeleteVoyage
 {
     public class DeleteVoyageCommandValidator : AbstractValidator<DeleteVoyageCommand>
     {
