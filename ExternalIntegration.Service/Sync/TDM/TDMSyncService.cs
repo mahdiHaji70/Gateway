@@ -175,6 +175,14 @@ namespace ExternalIntegration.Service.Sync.TDM
             return Response<DateTime>.Success(lastDate);
         }
 
+        public async Task<Response<IEnumerable<VoyageDto>>> GetVoyagesFromDate(
+            DateTime lastDate,
+            CancellationToken cancellationToken = default)
+        {
+            var voyages = await _voyageRepository.GetFromDateAsync(lastDate, cancellationToken);
+            return Response<IEnumerable<VoyageDto>>.Success(_mapper.Map<IEnumerable<VoyageDto>>(voyages));
+        }
+
         public async Task<Response<DateTime>> GetVoyagesLastDate()
         {
             var lastDate = await _voyageRepository.GetLastDateAsync();

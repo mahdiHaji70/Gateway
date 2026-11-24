@@ -17,6 +17,7 @@ namespace ExternalIntegration.Service.Sync.TDM
         Task<Response<DateTime>> GetDischargePermitsLastDate(string terminalCode);
         Task<Response<DateTime>> GetGoodwayBillsLastDate(string terminalCode);
         Task<Response<DateTime>> GetIssueRequestsLastDate(string terminalCode);
+        Task<Response<IEnumerable<VoyageDto>>> GetVoyagesFromDate(DateTime lastDate, CancellationToken cancellationToken = default);
         Task<Response<DateTime>> GetVoyagesLastDate();
         Task<Response<DateTime>> GetStoreReceiptsLastDate(string terminalCode);
         Task<Response<IEnumerable<IssueRequestDto>>> GetIssueRequestById(Guid id);

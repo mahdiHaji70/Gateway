@@ -104,6 +104,14 @@ namespace ExternalIntegration.Service.Controllers
             return await _tdmSyncService.GetIssueRequestsLastDate(terminalCode);
         }
 
+        [HttpGet("GetVoyagesFromDate")]
+        public async Task<Response<IEnumerable<VoyageDto>>> GetVoyagesFromDate(
+            [FromQuery] DateTime lastDate,
+            CancellationToken cancellationToken)
+        {
+            return await _tdmSyncService.GetVoyagesFromDate(lastDate, cancellationToken);
+        }
+
         [HttpGet("GetVoyagesLastDate")]
         public async Task<Response<DateTime>> GetVoyagesLastDate()
         {
