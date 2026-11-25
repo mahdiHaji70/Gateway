@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Sync.DTOs;
 using ExternalIntegration.Service.Sync.PMO;
 using Microsoft.AspNetCore.Authorization;
@@ -102,6 +102,36 @@ namespace ExternalIntegration.Service.Controllers
         public async Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges([FromQuery] DateRangeWithPagingDto dto)
         {
             return await _pmoSyncService.GetManifestChanges(dto);
+        }
+
+        [HttpGet("GetTallyQuantityVariances")]
+        public async Task<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>> GetTallyQuantityVariances([FromQuery] TallyQuantityVarianceQueryDto dto)
+        {
+            return await _pmoSyncService.GetTallyQuantityVariances(dto);
+        }
+
+        [HttpPost("ConfirmTallyQuantityVariance")]
+        public async Task<Response<bool>> ConfirmTallyQuantityVariance([FromBody] TallyQuantityVarianceConfirmationDto dto)
+        {
+            return await _pmoSyncService.ConfirmTallyQuantityVariance(dto);
+        }
+
+        [HttpPost("SendDeliveryReturn")]
+        public async Task<Response<bool>> SendDeliveryReturn([FromBody] DeliveryReturnDto dto)
+        {
+            return await _pmoSyncService.SendDeliveryReturn(dto);
+        }
+
+        [HttpGet("GetContainerAllocations")]
+        public async Task<Response<ContainerAllocationsDto>> GetContainerAllocations([FromQuery] ContainerAllocationsQueryDto dto)
+        {
+            return await _pmoSyncService.GetContainerAllocations(dto);
+        }
+
+        [HttpPost("SendThroughTransportDelivery")]
+        public async Task<Response<Guid>> SendThroughTransportDelivery([FromBody] ThroughTransportDeliveryDto dto)
+        {
+            return await _pmoSyncService.SendThroughTransportDelivery(dto);
         }
 
         [HttpPost("SendVesselLoading")]

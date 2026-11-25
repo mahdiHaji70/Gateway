@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +23,11 @@ namespace ExternalIntegration.Service.Sync.PMO
         Task<Response<IEnumerable<ManifestDto>>> GetManifests(DateRangeWithPagingDto dto);
         Task<Response<IEnumerable<ManifestChangeDto>>> GetManifestChanges(DateRangeWithPagingDto dto);
         Task<Response<ManifestDto>> GetManifestById(Guid id, string terminalCode);
+        Task<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryDto dto);
+        Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationDto dto);
+        Task<Response<bool>> SendDeliveryReturn(DeliveryReturnDto dto);
+        Task<Response<ContainerAllocationsDto>> GetContainerAllocations(ContainerAllocationsQueryDto dto);
+        Task<Response<Guid>> SendThroughTransportDelivery(ThroughTransportDeliveryDto dto);
         Task<Response<Guid>> SendVesselLoading(VesselLoadingDto dto);
         Task<Response<Guid>> SendTallySubmission(TallySubmissionDto dto);
         Task<Response<DeliveryResultDto>> SendDelivery(DeliveryDto dto);

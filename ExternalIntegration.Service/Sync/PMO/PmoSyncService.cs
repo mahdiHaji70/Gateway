@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
@@ -393,6 +393,42 @@ namespace ExternalIntegration.Service.Sync.PMO
             await _manifestRepository.InsertAsync(manifest);
             await _unitOfWork.SaveChangesAsync();
 
+            return syncMappingDto;
+        }
+
+        public async Task<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryDto dto)
+        {
+            var request = _mapper.Map<TallyQuantityVarianceQueryRequestDto>(dto);
+            var response = await _client.GetTallyQuantityVariances(request);
+            return _mapper.Map<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>>(response);
+        }
+
+        public async Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationDto dto)
+        {
+            var request = _mapper.Map<TallyQuantityVarianceConfirmationRequestDto>(dto);
+            var response = await _client.ConfirmTallyQuantityVariance(request);
+            return _mapper.Map<Response<bool>>(response);
+        }
+
+        public async Task<Response<bool>> SendDeliveryReturn(DeliveryReturnDto dto)
+        {
+            var request = _mapper.Map<DeliveryReturnRequestDto>(dto);
+            var response = await _client.SendDeliveryReturn(request);
+            return _mapper.Map<Response<bool>>(response);
+        }
+
+        public async Task<Response<ContainerAllocationsDto>> GetContainerAllocations(ContainerAllocationsQueryDto dto)
+        {
+            var request = _mapper.Map<ContainerAllocationsQueryRequestDto>(dto);
+            var response = await _client.GetContainerAllocations(request);
+            return _mapper.Map<Response<ContainerAllocationsDto>>(response);
+        }
+
+        public async Task<Response<Guid>> SendThroughTransportDelivery(ThroughTransportDeliveryDto dto)
+        {
+            var syncMappingRequestDto = _mapper.Map<ThroughTransportDeliveryRequestDto>(dto);
+            var clientResult = await _client.SendThroughTransportDelivery(syncMappingRequestDto);
+            var syncMappingDto = _mapper.Map<Response<Guid>>(clientResult);
             return syncMappingDto;
         }
 
