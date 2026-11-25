@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
@@ -133,6 +133,23 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
 
             CreateMap<ManifestChangeResponseDto, ManifestChangeDto>();
             CreateMap<ManifestChangeLogResponseDto, ManifestChangeLogDto>();
+
+            CreateMap<TallyQuantityVarianceResponseDto, TallyQuantityVarianceDto>();
+            CreateMap<TallyQuantityVarianceBillOfLadingResponseDto, TallyQuantityVarianceBillOfLadingDto>();
+            CreateMap<TallyQuantityVarianceContainerResponseDto, TallyQuantityVarianceContainerDto>();
+            CreateMap<TallyQuantityVarianceGeneralCargoResponseDto, TallyQuantityVarianceGeneralCargoDto>();
+            CreateMap<TallyQuantityVarianceBulkResponseDto, TallyQuantityVarianceBulkDto>();
+            CreateMap<TallyQuantityVarianceApproverResponseDto, TallyQuantityVarianceApproverDto>();
+            CreateMap<TallyQuantityVarianceQueryDto, TallyQuantityVarianceQueryRequestDto>();
+            CreateMap<TallyQuantityVarianceConfirmationDto, TallyQuantityVarianceConfirmationRequestDto>();
+            CreateMap<ContainerAllocationsQueryDto, ContainerAllocationsQueryRequestDto>();
+            CreateMap<ContainerAllocationsResponseDto, ContainerAllocationsDto>();
+            CreateMap<ContainerAllocationResponseDto, ContainerAllocationDto>();
+            CreateMap<GeneralCargoDeliveryReturnDto, GeneralCargoDeliveryReturnRequestDto>();
+            CreateMap<BulkDeliveryReturnDto, BulkDeliveryReturnRequestDto>();
+            CreateMap<DangerousSpecificationDeliveryReturnDto, DangerousSpecificationDeliveryReturnRequestDto>();
+            CreateMap<DeliveryReturnDto, DeliveryReturnRequestDto>();
+            CreateMap<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>, GetDataWithPagingDto<TallyQuantityVarianceDto>>();
 
             CreateMap<ThroughTransportDeliveryDto, ThroughTransportDeliveryRequestDto>();
             CreateMap<GeneralCargoThroughTransportDeliveryDto, GeneralCargoThroughTransportDeliveryRequestDto>();

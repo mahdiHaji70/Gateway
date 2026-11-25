@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
@@ -410,6 +410,70 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             var response = await _requestExecutor.PostAsync<ManifestResponseDto>(request, terminalCode);
 
             return response;
+        }
+
+        public async Task<Response<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.TallyQuantityV)
+                .WithParameters(new List<Parameter>
+                {
+                    new Parameter { ParameterName = "TerminalCode", ParameterValue = dto.TerminalCode },
+                    new Parameter { ParameterName = "FromDate", ParameterValue = dto.FromDate },
+                    new Parameter { ParameterName = "ToDate", ParameterValue = dto.ToDate },
+                    new Parameter { ParameterName = "PageIndex", ParameterValue = dto.PageIndex },
+                    new Parameter { ParameterName = "PageSize", ParameterValue = dto.PageSize }
+                }).Build();
+
+            return await _requestExecutor.PostAsync<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>(request, dto.TerminalCode);
+        }
+
+        public async Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.TallyQuantityVar)
+                .WithParameters(new List<Parameter>
+                {
+                    new Parameter { ParameterName = "Id", ParameterValue = dto.Id },
+                    new Parameter { ParameterName = "terminalCode", ParameterValue = dto.TerminalCode }
+                }).Build();
+
+            return await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+        }
+
+        public async Task<Response<bool>> SendDeliveryReturn(DeliveryReturnRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.DeliveriesReturns)
+                .WithParameters(new List<Parameter>
+                {
+                    new Parameter { ParameterName = "transactionId", ParameterValue = dto.TransactionId },
+                    new Parameter { ParameterName = "transactionNo", ParameterValue = dto.TransactionNo },
+                    new Parameter { ParameterName = "date", ParameterValue = dto.Date.ToString("yyyy-MM-ddTHH:mm:ss.fffK", System.Globalization.CultureInfo.InvariantCulture) },
+                    new Parameter { ParameterName = "remark", ParameterValue = dto.Remark },
+                    new Parameter { ParameterName = "GeneralCargoList", ParameterValue = JsonConvert.SerializeObject(dto.GeneralCargoList) },
+                    new Parameter { ParameterName = "BulkList", ParameterValue = JsonConvert.SerializeObject(dto.BulkList) },
+                    new Parameter { ParameterName = "ContainerList", ParameterValue = JsonConvert.SerializeObject(dto.ContainerList) }
+                }).Build();
+
+            return await _requestExecutor.PostAsync<bool>(request, dto.TerminalCode);
+        }
+
+        public async Task<Response<ContainerAllocationsResponseDto>> GetContainerAllocations(ContainerAllocationsQueryRequestDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.ContainerAllocations)
+                .WithParameters(new List<Parameter>
+                {
+                    new Parameter { ParameterName = "TerminalCode", ParameterValue = dto.TerminalCode },
+                    new Parameter { ParameterName = "VoyageNoticeNo", ParameterValue = dto.VoyageNoticeNo }
+                }).Build();
+
+            return await _requestExecutor.PostAsync<ContainerAllocationsResponseDto>(request, dto.TerminalCode);
         }
 
         public async Task<Response<Guid>> SendThroughTransportDelivery(ThroughTransportDeliveryRequestDto model)

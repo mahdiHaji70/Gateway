@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Application.Shared;
+using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Requests;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Responses;
 using ExternalIntegration.Service.Sync.DTOs;
@@ -23,6 +23,10 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<IEnumerable<ManifestResponseDto>>> GetManifests(PmoDateRangeWithPagingDto dto);
         Task<Response<IEnumerable<ManifestChangeResponseDto>>> GetManifestChanges(PmoDateRangeWithPagingDto dto);
         Task<Response<ManifestResponseDto>> GetManifestById(Guid id, string terminalCode);
+        Task<Response<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryRequestDto dto);
+        Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationRequestDto dto);
+        Task<Response<bool>> SendDeliveryReturn(DeliveryReturnRequestDto dto);
+        Task<Response<ContainerAllocationsResponseDto>> GetContainerAllocations(ContainerAllocationsQueryRequestDto dto);
         Task<Response<Guid>> SendThroughTransportDelivery(ThroughTransportDeliveryRequestDto dto);
         Task<Response<Guid>> SendVesselLoading(VesselLoadingRequestDto dto);
         Task<Response<Guid>> SendTallySubmission(TallySubmissionRequestDto dto);

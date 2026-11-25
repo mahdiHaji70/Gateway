@@ -1,4 +1,4 @@
-﻿namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config
+namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Config
 {
     public class PmoServiceNames
     {
@@ -23,6 +23,7 @@
         public string VesselDischarges { get; init; } = default!;
         public string TallyQuantityV { get; init; } = default!;
         public string TallyQuantityVar { get; init; } = default!;
+        public string ContainerAllocations { get; init; } = default!;
         public string ContainerStrips { get; init; } = default!;
         public string UnpackItems { get; init; } = default!;
         public string WarehouseTransfersR { get; init; } = default!;
