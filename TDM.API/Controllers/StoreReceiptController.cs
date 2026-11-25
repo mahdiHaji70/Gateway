@@ -1,4 +1,5 @@
-﻿using TDM.Application.Doc.StoreReceipts.Commands.SendSeaExitDeliveryToIpas;
+﻿using TDM.Application.Doc.StoreReceipts.Commands.SendVesselLoadingToIpas;
+using TDM.Application.Doc.StoreReceipts.Commands.SendSeaExitDeliveryToIpas;
 using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +15,7 @@ using TDM.Application.Doc.StoreReceipts.Queries.GetStoreReceiptByBillOfLadingId;
 
 namespace TDM.API.Controllers
 {
-   
+
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
@@ -89,6 +90,15 @@ namespace TDM.API.Controllers
                 new GetStoreReceiptWarehousesQuery(storeReceiptId),
                 cancellationToken);
 
+            return Ok(ApiResponse.Success(result));
+        }
+
+        [HttpPost("send-vessel-loading-to-ipas/{storeExitDocumentId:guid}")]
+        public async Task<IActionResult> SendVesselLoadingToIpas(Guid storeExitDocumentId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(
+                new SendVesselLoadingToIpasCommand(storeExitDocumentId),
+                cancellationToken);
             return Ok(ApiResponse.Success(result));
         }
 

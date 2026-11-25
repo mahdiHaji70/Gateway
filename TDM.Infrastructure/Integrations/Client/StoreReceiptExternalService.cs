@@ -1,4 +1,5 @@
-﻿using TDM.Application.Doc.StoreReceipts.Commands.SendSeaExitDeliveryToIpas;
+﻿using TDM.Application.Doc.StoreReceipts.Commands.SendVesselLoadingToIpas;
+using TDM.Application.Doc.StoreReceipts.Commands.SendSeaExitDeliveryToIpas;
 using TDM.Application.Doc.StoreReceipts.Commands.SendLandExitDeliveryToIpas;
 using TDM.Application.Common.Interfaces;
 using TDM.Application.Doc.StoreReceipts.Commands.SendIpasStoreAllocation;
@@ -51,6 +52,29 @@ namespace TDM.Infrastructure.Integrations.Client
             return receipts;
         }
 
+        public async Task<SendVesselLoadingToIpasResponse> SendVesselLoadingToIpas(
+            SendVesselLoadingToIpasRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var dto = SendVesselLoadingToIpasMapper.Map(request);
+
+            var response = await _requestExecutor.PostAsync<Guid>(
+                "PMO", "SendVesselLoading", dto, cancellationToken);
+
+            var result = new SendVesselLoadingToIpasResponse
+            {
+                StoreExitDocumentId = request.StoreExitDocumentId
+            };
+
+            if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Vessel Loading", out var errorMessage))
+            {
+                result.ErrorMessage = errorMessage;
+                return result;
+            }
+
+            return SendVesselLoadingToIpasMapper.Map(response.Data, request.StoreExitDocumentId);
+        }
+
         public async Task<SendSeaExitDeliveryToIpasResponse> SendSeaExitDeliveryToIpas(
             SendSeaExitDeliveryToIpasRequest request,
             CancellationToken cancellationToken = default)
@@ -87,7 +111,7 @@ namespace TDM.Infrastructure.Integrations.Client
             {
                 StoreExitDocumentId = request.StoreExitDocumentId
             };
-           
+
             if (!ExternalResponseHelper.TryEnsureSuccess(response, "Send IPAS Land Exit Delivery", out var errorMessage))
             {
                 result.ErrorMessage = errorMessage;
@@ -119,6 +143,6 @@ namespace TDM.Infrastructure.Integrations.Client
             };
         }
 
-       
+
     }
 }
