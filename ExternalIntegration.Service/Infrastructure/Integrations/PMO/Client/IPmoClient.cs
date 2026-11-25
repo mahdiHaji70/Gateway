@@ -23,7 +23,8 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
         Task<Response<IEnumerable<ManifestResponseDto>>> GetManifests(PmoDateRangeWithPagingDto dto);
         Task<Response<IEnumerable<ManifestChangeResponseDto>>> GetManifestChanges(PmoDateRangeWithPagingDto dto);
         Task<Response<ManifestResponseDto>> GetManifestById(Guid id, string terminalCode);
-        Task<Response<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryRequestDto dto);
+        Task<Response<IEnumerable<ThroughTransportResponseDto>>> GetThroughTransports(PmoDateRangeWithPagingDto dto);
+        Task<Response<IEnumerable<TallyQuantityVarianceResponseDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryRequestDto dto);
         Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationRequestDto dto);
         Task<Response<bool>> SendDeliveryReturn(DeliveryReturnRequestDto dto);
         Task<Response<ContainerAllocationsResponseDto>> GetContainerAllocations(ContainerAllocationsQueryRequestDto dto);

@@ -104,8 +104,14 @@ namespace ExternalIntegration.Service.Controllers
             return await _pmoSyncService.GetManifestChanges(dto);
         }
 
+        [HttpGet("GetThroughTransports")]
+        public async Task<Response<IEnumerable<ThroughTransportDto>>> GetThroughTransports([FromQuery] DateRangeWithPagingDto dto)
+        {
+            return await _pmoSyncService.GetThroughTransports(dto);
+        }
+
         [HttpGet("GetTallyQuantityVariances")]
-        public async Task<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>> GetTallyQuantityVariances([FromQuery] TallyQuantityVarianceQueryDto dto)
+        public async Task<Response<IEnumerable<TallyQuantityVarianceDto>>> GetTallyQuantityVariances([FromQuery] TallyQuantityVarianceQueryDto dto)
         {
             return await _pmoSyncService.GetTallyQuantityVariances(dto);
         }

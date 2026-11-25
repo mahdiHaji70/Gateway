@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Domain.Entities;
+using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Infrastructure.Logging.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +19,8 @@ namespace ExternalIntegration.Service.Infrastructure.Persistence.Context
         public DbSet<StoreReceipt> StoreReceipts => Set<StoreReceipt>();
         public DbSet<StoreReceiptManifestItem> StoreReceiptManifestItems => Set<StoreReceiptManifestItem>();
         public DbSet<PMOLog> IntegrationLogs => Set<PMOLog>();
+        public DbSet<TallyQuantityVariance> TallyQuantityVariances => Set<TallyQuantityVariance>();
+        public DbSet<ThroughTransport> ThroughTransports => Set<ThroughTransport>();
         public DbSet<Manifest> Manifests => Set<Manifest>();
         public DbSet<VesselLoadingList> VesselLoadingLists => Set<VesselLoadingList>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)

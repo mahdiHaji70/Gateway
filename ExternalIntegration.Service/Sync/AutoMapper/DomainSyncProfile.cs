@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using ExternalIntegration.Service.Application.Shared;
 using ExternalIntegration.Service.Domain.Entities;
 using ExternalIntegration.Service.Sync.DTOs;
@@ -88,6 +88,22 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
                 .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitBulkDto>>(src.BulkList)))
                 .ForMember(dest => dest.GeneralCargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitGeneralCargoDto>>(src.GeneralCargoList)))
                 .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<VesselLoadingPermitContainerDto>>(src.ContainerList)));
+
+            CreateMap<TallyQuantityVariance, TallyQuantityVarianceDto>()
+                .ForMember(dest => dest.BillOfLadings, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<TallyQuantityVarianceBillOfLadingDto>>(src.BillOfLadings)))
+                .ForMember(dest => dest.Approvers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<TallyQuantityVarianceApproverDto>>(src.Approvers)))
+                .ReverseMap()
+                .ForMember(dest => dest.BillOfLadings, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.BillOfLadings)))
+                .ForMember(dest => dest.Approvers, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Approvers)));
+
+            CreateMap<ThroughTransport, ThroughTransportDto>()
+                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ThroughTransportBulkDto>>(src.BulkList)))
+                .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ThroughTransportCargoDto>>(src.CargoList)))
+                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<ThroughTransportContainerDto>>(src.ContainerList)))
+                .ReverseMap()
+                .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.BulkList)))
+                .ForMember(dest => dest.CargoList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.CargoList)))
+                .ForMember(dest => dest.ContainerList, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.ContainerList)));
 
             CreateMap<LoadingPermit, LoadingPermitDto>()
             .ForMember(dest => dest.BulkList, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<LoadingPermitBulkDto>>(src.BulkList)))

@@ -2,6 +2,7 @@ namespace ExternalIntegration.Service.Sync.DTOs
 {
     public class TallyQuantityVarianceDto
     {
+        public string TerminalCode { get; set; } = string.Empty;
         public Guid Id { get; set; }
         public Guid VoyageId { get; set; }
         public string VoyageNoticeNo { get; set; } = string.Empty;

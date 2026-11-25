@@ -412,7 +412,31 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
             return response;
         }
 
-        public async Task<Response<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryRequestDto dto)
+        public async Task<Response<IEnumerable<ThroughTransportResponseDto>>> GetThroughTransports(PmoDateRangeWithPagingDto dto)
+        {
+            var request = new PmoRequestBuilder()
+                .WithCredential(_userName, _password)
+                .WithService(_serviceNames.ThroughTransports)
+                .WithParameters(new List<Parameter>
+                {
+                    new Parameter { ParameterName = nameof(dto.TerminalCode), ParameterValue = dto.TerminalCode },
+                    new Parameter { ParameterName = nameof(dto.FromDate), ParameterValue = dto.FromDate },
+                    new Parameter { ParameterName = nameof(dto.ToDate), ParameterValue = dto.ToDate },
+                    new Parameter { ParameterName = nameof(dto.PageIndex), ParameterValue = dto.PageIndex },
+                    new Parameter { ParameterName = nameof(dto.PageSize), ParameterValue = dto.PageSize }
+                }).Build();
+
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<ThroughTransportResponseDto>>(request, dto.TerminalCode);
+            return new Response<IEnumerable<ThroughTransportResponseDto>>
+            {
+                Status = response.Status,
+                Message = response.Message,
+                Errors = response.Errors,
+                Data = response.Data?.Items
+            };
+        }
+
+        public async Task<Response<IEnumerable<TallyQuantityVarianceResponseDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryRequestDto dto)
         {
             var request = new PmoRequestBuilder()
                 .WithCredential(_userName, _password)
@@ -426,7 +450,14 @@ namespace ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client
                     new Parameter { ParameterName = "PageSize", ParameterValue = dto.PageSize }
                 }).Build();
 
-            return await _requestExecutor.PostAsync<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>(request, dto.TerminalCode);
+            var response = await _requestExecutor.PostAsync<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>>(request, dto.TerminalCode);
+            return new Response<IEnumerable<TallyQuantityVarianceResponseDto>>
+            {
+                Status = response.Status,
+                Message = response.Message,
+                Errors = response.Errors,
+                Data = response.Data?.Items
+            };
         }
 
         public async Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationRequestDto dto)

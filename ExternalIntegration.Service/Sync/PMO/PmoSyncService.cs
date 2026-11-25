@@ -26,6 +26,8 @@ namespace ExternalIntegration.Service.Sync.PMO
         private readonly IVesselLoadingPermitRepository _vesselLoadingPermitRepository;
         private readonly IRepository<VesselLoadingList> _vesselLoadingListRepository;
         private readonly ILoadingPermitRepository _loadingPermitRepository;
+        private readonly ITallyQuantityVarianceRepository _tallyQuantityVarianceRepository;
+        private readonly IThroughTransportRepository _throughTransportRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public PmoSyncService(IHttpContextAccessor httpContextAccessor, IPmoClient client
@@ -40,6 +42,8 @@ namespace ExternalIntegration.Service.Sync.PMO
             , IManifestChangeRepository manifestChangeRepository
             , IVesselLoadingPermitRepository vesselLoadingPermitRepository
             , IRepository<VesselLoadingList> vesselLoadingListRepository
+            , ITallyQuantityVarianceRepository tallyQuantityVarianceRepository
+            , IThroughTransportRepository throughTransportRepository
             , ILoadingPermitRepository loadingPermitRepository)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -55,6 +59,8 @@ namespace ExternalIntegration.Service.Sync.PMO
             _manifestChangeRepository = manifestChangeRepository;
             _vesselLoadingPermitRepository = vesselLoadingPermitRepository;
             _vesselLoadingListRepository = vesselLoadingListRepository;
+            _tallyQuantityVarianceRepository = tallyQuantityVarianceRepository;
+            _throughTransportRepository = throughTransportRepository;
             _loadingPermitRepository = loadingPermitRepository;
         }
         public async Task<Response<IEnumerable<GoodwayBillDto>>> GetGoodwayBill(DateRangeDto dto)
@@ -396,11 +402,43 @@ namespace ExternalIntegration.Service.Sync.PMO
             return syncMappingDto;
         }
 
-        public async Task<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryDto dto)
+        public async Task<Response<IEnumerable<ThroughTransportDto>>> GetThroughTransports(DateRangeWithPagingDto dto)
+        {
+            var fromDate = dto.FromDate ?? await _throughTransportRepository.GetLastDateAsync(dto.TerminalCode);
+            var request = new PmoDateRangeWithPagingDto(dto.TerminalCode, fromDate,
+                dto.ToDate ?? DateTime.Now.AddDays(1), dto.PortCode, dto.PageIndex, dto.PageSize);
+            var clientResult = await _client.GetThroughTransports(request);
+            var result = _mapper.Map<Response<IEnumerable<ThroughTransportDto>>>(clientResult);
+            if (result.Status == ResponseStatuses.Error || result.Data == null)
+                return result;
+
+            foreach (var item in result.Data)
+                item.TerminalCode = dto.TerminalCode;
+
+            var newData = await _throughTransportRepository.FilterUnpersistedAsync(
+                _mapper.Map<IEnumerable<ThroughTransport>>(result.Data).GroupBy(x => x.Id).Select(x => x.First()),
+                x => x.Id, x => x.Id);
+            await _throughTransportRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
+        }
+
+        public async Task<Response<IEnumerable<TallyQuantityVarianceDto>>> GetTallyQuantityVariances(TallyQuantityVarianceQueryDto dto)
         {
             var request = _mapper.Map<TallyQuantityVarianceQueryRequestDto>(dto);
-            var response = await _client.GetTallyQuantityVariances(request);
-            return _mapper.Map<Response<GetDataWithPagingDto<TallyQuantityVarianceDto>>>(response);
+            var clientResult = await _client.GetTallyQuantityVariances(request);
+            var result = _mapper.Map<Response<IEnumerable<TallyQuantityVarianceDto>>>(clientResult);
+            if (result.Status == ResponseStatuses.Error || result.Data == null)
+                return result;
+
+            foreach (var item in result.Data)
+                item.TerminalCode = dto.TerminalCode;
+
+            var newData = await _tallyQuantityVarianceRepository.FilterUnpersistedAsync(
+                _mapper.Map<IEnumerable<TallyQuantityVariance>>(result.Data), x => x.Id, x => x.Id);
+            await _tallyQuantityVarianceRepository.InsertBulkAsync(newData);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
         }
 
         public async Task<Response<bool>> ConfirmTallyQuantityVariance(TallyQuantityVarianceConfirmationDto dto)

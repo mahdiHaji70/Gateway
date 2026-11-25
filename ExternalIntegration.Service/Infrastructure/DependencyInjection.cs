@@ -1,4 +1,4 @@
-﻿using ExternalIntegration.Service.Application.Abstractions;
+using ExternalIntegration.Service.Application.Abstractions;
 using ExternalIntegration.Service.Infrastructure.Encryption;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Auth;
 using ExternalIntegration.Service.Infrastructure.Integrations.PMO.Client;
@@ -33,6 +33,8 @@ namespace ExternalIntegration.Service.Infrastructure
             services.AddScoped<IStoreReceiptRepository, StoreReceiptRepository>();
             services.AddScoped<IManifestRepository, ManifestRepository>();
             services.AddScoped<IManifestChangeRepository, ManifestChangeRepository>();
+            services.AddScoped<ITallyQuantityVarianceRepository, TallyQuantityVarianceRepository>();
+            services.AddScoped<IThroughTransportRepository, ThroughTransportRepository>();
             services.AddScoped<IVesselLoadingPermitRepository, VesselLoadingPermitRepository>();
             services.AddScoped<ILoadingPermitRepository, LoadingPermitRepository>();
             services.AddScoped<IVesselLoadingListRepository, VesselLoadingListRepository>();

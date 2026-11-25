@@ -134,7 +134,15 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<ManifestChangeResponseDto, ManifestChangeDto>();
             CreateMap<ManifestChangeLogResponseDto, ManifestChangeLogDto>();
 
-            CreateMap<TallyQuantityVarianceResponseDto, TallyQuantityVarianceDto>();
+            CreateMap<ThroughTransportResponseDto, ThroughTransportDto>()
+                .ForMember(dest => dest.TerminalCode, opt => opt.Ignore());
+            CreateMap<ThroughTransportBulkResponseDto, ThroughTransportBulkDto>();
+            CreateMap<ThroughTransportCargoResponseDto, ThroughTransportCargoDto>();
+            CreateMap<ThroughTransportContainerResponseDto, ThroughTransportContainerDto>();
+            CreateMap<ThroughTransportGoodResponseDto, ThroughTransportGoodDto>();
+
+            CreateMap<TallyQuantityVarianceResponseDto, TallyQuantityVarianceDto>()
+                .ForMember(dest => dest.TerminalCode, opt => opt.Ignore());
             CreateMap<TallyQuantityVarianceBillOfLadingResponseDto, TallyQuantityVarianceBillOfLadingDto>();
             CreateMap<TallyQuantityVarianceContainerResponseDto, TallyQuantityVarianceContainerDto>();
             CreateMap<TallyQuantityVarianceGeneralCargoResponseDto, TallyQuantityVarianceGeneralCargoDto>();
@@ -149,7 +157,6 @@ namespace ExternalIntegration.Service.Sync.AutoMapper
             CreateMap<BulkDeliveryReturnDto, BulkDeliveryReturnRequestDto>();
             CreateMap<DangerousSpecificationDeliveryReturnDto, DangerousSpecificationDeliveryReturnRequestDto>();
             CreateMap<DeliveryReturnDto, DeliveryReturnRequestDto>();
-            CreateMap<GetDataWithPagingDto<TallyQuantityVarianceResponseDto>, GetDataWithPagingDto<TallyQuantityVarianceDto>>();
 
             CreateMap<ThroughTransportDeliveryDto, ThroughTransportDeliveryRequestDto>();
             CreateMap<GeneralCargoThroughTransportDeliveryDto, GeneralCargoThroughTransportDeliveryRequestDto>();
