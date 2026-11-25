@@ -8,6 +8,18 @@ namespace TDM.Infrastructure.Persistence.Repositories
     {
         public StoreExitDocumentRepository(TDMDbContext context) : base(context) { }
 
+        public Task<StoreExitDocument?> GetForVesselLoadingAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return _dbSet
+                .Include(x => x.Voyage)
+                .Include(x => x.StoreReceiptOperations).ThenInclude(x => x.StoreReceiptHead).ThenInclude(x => x.Declaration)
+                .Include(x => x.StoreReceiptOperations).ThenInclude(x => x.StoreReceiptContainer).ThenInclude(x => x!.Container)
+                .Include(x => x.StoreReceiptOperations).ThenInclude(x => x.Store)
+                .Include(x => x.StoreReceiptOperations).ThenInclude(x => x.StoreReceiptGood).ThenInclude(x => x!.Commodity)
+                .Include(x => x.StoreReceiptOperations).ThenInclude(x => x.StoreReceiptGood).ThenInclude(x => x!.Package)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
+
         public Task<StoreExitDocument?> GetForSeaDeliveryAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return _dbSet

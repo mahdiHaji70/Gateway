@@ -15,6 +15,7 @@ namespace TDM.Domain.Entities
         public Guid? VoyageId { get; set; }
         public Voyage? Voyage { get; set; }
 
+        public Guid? IpasVesselLoadingId { get; set; }
         public Guid? IpasDeliveryId { get; set; }
         public int? IpasDeliverySerialNo { get; set; }
 
